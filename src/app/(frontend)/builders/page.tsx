@@ -19,7 +19,7 @@ async function getBuildersData(searchParams: { [key: string]: string | string[] 
       limit: 1,
     })
     if (specialty.docs.length > 0) {
-      where['specialties'] = { contains: specialty.docs[0].id }
+      where['specialties'] = { in: [specialty.docs[0].id] }
     }
   }
 
