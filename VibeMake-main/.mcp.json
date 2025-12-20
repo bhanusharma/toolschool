@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "figma-dev-mode-mcp-server": {
+      "type": "sse",
+      "url": "http://127.0.0.1:3845/sse"
+    },
+    "wordpress-mcp": {
+      "type": "http",
+      "url": "http://vibemake.local/wp-json/wp/v2/wpmcp/streamable",
+      "headers": {
+        "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vdmliZW1ha2UubG9jYWwiLCJpYXQiOjE3NTEzOTE2OTIsImV4cCI6MTc1MTQ3ODA5MiwidXNlcl9pZCI6MSwianRpIjoiamV6cDRleHBvTU1VanJTUFRvUlF2RHBMVVZyWkJGZFkifQ.tTfKSyTD6833FmxM3XylKjowj5rxznGnTwrB3mOKF5I"
+      }
+    }
+  }
+}

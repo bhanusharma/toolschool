@@ -1,0 +1,2763 @@
+-- MySQL dump 10.13  Distrib 8.0.35, for macos13 (arm64)
+--
+-- Host: localhost    Database: local
+-- ------------------------------------------------------
+-- Server version	8.0.35
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `wp_commentmeta`
+--
+
+DROP TABLE IF EXISTS `wp_commentmeta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wp_commentmeta` (
+  `meta_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `comment_id` bigint unsigned NOT NULL DEFAULT '0',
+  `meta_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `meta_value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci,
+  PRIMARY KEY (`meta_id`),
+  KEY `comment_id` (`comment_id`),
+  KEY `meta_key` (`meta_key`(191))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wp_commentmeta`
+--
+
+LOCK TABLES `wp_commentmeta` WRITE;
+/*!40000 ALTER TABLE `wp_commentmeta` DISABLE KEYS */;
+/*!40000 ALTER TABLE `wp_commentmeta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `wp_comments`
+--
+
+DROP TABLE IF EXISTS `wp_comments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wp_comments` (
+  `comment_ID` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `comment_post_ID` bigint unsigned NOT NULL DEFAULT '0',
+  `comment_author` tinytext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `comment_author_email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `comment_author_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `comment_author_IP` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `comment_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `comment_date_gmt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `comment_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `comment_karma` int NOT NULL DEFAULT '0',
+  `comment_approved` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '1',
+  `comment_agent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `comment_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'comment',
+  `comment_parent` bigint unsigned NOT NULL DEFAULT '0',
+  `user_id` bigint unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`comment_ID`),
+  KEY `comment_post_ID` (`comment_post_ID`),
+  KEY `comment_approved_date_gmt` (`comment_approved`,`comment_date_gmt`),
+  KEY `comment_date_gmt` (`comment_date_gmt`),
+  KEY `comment_parent` (`comment_parent`),
+  KEY `comment_author_email` (`comment_author_email`(10))
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wp_comments`
+--
+
+LOCK TABLES `wp_comments` WRITE;
+/*!40000 ALTER TABLE `wp_comments` DISABLE KEYS */;
+INSERT INTO `wp_comments` VALUES (1,1,'A WordPress Commenter','wapuu@wordpress.example','https://wordpress.org/','','2025-06-29 21:40:54','2025-06-29 21:40:54','Hi, this is a comment.\nTo get started with moderating, editing, and deleting comments, please visit the Comments screen in the dashboard.\nCommenter avatars come from <a href=\"https://gravatar.com/\">Gravatar</a>.',0,'post-trashed','','comment',0,0);
+/*!40000 ALTER TABLE `wp_comments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `wp_links`
+--
+
+DROP TABLE IF EXISTS `wp_links`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wp_links` (
+  `link_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `link_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `link_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `link_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `link_target` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `link_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `link_visible` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'Y',
+  `link_owner` bigint unsigned NOT NULL DEFAULT '1',
+  `link_rating` int NOT NULL DEFAULT '0',
+  `link_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `link_rel` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `link_notes` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `link_rss` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`link_id`),
+  KEY `link_visible` (`link_visible`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wp_links`
+--
+
+LOCK TABLES `wp_links` WRITE;
+/*!40000 ALTER TABLE `wp_links` DISABLE KEYS */;
+/*!40000 ALTER TABLE `wp_links` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `wp_options`
+--
+
+DROP TABLE IF EXISTS `wp_options`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wp_options` (
+  `option_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `option_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `option_value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `autoload` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'yes',
+  PRIMARY KEY (`option_id`),
+  UNIQUE KEY `option_name` (`option_name`),
+  KEY `autoload` (`autoload`)
+) ENGINE=InnoDB AUTO_INCREMENT=751 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wp_options`
+--
+
+LOCK TABLES `wp_options` WRITE;
+/*!40000 ALTER TABLE `wp_options` DISABLE KEYS */;
+INSERT INTO `wp_options` VALUES (1,'cron','a:18:{i:1752111667;a:1:{s:34:\"wp_privacy_delete_old_export_files\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:6:\"hourly\";s:4:\"args\";a:0:{}s:8:\"interval\";i:3600;}}}i:1752123793;a:1:{s:46:\"WPEngineSecurityAuditor_Scans_fingerprint_core\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:2:{s:8:\"schedule\";b:0;s:4:\"args\";a:0:{}}}}i:1752124398;a:1:{s:49:\"WPEngineSecurityAuditor_Scans_fingerprint_plugins\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:2:{s:8:\"schedule\";b:0;s:4:\"args\";a:0:{}}}}i:1752140631;a:1:{s:21:\"wp_update_user_counts\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}}i:1752144053;a:1:{s:16:\"wp_version_check\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}}i:1752144515;a:1:{s:39:\"WPEngineSecurityAuditor_Scans_scheduler\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}}i:1752145853;a:1:{s:17:\"wp_update_plugins\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}}i:1752147653;a:1:{s:16:\"wp_update_themes\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}}i:1752183667;a:1:{s:32:\"recovery_mode_clean_expired_keys\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:5:\"daily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:86400;}}}i:1752184489;a:2:{s:19:\"wp_scheduled_delete\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:5:\"daily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:86400;}}s:25:\"delete_expired_transients\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:5:\"daily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:86400;}}}i:1752185093;a:1:{s:30:\"wp_scheduled_auto_draft_delete\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:5:\"daily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:86400;}}}i:1752443054;a:1:{s:27:\"acf_update_site_health_data\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:6:\"weekly\";s:4:\"args\";a:0:{}s:8:\"interval\";i:604800;}}}i:1752444302;a:1:{s:29:\"wp-graphql_tracker_send_event\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:6:\"weekly\";s:4:\"args\";a:0:{}s:8:\"interval\";i:604800;}}}i:1752444305;a:1:{s:32:\"wpgraphql-acf_tracker_send_event\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:6:\"weekly\";s:4:\"args\";a:0:{}s:8:\"interval\";i:604800;}}}i:1752507715;a:1:{s:30:\"wp_delete_temp_updater_backups\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:6:\"weekly\";s:4:\"args\";a:0:{}s:8:\"interval\";i:604800;}}}i:1752529267;a:1:{s:30:\"wp_site_health_scheduled_check\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:6:\"weekly\";s:4:\"args\";a:0:{}s:8:\"interval\";i:604800;}}}i:1753827900;a:1:{s:19:\"publish_future_post\";a:1:{s:32:\"9a7037354a2b7b98ba90551f53b6ca93\";a:2:{s:8:\"schedule\";b:0;s:4:\"args\";a:1:{i:0;i:47;}}}}s:7:\"version\";i:2;}','on');
+INSERT INTO `wp_options` VALUES (2,'siteurl','https://vibemake.local','on');
+INSERT INTO `wp_options` VALUES (3,'home','https://vibemake.local','on');
+INSERT INTO `wp_options` VALUES (4,'blogname','VibeMake','on');
+INSERT INTO `wp_options` VALUES (5,'blogdescription','','on');
+INSERT INTO `wp_options` VALUES (6,'users_can_register','0','on');
+INSERT INTO `wp_options` VALUES (7,'admin_email','admin@vibemake.local','on');
+INSERT INTO `wp_options` VALUES (8,'start_of_week','1','on');
+INSERT INTO `wp_options` VALUES (9,'use_balanceTags','0','on');
+INSERT INTO `wp_options` VALUES (10,'use_smilies','1','on');
+INSERT INTO `wp_options` VALUES (11,'require_name_email','1','on');
+INSERT INTO `wp_options` VALUES (12,'comments_notify','1','on');
+INSERT INTO `wp_options` VALUES (13,'posts_per_rss','10','on');
+INSERT INTO `wp_options` VALUES (14,'rss_use_excerpt','0','on');
+INSERT INTO `wp_options` VALUES (15,'mailserver_url','mail.example.com','on');
+INSERT INTO `wp_options` VALUES (16,'mailserver_login','login@example.com','on');
+INSERT INTO `wp_options` VALUES (17,'mailserver_pass','','on');
+INSERT INTO `wp_options` VALUES (18,'mailserver_port','110','on');
+INSERT INTO `wp_options` VALUES (19,'default_category','1','on');
+INSERT INTO `wp_options` VALUES (20,'default_comment_status','open','on');
+INSERT INTO `wp_options` VALUES (21,'default_ping_status','open','on');
+INSERT INTO `wp_options` VALUES (22,'default_pingback_flag','1','on');
+INSERT INTO `wp_options` VALUES (23,'posts_per_page','10','on');
+INSERT INTO `wp_options` VALUES (24,'date_format','F j, Y','on');
+INSERT INTO `wp_options` VALUES (25,'time_format','g:i a','on');
+INSERT INTO `wp_options` VALUES (26,'links_updated_date_format','F j, Y g:i a','on');
+INSERT INTO `wp_options` VALUES (27,'comment_moderation','0','on');
+INSERT INTO `wp_options` VALUES (28,'moderation_notify','1','on');
+INSERT INTO `wp_options` VALUES (29,'permalink_structure','/%postname%/','on');
+INSERT INTO `wp_options` VALUES (30,'rewrite_rules','a:222:{s:8:\"maker/?$\";s:25:\"index.php?post_type=maker\";s:38:\"maker/feed/(feed|rdf|rss|rss2|atom)/?$\";s:42:\"index.php?post_type=maker&feed=$matches[1]\";s:33:\"maker/(feed|rdf|rss|rss2|atom)/?$\";s:42:\"index.php?post_type=maker&feed=$matches[1]\";s:25:\"maker/page/([0-9]{1,})/?$\";s:43:\"index.php?post_type=maker&paged=$matches[1]\";s:20:\"community_project/?$\";s:37:\"index.php?post_type=community_project\";s:50:\"community_project/feed/(feed|rdf|rss|rss2|atom)/?$\";s:54:\"index.php?post_type=community_project&feed=$matches[1]\";s:45:\"community_project/(feed|rdf|rss|rss2|atom)/?$\";s:54:\"index.php?post_type=community_project&feed=$matches[1]\";s:37:\"community_project/page/([0-9]{1,})/?$\";s:55:\"index.php?post_type=community_project&paged=$matches[1]\";s:11:\"^wp-json/?$\";s:22:\"index.php?rest_route=/\";s:14:\"^wp-json/(.*)?\";s:33:\"index.php?rest_route=/$matches[1]\";s:21:\"^index.php/wp-json/?$\";s:22:\"index.php?rest_route=/\";s:24:\"^index.php/wp-json/(.*)?\";s:33:\"index.php?rest_route=/$matches[1]\";s:17:\"^wp-sitemap\\.xml$\";s:23:\"index.php?sitemap=index\";s:17:\"^wp-sitemap\\.xsl$\";s:36:\"index.php?sitemap-stylesheet=sitemap\";s:23:\"^wp-sitemap-index\\.xsl$\";s:34:\"index.php?sitemap-stylesheet=index\";s:48:\"^wp-sitemap-([a-z]+?)-([a-z\\d_-]+?)-(\\d+?)\\.xml$\";s:75:\"index.php?sitemap=$matches[1]&sitemap-subtype=$matches[2]&paged=$matches[3]\";s:34:\"^wp-sitemap-([a-z]+?)-(\\d+?)\\.xml$\";s:47:\"index.php?sitemap=$matches[1]&paged=$matches[2]\";s:7:\"tool/?$\";s:24:\"index.php?post_type=tool\";s:37:\"tool/feed/(feed|rdf|rss|rss2|atom)/?$\";s:41:\"index.php?post_type=tool&feed=$matches[1]\";s:32:\"tool/(feed|rdf|rss|rss2|atom)/?$\";s:41:\"index.php?post_type=tool&feed=$matches[1]\";s:24:\"tool/page/([0-9]{1,})/?$\";s:42:\"index.php?post_type=tool&paged=$matches[1]\";s:10:\"example/?$\";s:27:\"index.php?post_type=example\";s:40:\"example/feed/(feed|rdf|rss|rss2|atom)/?$\";s:44:\"index.php?post_type=example&feed=$matches[1]\";s:35:\"example/(feed|rdf|rss|rss2|atom)/?$\";s:44:\"index.php?post_type=example&feed=$matches[1]\";s:27:\"example/page/([0-9]{1,})/?$\";s:45:\"index.php?post_type=example&paged=$matches[1]\";s:10:\"graphql/?$\";s:22:\"index.php?graphql=true\";s:47:\"category/(.+?)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:52:\"index.php?category_name=$matches[1]&feed=$matches[2]\";s:42:\"category/(.+?)/(feed|rdf|rss|rss2|atom)/?$\";s:52:\"index.php?category_name=$matches[1]&feed=$matches[2]\";s:23:\"category/(.+?)/embed/?$\";s:46:\"index.php?category_name=$matches[1]&embed=true\";s:35:\"category/(.+?)/page/?([0-9]{1,})/?$\";s:53:\"index.php?category_name=$matches[1]&paged=$matches[2]\";s:17:\"category/(.+?)/?$\";s:35:\"index.php?category_name=$matches[1]\";s:44:\"tag/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:42:\"index.php?tag=$matches[1]&feed=$matches[2]\";s:39:\"tag/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:42:\"index.php?tag=$matches[1]&feed=$matches[2]\";s:20:\"tag/([^/]+)/embed/?$\";s:36:\"index.php?tag=$matches[1]&embed=true\";s:32:\"tag/([^/]+)/page/?([0-9]{1,})/?$\";s:43:\"index.php?tag=$matches[1]&paged=$matches[2]\";s:14:\"tag/([^/]+)/?$\";s:25:\"index.php?tag=$matches[1]\";s:45:\"type/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:50:\"index.php?post_format=$matches[1]&feed=$matches[2]\";s:40:\"type/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:50:\"index.php?post_format=$matches[1]&feed=$matches[2]\";s:21:\"type/([^/]+)/embed/?$\";s:44:\"index.php?post_format=$matches[1]&embed=true\";s:33:\"type/([^/]+)/page/?([0-9]{1,})/?$\";s:51:\"index.php?post_format=$matches[1]&paged=$matches[2]\";s:15:\"type/([^/]+)/?$\";s:33:\"index.php?post_format=$matches[1]\";s:33:\"maker/[^/]+/attachment/([^/]+)/?$\";s:32:\"index.php?attachment=$matches[1]\";s:43:\"maker/[^/]+/attachment/([^/]+)/trackback/?$\";s:37:\"index.php?attachment=$matches[1]&tb=1\";s:63:\"maker/[^/]+/attachment/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:58:\"maker/[^/]+/attachment/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:58:\"maker/[^/]+/attachment/([^/]+)/comment-page-([0-9]{1,})/?$\";s:50:\"index.php?attachment=$matches[1]&cpage=$matches[2]\";s:39:\"maker/[^/]+/attachment/([^/]+)/embed/?$\";s:43:\"index.php?attachment=$matches[1]&embed=true\";s:22:\"maker/([^/]+)/embed/?$\";s:38:\"index.php?maker=$matches[1]&embed=true\";s:26:\"maker/([^/]+)/trackback/?$\";s:32:\"index.php?maker=$matches[1]&tb=1\";s:46:\"maker/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:44:\"index.php?maker=$matches[1]&feed=$matches[2]\";s:41:\"maker/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:44:\"index.php?maker=$matches[1]&feed=$matches[2]\";s:34:\"maker/([^/]+)/page/?([0-9]{1,})/?$\";s:45:\"index.php?maker=$matches[1]&paged=$matches[2]\";s:41:\"maker/([^/]+)/comment-page-([0-9]{1,})/?$\";s:45:\"index.php?maker=$matches[1]&cpage=$matches[2]\";s:30:\"maker/([^/]+)(?:/([0-9]+))?/?$\";s:44:\"index.php?maker=$matches[1]&page=$matches[2]\";s:22:\"maker/[^/]+/([^/]+)/?$\";s:32:\"index.php?attachment=$matches[1]\";s:32:\"maker/[^/]+/([^/]+)/trackback/?$\";s:37:\"index.php?attachment=$matches[1]&tb=1\";s:52:\"maker/[^/]+/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:47:\"maker/[^/]+/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:47:\"maker/[^/]+/([^/]+)/comment-page-([0-9]{1,})/?$\";s:50:\"index.php?attachment=$matches[1]&cpage=$matches[2]\";s:28:\"maker/[^/]+/([^/]+)/embed/?$\";s:43:\"index.php?attachment=$matches[1]&embed=true\";s:45:\"community_project/[^/]+/attachment/([^/]+)/?$\";s:32:\"index.php?attachment=$matches[1]\";s:55:\"community_project/[^/]+/attachment/([^/]+)/trackback/?$\";s:37:\"index.php?attachment=$matches[1]&tb=1\";s:75:\"community_project/[^/]+/attachment/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:70:\"community_project/[^/]+/attachment/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:70:\"community_project/[^/]+/attachment/([^/]+)/comment-page-([0-9]{1,})/?$\";s:50:\"index.php?attachment=$matches[1]&cpage=$matches[2]\";s:51:\"community_project/[^/]+/attachment/([^/]+)/embed/?$\";s:43:\"index.php?attachment=$matches[1]&embed=true\";s:34:\"community_project/([^/]+)/embed/?$\";s:50:\"index.php?community_project=$matches[1]&embed=true\";s:38:\"community_project/([^/]+)/trackback/?$\";s:44:\"index.php?community_project=$matches[1]&tb=1\";s:58:\"community_project/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:56:\"index.php?community_project=$matches[1]&feed=$matches[2]\";s:53:\"community_project/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:56:\"index.php?community_project=$matches[1]&feed=$matches[2]\";s:46:\"community_project/([^/]+)/page/?([0-9]{1,})/?$\";s:57:\"index.php?community_project=$matches[1]&paged=$matches[2]\";s:53:\"community_project/([^/]+)/comment-page-([0-9]{1,})/?$\";s:57:\"index.php?community_project=$matches[1]&cpage=$matches[2]\";s:42:\"community_project/([^/]+)(?:/([0-9]+))?/?$\";s:56:\"index.php?community_project=$matches[1]&page=$matches[2]\";s:34:\"community_project/[^/]+/([^/]+)/?$\";s:32:\"index.php?attachment=$matches[1]\";s:44:\"community_project/[^/]+/([^/]+)/trackback/?$\";s:37:\"index.php?attachment=$matches[1]&tb=1\";s:64:\"community_project/[^/]+/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:59:\"community_project/[^/]+/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:59:\"community_project/[^/]+/([^/]+)/comment-page-([0-9]{1,})/?$\";s:50:\"index.php?attachment=$matches[1]&cpage=$matches[2]\";s:40:\"community_project/[^/]+/([^/]+)/embed/?$\";s:43:\"index.php?attachment=$matches[1]&embed=true\";s:56:\"maker_specialty/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:54:\"index.php?maker_specialty=$matches[1]&feed=$matches[2]\";s:51:\"maker_specialty/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:54:\"index.php?maker_specialty=$matches[1]&feed=$matches[2]\";s:32:\"maker_specialty/([^/]+)/embed/?$\";s:48:\"index.php?maker_specialty=$matches[1]&embed=true\";s:44:\"maker_specialty/([^/]+)/page/?([0-9]{1,})/?$\";s:55:\"index.php?maker_specialty=$matches[1]&paged=$matches[2]\";s:26:\"maker_specialty/([^/]+)/?$\";s:37:\"index.php?maker_specialty=$matches[1]\";s:55:\"community_type/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:53:\"index.php?community_type=$matches[1]&feed=$matches[2]\";s:50:\"community_type/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:53:\"index.php?community_type=$matches[1]&feed=$matches[2]\";s:31:\"community_type/([^/]+)/embed/?$\";s:47:\"index.php?community_type=$matches[1]&embed=true\";s:43:\"community_type/([^/]+)/page/?([0-9]{1,})/?$\";s:54:\"index.php?community_type=$matches[1]&paged=$matches[2]\";s:25:\"community_type/([^/]+)/?$\";s:36:\"index.php?community_type=$matches[1]\";s:54:\"news_category/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:52:\"index.php?news_category=$matches[1]&feed=$matches[2]\";s:49:\"news_category/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:52:\"index.php?news_category=$matches[1]&feed=$matches[2]\";s:30:\"news_category/([^/]+)/embed/?$\";s:46:\"index.php?news_category=$matches[1]&embed=true\";s:42:\"news_category/([^/]+)/page/?([0-9]{1,})/?$\";s:53:\"index.php?news_category=$matches[1]&paged=$matches[2]\";s:24:\"news_category/([^/]+)/?$\";s:35:\"index.php?news_category=$matches[1]\";s:32:\"tool/[^/]+/attachment/([^/]+)/?$\";s:32:\"index.php?attachment=$matches[1]\";s:42:\"tool/[^/]+/attachment/([^/]+)/trackback/?$\";s:37:\"index.php?attachment=$matches[1]&tb=1\";s:62:\"tool/[^/]+/attachment/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:57:\"tool/[^/]+/attachment/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:57:\"tool/[^/]+/attachment/([^/]+)/comment-page-([0-9]{1,})/?$\";s:50:\"index.php?attachment=$matches[1]&cpage=$matches[2]\";s:38:\"tool/[^/]+/attachment/([^/]+)/embed/?$\";s:43:\"index.php?attachment=$matches[1]&embed=true\";s:21:\"tool/([^/]+)/embed/?$\";s:37:\"index.php?tool=$matches[1]&embed=true\";s:25:\"tool/([^/]+)/trackback/?$\";s:31:\"index.php?tool=$matches[1]&tb=1\";s:45:\"tool/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:43:\"index.php?tool=$matches[1]&feed=$matches[2]\";s:40:\"tool/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:43:\"index.php?tool=$matches[1]&feed=$matches[2]\";s:33:\"tool/([^/]+)/page/?([0-9]{1,})/?$\";s:44:\"index.php?tool=$matches[1]&paged=$matches[2]\";s:40:\"tool/([^/]+)/comment-page-([0-9]{1,})/?$\";s:44:\"index.php?tool=$matches[1]&cpage=$matches[2]\";s:29:\"tool/([^/]+)(?:/([0-9]+))?/?$\";s:43:\"index.php?tool=$matches[1]&page=$matches[2]\";s:21:\"tool/[^/]+/([^/]+)/?$\";s:32:\"index.php?attachment=$matches[1]\";s:31:\"tool/[^/]+/([^/]+)/trackback/?$\";s:37:\"index.php?attachment=$matches[1]&tb=1\";s:51:\"tool/[^/]+/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:46:\"tool/[^/]+/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:46:\"tool/[^/]+/([^/]+)/comment-page-([0-9]{1,})/?$\";s:50:\"index.php?attachment=$matches[1]&cpage=$matches[2]\";s:27:\"tool/[^/]+/([^/]+)/embed/?$\";s:43:\"index.php?attachment=$matches[1]&embed=true\";s:54:\"tool_category/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:52:\"index.php?tool_category=$matches[1]&feed=$matches[2]\";s:49:\"tool_category/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:52:\"index.php?tool_category=$matches[1]&feed=$matches[2]\";s:30:\"tool_category/([^/]+)/embed/?$\";s:46:\"index.php?tool_category=$matches[1]&embed=true\";s:42:\"tool_category/([^/]+)/page/?([0-9]{1,})/?$\";s:53:\"index.php?tool_category=$matches[1]&paged=$matches[2]\";s:24:\"tool_category/([^/]+)/?$\";s:35:\"index.php?tool_category=$matches[1]\";s:54:\"creation_type/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:52:\"index.php?creation_type=$matches[1]&feed=$matches[2]\";s:49:\"creation_type/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:52:\"index.php?creation_type=$matches[1]&feed=$matches[2]\";s:30:\"creation_type/([^/]+)/embed/?$\";s:46:\"index.php?creation_type=$matches[1]&embed=true\";s:42:\"creation_type/([^/]+)/page/?([0-9]{1,})/?$\";s:53:\"index.php?creation_type=$matches[1]&paged=$matches[2]\";s:24:\"creation_type/([^/]+)/?$\";s:35:\"index.php?creation_type=$matches[1]\";s:55:\"user_situation/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:53:\"index.php?user_situation=$matches[1]&feed=$matches[2]\";s:50:\"user_situation/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:53:\"index.php?user_situation=$matches[1]&feed=$matches[2]\";s:31:\"user_situation/([^/]+)/embed/?$\";s:47:\"index.php?user_situation=$matches[1]&embed=true\";s:43:\"user_situation/([^/]+)/page/?([0-9]{1,})/?$\";s:54:\"index.php?user_situation=$matches[1]&paged=$matches[2]\";s:25:\"user_situation/([^/]+)/?$\";s:36:\"index.php?user_situation=$matches[1]\";s:35:\"example/[^/]+/attachment/([^/]+)/?$\";s:32:\"index.php?attachment=$matches[1]\";s:45:\"example/[^/]+/attachment/([^/]+)/trackback/?$\";s:37:\"index.php?attachment=$matches[1]&tb=1\";s:65:\"example/[^/]+/attachment/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:60:\"example/[^/]+/attachment/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:60:\"example/[^/]+/attachment/([^/]+)/comment-page-([0-9]{1,})/?$\";s:50:\"index.php?attachment=$matches[1]&cpage=$matches[2]\";s:41:\"example/[^/]+/attachment/([^/]+)/embed/?$\";s:43:\"index.php?attachment=$matches[1]&embed=true\";s:24:\"example/([^/]+)/embed/?$\";s:40:\"index.php?example=$matches[1]&embed=true\";s:28:\"example/([^/]+)/trackback/?$\";s:34:\"index.php?example=$matches[1]&tb=1\";s:48:\"example/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:46:\"index.php?example=$matches[1]&feed=$matches[2]\";s:43:\"example/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:46:\"index.php?example=$matches[1]&feed=$matches[2]\";s:36:\"example/([^/]+)/page/?([0-9]{1,})/?$\";s:47:\"index.php?example=$matches[1]&paged=$matches[2]\";s:43:\"example/([^/]+)/comment-page-([0-9]{1,})/?$\";s:47:\"index.php?example=$matches[1]&cpage=$matches[2]\";s:32:\"example/([^/]+)(?:/([0-9]+))?/?$\";s:46:\"index.php?example=$matches[1]&page=$matches[2]\";s:24:\"example/[^/]+/([^/]+)/?$\";s:32:\"index.php?attachment=$matches[1]\";s:34:\"example/[^/]+/([^/]+)/trackback/?$\";s:37:\"index.php?attachment=$matches[1]&tb=1\";s:54:\"example/[^/]+/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:49:\"example/[^/]+/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:49:\"example/[^/]+/([^/]+)/comment-page-([0-9]{1,})/?$\";s:50:\"index.php?attachment=$matches[1]&cpage=$matches[2]\";s:30:\"example/[^/]+/([^/]+)/embed/?$\";s:43:\"index.php?attachment=$matches[1]&embed=true\";s:59:\"example_difficulty/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:57:\"index.php?example_difficulty=$matches[1]&feed=$matches[2]\";s:54:\"example_difficulty/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:57:\"index.php?example_difficulty=$matches[1]&feed=$matches[2]\";s:35:\"example_difficulty/([^/]+)/embed/?$\";s:51:\"index.php?example_difficulty=$matches[1]&embed=true\";s:47:\"example_difficulty/([^/]+)/page/?([0-9]{1,})/?$\";s:58:\"index.php?example_difficulty=$matches[1]&paged=$matches[2]\";s:29:\"example_difficulty/([^/]+)/?$\";s:40:\"index.php?example_difficulty=$matches[1]\";s:12:\"robots\\.txt$\";s:18:\"index.php?robots=1\";s:13:\"favicon\\.ico$\";s:19:\"index.php?favicon=1\";s:12:\"sitemap\\.xml\";s:24:\"index.php??sitemap=index\";s:48:\".*wp-(atom|rdf|rss|rss2|feed|commentsrss2)\\.php$\";s:18:\"index.php?feed=old\";s:20:\".*wp-app\\.php(/.*)?$\";s:19:\"index.php?error=403\";s:18:\".*wp-register.php$\";s:23:\"index.php?register=true\";s:32:\"feed/(feed|rdf|rss|rss2|atom)/?$\";s:27:\"index.php?&feed=$matches[1]\";s:27:\"(feed|rdf|rss|rss2|atom)/?$\";s:27:\"index.php?&feed=$matches[1]\";s:8:\"embed/?$\";s:21:\"index.php?&embed=true\";s:20:\"page/?([0-9]{1,})/?$\";s:28:\"index.php?&paged=$matches[1]\";s:41:\"comments/feed/(feed|rdf|rss|rss2|atom)/?$\";s:42:\"index.php?&feed=$matches[1]&withcomments=1\";s:36:\"comments/(feed|rdf|rss|rss2|atom)/?$\";s:42:\"index.php?&feed=$matches[1]&withcomments=1\";s:17:\"comments/embed/?$\";s:21:\"index.php?&embed=true\";s:44:\"search/(.+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:40:\"index.php?s=$matches[1]&feed=$matches[2]\";s:39:\"search/(.+)/(feed|rdf|rss|rss2|atom)/?$\";s:40:\"index.php?s=$matches[1]&feed=$matches[2]\";s:20:\"search/(.+)/embed/?$\";s:34:\"index.php?s=$matches[1]&embed=true\";s:32:\"search/(.+)/page/?([0-9]{1,})/?$\";s:41:\"index.php?s=$matches[1]&paged=$matches[2]\";s:14:\"search/(.+)/?$\";s:23:\"index.php?s=$matches[1]\";s:47:\"author/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:50:\"index.php?author_name=$matches[1]&feed=$matches[2]\";s:42:\"author/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:50:\"index.php?author_name=$matches[1]&feed=$matches[2]\";s:23:\"author/([^/]+)/embed/?$\";s:44:\"index.php?author_name=$matches[1]&embed=true\";s:35:\"author/([^/]+)/page/?([0-9]{1,})/?$\";s:51:\"index.php?author_name=$matches[1]&paged=$matches[2]\";s:17:\"author/([^/]+)/?$\";s:33:\"index.php?author_name=$matches[1]\";s:69:\"([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/feed/(feed|rdf|rss|rss2|atom)/?$\";s:80:\"index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]\";s:64:\"([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/(feed|rdf|rss|rss2|atom)/?$\";s:80:\"index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&feed=$matches[4]\";s:45:\"([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/embed/?$\";s:74:\"index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&embed=true\";s:57:\"([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/page/?([0-9]{1,})/?$\";s:81:\"index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]&paged=$matches[4]\";s:39:\"([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/?$\";s:63:\"index.php?year=$matches[1]&monthnum=$matches[2]&day=$matches[3]\";s:56:\"([0-9]{4})/([0-9]{1,2})/feed/(feed|rdf|rss|rss2|atom)/?$\";s:64:\"index.php?year=$matches[1]&monthnum=$matches[2]&feed=$matches[3]\";s:51:\"([0-9]{4})/([0-9]{1,2})/(feed|rdf|rss|rss2|atom)/?$\";s:64:\"index.php?year=$matches[1]&monthnum=$matches[2]&feed=$matches[3]\";s:32:\"([0-9]{4})/([0-9]{1,2})/embed/?$\";s:58:\"index.php?year=$matches[1]&monthnum=$matches[2]&embed=true\";s:44:\"([0-9]{4})/([0-9]{1,2})/page/?([0-9]{1,})/?$\";s:65:\"index.php?year=$matches[1]&monthnum=$matches[2]&paged=$matches[3]\";s:26:\"([0-9]{4})/([0-9]{1,2})/?$\";s:47:\"index.php?year=$matches[1]&monthnum=$matches[2]\";s:43:\"([0-9]{4})/feed/(feed|rdf|rss|rss2|atom)/?$\";s:43:\"index.php?year=$matches[1]&feed=$matches[2]\";s:38:\"([0-9]{4})/(feed|rdf|rss|rss2|atom)/?$\";s:43:\"index.php?year=$matches[1]&feed=$matches[2]\";s:19:\"([0-9]{4})/embed/?$\";s:37:\"index.php?year=$matches[1]&embed=true\";s:31:\"([0-9]{4})/page/?([0-9]{1,})/?$\";s:44:\"index.php?year=$matches[1]&paged=$matches[2]\";s:13:\"([0-9]{4})/?$\";s:26:\"index.php?year=$matches[1]\";s:27:\".?.+?/attachment/([^/]+)/?$\";s:32:\"index.php?attachment=$matches[1]\";s:37:\".?.+?/attachment/([^/]+)/trackback/?$\";s:37:\"index.php?attachment=$matches[1]&tb=1\";s:57:\".?.+?/attachment/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:52:\".?.+?/attachment/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:52:\".?.+?/attachment/([^/]+)/comment-page-([0-9]{1,})/?$\";s:50:\"index.php?attachment=$matches[1]&cpage=$matches[2]\";s:33:\".?.+?/attachment/([^/]+)/embed/?$\";s:43:\"index.php?attachment=$matches[1]&embed=true\";s:16:\"(.?.+?)/embed/?$\";s:41:\"index.php?pagename=$matches[1]&embed=true\";s:20:\"(.?.+?)/trackback/?$\";s:35:\"index.php?pagename=$matches[1]&tb=1\";s:40:\"(.?.+?)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:47:\"index.php?pagename=$matches[1]&feed=$matches[2]\";s:35:\"(.?.+?)/(feed|rdf|rss|rss2|atom)/?$\";s:47:\"index.php?pagename=$matches[1]&feed=$matches[2]\";s:28:\"(.?.+?)/page/?([0-9]{1,})/?$\";s:48:\"index.php?pagename=$matches[1]&paged=$matches[2]\";s:35:\"(.?.+?)/comment-page-([0-9]{1,})/?$\";s:48:\"index.php?pagename=$matches[1]&cpage=$matches[2]\";s:24:\"(.?.+?)(?:/([0-9]+))?/?$\";s:47:\"index.php?pagename=$matches[1]&page=$matches[2]\";s:27:\"[^/]+/attachment/([^/]+)/?$\";s:32:\"index.php?attachment=$matches[1]\";s:37:\"[^/]+/attachment/([^/]+)/trackback/?$\";s:37:\"index.php?attachment=$matches[1]&tb=1\";s:57:\"[^/]+/attachment/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:52:\"[^/]+/attachment/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:52:\"[^/]+/attachment/([^/]+)/comment-page-([0-9]{1,})/?$\";s:50:\"index.php?attachment=$matches[1]&cpage=$matches[2]\";s:33:\"[^/]+/attachment/([^/]+)/embed/?$\";s:43:\"index.php?attachment=$matches[1]&embed=true\";s:16:\"([^/]+)/embed/?$\";s:37:\"index.php?name=$matches[1]&embed=true\";s:20:\"([^/]+)/trackback/?$\";s:31:\"index.php?name=$matches[1]&tb=1\";s:40:\"([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:43:\"index.php?name=$matches[1]&feed=$matches[2]\";s:35:\"([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:43:\"index.php?name=$matches[1]&feed=$matches[2]\";s:28:\"([^/]+)/page/?([0-9]{1,})/?$\";s:44:\"index.php?name=$matches[1]&paged=$matches[2]\";s:35:\"([^/]+)/comment-page-([0-9]{1,})/?$\";s:44:\"index.php?name=$matches[1]&cpage=$matches[2]\";s:24:\"([^/]+)(?:/([0-9]+))?/?$\";s:43:\"index.php?name=$matches[1]&page=$matches[2]\";s:16:\"[^/]+/([^/]+)/?$\";s:32:\"index.php?attachment=$matches[1]\";s:26:\"[^/]+/([^/]+)/trackback/?$\";s:37:\"index.php?attachment=$matches[1]&tb=1\";s:46:\"[^/]+/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:41:\"[^/]+/([^/]+)/(feed|rdf|rss|rss2|atom)/?$\";s:49:\"index.php?attachment=$matches[1]&feed=$matches[2]\";s:41:\"[^/]+/([^/]+)/comment-page-([0-9]{1,})/?$\";s:50:\"index.php?attachment=$matches[1]&cpage=$matches[2]\";s:22:\"[^/]+/([^/]+)/embed/?$\";s:43:\"index.php?attachment=$matches[1]&embed=true\";}','on');
+INSERT INTO `wp_options` VALUES (31,'hack_file','0','on');
+INSERT INTO `wp_options` VALUES (32,'blog_charset','UTF-8','on');
+INSERT INTO `wp_options` VALUES (33,'moderation_keys','','off');
+INSERT INTO `wp_options` VALUES (34,'active_plugins','a:6:{i:0;s:30:\"advanced-custom-fields/acf.php\";i:1;s:31:\"vibemake-core/vibemake-core.php\";i:2;s:31:\"wordpress-mcp/wordpress-mcp.php\";i:3;s:25:\"wp-graphql/wp-graphql.php\";i:4;s:31:\"wpgraphql-acf/wpgraphql-acf.php\";i:5;s:48:\"wpgraphql-smart-cache/wp-graphql-smart-cache.php\";}','on');
+INSERT INTO `wp_options` VALUES (35,'category_base','','on');
+INSERT INTO `wp_options` VALUES (36,'ping_sites','http://rpc.pingomatic.com/','on');
+INSERT INTO `wp_options` VALUES (37,'comment_max_links','2','on');
+INSERT INTO `wp_options` VALUES (38,'gmt_offset','0','on');
+INSERT INTO `wp_options` VALUES (39,'default_email_category','1','on');
+INSERT INTO `wp_options` VALUES (40,'recently_edited','','off');
+INSERT INTO `wp_options` VALUES (41,'template','vibemake-api','on');
+INSERT INTO `wp_options` VALUES (42,'stylesheet','vibemake-api','on');
+INSERT INTO `wp_options` VALUES (43,'comment_registration','0','on');
+INSERT INTO `wp_options` VALUES (44,'html_type','text/html','on');
+INSERT INTO `wp_options` VALUES (45,'use_trackback','0','on');
+INSERT INTO `wp_options` VALUES (46,'default_role','subscriber','on');
+INSERT INTO `wp_options` VALUES (47,'db_version','58975','on');
+INSERT INTO `wp_options` VALUES (48,'uploads_use_yearmonth_folders','1','on');
+INSERT INTO `wp_options` VALUES (49,'upload_path','','on');
+INSERT INTO `wp_options` VALUES (50,'blog_public','1','on');
+INSERT INTO `wp_options` VALUES (51,'default_link_category','2','on');
+INSERT INTO `wp_options` VALUES (52,'show_on_front','posts','on');
+INSERT INTO `wp_options` VALUES (53,'tag_base','','on');
+INSERT INTO `wp_options` VALUES (54,'show_avatars','1','on');
+INSERT INTO `wp_options` VALUES (55,'avatar_rating','G','on');
+INSERT INTO `wp_options` VALUES (56,'upload_url_path','','on');
+INSERT INTO `wp_options` VALUES (57,'thumbnail_size_w','150','on');
+INSERT INTO `wp_options` VALUES (58,'thumbnail_size_h','150','on');
+INSERT INTO `wp_options` VALUES (59,'thumbnail_crop','1','on');
+INSERT INTO `wp_options` VALUES (60,'medium_size_w','300','on');
+INSERT INTO `wp_options` VALUES (61,'medium_size_h','300','on');
+INSERT INTO `wp_options` VALUES (62,'avatar_default','mystery','on');
+INSERT INTO `wp_options` VALUES (63,'large_size_w','1024','on');
+INSERT INTO `wp_options` VALUES (64,'large_size_h','1024','on');
+INSERT INTO `wp_options` VALUES (65,'image_default_link_type','none','on');
+INSERT INTO `wp_options` VALUES (66,'image_default_size','','on');
+INSERT INTO `wp_options` VALUES (67,'image_default_align','','on');
+INSERT INTO `wp_options` VALUES (68,'close_comments_for_old_posts','0','on');
+INSERT INTO `wp_options` VALUES (69,'close_comments_days_old','14','on');
+INSERT INTO `wp_options` VALUES (70,'thread_comments','1','on');
+INSERT INTO `wp_options` VALUES (71,'thread_comments_depth','5','on');
+INSERT INTO `wp_options` VALUES (72,'page_comments','0','on');
+INSERT INTO `wp_options` VALUES (73,'comments_per_page','50','on');
+INSERT INTO `wp_options` VALUES (74,'default_comments_page','newest','on');
+INSERT INTO `wp_options` VALUES (75,'comment_order','asc','on');
+INSERT INTO `wp_options` VALUES (76,'sticky_posts','a:0:{}','on');
+INSERT INTO `wp_options` VALUES (77,'widget_categories','a:0:{}','on');
+INSERT INTO `wp_options` VALUES (78,'widget_text','a:0:{}','on');
+INSERT INTO `wp_options` VALUES (79,'widget_rss','a:0:{}','on');
+INSERT INTO `wp_options` VALUES (80,'uninstall_plugins','a:0:{}','off');
+INSERT INTO `wp_options` VALUES (81,'timezone_string','','on');
+INSERT INTO `wp_options` VALUES (82,'page_for_posts','0','on');
+INSERT INTO `wp_options` VALUES (83,'page_on_front','0','on');
+INSERT INTO `wp_options` VALUES (84,'default_post_format','0','on');
+INSERT INTO `wp_options` VALUES (85,'link_manager_enabled','0','on');
+INSERT INTO `wp_options` VALUES (86,'finished_splitting_shared_terms','1','on');
+INSERT INTO `wp_options` VALUES (87,'site_icon','0','on');
+INSERT INTO `wp_options` VALUES (88,'medium_large_size_w','768','on');
+INSERT INTO `wp_options` VALUES (89,'medium_large_size_h','0','on');
+INSERT INTO `wp_options` VALUES (90,'wp_page_for_privacy_policy','3','on');
+INSERT INTO `wp_options` VALUES (91,'show_comments_cookies_opt_in','1','on');
+INSERT INTO `wp_options` VALUES (92,'admin_email_lifespan','1766785253','on');
+INSERT INTO `wp_options` VALUES (93,'disallowed_keys','','off');
+INSERT INTO `wp_options` VALUES (94,'comment_previously_approved','1','on');
+INSERT INTO `wp_options` VALUES (95,'auto_plugin_theme_update_emails','a:0:{}','off');
+INSERT INTO `wp_options` VALUES (96,'auto_update_core_dev','enabled','on');
+INSERT INTO `wp_options` VALUES (97,'auto_update_core_minor','enabled','on');
+INSERT INTO `wp_options` VALUES (98,'auto_update_core_major','enabled','on');
+INSERT INTO `wp_options` VALUES (99,'wp_force_deactivated_plugins','a:0:{}','on');
+INSERT INTO `wp_options` VALUES (100,'wp_attachment_pages_enabled','0','on');
+INSERT INTO `wp_options` VALUES (101,'initial_db_version','58975','on');
+INSERT INTO `wp_options` VALUES (102,'wp_user_roles','a:5:{s:13:\"administrator\";a:2:{s:4:\"name\";s:13:\"Administrator\";s:12:\"capabilities\";a:62:{s:13:\"switch_themes\";b:1;s:11:\"edit_themes\";b:1;s:16:\"activate_plugins\";b:1;s:12:\"edit_plugins\";b:1;s:10:\"edit_users\";b:1;s:10:\"edit_files\";b:1;s:14:\"manage_options\";b:1;s:17:\"moderate_comments\";b:1;s:17:\"manage_categories\";b:1;s:12:\"manage_links\";b:1;s:12:\"upload_files\";b:1;s:6:\"import\";b:1;s:15:\"unfiltered_html\";b:1;s:10:\"edit_posts\";b:1;s:17:\"edit_others_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:10:\"edit_pages\";b:1;s:4:\"read\";b:1;s:8:\"level_10\";b:1;s:7:\"level_9\";b:1;s:7:\"level_8\";b:1;s:7:\"level_7\";b:1;s:7:\"level_6\";b:1;s:7:\"level_5\";b:1;s:7:\"level_4\";b:1;s:7:\"level_3\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:17:\"edit_others_pages\";b:1;s:20:\"edit_published_pages\";b:1;s:13:\"publish_pages\";b:1;s:12:\"delete_pages\";b:1;s:19:\"delete_others_pages\";b:1;s:22:\"delete_published_pages\";b:1;s:12:\"delete_posts\";b:1;s:19:\"delete_others_posts\";b:1;s:22:\"delete_published_posts\";b:1;s:20:\"delete_private_posts\";b:1;s:18:\"edit_private_posts\";b:1;s:18:\"read_private_posts\";b:1;s:20:\"delete_private_pages\";b:1;s:18:\"edit_private_pages\";b:1;s:18:\"read_private_pages\";b:1;s:12:\"delete_users\";b:1;s:12:\"create_users\";b:1;s:17:\"unfiltered_upload\";b:1;s:14:\"edit_dashboard\";b:1;s:14:\"update_plugins\";b:1;s:14:\"delete_plugins\";b:1;s:15:\"install_plugins\";b:1;s:13:\"update_themes\";b:1;s:14:\"install_themes\";b:1;s:11:\"update_core\";b:1;s:10:\"list_users\";b:1;s:12:\"remove_users\";b:1;s:13:\"promote_users\";b:1;s:18:\"edit_theme_options\";b:1;s:13:\"delete_themes\";b:1;s:6:\"export\";b:1;s:18:\"manage_graphql_ide\";b:1;}}s:6:\"editor\";a:2:{s:4:\"name\";s:6:\"Editor\";s:12:\"capabilities\";a:34:{s:17:\"moderate_comments\";b:1;s:17:\"manage_categories\";b:1;s:12:\"manage_links\";b:1;s:12:\"upload_files\";b:1;s:15:\"unfiltered_html\";b:1;s:10:\"edit_posts\";b:1;s:17:\"edit_others_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:10:\"edit_pages\";b:1;s:4:\"read\";b:1;s:7:\"level_7\";b:1;s:7:\"level_6\";b:1;s:7:\"level_5\";b:1;s:7:\"level_4\";b:1;s:7:\"level_3\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:17:\"edit_others_pages\";b:1;s:20:\"edit_published_pages\";b:1;s:13:\"publish_pages\";b:1;s:12:\"delete_pages\";b:1;s:19:\"delete_others_pages\";b:1;s:22:\"delete_published_pages\";b:1;s:12:\"delete_posts\";b:1;s:19:\"delete_others_posts\";b:1;s:22:\"delete_published_posts\";b:1;s:20:\"delete_private_posts\";b:1;s:18:\"edit_private_posts\";b:1;s:18:\"read_private_posts\";b:1;s:20:\"delete_private_pages\";b:1;s:18:\"edit_private_pages\";b:1;s:18:\"read_private_pages\";b:1;}}s:6:\"author\";a:2:{s:4:\"name\";s:6:\"Author\";s:12:\"capabilities\";a:10:{s:12:\"upload_files\";b:1;s:10:\"edit_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:4:\"read\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:12:\"delete_posts\";b:1;s:22:\"delete_published_posts\";b:1;}}s:11:\"contributor\";a:2:{s:4:\"name\";s:11:\"Contributor\";s:12:\"capabilities\";a:5:{s:10:\"edit_posts\";b:1;s:4:\"read\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:12:\"delete_posts\";b:1;}}s:10:\"subscriber\";a:2:{s:4:\"name\";s:10:\"Subscriber\";s:12:\"capabilities\";a:2:{s:4:\"read\";b:1;s:7:\"level_0\";b:1;}}}','on');
+INSERT INTO `wp_options` VALUES (103,'fresh_site','0','off');
+INSERT INTO `wp_options` VALUES (104,'user_count','2','off');
+INSERT INTO `wp_options` VALUES (105,'widget_block','a:6:{i:2;a:1:{s:7:\"content\";s:19:\"<!-- wp:search /-->\";}i:3;a:1:{s:7:\"content\";s:154:\"<!-- wp:group --><div class=\"wp-block-group\"><!-- wp:heading --><h2>Recent Posts</h2><!-- /wp:heading --><!-- wp:latest-posts /--></div><!-- /wp:group -->\";}i:4;a:1:{s:7:\"content\";s:227:\"<!-- wp:group --><div class=\"wp-block-group\"><!-- wp:heading --><h2>Recent Comments</h2><!-- /wp:heading --><!-- wp:latest-comments {\"displayAvatar\":false,\"displayDate\":false,\"displayExcerpt\":false} /--></div><!-- /wp:group -->\";}i:5;a:1:{s:7:\"content\";s:146:\"<!-- wp:group --><div class=\"wp-block-group\"><!-- wp:heading --><h2>Archives</h2><!-- /wp:heading --><!-- wp:archives /--></div><!-- /wp:group -->\";}i:6;a:1:{s:7:\"content\";s:150:\"<!-- wp:group --><div class=\"wp-block-group\"><!-- wp:heading --><h2>Categories</h2><!-- /wp:heading --><!-- wp:categories /--></div><!-- /wp:group -->\";}s:12:\"_multiwidget\";i:1;}','auto');
+INSERT INTO `wp_options` VALUES (106,'sidebars_widgets','a:2:{s:19:\"wp_inactive_widgets\";a:5:{i:0;s:7:\"block-2\";i:1;s:7:\"block-3\";i:2;s:7:\"block-4\";i:3;s:7:\"block-5\";i:4;s:7:\"block-6\";}s:13:\"array_version\";i:3;}','auto');
+INSERT INTO `wp_options` VALUES (107,'widget_pages','a:1:{s:12:\"_multiwidget\";i:1;}','auto');
+INSERT INTO `wp_options` VALUES (108,'widget_calendar','a:1:{s:12:\"_multiwidget\";i:1;}','auto');
+INSERT INTO `wp_options` VALUES (109,'widget_archives','a:1:{s:12:\"_multiwidget\";i:1;}','auto');
+INSERT INTO `wp_options` VALUES (110,'widget_media_audio','a:1:{s:12:\"_multiwidget\";i:1;}','auto');
+INSERT INTO `wp_options` VALUES (111,'widget_media_image','a:1:{s:12:\"_multiwidget\";i:1;}','auto');
+INSERT INTO `wp_options` VALUES (112,'widget_media_gallery','a:1:{s:12:\"_multiwidget\";i:1;}','auto');
+INSERT INTO `wp_options` VALUES (113,'widget_media_video','a:1:{s:12:\"_multiwidget\";i:1;}','auto');
+INSERT INTO `wp_options` VALUES (114,'widget_meta','a:1:{s:12:\"_multiwidget\";i:1;}','auto');
+INSERT INTO `wp_options` VALUES (115,'widget_search','a:1:{s:12:\"_multiwidget\";i:1;}','auto');
+INSERT INTO `wp_options` VALUES (116,'widget_recent-posts','a:1:{s:12:\"_multiwidget\";i:1;}','auto');
+INSERT INTO `wp_options` VALUES (117,'widget_recent-comments','a:1:{s:12:\"_multiwidget\";i:1;}','auto');
+INSERT INTO `wp_options` VALUES (118,'widget_tag_cloud','a:1:{s:12:\"_multiwidget\";i:1;}','auto');
+INSERT INTO `wp_options` VALUES (119,'widget_nav_menu','a:1:{s:12:\"_multiwidget\";i:1;}','auto');
+INSERT INTO `wp_options` VALUES (120,'widget_custom_html','a:1:{s:12:\"_multiwidget\";i:1;}','auto');
+INSERT INTO `wp_options` VALUES (121,'_transient_wp_core_block_css_files','a:2:{s:7:\"version\";s:5:\"6.8.1\";s:5:\"files\";a:536:{i:0;s:23:\"archives/editor-rtl.css\";i:1;s:27:\"archives/editor-rtl.min.css\";i:2;s:19:\"archives/editor.css\";i:3;s:23:\"archives/editor.min.css\";i:4;s:22:\"archives/style-rtl.css\";i:5;s:26:\"archives/style-rtl.min.css\";i:6;s:18:\"archives/style.css\";i:7;s:22:\"archives/style.min.css\";i:8;s:20:\"audio/editor-rtl.css\";i:9;s:24:\"audio/editor-rtl.min.css\";i:10;s:16:\"audio/editor.css\";i:11;s:20:\"audio/editor.min.css\";i:12;s:19:\"audio/style-rtl.css\";i:13;s:23:\"audio/style-rtl.min.css\";i:14;s:15:\"audio/style.css\";i:15;s:19:\"audio/style.min.css\";i:16;s:19:\"audio/theme-rtl.css\";i:17;s:23:\"audio/theme-rtl.min.css\";i:18;s:15:\"audio/theme.css\";i:19;s:19:\"audio/theme.min.css\";i:20;s:21:\"avatar/editor-rtl.css\";i:21;s:25:\"avatar/editor-rtl.min.css\";i:22;s:17:\"avatar/editor.css\";i:23;s:21:\"avatar/editor.min.css\";i:24;s:20:\"avatar/style-rtl.css\";i:25;s:24:\"avatar/style-rtl.min.css\";i:26;s:16:\"avatar/style.css\";i:27;s:20:\"avatar/style.min.css\";i:28;s:21:\"button/editor-rtl.css\";i:29;s:25:\"button/editor-rtl.min.css\";i:30;s:17:\"button/editor.css\";i:31;s:21:\"button/editor.min.css\";i:32;s:20:\"button/style-rtl.css\";i:33;s:24:\"button/style-rtl.min.css\";i:34;s:16:\"button/style.css\";i:35;s:20:\"button/style.min.css\";i:36;s:22:\"buttons/editor-rtl.css\";i:37;s:26:\"buttons/editor-rtl.min.css\";i:38;s:18:\"buttons/editor.css\";i:39;s:22:\"buttons/editor.min.css\";i:40;s:21:\"buttons/style-rtl.css\";i:41;s:25:\"buttons/style-rtl.min.css\";i:42;s:17:\"buttons/style.css\";i:43;s:21:\"buttons/style.min.css\";i:44;s:22:\"calendar/style-rtl.css\";i:45;s:26:\"calendar/style-rtl.min.css\";i:46;s:18:\"calendar/style.css\";i:47;s:22:\"calendar/style.min.css\";i:48;s:25:\"categories/editor-rtl.css\";i:49;s:29:\"categories/editor-rtl.min.css\";i:50;s:21:\"categories/editor.css\";i:51;s:25:\"categories/editor.min.css\";i:52;s:24:\"categories/style-rtl.css\";i:53;s:28:\"categories/style-rtl.min.css\";i:54;s:20:\"categories/style.css\";i:55;s:24:\"categories/style.min.css\";i:56;s:19:\"code/editor-rtl.css\";i:57;s:23:\"code/editor-rtl.min.css\";i:58;s:15:\"code/editor.css\";i:59;s:19:\"code/editor.min.css\";i:60;s:18:\"code/style-rtl.css\";i:61;s:22:\"code/style-rtl.min.css\";i:62;s:14:\"code/style.css\";i:63;s:18:\"code/style.min.css\";i:64;s:18:\"code/theme-rtl.css\";i:65;s:22:\"code/theme-rtl.min.css\";i:66;s:14:\"code/theme.css\";i:67;s:18:\"code/theme.min.css\";i:68;s:22:\"columns/editor-rtl.css\";i:69;s:26:\"columns/editor-rtl.min.css\";i:70;s:18:\"columns/editor.css\";i:71;s:22:\"columns/editor.min.css\";i:72;s:21:\"columns/style-rtl.css\";i:73;s:25:\"columns/style-rtl.min.css\";i:74;s:17:\"columns/style.css\";i:75;s:21:\"columns/style.min.css\";i:76;s:33:\"comment-author-name/style-rtl.css\";i:77;s:37:\"comment-author-name/style-rtl.min.css\";i:78;s:29:\"comment-author-name/style.css\";i:79;s:33:\"comment-author-name/style.min.css\";i:80;s:29:\"comment-content/style-rtl.css\";i:81;s:33:\"comment-content/style-rtl.min.css\";i:82;s:25:\"comment-content/style.css\";i:83;s:29:\"comment-content/style.min.css\";i:84;s:26:\"comment-date/style-rtl.css\";i:85;s:30:\"comment-date/style-rtl.min.css\";i:86;s:22:\"comment-date/style.css\";i:87;s:26:\"comment-date/style.min.css\";i:88;s:31:\"comment-edit-link/style-rtl.css\";i:89;s:35:\"comment-edit-link/style-rtl.min.css\";i:90;s:27:\"comment-edit-link/style.css\";i:91;s:31:\"comment-edit-link/style.min.css\";i:92;s:32:\"comment-reply-link/style-rtl.css\";i:93;s:36:\"comment-reply-link/style-rtl.min.css\";i:94;s:28:\"comment-reply-link/style.css\";i:95;s:32:\"comment-reply-link/style.min.css\";i:96;s:30:\"comment-template/style-rtl.css\";i:97;s:34:\"comment-template/style-rtl.min.css\";i:98;s:26:\"comment-template/style.css\";i:99;s:30:\"comment-template/style.min.css\";i:100;s:42:\"comments-pagination-numbers/editor-rtl.css\";i:101;s:46:\"comments-pagination-numbers/editor-rtl.min.css\";i:102;s:38:\"comments-pagination-numbers/editor.css\";i:103;s:42:\"comments-pagination-numbers/editor.min.css\";i:104;s:34:\"comments-pagination/editor-rtl.css\";i:105;s:38:\"comments-pagination/editor-rtl.min.css\";i:106;s:30:\"comments-pagination/editor.css\";i:107;s:34:\"comments-pagination/editor.min.css\";i:108;s:33:\"comments-pagination/style-rtl.css\";i:109;s:37:\"comments-pagination/style-rtl.min.css\";i:110;s:29:\"comments-pagination/style.css\";i:111;s:33:\"comments-pagination/style.min.css\";i:112;s:29:\"comments-title/editor-rtl.css\";i:113;s:33:\"comments-title/editor-rtl.min.css\";i:114;s:25:\"comments-title/editor.css\";i:115;s:29:\"comments-title/editor.min.css\";i:116;s:23:\"comments/editor-rtl.css\";i:117;s:27:\"comments/editor-rtl.min.css\";i:118;s:19:\"comments/editor.css\";i:119;s:23:\"comments/editor.min.css\";i:120;s:22:\"comments/style-rtl.css\";i:121;s:26:\"comments/style-rtl.min.css\";i:122;s:18:\"comments/style.css\";i:123;s:22:\"comments/style.min.css\";i:124;s:20:\"cover/editor-rtl.css\";i:125;s:24:\"cover/editor-rtl.min.css\";i:126;s:16:\"cover/editor.css\";i:127;s:20:\"cover/editor.min.css\";i:128;s:19:\"cover/style-rtl.css\";i:129;s:23:\"cover/style-rtl.min.css\";i:130;s:15:\"cover/style.css\";i:131;s:19:\"cover/style.min.css\";i:132;s:22:\"details/editor-rtl.css\";i:133;s:26:\"details/editor-rtl.min.css\";i:134;s:18:\"details/editor.css\";i:135;s:22:\"details/editor.min.css\";i:136;s:21:\"details/style-rtl.css\";i:137;s:25:\"details/style-rtl.min.css\";i:138;s:17:\"details/style.css\";i:139;s:21:\"details/style.min.css\";i:140;s:20:\"embed/editor-rtl.css\";i:141;s:24:\"embed/editor-rtl.min.css\";i:142;s:16:\"embed/editor.css\";i:143;s:20:\"embed/editor.min.css\";i:144;s:19:\"embed/style-rtl.css\";i:145;s:23:\"embed/style-rtl.min.css\";i:146;s:15:\"embed/style.css\";i:147;s:19:\"embed/style.min.css\";i:148;s:19:\"embed/theme-rtl.css\";i:149;s:23:\"embed/theme-rtl.min.css\";i:150;s:15:\"embed/theme.css\";i:151;s:19:\"embed/theme.min.css\";i:152;s:19:\"file/editor-rtl.css\";i:153;s:23:\"file/editor-rtl.min.css\";i:154;s:15:\"file/editor.css\";i:155;s:19:\"file/editor.min.css\";i:156;s:18:\"file/style-rtl.css\";i:157;s:22:\"file/style-rtl.min.css\";i:158;s:14:\"file/style.css\";i:159;s:18:\"file/style.min.css\";i:160;s:23:\"footnotes/style-rtl.css\";i:161;s:27:\"footnotes/style-rtl.min.css\";i:162;s:19:\"footnotes/style.css\";i:163;s:23:\"footnotes/style.min.css\";i:164;s:23:\"freeform/editor-rtl.css\";i:165;s:27:\"freeform/editor-rtl.min.css\";i:166;s:19:\"freeform/editor.css\";i:167;s:23:\"freeform/editor.min.css\";i:168;s:22:\"gallery/editor-rtl.css\";i:169;s:26:\"gallery/editor-rtl.min.css\";i:170;s:18:\"gallery/editor.css\";i:171;s:22:\"gallery/editor.min.css\";i:172;s:21:\"gallery/style-rtl.css\";i:173;s:25:\"gallery/style-rtl.min.css\";i:174;s:17:\"gallery/style.css\";i:175;s:21:\"gallery/style.min.css\";i:176;s:21:\"gallery/theme-rtl.css\";i:177;s:25:\"gallery/theme-rtl.min.css\";i:178;s:17:\"gallery/theme.css\";i:179;s:21:\"gallery/theme.min.css\";i:180;s:20:\"group/editor-rtl.css\";i:181;s:24:\"group/editor-rtl.min.css\";i:182;s:16:\"group/editor.css\";i:183;s:20:\"group/editor.min.css\";i:184;s:19:\"group/style-rtl.css\";i:185;s:23:\"group/style-rtl.min.css\";i:186;s:15:\"group/style.css\";i:187;s:19:\"group/style.min.css\";i:188;s:19:\"group/theme-rtl.css\";i:189;s:23:\"group/theme-rtl.min.css\";i:190;s:15:\"group/theme.css\";i:191;s:19:\"group/theme.min.css\";i:192;s:21:\"heading/style-rtl.css\";i:193;s:25:\"heading/style-rtl.min.css\";i:194;s:17:\"heading/style.css\";i:195;s:21:\"heading/style.min.css\";i:196;s:19:\"html/editor-rtl.css\";i:197;s:23:\"html/editor-rtl.min.css\";i:198;s:15:\"html/editor.css\";i:199;s:19:\"html/editor.min.css\";i:200;s:20:\"image/editor-rtl.css\";i:201;s:24:\"image/editor-rtl.min.css\";i:202;s:16:\"image/editor.css\";i:203;s:20:\"image/editor.min.css\";i:204;s:19:\"image/style-rtl.css\";i:205;s:23:\"image/style-rtl.min.css\";i:206;s:15:\"image/style.css\";i:207;s:19:\"image/style.min.css\";i:208;s:19:\"image/theme-rtl.css\";i:209;s:23:\"image/theme-rtl.min.css\";i:210;s:15:\"image/theme.css\";i:211;s:19:\"image/theme.min.css\";i:212;s:29:\"latest-comments/style-rtl.css\";i:213;s:33:\"latest-comments/style-rtl.min.css\";i:214;s:25:\"latest-comments/style.css\";i:215;s:29:\"latest-comments/style.min.css\";i:216;s:27:\"latest-posts/editor-rtl.css\";i:217;s:31:\"latest-posts/editor-rtl.min.css\";i:218;s:23:\"latest-posts/editor.css\";i:219;s:27:\"latest-posts/editor.min.css\";i:220;s:26:\"latest-posts/style-rtl.css\";i:221;s:30:\"latest-posts/style-rtl.min.css\";i:222;s:22:\"latest-posts/style.css\";i:223;s:26:\"latest-posts/style.min.css\";i:224;s:18:\"list/style-rtl.css\";i:225;s:22:\"list/style-rtl.min.css\";i:226;s:14:\"list/style.css\";i:227;s:18:\"list/style.min.css\";i:228;s:22:\"loginout/style-rtl.css\";i:229;s:26:\"loginout/style-rtl.min.css\";i:230;s:18:\"loginout/style.css\";i:231;s:22:\"loginout/style.min.css\";i:232;s:25:\"media-text/editor-rtl.css\";i:233;s:29:\"media-text/editor-rtl.min.css\";i:234;s:21:\"media-text/editor.css\";i:235;s:25:\"media-text/editor.min.css\";i:236;s:24:\"media-text/style-rtl.css\";i:237;s:28:\"media-text/style-rtl.min.css\";i:238;s:20:\"media-text/style.css\";i:239;s:24:\"media-text/style.min.css\";i:240;s:19:\"more/editor-rtl.css\";i:241;s:23:\"more/editor-rtl.min.css\";i:242;s:15:\"more/editor.css\";i:243;s:19:\"more/editor.min.css\";i:244;s:30:\"navigation-link/editor-rtl.css\";i:245;s:34:\"navigation-link/editor-rtl.min.css\";i:246;s:26:\"navigation-link/editor.css\";i:247;s:30:\"navigation-link/editor.min.css\";i:248;s:29:\"navigation-link/style-rtl.css\";i:249;s:33:\"navigation-link/style-rtl.min.css\";i:250;s:25:\"navigation-link/style.css\";i:251;s:29:\"navigation-link/style.min.css\";i:252;s:33:\"navigation-submenu/editor-rtl.css\";i:253;s:37:\"navigation-submenu/editor-rtl.min.css\";i:254;s:29:\"navigation-submenu/editor.css\";i:255;s:33:\"navigation-submenu/editor.min.css\";i:256;s:25:\"navigation/editor-rtl.css\";i:257;s:29:\"navigation/editor-rtl.min.css\";i:258;s:21:\"navigation/editor.css\";i:259;s:25:\"navigation/editor.min.css\";i:260;s:24:\"navigation/style-rtl.css\";i:261;s:28:\"navigation/style-rtl.min.css\";i:262;s:20:\"navigation/style.css\";i:263;s:24:\"navigation/style.min.css\";i:264;s:23:\"nextpage/editor-rtl.css\";i:265;s:27:\"nextpage/editor-rtl.min.css\";i:266;s:19:\"nextpage/editor.css\";i:267;s:23:\"nextpage/editor.min.css\";i:268;s:24:\"page-list/editor-rtl.css\";i:269;s:28:\"page-list/editor-rtl.min.css\";i:270;s:20:\"page-list/editor.css\";i:271;s:24:\"page-list/editor.min.css\";i:272;s:23:\"page-list/style-rtl.css\";i:273;s:27:\"page-list/style-rtl.min.css\";i:274;s:19:\"page-list/style.css\";i:275;s:23:\"page-list/style.min.css\";i:276;s:24:\"paragraph/editor-rtl.css\";i:277;s:28:\"paragraph/editor-rtl.min.css\";i:278;s:20:\"paragraph/editor.css\";i:279;s:24:\"paragraph/editor.min.css\";i:280;s:23:\"paragraph/style-rtl.css\";i:281;s:27:\"paragraph/style-rtl.min.css\";i:282;s:19:\"paragraph/style.css\";i:283;s:23:\"paragraph/style.min.css\";i:284;s:35:\"post-author-biography/style-rtl.css\";i:285;s:39:\"post-author-biography/style-rtl.min.css\";i:286;s:31:\"post-author-biography/style.css\";i:287;s:35:\"post-author-biography/style.min.css\";i:288;s:30:\"post-author-name/style-rtl.css\";i:289;s:34:\"post-author-name/style-rtl.min.css\";i:290;s:26:\"post-author-name/style.css\";i:291;s:30:\"post-author-name/style.min.css\";i:292;s:26:\"post-author/editor-rtl.css\";i:293;s:30:\"post-author/editor-rtl.min.css\";i:294;s:22:\"post-author/editor.css\";i:295;s:26:\"post-author/editor.min.css\";i:296;s:25:\"post-author/style-rtl.css\";i:297;s:29:\"post-author/style-rtl.min.css\";i:298;s:21:\"post-author/style.css\";i:299;s:25:\"post-author/style.min.css\";i:300;s:33:\"post-comments-form/editor-rtl.css\";i:301;s:37:\"post-comments-form/editor-rtl.min.css\";i:302;s:29:\"post-comments-form/editor.css\";i:303;s:33:\"post-comments-form/editor.min.css\";i:304;s:32:\"post-comments-form/style-rtl.css\";i:305;s:36:\"post-comments-form/style-rtl.min.css\";i:306;s:28:\"post-comments-form/style.css\";i:307;s:32:\"post-comments-form/style.min.css\";i:308;s:26:\"post-content/style-rtl.css\";i:309;s:30:\"post-content/style-rtl.min.css\";i:310;s:22:\"post-content/style.css\";i:311;s:26:\"post-content/style.min.css\";i:312;s:23:\"post-date/style-rtl.css\";i:313;s:27:\"post-date/style-rtl.min.css\";i:314;s:19:\"post-date/style.css\";i:315;s:23:\"post-date/style.min.css\";i:316;s:27:\"post-excerpt/editor-rtl.css\";i:317;s:31:\"post-excerpt/editor-rtl.min.css\";i:318;s:23:\"post-excerpt/editor.css\";i:319;s:27:\"post-excerpt/editor.min.css\";i:320;s:26:\"post-excerpt/style-rtl.css\";i:321;s:30:\"post-excerpt/style-rtl.min.css\";i:322;s:22:\"post-excerpt/style.css\";i:323;s:26:\"post-excerpt/style.min.css\";i:324;s:34:\"post-featured-image/editor-rtl.css\";i:325;s:38:\"post-featured-image/editor-rtl.min.css\";i:326;s:30:\"post-featured-image/editor.css\";i:327;s:34:\"post-featured-image/editor.min.css\";i:328;s:33:\"post-featured-image/style-rtl.css\";i:329;s:37:\"post-featured-image/style-rtl.min.css\";i:330;s:29:\"post-featured-image/style.css\";i:331;s:33:\"post-featured-image/style.min.css\";i:332;s:34:\"post-navigation-link/style-rtl.css\";i:333;s:38:\"post-navigation-link/style-rtl.min.css\";i:334;s:30:\"post-navigation-link/style.css\";i:335;s:34:\"post-navigation-link/style.min.css\";i:336;s:27:\"post-template/style-rtl.css\";i:337;s:31:\"post-template/style-rtl.min.css\";i:338;s:23:\"post-template/style.css\";i:339;s:27:\"post-template/style.min.css\";i:340;s:24:\"post-terms/style-rtl.css\";i:341;s:28:\"post-terms/style-rtl.min.css\";i:342;s:20:\"post-terms/style.css\";i:343;s:24:\"post-terms/style.min.css\";i:344;s:24:\"post-title/style-rtl.css\";i:345;s:28:\"post-title/style-rtl.min.css\";i:346;s:20:\"post-title/style.css\";i:347;s:24:\"post-title/style.min.css\";i:348;s:26:\"preformatted/style-rtl.css\";i:349;s:30:\"preformatted/style-rtl.min.css\";i:350;s:22:\"preformatted/style.css\";i:351;s:26:\"preformatted/style.min.css\";i:352;s:24:\"pullquote/editor-rtl.css\";i:353;s:28:\"pullquote/editor-rtl.min.css\";i:354;s:20:\"pullquote/editor.css\";i:355;s:24:\"pullquote/editor.min.css\";i:356;s:23:\"pullquote/style-rtl.css\";i:357;s:27:\"pullquote/style-rtl.min.css\";i:358;s:19:\"pullquote/style.css\";i:359;s:23:\"pullquote/style.min.css\";i:360;s:23:\"pullquote/theme-rtl.css\";i:361;s:27:\"pullquote/theme-rtl.min.css\";i:362;s:19:\"pullquote/theme.css\";i:363;s:23:\"pullquote/theme.min.css\";i:364;s:39:\"query-pagination-numbers/editor-rtl.css\";i:365;s:43:\"query-pagination-numbers/editor-rtl.min.css\";i:366;s:35:\"query-pagination-numbers/editor.css\";i:367;s:39:\"query-pagination-numbers/editor.min.css\";i:368;s:31:\"query-pagination/editor-rtl.css\";i:369;s:35:\"query-pagination/editor-rtl.min.css\";i:370;s:27:\"query-pagination/editor.css\";i:371;s:31:\"query-pagination/editor.min.css\";i:372;s:30:\"query-pagination/style-rtl.css\";i:373;s:34:\"query-pagination/style-rtl.min.css\";i:374;s:26:\"query-pagination/style.css\";i:375;s:30:\"query-pagination/style.min.css\";i:376;s:25:\"query-title/style-rtl.css\";i:377;s:29:\"query-title/style-rtl.min.css\";i:378;s:21:\"query-title/style.css\";i:379;s:25:\"query-title/style.min.css\";i:380;s:25:\"query-total/style-rtl.css\";i:381;s:29:\"query-total/style-rtl.min.css\";i:382;s:21:\"query-total/style.css\";i:383;s:25:\"query-total/style.min.css\";i:384;s:20:\"query/editor-rtl.css\";i:385;s:24:\"query/editor-rtl.min.css\";i:386;s:16:\"query/editor.css\";i:387;s:20:\"query/editor.min.css\";i:388;s:19:\"quote/style-rtl.css\";i:389;s:23:\"quote/style-rtl.min.css\";i:390;s:15:\"quote/style.css\";i:391;s:19:\"quote/style.min.css\";i:392;s:19:\"quote/theme-rtl.css\";i:393;s:23:\"quote/theme-rtl.min.css\";i:394;s:15:\"quote/theme.css\";i:395;s:19:\"quote/theme.min.css\";i:396;s:23:\"read-more/style-rtl.css\";i:397;s:27:\"read-more/style-rtl.min.css\";i:398;s:19:\"read-more/style.css\";i:399;s:23:\"read-more/style.min.css\";i:400;s:18:\"rss/editor-rtl.css\";i:401;s:22:\"rss/editor-rtl.min.css\";i:402;s:14:\"rss/editor.css\";i:403;s:18:\"rss/editor.min.css\";i:404;s:17:\"rss/style-rtl.css\";i:405;s:21:\"rss/style-rtl.min.css\";i:406;s:13:\"rss/style.css\";i:407;s:17:\"rss/style.min.css\";i:408;s:21:\"search/editor-rtl.css\";i:409;s:25:\"search/editor-rtl.min.css\";i:410;s:17:\"search/editor.css\";i:411;s:21:\"search/editor.min.css\";i:412;s:20:\"search/style-rtl.css\";i:413;s:24:\"search/style-rtl.min.css\";i:414;s:16:\"search/style.css\";i:415;s:20:\"search/style.min.css\";i:416;s:20:\"search/theme-rtl.css\";i:417;s:24:\"search/theme-rtl.min.css\";i:418;s:16:\"search/theme.css\";i:419;s:20:\"search/theme.min.css\";i:420;s:24:\"separator/editor-rtl.css\";i:421;s:28:\"separator/editor-rtl.min.css\";i:422;s:20:\"separator/editor.css\";i:423;s:24:\"separator/editor.min.css\";i:424;s:23:\"separator/style-rtl.css\";i:425;s:27:\"separator/style-rtl.min.css\";i:426;s:19:\"separator/style.css\";i:427;s:23:\"separator/style.min.css\";i:428;s:23:\"separator/theme-rtl.css\";i:429;s:27:\"separator/theme-rtl.min.css\";i:430;s:19:\"separator/theme.css\";i:431;s:23:\"separator/theme.min.css\";i:432;s:24:\"shortcode/editor-rtl.css\";i:433;s:28:\"shortcode/editor-rtl.min.css\";i:434;s:20:\"shortcode/editor.css\";i:435;s:24:\"shortcode/editor.min.css\";i:436;s:24:\"site-logo/editor-rtl.css\";i:437;s:28:\"site-logo/editor-rtl.min.css\";i:438;s:20:\"site-logo/editor.css\";i:439;s:24:\"site-logo/editor.min.css\";i:440;s:23:\"site-logo/style-rtl.css\";i:441;s:27:\"site-logo/style-rtl.min.css\";i:442;s:19:\"site-logo/style.css\";i:443;s:23:\"site-logo/style.min.css\";i:444;s:27:\"site-tagline/editor-rtl.css\";i:445;s:31:\"site-tagline/editor-rtl.min.css\";i:446;s:23:\"site-tagline/editor.css\";i:447;s:27:\"site-tagline/editor.min.css\";i:448;s:26:\"site-tagline/style-rtl.css\";i:449;s:30:\"site-tagline/style-rtl.min.css\";i:450;s:22:\"site-tagline/style.css\";i:451;s:26:\"site-tagline/style.min.css\";i:452;s:25:\"site-title/editor-rtl.css\";i:453;s:29:\"site-title/editor-rtl.min.css\";i:454;s:21:\"site-title/editor.css\";i:455;s:25:\"site-title/editor.min.css\";i:456;s:24:\"site-title/style-rtl.css\";i:457;s:28:\"site-title/style-rtl.min.css\";i:458;s:20:\"site-title/style.css\";i:459;s:24:\"site-title/style.min.css\";i:460;s:26:\"social-link/editor-rtl.css\";i:461;s:30:\"social-link/editor-rtl.min.css\";i:462;s:22:\"social-link/editor.css\";i:463;s:26:\"social-link/editor.min.css\";i:464;s:27:\"social-links/editor-rtl.css\";i:465;s:31:\"social-links/editor-rtl.min.css\";i:466;s:23:\"social-links/editor.css\";i:467;s:27:\"social-links/editor.min.css\";i:468;s:26:\"social-links/style-rtl.css\";i:469;s:30:\"social-links/style-rtl.min.css\";i:470;s:22:\"social-links/style.css\";i:471;s:26:\"social-links/style.min.css\";i:472;s:21:\"spacer/editor-rtl.css\";i:473;s:25:\"spacer/editor-rtl.min.css\";i:474;s:17:\"spacer/editor.css\";i:475;s:21:\"spacer/editor.min.css\";i:476;s:20:\"spacer/style-rtl.css\";i:477;s:24:\"spacer/style-rtl.min.css\";i:478;s:16:\"spacer/style.css\";i:479;s:20:\"spacer/style.min.css\";i:480;s:20:\"table/editor-rtl.css\";i:481;s:24:\"table/editor-rtl.min.css\";i:482;s:16:\"table/editor.css\";i:483;s:20:\"table/editor.min.css\";i:484;s:19:\"table/style-rtl.css\";i:485;s:23:\"table/style-rtl.min.css\";i:486;s:15:\"table/style.css\";i:487;s:19:\"table/style.min.css\";i:488;s:19:\"table/theme-rtl.css\";i:489;s:23:\"table/theme-rtl.min.css\";i:490;s:15:\"table/theme.css\";i:491;s:19:\"table/theme.min.css\";i:492;s:24:\"tag-cloud/editor-rtl.css\";i:493;s:28:\"tag-cloud/editor-rtl.min.css\";i:494;s:20:\"tag-cloud/editor.css\";i:495;s:24:\"tag-cloud/editor.min.css\";i:496;s:23:\"tag-cloud/style-rtl.css\";i:497;s:27:\"tag-cloud/style-rtl.min.css\";i:498;s:19:\"tag-cloud/style.css\";i:499;s:23:\"tag-cloud/style.min.css\";i:500;s:28:\"template-part/editor-rtl.css\";i:501;s:32:\"template-part/editor-rtl.min.css\";i:502;s:24:\"template-part/editor.css\";i:503;s:28:\"template-part/editor.min.css\";i:504;s:27:\"template-part/theme-rtl.css\";i:505;s:31:\"template-part/theme-rtl.min.css\";i:506;s:23:\"template-part/theme.css\";i:507;s:27:\"template-part/theme.min.css\";i:508;s:30:\"term-description/style-rtl.css\";i:509;s:34:\"term-description/style-rtl.min.css\";i:510;s:26:\"term-description/style.css\";i:511;s:30:\"term-description/style.min.css\";i:512;s:27:\"text-columns/editor-rtl.css\";i:513;s:31:\"text-columns/editor-rtl.min.css\";i:514;s:23:\"text-columns/editor.css\";i:515;s:27:\"text-columns/editor.min.css\";i:516;s:26:\"text-columns/style-rtl.css\";i:517;s:30:\"text-columns/style-rtl.min.css\";i:518;s:22:\"text-columns/style.css\";i:519;s:26:\"text-columns/style.min.css\";i:520;s:19:\"verse/style-rtl.css\";i:521;s:23:\"verse/style-rtl.min.css\";i:522;s:15:\"verse/style.css\";i:523;s:19:\"verse/style.min.css\";i:524;s:20:\"video/editor-rtl.css\";i:525;s:24:\"video/editor-rtl.min.css\";i:526;s:16:\"video/editor.css\";i:527;s:20:\"video/editor.min.css\";i:528;s:19:\"video/style-rtl.css\";i:529;s:23:\"video/style-rtl.min.css\";i:530;s:15:\"video/style.css\";i:531;s:19:\"video/style.min.css\";i:532;s:19:\"video/theme-rtl.css\";i:533;s:23:\"video/theme-rtl.min.css\";i:534;s:15:\"video/theme.css\";i:535;s:19:\"video/theme.min.css\";}}','on');
+INSERT INTO `wp_options` VALUES (125,'wp_graphql_version','2.3.3','auto');
+INSERT INTO `wp_options` VALUES (127,'graphql_general_settings','a:16:{s:16:\"graphql_endpoint\";s:7:\"graphql\";s:36:\"restrict_endpoint_to_logged_in_users\";s:3:\"off\";s:21:\"batch_queries_enabled\";s:2:\"on\";s:11:\"batch_limit\";s:2:\"20\";s:19:\"query_depth_enabled\";s:3:\"off\";s:15:\"query_depth_max\";i:20;s:22:\"query_analyzer_enabled\";s:3:\"off\";s:16:\"graphiql_enabled\";s:2:\"on\";s:31:\"show_graphiql_link_in_admin_bar\";s:2:\"on\";s:25:\"delete_data_on_deactivate\";s:2:\"on\";s:18:\"debug_mode_enabled\";s:3:\"off\";s:15:\"tracing_enabled\";s:3:\"off\";s:17:\"tracing_user_role\";s:13:\"administrator\";s:18:\"query_logs_enabled\";s:3:\"off\";s:19:\"query_log_user_role\";s:13:\"administrator\";s:28:\"public_introspection_enabled\";s:3:\"off\";}','auto');
+INSERT INTO `wp_options` VALUES (128,'acf_first_activated_version','6.4.2','on');
+INSERT INTO `wp_options` VALUES (129,'acf_site_health','{\"version\":\"6.4.2\",\"plugin_type\":\"Free\",\"update_source\":\"wordpress.org\",\"wp_version\":\"6.8.1\",\"mysql_version\":\"8.0.42-33\",\"is_multisite\":false,\"active_theme\":{\"name\":\"VibeMake API\",\"version\":\"1.0.0\",\"theme_uri\":\"https:\\/\\/vibemake.com\",\"stylesheet\":false},\"active_plugins\":{\"advanced-custom-fields\\/acf.php\":{\"name\":\"Advanced Custom Fields\",\"version\":\"6.4.2\",\"plugin_uri\":\"https:\\/\\/www.advancedcustomfields.com\"},\"vibemake-core\\/vibemake-core.php\":{\"name\":\"VibeMake Core\",\"version\":\"1.0.0\",\"plugin_uri\":\"https:\\/\\/vibemake.com\"},\"wordpress-mcp\\/wordpress-mcp.php\":{\"name\":\"WordPress MCP\",\"version\":\"0.2.3\",\"plugin_uri\":\"\"},\"wp-graphql\\/wp-graphql.php\":{\"name\":\"WPGraphQL\",\"version\":\"2.3.3\",\"plugin_uri\":\"https:\\/\\/github.com\\/wp-graphql\\/wp-graphql\"},\"wpgraphql-acf\\/wpgraphql-acf.php\":{\"name\":\"WPGraphQL for ACF\",\"version\":\"2.4.1\",\"plugin_uri\":\"\"}},\"ui_field_groups\":\"0\",\"php_field_groups\":\"0\",\"json_field_groups\":\"0\",\"rest_field_groups\":\"0\",\"graphql_field_groups\":\"6\",\"all_location_rules\":[\"post_type==maker\",\"post_type==post\",\"post_type==community_project\",\"taxonomy==creation_type\",\"taxonomy==user_situation\",\"post_type==tool\"],\"number_of_fields_by_type\":{\"text\":9,\"textarea\":4,\"image\":6,\"url\":5,\"select\":6,\"checkbox\":3,\"true_false\":4,\"number\":3,\"date_picker\":1,\"file\":2,\"color_picker\":4,\"group\":3,\"tab\":4,\"button_group\":2},\"number_of_third_party_fields_by_type\":{\"repeater\":7,\"gallery\":1},\"post_types_enabled\":true,\"ui_post_types\":\"7\",\"json_post_types\":\"0\",\"ui_taxonomies\":\"10\",\"json_taxonomies\":\"0\",\"rest_api_format\":\"light\",\"admin_ui_enabled\":true,\"field_type-modal_enabled\":true,\"field_settings_tabs_enabled\":false,\"shortcode_enabled\":false,\"registered_acf_forms\":\"0\",\"json_save_paths\":1,\"json_load_paths\":1,\"event_first_activated\":1751233454,\"last_updated\":1751840014}','off');
+INSERT INTO `wp_options` VALUES (130,'theme_mods_twentytwentyfive','a:4:{s:18:\"custom_css_post_id\";i:-1;s:16:\"sidebars_widgets\";a:2:{s:4:\"time\";i:1751297965;s:4:\"data\";a:3:{s:19:\"wp_inactive_widgets\";a:0:{}s:9:\"sidebar-1\";a:3:{i:0;s:7:\"block-2\";i:1;s:7:\"block-3\";i:2;s:7:\"block-4\";}s:9:\"sidebar-2\";a:2:{i:0;s:7:\"block-5\";i:1;s:7:\"block-6\";}}}s:19:\"wp_classic_sidebars\";a:0:{}s:18:\"nav_menu_locations\";a:0:{}}','off');
+INSERT INTO `wp_options` VALUES (131,'_transient_wp_styles_for_blocks','a:2:{s:4:\"hash\";s:32:\"995febb4f4fef6e5500e6199916c745b\";s:6:\"blocks\";a:52:{s:11:\"core/button\";s:0:\"\";s:14:\"core/site-logo\";s:0:\"\";s:18:\"core/post-template\";s:0:\"\";s:12:\"core/columns\";s:769:\":root :where(.wp-block-columns-is-layout-flow) > :first-child{margin-block-start: 0;}:root :where(.wp-block-columns-is-layout-flow) > :last-child{margin-block-end: 0;}:root :where(.wp-block-columns-is-layout-flow) > *{margin-block-start: var(--wp--preset--spacing--50);margin-block-end: 0;}:root :where(.wp-block-columns-is-layout-constrained) > :first-child{margin-block-start: 0;}:root :where(.wp-block-columns-is-layout-constrained) > :last-child{margin-block-end: 0;}:root :where(.wp-block-columns-is-layout-constrained) > *{margin-block-start: var(--wp--preset--spacing--50);margin-block-end: 0;}:root :where(.wp-block-columns-is-layout-flex){gap: var(--wp--preset--spacing--50);}:root :where(.wp-block-columns-is-layout-grid){gap: var(--wp--preset--spacing--50);}\";s:14:\"core/pullquote\";s:306:\":root :where(.wp-block-pullquote){font-size: var(--wp--preset--font-size--xx-large);font-weight: 300;line-height: 1.2;padding-top: var(--wp--preset--spacing--30);padding-bottom: var(--wp--preset--spacing--30);}:root :where(.wp-block-pullquote p:last-of-type){margin-bottom: var(--wp--preset--spacing--30);}\";s:32:\"c48738dcb285a3f6ab83acff204fc486\";s:106:\":root :where(.wp-block-pullquote cite){font-size: var(--wp--preset--font-size--small);font-style: normal;}\";s:11:\"core/avatar\";s:57:\":root :where(.wp-block-avatar img){border-radius: 100px;}\";s:12:\"core/buttons\";s:665:\":root :where(.wp-block-buttons-is-layout-flow) > :first-child{margin-block-start: 0;}:root :where(.wp-block-buttons-is-layout-flow) > :last-child{margin-block-end: 0;}:root :where(.wp-block-buttons-is-layout-flow) > *{margin-block-start: 16px;margin-block-end: 0;}:root :where(.wp-block-buttons-is-layout-constrained) > :first-child{margin-block-start: 0;}:root :where(.wp-block-buttons-is-layout-constrained) > :last-child{margin-block-end: 0;}:root :where(.wp-block-buttons-is-layout-constrained) > *{margin-block-start: 16px;margin-block-end: 0;}:root :where(.wp-block-buttons-is-layout-flex){gap: 16px;}:root :where(.wp-block-buttons-is-layout-grid){gap: 16px;}\";s:9:\"core/code\";s:427:\":root :where(.wp-block-code){background-color: var(--wp--preset--color--accent-5);color: var(--wp--preset--color--contrast);font-family: var(--wp--preset--font-family--fira-code);font-size: var(--wp--preset--font-size--medium);font-weight: 300;padding-top: var(--wp--preset--spacing--40);padding-right: var(--wp--preset--spacing--40);padding-bottom: var(--wp--preset--spacing--40);padding-left: var(--wp--preset--spacing--40);}\";s:24:\"core/comment-author-name\";s:169:\":root :where(.wp-block-comment-author-name){color: var(--wp--preset--color--accent-4);font-size: var(--wp--preset--font-size--small);margin-top: 5px;margin-bottom: 0px;}\";s:32:\"c0002c260f8238c4212f3e4c369fc4f7\";s:143:\":root :where(.wp-block-comment-author-name a:where(:not(.wp-element-button))){color: var(--wp--preset--color--accent-4);text-decoration: none;}\";s:32:\"1e7c38b45537b325dbbbaec17a301676\";s:112:\":root :where(.wp-block-comment-author-name a:where(:not(.wp-element-button)):hover){text-decoration: underline;}\";s:20:\"core/comment-content\";s:178:\":root :where(.wp-block-comment-content){font-size: var(--wp--preset--font-size--medium);margin-top: var(--wp--preset--spacing--30);margin-bottom: var(--wp--preset--spacing--30);}\";s:17:\"core/comment-date\";s:127:\":root :where(.wp-block-comment-date){color: var(--wp--preset--color--contrast);font-size: var(--wp--preset--font-size--small);}\";s:32:\"c83ca7b3e52884c70f7830c54f99b318\";s:114:\":root :where(.wp-block-comment-date a:where(:not(.wp-element-button))){color: var(--wp--preset--color--contrast);}\";s:22:\"core/comment-edit-link\";s:90:\":root :where(.wp-block-comment-edit-link){font-size: var(--wp--preset--font-size--small);}\";s:32:\"41d70710612536a90e368c12bcb0efea\";s:119:\":root :where(.wp-block-comment-edit-link a:where(:not(.wp-element-button))){color: var(--wp--preset--color--contrast);}\";s:23:\"core/comment-reply-link\";s:91:\":root :where(.wp-block-comment-reply-link){font-size: var(--wp--preset--font-size--small);}\";s:32:\"13c96340dbf37700add1f4c5cae19f3e\";s:120:\":root :where(.wp-block-comment-reply-link a:where(:not(.wp-element-button))){color: var(--wp--preset--color--contrast);}\";s:23:\"core/post-comments-form\";s:565:\":root :where(.wp-block-post-comments-form){font-size: var(--wp--preset--font-size--medium);padding-top: var(--wp--preset--spacing--40);padding-bottom: var(--wp--preset--spacing--40);}:root :where(.wp-block-post-comments-form textarea, .wp-block-post-comments-form input:not([type=submit])){border-radius:.25rem; border-color: var(--wp--preset--color--accent-6) !important;}:root :where(.wp-block-post-comments-form input[type=checkbox]){margin:0 .2rem 0 0 !important;}:root :where(.wp-block-post-comments-form label){font-size: var(--wp--preset--font-size--small);}\";s:24:\"core/comments-pagination\";s:182:\":root :where(.wp-block-comments-pagination){font-size: var(--wp--preset--font-size--medium);margin-top: var(--wp--preset--spacing--40);margin-bottom: var(--wp--preset--spacing--40);}\";s:29:\"core/comments-pagination-next\";s:98:\":root :where(.wp-block-comments-pagination-next){font-size: var(--wp--preset--font-size--medium);}\";s:32:\"core/comments-pagination-numbers\";s:101:\":root :where(.wp-block-comments-pagination-numbers){font-size: var(--wp--preset--font-size--medium);}\";s:33:\"core/comments-pagination-previous\";s:102:\":root :where(.wp-block-comments-pagination-previous){font-size: var(--wp--preset--font-size--medium);}\";s:14:\"core/post-date\";s:124:\":root :where(.wp-block-post-date){color: var(--wp--preset--color--accent-4);font-size: var(--wp--preset--font-size--small);}\";s:32:\"ac0d4e00f5ec22d14451759983e5bd43\";s:133:\":root :where(.wp-block-post-date a:where(:not(.wp-element-button))){color: var(--wp--preset--color--accent-4);text-decoration: none;}\";s:32:\"0ae6ffd1b886044c2da62d75d05ab13d\";s:102:\":root :where(.wp-block-post-date a:where(:not(.wp-element-button)):hover){text-decoration: underline;}\";s:25:\"core/post-navigation-link\";s:94:\":root :where(.wp-block-post-navigation-link){font-size: var(--wp--preset--font-size--medium);}\";s:15:\"core/post-terms\";s:158:\":root :where(.wp-block-post-terms){font-size: var(--wp--preset--font-size--small);font-weight: 600;}:root :where(.wp-block-post-terms a){white-space: nowrap;}\";s:15:\"core/post-title\";s:0:\"\";s:32:\"bb496d3fcd9be3502ce57ff8281e5687\";s:92:\":root :where(.wp-block-post-title a:where(:not(.wp-element-button))){text-decoration: none;}\";s:32:\"12380ab98fdc81351bb32a39bbfc9249\";s:103:\":root :where(.wp-block-post-title a:where(:not(.wp-element-button)):hover){text-decoration: underline;}\";s:10:\"core/quote\";s:1315:\":root :where(.wp-block-quote){border-color: currentColor;border-width: 0 0 0 2px;border-style: solid;font-size: var(--wp--preset--font-size--large);font-weight: 300;margin-right: 0;margin-left: 0;padding-top: var(--wp--preset--spacing--30);padding-right: var(--wp--preset--spacing--40);padding-bottom: var(--wp--preset--spacing--30);padding-left: var(--wp--preset--spacing--40);}:root :where(.wp-block-quote-is-layout-flow) > :first-child{margin-block-start: 0;}:root :where(.wp-block-quote-is-layout-flow) > :last-child{margin-block-end: 0;}:root :where(.wp-block-quote-is-layout-flow) > *{margin-block-start: var(--wp--preset--spacing--30);margin-block-end: 0;}:root :where(.wp-block-quote-is-layout-constrained) > :first-child{margin-block-start: 0;}:root :where(.wp-block-quote-is-layout-constrained) > :last-child{margin-block-end: 0;}:root :where(.wp-block-quote-is-layout-constrained) > *{margin-block-start: var(--wp--preset--spacing--30);margin-block-end: 0;}:root :where(.wp-block-quote-is-layout-flex){gap: var(--wp--preset--spacing--30);}:root :where(.wp-block-quote-is-layout-grid){gap: var(--wp--preset--spacing--30);}:root :where(.wp-block-quote.has-text-align-right ){border-width: 0 2px 0 0;}:root :where(.wp-block-quote.has-text-align-center ){border-width: 0;border-inline: 0; padding-inline: 0;}\";s:32:\"1de7a22e22013106efc5be82788cb6c0\";s:176:\":root :where(.wp-block-quote cite){font-size: var(--wp--preset--font-size--small);font-style: normal;font-weight: 300;}:root :where(.wp-block-quote cite sub){font-size: 0.65em}\";s:21:\"core/query-pagination\";s:107:\":root :where(.wp-block-query-pagination){font-size: var(--wp--preset--font-size--medium);font-weight: 500;}\";s:11:\"core/search\";s:380:\":root :where(.wp-block-search .wp-block-search__label, .wp-block-search .wp-block-search__input, .wp-block-search .wp-block-search__button){font-size: var(--wp--preset--font-size--medium);line-height: 1.6;}:root :where(.wp-block-search .wp-block-search__input){border-radius:3.125rem;padding-left:1.5625rem;padding-right:1.5625rem;border-color:var(--wp--preset--color--accent-6);}\";s:32:\"14fa6a3d0cfbde171cbc0fb04aa8a6cf\";s:138:\":root :where(.wp-block-search .wp-element-button,.wp-block-search  .wp-block-button__link){border-radius: 3.125rem;margin-left: 1.125rem;}\";s:32:\"05993ee2f3de94b5d1350998a7e9b6b0\";s:130:\":root :where(.wp-block-search .wp-element-button:hover,.wp-block-search  .wp-block-button__link:hover){border-color: transparent;}\";s:14:\"core/separator\";s:148:\":root :where(.wp-block-separator){border-color: currentColor;border-width: 0 0 1px 0;border-style: solid;color: var(--wp--preset--color--accent-6);}\";s:17:\"core/site-tagline\";s:86:\":root :where(.wp-block-site-tagline){font-size: var(--wp--preset--font-size--medium);}\";s:15:\"core/site-title\";s:75:\":root :where(.wp-block-site-title){font-weight: 700;letter-spacing: -.5px;}\";s:32:\"f513d889cf971b13995cc3fffed2f39b\";s:92:\":root :where(.wp-block-site-title a:where(:not(.wp-element-button))){text-decoration: none;}\";s:32:\"22c37a317cc0ebd50155b5ad78564f37\";s:103:\":root :where(.wp-block-site-title a:where(:not(.wp-element-button)):hover){text-decoration: underline;}\";s:21:\"core/term-description\";s:90:\":root :where(.wp-block-term-description){font-size: var(--wp--preset--font-size--medium);}\";s:15:\"core/navigation\";s:84:\":root :where(.wp-block-navigation){font-size: var(--wp--preset--font-size--medium);}\";s:32:\"25289a01850f5a0264ddb79a9a3baf3d\";s:92:\":root :where(.wp-block-navigation a:where(:not(.wp-element-button))){text-decoration: none;}\";s:32:\"026c04da08398d655a95047f1f235d97\";s:103:\":root :where(.wp-block-navigation a:where(:not(.wp-element-button)):hover){text-decoration: underline;}\";s:9:\"core/list\";s:52:\":root :where(.wp-block-list li){margin-top: 0.5rem;}\";s:12:\"core/heading\";s:0:\"\";s:14:\"core/paragraph\";s:0:\"\";s:10:\"core/group\";s:0:\"\";s:11:\"core/column\";s:0:\"\";}}','on');
+INSERT INTO `wp_options` VALUES (132,'wpgraphql_ide_capabilities','66867b6d9cfe967eef8f8026bfe52701','auto');
+INSERT INTO `wp_options` VALUES (133,'acf_version','6.4.2','auto');
+INSERT INTO `wp_options` VALUES (134,'_site_transient_update_core','O:8:\"stdClass\":4:{s:7:\"updates\";a:1:{i:0;O:8:\"stdClass\":10:{s:8:\"response\";s:6:\"latest\";s:8:\"download\";s:59:\"https://downloads.wordpress.org/release/wordpress-6.8.1.zip\";s:6:\"locale\";s:5:\"en_US\";s:8:\"packages\";O:8:\"stdClass\":5:{s:4:\"full\";s:59:\"https://downloads.wordpress.org/release/wordpress-6.8.1.zip\";s:10:\"no_content\";s:70:\"https://downloads.wordpress.org/release/wordpress-6.8.1-no-content.zip\";s:11:\"new_bundled\";s:71:\"https://downloads.wordpress.org/release/wordpress-6.8.1-new-bundled.zip\";s:7:\"partial\";s:0:\"\";s:8:\"rollback\";s:0:\"\";}s:7:\"current\";s:5:\"6.8.1\";s:7:\"version\";s:5:\"6.8.1\";s:11:\"php_version\";s:6:\"7.2.24\";s:13:\"mysql_version\";s:5:\"5.5.5\";s:11:\"new_bundled\";s:3:\"6.7\";s:15:\"partial_version\";s:0:\"\";}}s:12:\"last_checked\";i:1752111442;s:15:\"version_checked\";s:5:\"6.8.1\";s:12:\"translations\";a:0:{}}','off');
+INSERT INTO `wp_options` VALUES (137,'_site_transient_update_themes','O:8:\"stdClass\":5:{s:12:\"last_checked\";i:1751755467;s:7:\"checked\";a:1:{s:12:\"vibemake-api\";s:5:\"1.0.0\";}s:8:\"response\";a:0:{}s:9:\"no_update\";a:0:{}s:12:\"translations\";a:0:{}}','off');
+INSERT INTO `wp_options` VALUES (138,'graphql_ide_settings','','auto');
+INSERT INTO `wp_options` VALUES (143,'recovery_mode_email_last_sent','1751335455','auto');
+INSERT INTO `wp_options` VALUES (144,'recovery_keys','a:0:{}','off');
+INSERT INTO `wp_options` VALUES (145,'recently_activated','a:0:{}','off');
+INSERT INTO `wp_options` VALUES (147,'can_compress_scripts','0','on');
+INSERT INTO `wp_options` VALUES (160,'wp-graphql_allow_tracking','yes','auto');
+INSERT INTO `wp_options` VALUES (161,'wp-graphql_tracking_notice','hide','auto');
+INSERT INTO `wp_options` VALUES (163,'wpgraphql-acf_allow_tracking','yes','auto');
+INSERT INTO `wp_options` VALUES (164,'wpgraphql-acf_tracking_notice','hide','auto');
+INSERT INTO `wp_options` VALUES (166,'current_theme','VibeMake API','auto');
+INSERT INTO `wp_options` VALUES (167,'theme_mods_vibemake-api','a:3:{i:0;b:0;s:18:\"nav_menu_locations\";a:0:{}s:16:\"sidebars_widgets\";a:2:{s:4:\"time\";i:1751297495;s:4:\"data\";a:1:{s:19:\"wp_inactive_widgets\";a:5:{i:0;s:7:\"block-2\";i:1;s:7:\"block-3\";i:2;s:7:\"block-4\";i:3;s:7:\"block-5\";i:4;s:7:\"block-6\";}}}}','on');
+INSERT INTO `wp_options` VALUES (168,'theme_switched','','auto');
+INSERT INTO `wp_options` VALUES (177,'_site_transient_wp_plugin_dependencies_plugin_data','a:1:{s:10:\"wp-graphql\";a:35:{s:4:\"name\";s:9:\"WPGraphQL\";s:4:\"slug\";s:10:\"wp-graphql\";s:7:\"version\";s:5:\"2.3.3\";s:6:\"author\";s:66:\"<a href=\"https://profiles.wordpress.org/jasonbahl/\">Jason Bahl</a>\";s:14:\"author_profile\";s:41:\"https://profiles.wordpress.org/jasonbahl/\";s:12:\"contributors\";a:6:{s:9:\"jasonbahl\";a:3:{s:7:\"profile\";s:41:\"https://profiles.wordpress.org/jasonbahl/\";s:6:\"avatar\";s:120:\"https://secure.gravatar.com/avatar/798f7b954678b4efaafa269e29194e435a61bbd02accfbf2a93ebc37888f9ce5?s=96&d=monsterid&r=g\";s:12:\"display_name\";s:10:\"Jason Bahl\";}s:12:\"tylerbarnes1\";a:3:{s:7:\"profile\";s:44:\"https://profiles.wordpress.org/tylerbarnes1/\";s:6:\"avatar\";s:120:\"https://secure.gravatar.com/avatar/0168aae06b1406c39d3ba9ea8138d8de975df7cd08382e9960976e7fe3701c2a?s=96&d=monsterid&r=g\";s:12:\"display_name\";s:5:\"Tyler\";}s:10:\"ryankanner\";a:3:{s:7:\"profile\";s:42:\"https://profiles.wordpress.org/ryankanner/\";s:6:\"avatar\";s:120:\"https://secure.gravatar.com/avatar/0b51cdade8f3b0ac34c620396636f857d4189bfdb7f3df4249a5e9b9d114a022?s=96&d=monsterid&r=g\";s:12:\"display_name\";s:11:\"Ryan Kanner\";}s:10:\"chopinbach\";a:3:{s:7:\"profile\";s:42:\"https://profiles.wordpress.org/chopinbach/\";s:6:\"avatar\";s:120:\"https://secure.gravatar.com/avatar/e9ef79a809e178334a16c65dc6d46a66aeb6226486fd316e285d0957b222c127?s=96&d=monsterid&r=g\";s:12:\"display_name\";s:13:\"Edwin Cromley\";}s:9:\"kidunot89\";a:3:{s:7:\"profile\";s:41:\"https://profiles.wordpress.org/kidunot89/\";s:6:\"avatar\";s:120:\"https://secure.gravatar.com/avatar/b88ae0ad9a6c04e5ee6050d959957f7662fd56d036e13f8d5d195e0ea1016036?s=96&d=monsterid&r=g\";s:12:\"display_name\";s:12:\"Geoff Taylor\";}s:10:\"justlevine\";a:3:{s:7:\"profile\";s:42:\"https://profiles.wordpress.org/justlevine/\";s:6:\"avatar\";s:120:\"https://secure.gravatar.com/avatar/33212bff2915bd72792772a2d3203abe0402352b6be6ba65081036f10560c6e6?s=96&d=monsterid&r=g\";s:12:\"display_name\";s:12:\"David Levine\";}}s:8:\"requires\";s:3:\"6.0\";s:6:\"tested\";s:5:\"6.8.1\";s:12:\"requires_php\";s:3:\"7.4\";s:16:\"requires_plugins\";a:0:{}s:6:\"rating\";i:98;s:7:\"ratings\";a:5:{i:5;i:46;i:4;i:1;i:3;i:1;i:2;i:0;i:1;i:0;}s:11:\"num_ratings\";i:48;s:11:\"support_url\";s:48:\"https://wordpress.org/support/plugin/wp-graphql/\";s:15:\"support_threads\";i:1;s:24:\"support_threads_resolved\";i:0;s:15:\"active_installs\";i:30000;s:12:\"last_updated\";s:21:\"2025-06-17 2:29pm GMT\";s:5:\"added\";s:10:\"2020-11-14\";s:8:\"homepage\";s:40:\"https://github.com/wp-graphql/wp-graphql\";s:8:\"sections\";a:5:{s:11:\"description\";s:3275:\"<p>WPGraphQL is a free, open-source WordPress plugin that provides an extendable GraphQL schema and API for any WordPress site.</p>\n<p><strong>Get Started</strong></p>\n<ol>\n<li>Install WPGraphQL: <code>wp plugin install wp-graphql --activate</code></li>\n<li>Try it out: <a href=\"https://repl.wpgraphql.com\" rel=\"nofollow ugc\">Live Demo</a></li>\n<li>Read the <a href=\"https://wpgraphql.com/docs/quick-start\" rel=\"nofollow ugc\">Quick Start Guide</a>.</li>\n<li>Join the <a href=\"https://discord.gg/AGVBqqyaUY\" rel=\"nofollow ugc\">Community on Discord</a> and <a href=\"https://github.com/wp-graphql/wp-graphql\" rel=\"nofollow ugc\">Star the Repo</a>!</li>\n</ol>\n<p><strong>Key Features</strong></p>\n<ul>\n<li><strong>Flexible API</strong>: Query posts, pages, custom post types, taxonomies, users, and more.</li>\n<li><strong>Extendable Schema</strong>: Easily add functionality with WPGraphQL’s API, enabling custom integrations.</li>\n<li><strong>Compatible with Modern Frameworks</strong>: Works seamlessly with <a href=\"https://vercel.com/guides/wordpress-with-vercel\" rel=\"nofollow ugc\">Next.js</a>, <a href=\"https://docs.astro.build/en/guides/cms/wordpress/\" rel=\"nofollow ugc\">Astro</a>, <a href=\"https://www.okupter.com/blog/headless-wordpress-graphql-sveltekit\" rel=\"nofollow ugc\">SvelteKit</a>, and more.</li>\n<li><strong>Optimized Performance</strong>: Fetch exactly the data you need in a single query. Boost performance with <a href=\"https://github.com/wp-graphql/wp-graphql-smart-cache\" rel=\"nofollow ugc\">WPGraphQL Smart Cache</a>.</li>\n</ul>\n<p>WPGraphQL is becoming a <a href=\"https://wordpress.org/news/2024/10/wpgraphql/\" rel=\"ugc\">Canonical Plugin</a> on WordPress.org, ensuring long-term support and a growing community of users and contributors.</p>\n<h4>Upgrading</h4>\n<p>It is recommended that anytime you want to update WPGraphQL that you get familiar with what&#8217;s changed in the release.</p>\n<p>WPGraphQL publishes <a href=\"https://github.com/wp-graphql/wp-graphql/releases\" rel=\"nofollow ugc\">release notes on Github</a>.</p>\n<p>WPGraphQL has been following Semver practices for a few years. We will continue to follow Semver and let version numbers communicate meaning. The summary of Semver versioning is as follows:</p>\n<ul>\n<li><em>MAJOR</em> version when you make incompatible API changes,</li>\n<li><em>MINOR</em> version when you add functionality in a backwards compatible manner, and</li>\n<li><em>PATCH</em> version when you make backwards compatible bug fixes.</li>\n</ul>\n<p>You can read more about the details of Semver at semver.org</p>\n<h3>Privacy Policy</h3>\n<p>WPGraphQL uses <a href=\"https://appsero.com\" rel=\"nofollow ugc\">Appsero</a> SDK to collect some telemetry data upon user&#8217;s confirmation. This helps us to troubleshoot problems faster and make product improvements.</p>\n<p>Appsero SDK <strong>does not gather any data by default.</strong> The SDK starts gathering basic telemetry data <strong>only when a user allows it via the admin notice</strong>.</p>\n<p>Learn more about how <a href=\"https://appsero.com/privacy-policy/\" rel=\"nofollow ugc\">Appsero collects and uses this data</a>.</p>\n<p>Learn more about how <a href=\"https://appsero.com/privacy-policy/\" rel=\"nofollow ugc\">Appsero collects and uses this data</a>.</p>\n\";s:3:\"faq\";s:1570:\"\n<dt id=\'how%20is%20wpgraphql%20funded%3F\'>\nHow is WPGraphQL funded?\n</h4>\n<p>\n<p>WPGraphQL is free and open-source. It is supported by contributors, backers, and sponsors, including Automattic, which provides significant support as WPGraphQL becomes a Canonical Plugin.</p>\n<p>Learn more about supporting WPGraphQL on <a href=\"https://opencollective.com/wp-graphql\" rel=\"nofollow ugc\">Open Collective</a>.</p>\n</p>\n<dt id=\'can%20i%20use%20wpgraphql%20with%20xx%20javascript%20framework%3F\'>\nCan I use WPGraphQL with xx JavaScript framework?\n</h4>\n<p>\n<p>Yes! WPGraphQL works with any client that can make HTTP requests to the GraphQL endpoint. It integrates seamlessly with frameworks like <a href=\"https://vercel.com/guides/wordpress-with-vercel\" rel=\"nofollow ugc\">Next.js</a>, <a href=\"https://gatsbyjs.com\" rel=\"nofollow ugc\">Gatsby</a>, <a href=\"https://docs.astro.build/en/guides/cms/wordpress/\" rel=\"nofollow ugc\">Astro</a>, and more.</p>\n</p>\n<dt id=\'where%20can%20i%20get%20support%3F\'>\nWhere can I get support?\n</h4>\n<p>\n<p>You can join the WPGraphQL <a href=\"https://discord.gg/AGVBqqyaUY\" rel=\"nofollow ugc\">Discord community</a> for support, discussions, and announcements.</p>\n</p>\n<dt id=\'how%20does%20wpgraphql%20handle%20privacy%20and%20telemetry%3F\'>\nHow does WPGraphQL handle privacy and telemetry?\n</h4>\n<p>\n<p>WPGraphQL uses the <a href=\"https://appsero.com/privacy-policy\" rel=\"nofollow ugc\">Appsero SDK</a> to collect telemetry data <strong>only after user consent</strong>. This helps improve the plugin while respecting user privacy.</p>\n</p>\n\n\";s:9:\"changelog\";s:29647:\"<h4>2.3.3</h4>\n<p><strong>Bug Fixes</strong></p>\n<ul>\n<li>fix: update skipped since tags (https://github.com/jasonbahl/automation-tests/pull/3372)</li>\n<li>fix: check for preloaded AppContext::get_loader() (https://github.com/jasonbahl/automation-tests/pull/3384)</li>\n<li>fix: cleanup  logic (https://github.com/jasonbahl/automation-tests/pull/3383)</li>\n</ul>\n<p><strong>Other Changes</strong></p>\n<ul>\n<li>chore: improve type safety of  and schema registration (https://github.com/jasonbahl/automation-tests/pull/3382)</li>\n<li>refactor: cleanup  class to reduce complexity and improve type safety (https://github.com/jasonbahl/automation-tests/pull/3381)</li>\n<li>perf: refactor  to lazy-load dataloaders (https://github.com/jasonbahl/automation-tests/pull/3380)</li>\n<li>chore: update Composer dev-deps and PHPCs ruleset (https://github.com/jasonbahl/automation-tests/pull/3379)</li>\n<li>chore: expose array shape for   (https://github.com/jasonbahl/automation-tests/pull/3374)</li>\n<li>chore: expose array shapes for register_graphql_enum_type()  (https://github.com/jasonbahl/automation-tests/pull/3373)</li>\n<li>chore: narrow/fix php types on WPGraphQL, Server, Utils namespaces (https://github.com/jasonbahl/automation-tests/pull/3368)</li>\n</ul>\n<h4>2.3.2</h4>\n<p><strong>Other Changes</strong></p>\n<ul>\n<li>chore: improve type safety of  and schema registration (https://github.com/jasonbahl/automation-tests/pull/3382)</li>\n<li>refactor: cleanup  class to reduce complexity and improve type safety (https://github.com/jasonbahl/automation-tests/pull/3381)</li>\n<li>perf: refactor  to lazy-load dataloaders (https://github.com/jasonbahl/automation-tests/pull/3380)</li>\n<li>chore: update Composer dev-deps and PHPCs ruleset (https://github.com/jasonbahl/automation-tests/pull/3379)</li>\n</ul>\n<h4>2.3.1</h4>\n<p><strong>Other Changes</strong></p>\n<ul>\n<li>chore: expose array shape for   (https://github.com/jasonbahl/automation-tests/pull/3374)</li>\n<li>chore: expose array shapes for register_graphql_enum_type()  (https://github.com/jasonbahl/automation-tests/pull/3373)</li>\n<li>chore: narrow/fix php types on WPGraphQL, Server, Utils namespaces (https://github.com/jasonbahl/automation-tests/pull/3368)</li>\n</ul>\n<h4>2.3.0</h4>\n<p><strong>New Features</strong></p>\n<ul>\n<li>feat: lazy loading fields for Object Types and Interface Types (https://github.com/jasonbahl/automation-tests/pull/3356)</li>\n<li>feat: Update Enum Type descriptions (https://github.com/jasonbahl/automation-tests/pull/3355)</li>\n</ul>\n<p><strong>Bug Fixes</strong></p>\n<ul>\n<li>fix: don&#8217;t initialize  twice in class constructor (https://github.com/jasonbahl/automation-tests/pull/3369)</li>\n<li>fix: cleanup Model fields for better source-of-truth and type-safety. (https://github.com/jasonbahl/automation-tests/pull/3363)</li>\n<li>fix: bump  and remove 7.3 references (https://github.com/jasonbahl/automation-tests/pull/3360)</li>\n</ul>\n<p><strong>Other Changes</strong></p>\n<ul>\n<li>chore: improve type-safety for  class (https://github.com/jasonbahl/automation-tests/pull/3367)</li>\n<li>chore: add array shapes to  and  (https://github.com/jasonbahl/automation-tests/pull/3366)</li>\n<li>chore: inline (non-breaking) native return types (https://github.com/jasonbahl/automation-tests/pull/3362)</li>\n<li>chore: implement array shapes for  (https://github.com/jasonbahl/automation-tests/pull/3364)</li>\n<li>chore: Test compatibility with WordPress 6.8 (https://github.com/jasonbahl/automation-tests/pull/3361)</li>\n<li>ci: trigger Codeception workflow more often (https://github.com/jasonbahl/automation-tests/pull/3359)</li>\n<li>chore: Update Composer deps (https://github.com/jasonbahl/automation-tests/pull/3358)</li>\n</ul>\n<h4>2.2.0</h4>\n<p><strong>New Features</strong></p>\n<ul>\n<li>feat: add support for graphql_description on register_post_type and register_taxonomy (https://github.com/jasonbahl/automation-tests/pull/3346)</li>\n</ul>\n<p><strong>Other Changes</strong></p>\n<ul>\n<li>chore: update  placeholder that didn&#8217;t properly get replaced during release (https://github.com/jasonbahl/automation-tests/pull/3349)</li>\n<li>chore: update interface descriptions (https://github.com/jasonbahl/automation-tests/pull/3347)</li>\n</ul>\n<h4>2.1.1</h4>\n<p><strong>Bug Fixes</strong></p>\n<ul>\n<li>fix: Avoid the deprecation warning when sending null header values (https://github.com/jasonbahl/automation-tests/pull/3338)</li>\n</ul>\n<p><strong>Other Changes</strong></p>\n<ul>\n<li>chore: update README&#8217;s for github workflows (https://github.com/jasonbahl/automation-tests/pull/3343)</li>\n<li>chore: update cursor rules to use .cursor/rules instead of .cursorrules (https://github.com/jasonbahl/automation-tests/pull/3333)</li>\n<li>chore: add WPGraphQL IDE to the extensions page (https://github.com/jasonbahl/automation-tests/pull/3332)</li>\n</ul>\n<h4>2.1.0</h4>\n<p><strong>New Features</strong></p>\n<ul>\n<li>\n<p><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3320\" rel=\"nofollow ugc\">#3320</a>: feat: add filter to Request::is_valid_http_content_type to allow for custom content types with POST method requests<br />\n<strong>Chores / Bugfixes</strong></p>\n</li>\n<li>\n<p><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3314\" rel=\"nofollow ugc\">#3314</a>: fix: use version_compare to simplify incompatible dependent check</p>\n</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3316\" rel=\"nofollow ugc\">#3316</a>: docs: update changelog and upgrade notice</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3325\" rel=\"nofollow ugc\">#3325</a>: docs: update quick-start.md</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3190\" rel=\"nofollow ugc\">#3190</a>: docs: add developer docs for <code>AbstractConnectionResolver</code></li>\n</ul>\n<h4>2.0.0</h4>\n<p><strong>BREAKING CHANGE UPDATE</strong></p>\n<p>This is a major update that drops support for PHP versions below 7.4 and WordPress versions below 6.0.</p>\n<p>We&#8217;ve written more about the update here:</p>\n<ul>\n<li>https://www.wpgraphql.com/2024/12/16/wpgraphql-v2-0-is-coming-heres-what-you-need-to-know</li>\n<li>https://www.wpgraphql.com/2024/12/16/wpgraphql-v2-0-technical-update-breaking-changes</li>\n</ul>\n<h4>1.32.1</h4>\n<p><strong>Chores / Bugfixes</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3308\" rel=\"nofollow ugc\">#3308</a>: fix: update term mutation was preventing terms from removing the parentId</li>\n</ul>\n<h4>1.32.0</h4>\n<p><strong>New Features</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3294\" rel=\"nofollow ugc\">#3294</a>: feat: introduce new fields for getting mediaItem files and filePaths</li>\n</ul>\n<p><strong>Chores / Bugfixes</strong></p>\n<ul>\n<li>update stable tag</li>\n</ul>\n<h4>1.31.0</h4>\n<p><strong>New Features</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3278\" rel=\"nofollow ugc\">#3278</a>: feat: add option to provide custom file path for static schemas when using the <code>wp graphql generate-static-schema</code> command</li>\n</ul>\n<p><strong>Chores / Bugfixes</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3284\" rel=\"nofollow ugc\">#3284</a>: fix: fix: Updated docs link for example of hierarchical data</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3283\" rel=\"nofollow ugc\">#3283</a>: fix: Error in update checker when WPGraphQL is active as an mu-plugin</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3293\" rel=\"nofollow ugc\">#3293</a>: fix: correct the resolver for the MediaDetails.file field to return the file name</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3299\" rel=\"nofollow ugc\">#3299</a>: chore: restore excluded PHPCS rules</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3301\" rel=\"nofollow ugc\">#3301</a>: fix: React backwards-compatibility with WP &lt; 6.6</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3302\" rel=\"nofollow ugc\">#3302</a>: chore: update NPM dependencies</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3297\" rel=\"nofollow ugc\">#3297</a>: fix: typo in <code>Extensions\\Registry\\get_extensions()</code> method name</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3303\" rel=\"nofollow ugc\">#3303</a>: chore: cleanup git cache</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3298\" rel=\"nofollow ugc\">#3298</a>: chore: submit GF, Rank Math, and Headless Login plugins</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3287\" rel=\"nofollow ugc\">#3287</a>: chore: fixes the syntax of the readme.txt so that the short description is shown on WordPress.org</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3284\" rel=\"nofollow ugc\">#3284</a>: fix: Updated docs link for example of hierarchical data</li>\n</ul>\n<h4>1.30.0</h4>\n<p><strong>Chores / Bugfixes</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3250\" rel=\"nofollow ugc\">#3250</a>: fix: receiving post for Incorrect uri</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3268\" rel=\"nofollow ugc\">#3268</a>: ci: trigger PR workflows on release/* branches</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3267\" rel=\"nofollow ugc\">#3267</a>: chore: fix bleeding edge/deprecated PHPStan smells [first pass]</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3270\" rel=\"nofollow ugc\">#3270</a>: build(deps): bump the npm_and_yarn group across 1 directory with 3 updates</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3271\" rel=\"nofollow ugc\">#3271</a>: fix: default cat should not be added when other categories are added</li>\n</ul>\n<p><strong>New Features</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3251\" rel=\"nofollow ugc\">#3251</a>: feat: implement SemVer-compliant update checker</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3196\" rel=\"nofollow ugc\">#3196</a>: feat: expose EnqueuedAsset.group and EnqueuedScript.location to schema</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3188\" rel=\"nofollow ugc\">#3188</a>: feat: Add WPGraphQL Extensions page to the WordPress admin</li>\n</ul>\n<h4>1.29.3</h4>\n<p><strong>Chores / Bugfixes</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3245\" rel=\"nofollow ugc\">#3245</a>: fix: update appsero/client to v2.0.4 to prevent conflicts with WP6.7</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3243\" rel=\"nofollow ugc\">#3243</a>: chore: fix Composer autoloader for WPGraphQL.php</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3242\" rel=\"nofollow ugc\">#3242</a>: chore: update Composer dev deps</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3235\" rel=\"nofollow ugc\">#3235</a>: chore: general updates to README.md and readme.txt</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3234\" rel=\"nofollow ugc\">#3234</a>: chore: update quick-start.md to provide more clarity around using wpackagist</li>\n</ul>\n<h4>1.29.2</h4>\n<p><strong>Chores / Bugfixes</strong></p>\n<ul>\n<li>fix: move assets/blueprint.json under .wordpress-org directory</li>\n</ul>\n<h4>1.29.1</h4>\n<p><strong>Chores / Bugfixes</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3226\" rel=\"nofollow ugc\">#3226</a>: chore: add blueprint.json so WPGraphQL can be demo&#8217;d with a live preview on WordPress.org</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3218\" rel=\"nofollow ugc\">#3218</a>: docs: update upgrading.md to highlight how breaking change releases will be handled</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3214\" rel=\"nofollow ugc\">#3214</a>: fix: lazy-resolve Post.sourceUrl and deprecate Post.sourceUrlsBySize</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3224\" rel=\"nofollow ugc\">#3224</a>: chore(deps-dev): bump symfony/process from 5.4.40 to 5.4.46 in the composer group</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3219\" rel=\"nofollow ugc\">#3219</a>: test: add tests for querying different sizes of media items</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3229\" rel=\"nofollow ugc\">#3229</a>: fix: Deprecated null value warning in titleRendered callback</li>\n</ul>\n<h4>1.29.0</h4>\n<p><strong>New Features</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3208\" rel=\"nofollow ugc\">#3208</a>: feat: expose commenter edge fields</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3207\" rel=\"nofollow ugc\">#3207</a>: feat: introduce get_graphql_admin_notices and convert AdminNotices class to a singleton</li>\n</ul>\n<p><strong>Chores / Bugfixes</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3213\" rel=\"nofollow ugc\">#3213</a>: chore(deps): bump the npm_and_yarn group across 1 directory with 4 updates</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3212\" rel=\"nofollow ugc\">#3212</a>: chore(deps): bump dset from 3.1.3 to 3.1.4 in the npm_and_yarn group across 1 directory</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3211\" rel=\"nofollow ugc\">#3211</a>: chore: add LABELS.md</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3201\" rel=\"nofollow ugc\">#3201</a>: fix: ensure connectedTerms returns terms for the specified taxonomy only</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3199\" rel=\"nofollow ugc\">#3199</a>: chore(deps-dev): bump the npm_and_yarn group across 1 directory with 2 updates</li>\n</ul>\n<h4>1.28.1</h4>\n<p><strong>Chores / Bugfixes</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3189\" rel=\"nofollow ugc\">#3189</a>: fix: [regression] missing placeholder in $wpdb-&gt;prepare() call</li>\n</ul>\n<h4>1.28.0</h4>\n<p><strong>Upgrade Notice</strong></p>\n<p>This release contains an internal refactor for how the Type Registry is generated which should lead to significant performance improvements for most users. While there is no known breaking changes, because this change impacts every user we highly recommend testing this release thoroughly on staging servers to ensure the changes don&#8217;t negatively impact your projects.</p>\n<p><strong>New Features</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3172\" rel=\"nofollow ugc\">#3172</a>: feat: only <code>eagerlyLoadType</code> on introspection requests.</li>\n</ul>\n<p><strong>Chores / Bugfixes</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3181\" rel=\"nofollow ugc\">#3181</a>: ci: replace <code>docker-compose</code> commands with <code>docker compose</code></li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3182\" rel=\"nofollow ugc\">#3182</a>: ci: test against WP 6.6</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3183\" rel=\"nofollow ugc\">#3183</a>: fix: improve performance of SQL query in the user loader</li>\n</ul>\n<h4>1.27.2</h4>\n<p><strong>Chores / Bugfixes</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3167\" rel=\"nofollow ugc\">#3167</a>: fix: missing .svg causing admin_menu not to be registered</li>\n</ul>\n<h4>1.27.1</h4>\n<p><strong>Chores / Bugfixes</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3066\" rel=\"nofollow ugc\">#3066</a>: fix: merge query arg arrays instead of overriding.</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3151\" rel=\"nofollow ugc\">#3151</a>: fix: update dev-deps and fix <code>WPGraphQL::get_static_schema()</code></li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3152\" rel=\"nofollow ugc\">#3152</a>: fix: handle regression when implementing interface with identical args.</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3153\" rel=\"nofollow ugc\">#3153</a>: chore(deps-dev): bump composer/composer from 2.7.6 to 2.7.7 in the composer group across 1 directory</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3155\" rel=\"nofollow ugc\">#3155</a>: chore(deps-dev): bump the npm_and_yarn group across 1 directory with 2 updates</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3160\" rel=\"nofollow ugc\">#3160</a>: chore: Update branding assets</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3162\" rel=\"nofollow ugc\">#3162</a>: fix: set_query_arg should not merge args</li>\n</ul>\n<h4>1.27.0</h4>\n<p><strong>New Features</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3143\" rel=\"nofollow ugc\">#3143</a>: feat: Enhance tab state management with query arguments and localStorage fallback</li>\n</ul>\n<p><strong>Chores / Bugfixes</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3139\" rel=\"nofollow ugc\">#3139</a>: fix: <code>$settings_fields</code> param on &#8220;graphql_get_setting_section_field_value&#8221; filter not passing the correct type</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3137\" rel=\"nofollow ugc\">#3137</a>: fix: WPGraphQL Settings page fails to load when &#8220;graphiql_enabled&#8221; setting is &#8220;off&#8221;</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3133\" rel=\"nofollow ugc\">#3133</a>: build: clean up dist</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3146\" rel=\"nofollow ugc\">#3146</a>: test: add e2e test coverage for tabs in the settings page</li>\n</ul>\n<h4>1.26.0</h4>\n<p><strong>New Features</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3125\" rel=\"nofollow ugc\">#3125</a>: refactor: improve query handling in AbstractConnectionResolver\n<ul>\n<li>new: <code>graphql_connection_pre_get_query</code> filter</li>\n<li>new: <code>AbstractConnectionResolver::is_valid_query_class()</code></li>\n<li>new: <code>AbstractConnectionResolver::get_query()</code></li>\n<li>new: <code>AbstractConnectionResolver::get_query_class()</code></li>\n<li>new: <code>AsbtractConnectionResolver::query_class()</code></li>\n<li>new: <code>AbstractConnectionResolver::$query_class</code></li>\n</ul>\n</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3124\" rel=\"nofollow ugc\">#3124</a>: refactor: split <code>AbstractConnectionResolver::get_args()</code> and <code>::get_query_args()</code> into <code>::prepare_*()</code> methods</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3123\" rel=\"nofollow ugc\">#3123</a>: refactor: split <code>AbstractConnectionResolver::get_ids()</code> into <code>::prepare_ids()</code></li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3121\" rel=\"nofollow ugc\">#3121</a>: refactor: split <code>AbstractConnectionResolver::get_nodes()</code> and <code>get_edges()</code> into <code>prepare_*()</code> methods</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3120\" rel=\"nofollow ugc\">#3120</a>: refactor: wrap <code>AbstractConnectionResolver::is_valid_model()</code> in <code>::get_is_valid_model()</code></li>\n</ul>\n<p><strong>Chores / Bugfixes</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3125\" rel=\"nofollow ugc\">#3125</a>: refactor: improve query handling in AbstractConnectionResolver\n<ul>\n<li>Implement PHPStan Generic Type</li>\n<li>Update generic Exceptions to InvariantViolation</li>\n</ul>\n</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3127\" rel=\"nofollow ugc\">#3127</a>: chore: update references to the WPGraphQL Slack Community to point to the new WPGraphQL Discord community instead.</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3122\" rel=\"nofollow ugc\">#3122</a>: chore: relocate <code>AbstractConnectionResolver::is_valid_offset()</code> with other abstract methods.</li>\n</ul>\n<h4>1.25.0</h4>\n<p><strong>New Features</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3104\" rel=\"nofollow ugc\">#3104</a>: feat: add <code>AbsractConnectionResolver::pre_should_execute()</code>. Thanks @justlevine!</li>\n</ul>\n<p><strong>Chores / Bugfixes</strong><br />\n&#8211; <a href=\"https://github.com/wp-graphql/wp-graphql/pull/3104\" rel=\"nofollow ugc\">#3104</a>: refactor: <code>AbstractConnectionResolver::should_execute()</code> Thanks @justlevine!<br />\n&#8211; <a href=\"https://github.com/wp-graphql/wp-graphql/pull/3104\" rel=\"nofollow ugc\">#3112</a>: fix: fixes a regression from v1.24.0 relating to field arguments defined on Interfaces not being properly merged onto Object Types that implement the interface. Thanks @kidunot89!<br />\n&#8211; <a href=\"https://github.com/wp-graphql/wp-graphql/pull/3114\" rel=\"nofollow ugc\">#3114</a>: fix: node IDs not showing in the Query Analyzer / X-GraphQL-Keys when using DataLoader-&gt;load_many()<br />\n&#8211; <a href=\"https://github.com/wp-graphql/wp-graphql/pull/3116\" rel=\"nofollow ugc\">#3116</a>: chore: Update WPGraphQLTestCase to v3. Thanks @kidunot89!</p>\n<h4>1.24.0</h4>\n<p><strong>New Features</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3084\" rel=\"nofollow ugc\">#3084</a>: perf: refactor PluginConnectionResolver to only fetch plugins once. Thanks @justlevine!</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3088\" rel=\"nofollow ugc\">#3088</a>: refactor: improve loader handling in AbstractConnectionResolver. Thanks @justlevine!</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3087\" rel=\"nofollow ugc\">#3087</a>: feat: improve query amount handling in AbstractConnectionResolver. Thanks @justlevine!</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3086\" rel=\"nofollow ugc\">#3086</a>: refactor: add AbstractConnectionResolver::get_unfiltered_args() public getter. Thanks @justlevine!</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3085\" rel=\"nofollow ugc\">#3085</a>: refactor: add AbstractConnectionResolver::prepare_page_info()and only instantiate once. Thanks @justlevine!</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3083\" rel=\"nofollow ugc\">#3083</a>: refactor: deprecate camelCase methods in AbstractConnectionResolver for snake_case equivalents. Thanks @justlevine!</li>\n</ul>\n<p><strong>Chores / Bugfixes</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3095\" rel=\"nofollow ugc\">#3095</a>: chore: lint for superfluous whitespace. Thanks @justlevine!</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3100\" rel=\"nofollow ugc\">#3100</a>: fix: recursion issues with interfaces</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3082\" rel=\"nofollow ugc\">#3082</a>: chore: prepare ConnectionResolver classes for v2 backport</li>\n</ul>\n<h4>1.23.0</h4>\n<p><strong>New Features</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3073\" rel=\"nofollow ugc\">#3073</a>: feat: expose <code>hasPassword</code> and <code>password</code> fields on Post objects. Thanks @justlevine!</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3091\" rel=\"nofollow ugc\">#3091</a>: feat: introduce actions and filters for GraphQL Admin Notices</li>\n</ul>\n<p><strong>Chores / Bugfixes</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3079\" rel=\"nofollow ugc\">#3079</a>: fix: GraphiQL IDE test failures</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3084\" rel=\"nofollow ugc\">#3084</a>: perf: refactor PluginConnectionResolver to only fetch plugins once. Thanks @justlevine!</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3092\" rel=\"nofollow ugc\">#3092</a>: ci: test against wp 6.5</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3093\" rel=\"nofollow ugc\">#3093</a>: ci: Update actions in GitHub workflows and cleanup. Thanks @justlevine!</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3093\" rel=\"nofollow ugc\">#3093</a>: chore: update Composer dev-deps and lint. Thanks @justlevine!</li>\n</ul>\n<h4>1.22.1</h4>\n<p><strong>Chores / Bugfixes</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3067\" rel=\"nofollow ugc\">#3067</a>: fix: respect show avatar setting</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3063\" rel=\"nofollow ugc\">#3063</a>: fix: fixes a bug in cursor stability filters that could lead to empty order</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3070\" rel=\"nofollow ugc\">#3070</a>: test(3063): Adds test for <a href=\"https://github.com/wp-graphql/wp-graphql/pull/3063\" rel=\"nofollow ugc\">#3063</a></li>\n</ul>\n<h4>1.22.0</h4>\n<p><strong>New Features</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3044\" rel=\"nofollow ugc\">#3044</a>: feat: add <code>graphql_pre_resolve_menu_item_connected_node</code> filter</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3043\" rel=\"nofollow ugc\">#3039</a>: feat: add <code>UniformResourceIdentifiable</code> interface to <code>Comment</code> type</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3020\" rel=\"nofollow ugc\">#3020</a>: feat: introduce <code>graphql_query_analyzer_get_headers</code> filter</li>\n</ul>\n<p><strong>Chores / Bugfixes</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3062\" rel=\"nofollow ugc\">#3062</a>: ci: pin wp-browser to &#8220;&lt;3.5&#8221; to allow automated tests to run properly</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3057\" rel=\"nofollow ugc\">#3057</a>: fix: <code>admin_enqueue_scripts</code> callback should expect a possible <code>null</code> value passed to it</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3048\" rel=\"nofollow ugc\">#3048</a>: fix: <code>isPostsPage</code> on content type</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3043\" rel=\"nofollow ugc\">#3043</a>: fix: return empty when filtering <code>menuItems</code> by a location with no assigned items</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3045\" rel=\"nofollow ugc\">#3045</a>: fix: <code>UsersConnectionSearchColumnEnum</code> values should be prefixed with <code>user_</code></li>\n</ul>\n<p><h4>1.21.0</h4>\n</p>\n<p><strong>New Features</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3035\" rel=\"nofollow ugc\">#3035</a>: feat: provide better error when field references a type that does not exist</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3027\" rel=\"nofollow ugc\">#3027</a>: feat: Add register_graphql_admin_notice API and intial use to inform users of the new WPGraphQL for ACF plugin</li>\n</ul>\n<p><strong>Chores / Bugfixes</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3038\" rel=\"nofollow ugc\">#3038</a>: chore(deps-dev): bump the composer group across 1 directories with 1 update. Thanks @dependabot!</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3033\" rel=\"nofollow ugc\">#3033</a>: fix: php deprecation error for dynamic properties on AppContext class</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3031\" rel=\"nofollow ugc\">#3031</a>: fix(graphiql): Allow GraphiQL to run even if a valid schema cannot be returned. Thanks @linucks!</li>\n</ul>\n<h4>1.20.0</h4>\n<p><strong>New Features</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3013\" rel=\"nofollow ugc\">#3013</a>: feat: output GRAPHQL_DEBUG message if requested amount is larger than connection limit. Thanks @justlevine!</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3008\" rel=\"nofollow ugc\">#3008</a>: perf: Expose graphql_should_analyze_queries as setting. Thanks @justlevine!</li>\n</ul>\n<p><strong>Chores / Bugfixes</strong></p>\n<ul>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3022\" rel=\"nofollow ugc\">#3022</a>: chore: add @justlevine to list of contributors! 🙌 🥳</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3011\" rel=\"nofollow ugc\">#3011</a>: chore: update composer dev-dependencies and use php-compatibility:develop branch to 8.0+ lints. Thanks @justlevine!</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3010\" rel=\"nofollow ugc\">#3010</a>: chore: implement stricter PHPDoc types. Thanks @justlevine!</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3009\" rel=\"nofollow ugc\">#3009</a>: chore: implement stricter PHPStan config and clean up unnecessary type-guards. Thanks @justlevine!</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3007\" rel=\"nofollow ugc\">#3007</a>: fix: call html_entity_decode() with explicit flags and decode single-quotes. Thanks @justlevine!</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3006\" rel=\"nofollow ugc\">#3006</a>: fix: replace deprecated AbstractConnectionResolver::setQueryArg() call with ::set_query_arg(). Thanks @justlevine!</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/3004\" rel=\"nofollow ugc\">#3004</a>: docs: Update using-data-from-custom-database-tables.md</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/2998\" rel=\"nofollow ugc\">#2998</a>: docs: Update build-your-first-wpgraphql-extension.md. Thanks @Jacob-Daniel!</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/2997\" rel=\"nofollow ugc\">#2997</a>: docs: update wpgraphql-concepts.md. Thanks @Jacob-Daniel!</li>\n<li><a href=\"https://github.com/wp-graphql/wp-graphql/pull/2996\" rel=\"nofollow ugc\">#2996</a>: fix: Field id duplicates uri field description. Thanks @marcinkrzeminski!</li>\n</ul>\n<p>View Full Changelog: https://github.com/wp-graphql/wp-graphql/blob/develop/CHANGELOG.md</p>\n\";s:11:\"screenshots\";s:347:\"<ol><li><a href=\"https://ps.w.org/wp-graphql/assets/screenshot-1.jpg?rev=2482884\"><img src=\"https://ps.w.org/wp-graphql/assets/screenshot-1.jpg?rev=2482884\" alt=\"\"></a></li><li><a href=\"https://ps.w.org/wp-graphql/assets/screenshot-2.jpg?rev=2482884\"><img src=\"https://ps.w.org/wp-graphql/assets/screenshot-2.jpg?rev=2482884\" alt=\"\"></a></li></ol>\";s:7:\"reviews\";s:16212:\"<div class=\"review\">\n	<div class=\"review-head\">\n		<div class=\"reviewer-info\">\n			<div class=\"review-title-section\">\n				<h4 class=\"review-title\">Speedy</h4>\n				<div class=\"star-rating\">\n				<div class=\"wporg-ratings\" aria-label=\"5 out of 5 stars\" data-title-template=\"%s out of 5 stars\" data-rating=\"5\" style=\"color:#ffb900;\"><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span></div>				</div>\n			</div>\n			<p class=\"reviewer\">\n				By <a href=\"https://profiles.wordpress.org/conschneider/\"><img alt=\'\' src=\'https://secure.gravatar.com/avatar/02a76d95b36cbc866cf2652b1a0739943346028e0564ba8735ed59744c41cfe7?s=16&#038;d=monsterid&#038;r=g\' srcset=\'https://secure.gravatar.com/avatar/02a76d95b36cbc866cf2652b1a0739943346028e0564ba8735ed59744c41cfe7?s=32&#038;d=monsterid&#038;r=g 2x\' class=\'avatar avatar-16 photo\' height=\'16\' width=\'16\' loading=\'lazy\' decoding=\'async\'/></a><a href=\"https://profiles.wordpress.org/conschneider/\" class=\"reviewer-name\">con <small>(conschneider)</small></a> on <span class=\"review-date\">March 26, 2025</span>			</p>\n		</div>\n	</div>\n	<div class=\"review-body\">GraphQL vs. REST API\n  10    :     0\n\nThank you for this plugin. Building my headless application with WPGraphQL is fun. \nThe repl interface to test queries is A+.</div>\n</div>\n<div class=\"review\">\n	<div class=\"review-head\">\n		<div class=\"reviewer-info\">\n			<div class=\"review-title-section\">\n				<h4 class=\"review-title\">Performance performance performance</h4>\n				<div class=\"star-rating\">\n				<div class=\"wporg-ratings\" aria-label=\"5 out of 5 stars\" data-title-template=\"%s out of 5 stars\" data-rating=\"5\" style=\"color:#ffb900;\"><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span></div>				</div>\n			</div>\n			<p class=\"reviewer\">\n				By <a href=\"https://profiles.wordpress.org/psychosispicks/\"><img alt=\'\' src=\'https://secure.gravatar.com/avatar/3168ee6eae340ca4a96c94efe8c2ed788e4787c98daec5f442c07aadfbf7d899?s=16&#038;d=monsterid&#038;r=g\' srcset=\'https://secure.gravatar.com/avatar/3168ee6eae340ca4a96c94efe8c2ed788e4787c98daec5f442c07aadfbf7d899?s=32&#038;d=monsterid&#038;r=g 2x\' class=\'avatar avatar-16 photo\' height=\'16\' width=\'16\' loading=\'lazy\' decoding=\'async\'/></a><a href=\"https://profiles.wordpress.org/psychosispicks/\" class=\"reviewer-name\">psychosispicks</a> on <span class=\"review-date\">September 7, 2023</span>			</p>\n		</div>\n	</div>\n	<div class=\"review-body\"><!-- wp:paragraph -->\n<p class=\"\">I\'m so glad I decided to transition to a headless WP, and WPGraphQL made this possible, convenient and super fast.</p>\n<!-- /wp:paragraph --></div>\n</div>\n<div class=\"review\">\n	<div class=\"review-head\">\n		<div class=\"reviewer-info\">\n			<div class=\"review-title-section\">\n				<h4 class=\"review-title\">Unreliable</h4>\n				<div class=\"star-rating\">\n				<div class=\"wporg-ratings\" aria-label=\"3 out of 5 stars\" data-title-template=\"%s out of 5 stars\" data-rating=\"3\" style=\"color:#ffb900;\"><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-empty\"></span><span class=\"star dashicons dashicons-star-empty\"></span></div>				</div>\n			</div>\n			<p class=\"reviewer\">\n				By <a href=\"https://profiles.wordpress.org/benknight/\"><img alt=\'\' src=\'https://secure.gravatar.com/avatar/acd1324f0b40dba22d7f0e6dcd13a7cba56e9c6aacd66f73e829d3acb4c28c26?s=16&#038;d=monsterid&#038;r=g\' srcset=\'https://secure.gravatar.com/avatar/acd1324f0b40dba22d7f0e6dcd13a7cba56e9c6aacd66f73e829d3acb4c28c26?s=32&#038;d=monsterid&#038;r=g 2x\' class=\'avatar avatar-16 photo\' height=\'16\' width=\'16\' loading=\'lazy\' decoding=\'async\'/></a><a href=\"https://profiles.wordpress.org/benknight/\" class=\"reviewer-name\">benknight</a> on <span class=\"review-date\">May 29, 2023</span>			</p>\n		</div>\n	</div>\n	<div class=\"review-body\"><!-- wp:paragraph -->\n<p>I operate a large blog that uses WordPress as a headless CMS with a Next.JS frontend, which is largely enabled by this plugin. Let me just say first that creating an entire alternative third-party data API is an ambitious undertaking and I appreciate all the work the authors have put into it.</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:paragraph -->\n<p>But as a developer I have to throw out a word of caution that this plugin often has major bugs that can have critical impact on your production website. For example after a recent minor update  we discovered a bug where any URL with a special character in it started returning a 404, causing several of our pages to suddenly become unavailable to users and delisted from Google, and this went on for many months before we realized it.</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:paragraph -->\n<p>There have been many similar instances. My general approach is to lean more on WordPress\'s REST API over time which is more reliable since it\'s maintained by the WordPress team, and only use WPGraphQL when it\'s necessary.</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:paragraph -->\n<p>Also recommend turning off auto-updates and test your website extremely thoroughly after any upgrade.</p>\n<!-- /wp:paragraph --></div>\n</div>\n<div class=\"review\">\n	<div class=\"review-head\">\n		<div class=\"reviewer-info\">\n			<div class=\"review-title-section\">\n				<h4 class=\"review-title\">Great! 10 stars if possible</h4>\n				<div class=\"star-rating\">\n				<div class=\"wporg-ratings\" aria-label=\"5 out of 5 stars\" data-title-template=\"%s out of 5 stars\" data-rating=\"5\" style=\"color:#ffb900;\"><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span></div>				</div>\n			</div>\n			<p class=\"reviewer\">\n				By <a href=\"https://profiles.wordpress.org/chisnghiax/\"><img alt=\'\' src=\'https://secure.gravatar.com/avatar/48a7f4f320763869961fad5d20a07b8996259921c3bb7fab4b5a2d4f6914e844?s=16&#038;d=monsterid&#038;r=g\' srcset=\'https://secure.gravatar.com/avatar/48a7f4f320763869961fad5d20a07b8996259921c3bb7fab4b5a2d4f6914e844?s=32&#038;d=monsterid&#038;r=g 2x\' class=\'avatar avatar-16 photo\' height=\'16\' width=\'16\' loading=\'lazy\' decoding=\'async\'/></a><a href=\"https://profiles.wordpress.org/chisnghiax/\" class=\"reviewer-name\">chisnghiax</a> on <span class=\"review-date\">September 7, 2022</span>			</p>\n		</div>\n	</div>\n	<div class=\"review-body\">Great!</div>\n</div>\n<div class=\"review\">\n	<div class=\"review-head\">\n		<div class=\"reviewer-info\">\n			<div class=\"review-title-section\">\n				<h4 class=\"review-title\">Great Plugin!</h4>\n				<div class=\"star-rating\">\n				<div class=\"wporg-ratings\" aria-label=\"5 out of 5 stars\" data-title-template=\"%s out of 5 stars\" data-rating=\"5\" style=\"color:#ffb900;\"><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span></div>				</div>\n			</div>\n			<p class=\"reviewer\">\n				By <a href=\"https://profiles.wordpress.org/2cubed/\"><img alt=\'\' src=\'https://secure.gravatar.com/avatar/76f1cb13f179e916222228b5452c294ab3d54740a875244305a8b09f3bcf6ea1?s=16&#038;d=monsterid&#038;r=g\' srcset=\'https://secure.gravatar.com/avatar/76f1cb13f179e916222228b5452c294ab3d54740a875244305a8b09f3bcf6ea1?s=32&#038;d=monsterid&#038;r=g 2x\' class=\'avatar avatar-16 photo\' height=\'16\' width=\'16\' loading=\'lazy\' decoding=\'async\'/></a><a href=\"https://profiles.wordpress.org/2cubed/\" class=\"reviewer-name\">2cubed</a> on <span class=\"review-date\">August 26, 2022</span>			</p>\n		</div>\n	</div>\n	<div class=\"review-body\">One of the best plugins for WordPress. It\'s right up there with ACF!</div>\n</div>\n<div class=\"review\">\n	<div class=\"review-head\">\n		<div class=\"reviewer-info\">\n			<div class=\"review-title-section\">\n				<h4 class=\"review-title\">Awesome, everybody should use it</h4>\n				<div class=\"star-rating\">\n				<div class=\"wporg-ratings\" aria-label=\"5 out of 5 stars\" data-title-template=\"%s out of 5 stars\" data-rating=\"5\" style=\"color:#ffb900;\"><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span></div>				</div>\n			</div>\n			<p class=\"reviewer\">\n				By <a href=\"https://profiles.wordpress.org/mauretto1978/\"><img alt=\'\' src=\'https://secure.gravatar.com/avatar/31a05155e279bd0f2b1f59c0768c20d89ff45c8461975a6a4f525377a912c3d2?s=16&#038;d=monsterid&#038;r=g\' srcset=\'https://secure.gravatar.com/avatar/31a05155e279bd0f2b1f59c0768c20d89ff45c8461975a6a4f525377a912c3d2?s=32&#038;d=monsterid&#038;r=g 2x\' class=\'avatar avatar-16 photo\' height=\'16\' width=\'16\' loading=\'lazy\' decoding=\'async\'/></a><a href=\"https://profiles.wordpress.org/mauretto1978/\" class=\"reviewer-name\">mauretto1978</a> on <span class=\"review-date\">May 31, 2022</span>			</p>\n		</div>\n	</div>\n	<div class=\"review-body\">Great plugin,\n\neveryone should use it. \n\nThe IDE is a valuable plus, and it can be used to learn GraphQL from scratch.\n\nFrom the developer\'s point of view, the plugin is super easy to extend, thanks to the great documentation.\n\nDon\'t forget to check the official YouTube channel.\n\nIf you need extra support for custom post types and metas, I just released v1.0.70 of my plugin ACPT with full support to WPGraphQL.\n\nThank you so much John!</div>\n</div>\n<div class=\"review\">\n	<div class=\"review-head\">\n		<div class=\"reviewer-info\">\n			<div class=\"review-title-section\">\n				<h4 class=\"review-title\">Excellent tool and support</h4>\n				<div class=\"star-rating\">\n				<div class=\"wporg-ratings\" aria-label=\"5 out of 5 stars\" data-title-template=\"%s out of 5 stars\" data-rating=\"5\" style=\"color:#ffb900;\"><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span></div>				</div>\n			</div>\n			<p class=\"reviewer\">\n				By <a href=\"https://profiles.wordpress.org/runonce/\"><img alt=\'\' src=\'https://secure.gravatar.com/avatar/07efd3c5d48f87c4f21b9a05731202a47508414cd2182b7999ce7f9608569da7?s=16&#038;d=monsterid&#038;r=g\' srcset=\'https://secure.gravatar.com/avatar/07efd3c5d48f87c4f21b9a05731202a47508414cd2182b7999ce7f9608569da7?s=32&#038;d=monsterid&#038;r=g 2x\' class=\'avatar avatar-16 photo\' height=\'16\' width=\'16\' loading=\'lazy\' decoding=\'async\'/></a><a href=\"https://profiles.wordpress.org/runonce/\" class=\"reviewer-name\">Camilo <small>(runonce)</small></a> on <span class=\"review-date\">April 25, 2022</span>			</p>\n		</div>\n	</div>\n	<div class=\"review-body\">Great tool for getting data from your WP into your SPA.\n\nI had some trouble with a conflicting plugin (Post Types Order) that caused unexpted results when paginating my posts but the support provided by both Jason Bahl and David Levine was absolutely top notch and I managed to resolve the issue within hours.</div>\n</div>\n<div class=\"review\">\n	<div class=\"review-head\">\n		<div class=\"reviewer-info\">\n			<div class=\"review-title-section\">\n				<h4 class=\"review-title\">Definitely Recommend</h4>\n				<div class=\"star-rating\">\n				<div class=\"wporg-ratings\" aria-label=\"5 out of 5 stars\" data-title-template=\"%s out of 5 stars\" data-rating=\"5\" style=\"color:#ffb900;\"><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span></div>				</div>\n			</div>\n			<p class=\"reviewer\">\n				By <a href=\"https://profiles.wordpress.org/turboloop/\"><img alt=\'\' src=\'https://secure.gravatar.com/avatar/51108af2f1d5e623e5ad554fad93e25ba067ec8fcf9b59173f60d0f2fadb0665?s=16&#038;d=monsterid&#038;r=g\' srcset=\'https://secure.gravatar.com/avatar/51108af2f1d5e623e5ad554fad93e25ba067ec8fcf9b59173f60d0f2fadb0665?s=32&#038;d=monsterid&#038;r=g 2x\' class=\'avatar avatar-16 photo\' height=\'16\' width=\'16\' loading=\'lazy\' decoding=\'async\'/></a><a href=\"https://profiles.wordpress.org/turboloop/\" class=\"reviewer-name\">turboloop</a> on <span class=\"review-date\">March 23, 2022</span>			</p>\n		</div>\n	</div>\n	<div class=\"review-body\">Over a year ago I switched from using REST to this plugin. I mainly build Angular Apps using Apollo client. Works perfectly fine and increases development speed.</div>\n</div>\n<div class=\"review\">\n	<div class=\"review-head\">\n		<div class=\"reviewer-info\">\n			<div class=\"review-title-section\">\n				<h4 class=\"review-title\">The Future</h4>\n				<div class=\"star-rating\">\n				<div class=\"wporg-ratings\" aria-label=\"5 out of 5 stars\" data-title-template=\"%s out of 5 stars\" data-rating=\"5\" style=\"color:#ffb900;\"><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span></div>				</div>\n			</div>\n			<p class=\"reviewer\">\n				By <a href=\"https://profiles.wordpress.org/scottyzen/\"><img alt=\'\' src=\'https://secure.gravatar.com/avatar/620520403665388b4e9bf60f8be32f83892e79a471e6de7ae565d9ece961936c?s=16&#038;d=monsterid&#038;r=g\' srcset=\'https://secure.gravatar.com/avatar/620520403665388b4e9bf60f8be32f83892e79a471e6de7ae565d9ece961936c?s=32&#038;d=monsterid&#038;r=g 2x\' class=\'avatar avatar-16 photo\' height=\'16\' width=\'16\' loading=\'lazy\' decoding=\'async\'/></a><a href=\"https://profiles.wordpress.org/scottyzen/\" class=\"reviewer-name\">scottyzen</a> on <span class=\"review-date\">December 3, 2021</span>			</p>\n		</div>\n	</div>\n	<div class=\"review-body\">This plugin is a game-changer. Once you start using it you really get a feel of how powerful it is. Why anyone would choose REST API now sounds crazy to me.</div>\n</div>\n<div class=\"review\">\n	<div class=\"review-head\">\n		<div class=\"reviewer-info\">\n			<div class=\"review-title-section\">\n				<h4 class=\"review-title\">Works great for Headless WordPress site with Gatsby</h4>\n				<div class=\"star-rating\">\n				<div class=\"wporg-ratings\" aria-label=\"5 out of 5 stars\" data-title-template=\"%s out of 5 stars\" data-rating=\"5\" style=\"color:#ffb900;\"><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span><span class=\"star dashicons dashicons-star-filled\"></span></div>				</div>\n			</div>\n			<p class=\"reviewer\">\n				By <a href=\"https://profiles.wordpress.org/ctack/\"><img alt=\'\' src=\'https://secure.gravatar.com/avatar/0c9b7241a875d4729d4da9cf758ff235276ae597756c96cdc1f26ddb1c9b38ca?s=16&#038;d=monsterid&#038;r=g\' srcset=\'https://secure.gravatar.com/avatar/0c9b7241a875d4729d4da9cf758ff235276ae597756c96cdc1f26ddb1c9b38ca?s=32&#038;d=monsterid&#038;r=g 2x\' class=\'avatar avatar-16 photo\' height=\'16\' width=\'16\' loading=\'lazy\' decoding=\'async\'/></a><a href=\"https://profiles.wordpress.org/ctack/\" class=\"reviewer-name\">Chris <small>(ctack)</small></a> on <span class=\"review-date\">September 10, 2021</span>			</p>\n		</div>\n	</div>\n	<div class=\"review-body\">Loving the ease of implementation for a headless WordPress site with a GatsbyJS front end</div>\n</div>\n\";}s:17:\"short_description\";s:136:\"WPGraphQL adds a flexible and powerful GraphQL API to WordPress, enabling efficient querying and interaction with your site&#039;s data.\";s:13:\"download_link\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.2.3.3.zip\";s:14:\"upgrade_notice\";a:17:{s:5:\"2.0.0\";s:418:\"<p><strong>BREAKING CHANGE UPDATE</strong></p>\n\n<p>This is a major update that drops support for PHP versions below 7.4 and WordPress versions below 6.0.</p>\n\n<p>We&#039;ve written more about the update here:</p>\n\n<ul>\n<li>https://www.wpgraphql.com/2024/12/16/wpgraphql-v2-0-is-coming-heres-what-you-need-to-know</li>\n<li>https://www.wpgraphql.com/2024/12/16/wpgraphql-v2-0-technical-update-breaking-changes</li>\n</ul>\";s:6:\"1.32.0\";s:399:\"<p>In #3293 a bug was fixed in how the <code>MediaDetails.file</code> field resolves. The previous behavior was a bug, but might have been used as a feature. If you need the field to behave the same as it did prior to this bugfix, you can <a href=\"https://github.com/wp-graphql/wp-graphql/pull/3293\">follow the instructions here</a> to override the field&#039;s resolver to how it worked before.</p>\";s:6:\"1.30.0\";s:546:\"<p>This release includes a new feature to implement a SemVer-compliant update checker, which will prevent auto-updates for major releases that include breaking changes.</p>\n\n<p>It also exposes the <code>EnqueuedAsset.group</code> and <code>EnqueuedScript.location</code> fields to the schema. Additionally, it adds a WPGraphQL Extensions page to the WordPress admin.</p>\n\n<p>There are no known breaking changes in this release, however, we recommend testing on staging servers to ensure the changes don&#039;t negatively impact your projects.</p>\";s:6:\"1.28.0\";s:395:\"<p>This release contains an internal refactor for how the Type Registry is generated which should lead to significant performance improvements for most users.</p>\n\n<p>While there are no intentional breaking changes, because this change impacts every user we highly recommend testing this release thoroughly on staging servers to ensure the changes don&#039;t negatively impact your projects.</p>\";s:6:\"1.26.0\";s:439:\"<p>This release refactors some code in the AbstractConnectionResolver with an aim at making it more efficient and easier to extend. While we believe there are no breaking changes and have tested against popular extensions such as WPGraphQL Headless Login, WPGraphQL Gravity Forms, WPGraphQL Rank Math and others, we recommend running your own tests on a staging site to confirm that there are no regresssions caused by the refactoring.</p>\";s:6:\"1.25.0\";s:205:\"<p>This release includes a fix to a regression in the v1.24.0. Users impacted by the regression in 1.24.0 included, but are not necessarily limited to, users of the WPGraphQL for WooCommerce extension.</p>\";s:6:\"1.24.0\";s:750:\"<p>The AbstractConnectionResolver has undergone some refactoring. Some methods using <code>snakeCase</code> have been deprecated in favor of their <code>camel_case</code> equivalent. While we&#039;ve preserved the deprecated methods to prevent breaking changes, you might begin seeing PHP notices about the deprecations. Any plugin that extends the AbstractConnectionResolver should update the following methods:</p>\n\n<ul>\n<li><code>getSource</code> -&gt; <code>get_source</code></li>\n<li><code>getContext</code> -&gt; <code>get_context</code></li>\n<li><code>getInfo</code> -&gt; <code>get_info</code></li>\n<li><code>getShouldExecute</code> -&gt; <code>get_should_execute</code></li>\n<li><code>getLoader</code> -&gt; <code>getLoader</code></li>\n</ul>\";s:6:\"1.16.0\";s:619:\"<p><strong>WPGraphQL Smart Cache</strong>\nFor WPGraphQL Smart Cache users, you should update WPGraphQL Smart Cache to v1.2.0 when updating\nWPGraphQL to v1.16.0 to ensure caches continue to purge as expected.</p>\n\n<p><strong>Cursor Pagination Updates</strong>\nThis version fixes some behaviors of Cursor Pagination which <em>may</em> lead to behavior changes in your application.</p>\n\n<p>As with any release, we recommend you test in staging environments. For this release, specifically any\nqueries you have using pagination arguments (<code>first</code>, <code>last</code>, <code>after</code>, <code>before</code>).</p>\";s:6:\"1.14.6\";s:328:\"<p>This release includes a security patch. It&#039;s recommended to update as soon as possible.</p>\n\n<p>If you&#039;re unable to update to the latest version, we have a snippet you can add to your site.</p>\n\n<p>You can read more about it here: https://github.com/wp-graphql/wp-graphql/security/advisories/GHSA-cfh4-7wq9-6pgg</p>\";s:6:\"1.13.0\";s:1273:\"<p>The <code>ContentRevisionUnion</code> Union has been removed, and the <code>RootQuery.revisions</code> and <code>User.revisions</code> connections that used to resolve to this Type now resolve to the <code>ContentNode</code> Interface type.</p>\n\n<p>This is <em>technically</em> a Schema Breaking change, however the behavior for most users querying these fields should remain the same.</p>\n\n<p>For example, this query worked before, and still works now:</p>\n\n<pre><code>`graphql\n</code></pre>\n\n<p>{\n  viewer {\n    revisions {\n      nodes {\n        __typename\n        ... on Post {\n          id\n          uri\n          isRevision\n        }\n        ... on Page {\n          id\n          uri\n          isRevision\n        }\n      }\n    }\n  }\n  revisions {\n    nodes {\n      __typename\n      ... on Post {\n        id\n        uri\n        isRevision\n      }\n      ... on Page {\n        id\n        uri\n        isRevision\n      }\n    }\n  }\n}\n    `</p>\n\n<p>If you were using a fragment to reference: <code>...on UserToContentRevisionUnionConnection</code> or <code>...on RootQueryToContentRevisionUnionConnection</code> you would need to update those references to <code>...on UserToRevisionsConnection</code> and <code>...on RootQueryToRevisionsConnection</code> respectively.</p>\";s:6:\"1.12.0\";s:860:\"<p>This release removes the <code>ContentNode</code> and <code>DatabaseIdentifier</code> interfaces from the <code>NodeWithFeaturedImage</code> Interface.</p>\n\n<p>This is considered a breaking change for client applications using a <code>...on NodeWithFeaturedImage</code> fragment that reference fields applied by those interfaces. If you have client applications doing this (or are unsure if you do) you can use the following filter to bring back the previous behavior:</p>\n\n<pre><code>`php\n</code></pre>\n\n<p>add_filter( &#039;graphql_wp_interface_type_config&#039;, function( $config ) {\n    if ( $config[&#039;name&#039;] === &#039;NodeWithFeaturedImage&#039; ) {\n        $config[&#039;interfaces&#039;][] = &#039;ContentNode&#039;;\n        $config[&#039;interfaces&#039;][] = &#039;DatabaseIdentifier&#039;;\n    }\n    return $config;\n}, 10, 1 );\n    `</p>\";s:6:\"1.10.0\";s:556:\"<p>PR (<a href=\"https://github.com/wp-graphql/wp-graphql/pull/2490\">#2490</a>) fixes a bug that some users were\nusing as a feature.</p>\n\n<p>When a page is marked as the &quot;Posts Page&quot; WordPress does not resolve that page by URI, and this\nbugfix no longer will resolve that page by URI.</p>\n\n<p>You can <a href=\"https://github.com/wp-graphql/wp-graphql/issues/2486#issuecomment-1232169375\">read more</a>\nabout why this change was made and find a snippet of code that will bring the old functionality back\nif you&#039;ve built features around it.</p>\";s:5:\"1.9.0\";s:1273:\"<p>There are 2 changes that <strong>might</strong> require action when updating to 1.9.0.</p>\n\n<ol>\n<li>(<a href=\"https://github.com/wp-graphql/wp-graphql/pull/2464\">#2464</a>)</li>\n</ol>\n\n<p>When querying for a <code>nodeByUri</code>, if your site has the &quot;page_for_posts&quot; setting configured, the behavior of the <code>nodeByUri</code> query for that uri might be different for you.</p>\n\n<p>Previously a bug caused this query to return a &quot;Page&quot; type, when it should have returned a &quot;ContentType&quot; Type.</p>\n\n<p>The bug fix might change your application if you were using the bug as a feature.</p>\n\n<ol start=\"2\">\n<li>(<a href=\"https://github.com/wp-graphql/wp-graphql/pull/2457\">#2457</a>)</li>\n</ol>\n\n<p>There were a lot of bug fixes related to connections to ensure they behave as intended. If you were querying lists of data, in some cases the data might be returned in a different order than it was before.</p>\n\n<p>For example, using the &quot;last&quot; input on a Comment or User query should still return the same nodes, but in a different order than before.</p>\n\n<p>This might cause behavior you don&#039;t want in your application because you had coded around the bug. This change was needed to support proper backward pagination.</p>\";s:5:\"1.6.7\";s:2028:\"<p>There&#039;s been a bugfix in the Post Model layer which <em>might</em> break existing behaviors.</p>\n\n<p>WordPress Post Type registry allows for a post_type to be registered as <code>public</code> (<code>true</code> or <code>false</code>)\nand <code>publicly_queryable</code> (<code>true</code> or <code>false</code>).</p>\n\n<p>WPGraphQL&#039;s Model Layer was allowing published content of any post_type to be exposed publicly. This\nchange better respects the <code>public</code> and <code>publicly_queryable</code> properties of post types better.</p>\n\n<p>Now, if a post_type is <code>public=&amp;gt;true</code>, published content of that post_type can be queried by public\nWPGraphQL requests.</p>\n\n<p>If a <code>post_type</code> is set to <code>public=&amp;gt;false</code>, then we fallback to the <code>publicly_queryable</code> property.\nIf a post_type is set to <code>publicly_queryable =&amp;gt; true</code>, then published content of the Post Type can\nbe queried in WPGraphQL by public users.</p>\n\n<p>If both <code>public=&amp;gt;false</code> and <code>publicly_queryable</code> is <code>false</code> or not defined, then the content of the\npost_type will only be accessible via authenticated queries by users with proper capabilities to\naccess the post_type.</p>\n\n<p><strong>Possible Action:</strong> You might need to adjust your post_type registration to better reflect your intent.</p>\n\n<ul>\n<li><code>public=&amp;gt;true</code>: The entries in the post_type will be public in WPGraphQL and will have a public\nURI in WordPress.</li>\n<li><code>public=&amp;gt;false, publicly_queryable=&amp;gt;true</code>: The entries in the post_type will be public in WPGraphQL,\nbut will not have individually respected URI from WordPress, and can not be queried by URI in WPGraphQL.</li>\n<li><code>public=&amp;gt;false,publicly_queryable=&amp;gt;false</code>: The entries in the post_type will only be accessible in\nWPGraphQL by authenticated requests for users with proper capabilities to interact with the post_type.</li>\n</ul>\";s:5:\"1.5.0\";s:157:\"<p>The <code>MenuItem.path</code> field was changed from <code>non-null</code> to nullable and some clients may need to make adjustments to support this.</p>\";s:5:\"1.4.0\";s:211:\"<p>The <code>uri</code> field was non-null on some Types in the Schema but has been changed to be nullable on all types that have it. This might require clients to update code to expect possible null values.</p>\";s:5:\"1.2.0\";s:179:\"<p>Composer dependencies are no longer versioned in Github. Recommended install source is WordPress.org or using Composer to get the code from Packagist.org or WPackagist.org.</p>\";}s:11:\"screenshots\";a:2:{i:1;a:2:{s:3:\"src\";s:63:\"https://ps.w.org/wp-graphql/assets/screenshot-1.jpg?rev=2482884\";s:7:\"caption\";s:0:\"\";}i:2;a:2:{s:3:\"src\";s:63:\"https://ps.w.org/wp-graphql/assets/screenshot-2.jpg?rev=2482884\";s:7:\"caption\";s:0:\"\";}}s:4:\"tags\";a:5:{s:9:\"decoupled\";s:9:\"decoupled\";s:7:\"graphql\";s:7:\"GraphQL\";s:8:\"headless\";s:8:\"headless\";s:5:\"react\";s:5:\"react\";s:8:\"rest-api\";s:8:\"rest-api\";}s:8:\"versions\";a:143:{s:8:\"0.1.14.1\";s:62:\"https://downloads.wordpress.org/plugin/wp-graphql.0.1.14.1.zip\";s:6:\"0.15.4\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.0.15.4.zip\";s:6:\"0.15.5\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.0.15.5.zip\";s:6:\"0.15.6\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.0.15.6.zip\";s:3:\"1.0\";s:57:\"https://downloads.wordpress.org/plugin/wp-graphql.1.0.zip\";s:5:\"1.0.1\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.0.1.zip\";s:5:\"1.0.2\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.0.2.zip\";s:5:\"1.0.3\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.0.3.zip\";s:5:\"1.0.4\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.0.4.zip\";s:5:\"1.0.5\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.0.5.zip\";s:5:\"1.1.0\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.1.0.zip\";s:5:\"1.1.1\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.1.1.zip\";s:5:\"1.1.2\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.1.2.zip\";s:5:\"1.1.3\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.1.3.zip\";s:5:\"1.1.4\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.1.4.zip\";s:5:\"1.1.5\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.1.5.zip\";s:5:\"1.1.6\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.1.6.zip\";s:5:\"1.1.7\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.1.7.zip\";s:5:\"1.1.8\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.1.8.zip\";s:7:\"1.1.8.0\";s:61:\"https://downloads.wordpress.org/plugin/wp-graphql.1.1.8.0.zip\";s:6:\"1.10.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.10.0.zip\";s:6:\"1.11.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.11.0.zip\";s:6:\"1.11.1\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.11.1.zip\";s:6:\"1.11.2\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.11.2.zip\";s:6:\"1.11.3\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.11.3.zip\";s:6:\"1.12.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.12.0.zip\";s:6:\"1.12.1\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.12.1.zip\";s:6:\"1.12.2\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.12.2.zip\";s:6:\"1.12.3\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.12.3.zip\";s:6:\"1.13.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.13.0.zip\";s:6:\"1.13.1\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.13.1.zip\";s:7:\"1.13.10\";s:61:\"https://downloads.wordpress.org/plugin/wp-graphql.1.13.10.zip\";s:6:\"1.13.2\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.13.2.zip\";s:6:\"1.13.4\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.13.4.zip\";s:6:\"1.13.5\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.13.5.zip\";s:6:\"1.13.6\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.13.6.zip\";s:6:\"1.13.7\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.13.7.zip\";s:6:\"1.13.8\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.13.8.zip\";s:6:\"1.13.9\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.13.9.zip\";s:6:\"1.14.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.14.0.zip\";s:7:\"1.14.10\";s:61:\"https://downloads.wordpress.org/plugin/wp-graphql.1.14.10.zip\";s:6:\"1.14.2\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.14.2.zip\";s:6:\"1.14.3\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.14.3.zip\";s:6:\"1.14.4\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.14.4.zip\";s:6:\"1.14.5\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.14.5.zip\";s:6:\"1.14.6\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.14.6.zip\";s:6:\"1.14.7\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.14.7.zip\";s:6:\"1.14.8\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.14.8.zip\";s:6:\"1.14.9\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.14.9.zip\";s:6:\"1.15.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.15.0.zip\";s:6:\"1.16.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.16.0.zip\";s:6:\"1.17.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.17.0.zip\";s:6:\"1.18.1\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.18.1.zip\";s:6:\"1.18.2\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.18.2.zip\";s:6:\"1.19.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.19.0.zip\";s:5:\"1.2.0\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.2.0.zip\";s:5:\"1.2.1\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.2.1.zip\";s:5:\"1.2.2\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.2.2.zip\";s:5:\"1.2.3\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.2.3.zip\";s:5:\"1.2.4\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.2.4.zip\";s:5:\"1.2.5\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.2.5.zip\";s:5:\"1.2.6\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.2.6.zip\";s:6:\"1.20.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.20.0.zip\";s:6:\"1.21.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.21.0.zip\";s:6:\"1.22.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.22.0.zip\";s:6:\"1.22.1\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.22.1.zip\";s:6:\"1.23.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.23.0.zip\";s:6:\"1.24.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.24.0.zip\";s:6:\"1.25.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.25.0.zip\";s:6:\"1.26.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.26.0.zip\";s:6:\"1.27.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.27.0.zip\";s:6:\"1.27.1\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.27.1.zip\";s:6:\"1.27.2\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.27.2.zip\";s:6:\"1.28.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.28.0.zip\";s:6:\"1.28.1\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.28.1.zip\";s:6:\"1.29.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.29.0.zip\";s:6:\"1.29.1\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.29.1.zip\";s:6:\"1.29.2\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.29.2.zip\";s:6:\"1.29.3\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.29.3.zip\";s:5:\"1.3.0\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.3.0.zip\";s:5:\"1.3.1\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.3.1.zip\";s:6:\"1.3.10\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.3.10.zip\";s:5:\"1.3.2\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.3.2.zip\";s:5:\"1.3.3\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.3.3.zip\";s:5:\"1.3.4\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.3.4.zip\";s:5:\"1.3.5\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.3.5.zip\";s:5:\"1.3.6\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.3.6.zip\";s:5:\"1.3.7\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.3.7.zip\";s:5:\"1.3.8\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.3.8.zip\";s:5:\"1.3.9\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.3.9.zip\";s:6:\"1.30.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.30.0.zip\";s:6:\"1.31.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.31.0.zip\";s:6:\"1.31.1\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.31.1.zip\";s:6:\"1.32.0\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.32.0.zip\";s:6:\"1.32.1\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.32.1.zip\";s:5:\"1.4.0\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.4.0.zip\";s:5:\"1.4.1\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.4.1.zip\";s:5:\"1.4.2\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.4.2.zip\";s:5:\"1.4.3\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.4.3.zip\";s:5:\"1.5.0\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.5.0.zip\";s:5:\"1.5.1\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.5.1.zip\";s:5:\"1.5.2\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.5.2.zip\";s:5:\"1.5.3\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.5.3.zip\";s:5:\"1.5.4\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.5.4.zip\";s:5:\"1.5.5\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.5.5.zip\";s:5:\"1.5.6\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.5.6.zip\";s:5:\"1.5.7\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.5.7.zip\";s:5:\"1.5.8\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.5.8.zip\";s:5:\"1.5.9\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.5.9.zip\";s:5:\"1.6.0\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.6.0.zip\";s:5:\"1.6.1\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.6.1.zip\";s:6:\"1.6.10\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.6.10.zip\";s:6:\"1.6.11\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.6.11.zip\";s:6:\"1.6.12\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.1.6.12.zip\";s:5:\"1.6.2\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.6.2.zip\";s:5:\"1.6.3\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.6.3.zip\";s:5:\"1.6.4\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.6.4.zip\";s:5:\"1.6.5\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.6.5.zip\";s:5:\"1.6.6\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.6.6.zip\";s:5:\"1.6.7\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.6.7.zip\";s:5:\"1.6.8\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.6.8.zip\";s:5:\"1.6.9\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.6.9.zip\";s:5:\"1.7.0\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.7.0.zip\";s:5:\"1.7.1\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.7.1.zip\";s:5:\"1.7.2\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.7.2.zip\";s:5:\"1.8.0\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.8.0.zip\";s:5:\"1.8.1\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.8.1.zip\";s:5:\"1.8.2\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.8.2.zip\";s:5:\"1.8.3\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.8.3.zip\";s:5:\"1.8.4\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.8.4.zip\";s:5:\"1.8.5\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.8.5.zip\";s:5:\"1.8.6\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.8.6.zip\";s:5:\"1.8.7\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.8.7.zip\";s:5:\"1.9.0\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.9.0.zip\";s:5:\"1.9.1\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.1.9.1.zip\";s:5:\"2.0.0\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.2.0.0.zip\";s:12:\"2.0.0-beta.2\";s:66:\"https://downloads.wordpress.org/plugin/wp-graphql.2.0.0-beta.2.zip\";s:5:\"2.1.0\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.2.1.0.zip\";s:5:\"2.2.0\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.2.2.0.zip\";s:5:\"2.3.0\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.2.3.0.zip\";s:5:\"2.3.3\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.2.3.3.zip\";s:5:\"trunk\";s:53:\"https://downloads.wordpress.org/plugin/wp-graphql.zip\";s:6:\"v2.1.1\";s:60:\"https://downloads.wordpress.org/plugin/wp-graphql.v2.1.1.zip\";}s:14:\"business_model\";s:9:\"community\";s:14:\"repository_url\";s:40:\"https://github.com/wp-graphql/wp-graphql\";s:22:\"commercial_support_url\";s:0:\"\";s:11:\"donate_link\";s:0:\"\";s:7:\"banners\";a:2:{s:3:\"low\";s:65:\"https://ps.w.org/wp-graphql/assets/banner-772x250.png?rev=3111985\";s:4:\"high\";s:66:\"https://ps.w.org/wp-graphql/assets/banner-1544x500.png?rev=3111985\";}s:5:\"icons\";a:2:{s:2:\"1x\";s:63:\"https://ps.w.org/wp-graphql/assets/icon-128x128.png?rev=3111985\";s:2:\"2x\";s:63:\"https://ps.w.org/wp-graphql/assets/icon-256x256.png?rev=3111985\";}s:12:\"preview_link\";s:51:\"https://wordpress.org/plugins/wp-graphql/?preview=1\";s:4:\"Name\";s:9:\"WPGraphQL\";}}','off');
+INSERT INTO `wp_options` VALUES (183,'vibemake_sample_content_created','1','auto');
+INSERT INTO `wp_options` VALUES (187,'community_type_children','a:0:{}','auto');
+INSERT INTO `wp_options` VALUES (191,'news_category_children','a:0:{}','auto');
+INSERT INTO `wp_options` VALUES (192,'wp_calendar_block_has_published_posts','1','auto');
+INSERT INTO `wp_options` VALUES (198,'finished_updating_comment_type','1','auto');
+INSERT INTO `wp_options` VALUES (232,'wp-graphql_tracking_last_send','1751298136','auto');
+INSERT INTO `wp_options` VALUES (233,'wpgraphql-acf_tracking_last_send','1751298139','auto');
+INSERT INTO `wp_options` VALUES (269,'_transient_health-check-site-status-result','{\"good\":17,\"recommended\":3,\"critical\":0}','on');
+INSERT INTO `wp_options` VALUES (316,'tool_category_children','a:0:{}','auto');
+INSERT INTO `wp_options` VALUES (331,'creation_type_children','a:0:{}','auto');
+INSERT INTO `wp_options` VALUES (382,'_site_transient_update_plugins','O:8:\"stdClass\":5:{s:12:\"last_checked\";i:1751755466;s:8:\"response\";a:0:{}s:12:\"translations\";a:0:{}s:9:\"no_update\";a:3:{s:30:\"advanced-custom-fields/acf.php\";O:8:\"stdClass\":10:{s:2:\"id\";s:36:\"w.org/plugins/advanced-custom-fields\";s:4:\"slug\";s:22:\"advanced-custom-fields\";s:6:\"plugin\";s:30:\"advanced-custom-fields/acf.php\";s:11:\"new_version\";s:5:\"6.4.2\";s:3:\"url\";s:53:\"https://wordpress.org/plugins/advanced-custom-fields/\";s:7:\"package\";s:71:\"https://downloads.wordpress.org/plugin/advanced-custom-fields.6.4.2.zip\";s:5:\"icons\";a:2:{s:2:\"1x\";s:67:\"https://ps.w.org/advanced-custom-fields/assets/icon.svg?rev=3207824\";s:3:\"svg\";s:67:\"https://ps.w.org/advanced-custom-fields/assets/icon.svg?rev=3207824\";}s:7:\"banners\";a:2:{s:2:\"2x\";s:78:\"https://ps.w.org/advanced-custom-fields/assets/banner-1544x500.jpg?rev=3207824\";s:2:\"1x\";s:77:\"https://ps.w.org/advanced-custom-fields/assets/banner-772x250.jpg?rev=3207824\";}s:11:\"banners_rtl\";a:0:{}s:8:\"requires\";s:3:\"6.0\";}s:25:\"wp-graphql/wp-graphql.php\";O:8:\"stdClass\":10:{s:2:\"id\";s:24:\"w.org/plugins/wp-graphql\";s:4:\"slug\";s:10:\"wp-graphql\";s:6:\"plugin\";s:25:\"wp-graphql/wp-graphql.php\";s:11:\"new_version\";s:5:\"2.3.3\";s:3:\"url\";s:41:\"https://wordpress.org/plugins/wp-graphql/\";s:7:\"package\";s:59:\"https://downloads.wordpress.org/plugin/wp-graphql.2.3.3.zip\";s:5:\"icons\";a:2:{s:2:\"2x\";s:63:\"https://ps.w.org/wp-graphql/assets/icon-256x256.png?rev=3111985\";s:2:\"1x\";s:63:\"https://ps.w.org/wp-graphql/assets/icon-128x128.png?rev=3111985\";}s:7:\"banners\";a:2:{s:2:\"2x\";s:66:\"https://ps.w.org/wp-graphql/assets/banner-1544x500.png?rev=3111985\";s:2:\"1x\";s:65:\"https://ps.w.org/wp-graphql/assets/banner-772x250.png?rev=3111985\";}s:11:\"banners_rtl\";a:0:{}s:8:\"requires\";s:3:\"6.0\";}s:31:\"wpgraphql-acf/wpgraphql-acf.php\";O:8:\"stdClass\":10:{s:2:\"id\";s:27:\"w.org/plugins/wpgraphql-acf\";s:4:\"slug\";s:13:\"wpgraphql-acf\";s:6:\"plugin\";s:31:\"wpgraphql-acf/wpgraphql-acf.php\";s:11:\"new_version\";s:5:\"2.4.1\";s:3:\"url\";s:44:\"https://wordpress.org/plugins/wpgraphql-acf/\";s:7:\"package\";s:62:\"https://downloads.wordpress.org/plugin/wpgraphql-acf.2.4.1.zip\";s:5:\"icons\";a:2:{s:2:\"2x\";s:66:\"https://ps.w.org/wpgraphql-acf/assets/icon-256x256.png?rev=3125402\";s:2:\"1x\";s:66:\"https://ps.w.org/wpgraphql-acf/assets/icon-128x128.png?rev=3125402\";}s:7:\"banners\";a:2:{s:2:\"2x\";s:69:\"https://ps.w.org/wpgraphql-acf/assets/banner-1544x500.png?rev=3125402\";s:2:\"1x\";s:68:\"https://ps.w.org/wpgraphql-acf/assets/banner-772x250.png?rev=3125402\";}s:11:\"banners_rtl\";a:0:{}s:8:\"requires\";s:3:\"5.9\";}}s:7:\"checked\";a:5:{s:30:\"advanced-custom-fields/acf.php\";s:5:\"6.4.2\";s:31:\"vibemake-core/vibemake-core.php\";s:5:\"1.0.0\";s:31:\"wordpress-mcp/wordpress-mcp.php\";s:5:\"0.2.3\";s:25:\"wp-graphql/wp-graphql.php\";s:5:\"2.3.3\";s:31:\"wpgraphql-acf/wpgraphql-acf.php\";s:5:\"2.4.1\";}}','off');
+INSERT INTO `wp_options` VALUES (383,'wordpress_mcp_settings','a:6:{s:7:\"enabled\";b:1;s:24:\"features_adapter_enabled\";b:0;s:19:\"enable_create_tools\";b:1;s:19:\"enable_update_tools\";b:1;s:19:\"enable_delete_tools\";b:1;s:26:\"enable_rest_api_crud_tools\";b:1;}','auto');
+INSERT INTO `wp_options` VALUES (384,'wpmcp_jwt_secret_key','wx9n1Rdy|lrH`.W(RU>P&^S$dQ9aBslsp(7pIX6CoQm_K~q%7dOw5b.bP0?gO,N0','auto');
+INSERT INTO `wp_options` VALUES (385,'jwt_token_registry','a:1:{s:32:\"0mS2EAzGqsCERFnwW8ACcWfwibM2Bo2q\";a:4:{s:7:\"user_id\";i:1;s:9:\"issued_at\";i:1751995548;s:10:\"expires_at\";i:1752081948;s:7:\"revoked\";b:0;}}','auto');
+INSERT INTO `wp_options` VALUES (395,'auto_update_plugins','a:3:{i:0;s:31:\"wpgraphql-acf/wpgraphql-acf.php\";i:1;s:30:\"advanced-custom-fields/acf.php\";i:2;s:48:\"wpgraphql-smart-cache/wp-graphql-smart-cache.php\";}','off');
+INSERT INTO `wp_options` VALUES (572,'widget_wpe_powered_by_widget','a:1:{s:12:\"_multiwidget\";i:1;}','auto');
+INSERT INTO `wp_options` VALUES (573,'wpe_feature_flags','a:4:{s:29:\"showUpdateProviderHealthPanel\";b:1;s:23:\"showCurrentUpdateSource\";b:1;s:25:\"showUpdateSourceSelection\";b:1;s:19:\"allowSourceOverride\";b:1;}','auto');
+INSERT INTO `wp_options` VALUES (574,'wpe_feature_flags_expiration','1752112196','auto');
+INSERT INTO `wp_options` VALUES (575,'wpe_site_transient_update_core','O:8:\"stdClass\":4:{s:7:\"updates\";a:1:{i:0;O:8:\"stdClass\":10:{s:8:\"response\";s:6:\"latest\";s:8:\"download\";s:62:\"https://wpe-downloads.wpengine.com/release/wordpress-6.8.1.zip\";s:6:\"locale\";s:5:\"en_US\";s:8:\"packages\";O:8:\"stdClass\":5:{s:4:\"full\";s:62:\"https://wpe-downloads.wpengine.com/release/wordpress-6.8.1.zip\";s:10:\"no_content\";s:73:\"https://wpe-downloads.wpengine.com/release/wordpress-6.8.1-no-content.zip\";s:11:\"new_bundled\";s:74:\"https://wpe-downloads.wpengine.com/release/wordpress-6.8.1-new-bundled.zip\";s:7:\"partial\";s:0:\"\";s:8:\"rollback\";s:0:\"\";}s:7:\"current\";s:5:\"6.8.1\";s:7:\"version\";s:5:\"6.8.1\";s:11:\"php_version\";s:6:\"7.2.24\";s:13:\"mysql_version\";s:5:\"5.5.5\";s:11:\"new_bundled\";s:3:\"6.7\";s:15:\"partial_version\";s:0:\"\";}}s:12:\"last_checked\";i:1752110024;s:15:\"version_checked\";s:5:\"6.8.1\";s:12:\"translations\";a:0:{}}','off');
+INSERT INTO `wp_options` VALUES (578,'wpe_notices','a:0:{}','auto');
+INSERT INTO `wp_options` VALUES (579,'wpe_notices_expiration','1752111759','auto');
+INSERT INTO `wp_options` VALUES (580,'wpe-health-check-site-status-result','{\"good\":18,\"recommended\":3,\"critical\":1}','auto');
+INSERT INTO `wp_options` VALUES (581,'https_migration_required','1','auto');
+INSERT INTO `wp_options` VALUES (582,'wpe_site_transient_update_themes','O:8:\"stdClass\":5:{s:12:\"last_checked\";i:1752110025;s:7:\"checked\";a:1:{s:12:\"vibemake-api\";s:5:\"1.0.0\";}s:8:\"response\";a:0:{}s:9:\"no_update\";a:0:{}s:12:\"translations\";a:0:{}}','off');
+INSERT INTO `wp_options` VALUES (744,'wpe_site_transient_update_plugins','O:8:\"stdClass\":5:{s:12:\"last_checked\";i:1752110028;s:8:\"response\";a:0:{}s:12:\"translations\";a:0:{}s:9:\"no_update\";a:4:{s:30:\"advanced-custom-fields/acf.php\";O:8:\"stdClass\":17:{s:2:\"id\";s:36:\"w.org/plugins/advanced-custom-fields\";s:4:\"slug\";s:22:\"advanced-custom-fields\";s:6:\"plugin\";s:30:\"advanced-custom-fields/acf.php\";s:11:\"new_version\";s:5:\"6.4.2\";s:3:\"url\";s:53:\"https://wordpress.org/plugins/advanced-custom-fields/\";s:7:\"package\";s:80:\"https://connect.advancedcustomfields.com/v2/plugins/download?p=acf&s=wpe&t=6.4.2\";s:5:\"icons\";a:2:{s:2:\"1x\";s:78:\"https://wpe-plugin-updates.wpengine.com/advanced-custom-fields/assets/icon.svg\";s:3:\"svg\";s:78:\"https://wpe-plugin-updates.wpengine.com/advanced-custom-fields/assets/icon.svg\";}s:7:\"banners\";a:2:{s:3:\"low\";s:100:\"https://wpe-plugin-updates.wpengine.com/advanced-custom-fields/assets/banner-772x250.jpg?rev=3096880\";s:4:\"high\";s:101:\"https://wpe-plugin-updates.wpengine.com/advanced-custom-fields/assets/banner-1544x500.jpg?rev=3096880\";}s:11:\"banners_rtl\";a:0:{}s:6:\"tested\";s:3:\"6.7\";s:8:\"requires\";s:3:\"6.0\";s:12:\"requires_php\";s:3:\"7.4\";s:16:\"requires_plugins\";a:0:{}s:6:\"rating\";i:96;s:11:\"num_ratings\";i:1220;s:15:\"support_threads\";i:48;s:24:\"support_threads_resolved\";i:47;}s:25:\"wp-graphql/wp-graphql.php\";O:8:\"stdClass\":17:{s:2:\"id\";s:24:\"w.org/plugins/wp-graphql\";s:4:\"slug\";s:10:\"wp-graphql\";s:6:\"plugin\";s:25:\"wp-graphql/wp-graphql.php\";s:11:\"new_version\";s:5:\"2.3.3\";s:3:\"url\";s:41:\"https://wordpress.org/plugins/wp-graphql/\";s:7:\"package\";s:67:\"https://plugin-updates.wpengine.com/wp-graphql/wp-graphql.2.3.3.zip\";s:5:\"icons\";a:2:{s:2:\"1x\";s:70:\"https://plugin-updates.wpengine.com/wp-graphql/assets/icon-128x128.png\";s:2:\"2x\";s:70:\"https://plugin-updates.wpengine.com/wp-graphql/assets/icon-256x256.png\";}s:7:\"banners\";a:2:{s:3:\"low\";s:84:\"https://plugin-updates.wpengine.com/wp-graphql/assets/banner-772x250.png?rev=3111985\";s:4:\"high\";s:85:\"https://plugin-updates.wpengine.com/wp-graphql/assets/banner-1544x500.png?rev=3111985\";}s:11:\"banners_rtl\";a:0:{}s:6:\"tested\";s:5:\"6.8.1\";s:8:\"requires\";s:3:\"6.0\";s:12:\"requires_php\";s:3:\"7.4\";s:16:\"requires_plugins\";a:0:{}s:6:\"rating\";i:98;s:11:\"num_ratings\";i:48;s:15:\"support_threads\";i:1;s:24:\"support_threads_resolved\";i:0;}s:31:\"wpgraphql-acf/wpgraphql-acf.php\";O:8:\"stdClass\":17:{s:2:\"id\";s:27:\"w.org/plugins/wpgraphql-acf\";s:4:\"slug\";s:13:\"wpgraphql-acf\";s:6:\"plugin\";s:31:\"wpgraphql-acf/wpgraphql-acf.php\";s:11:\"new_version\";s:5:\"2.4.1\";s:3:\"url\";s:44:\"https://wordpress.org/plugins/wpgraphql-acf/\";s:7:\"package\";s:73:\"https://plugin-updates.wpengine.com/wpgraphql-acf/wpgraphql-acf.2.4.1.zip\";s:5:\"icons\";a:2:{s:2:\"1x\";s:73:\"https://plugin-updates.wpengine.com/wpgraphql-acf/assets/icon-128x128.png\";s:2:\"2x\";s:73:\"https://plugin-updates.wpengine.com/wpgraphql-acf/assets/icon-256x256.png\";}s:7:\"banners\";a:2:{s:3:\"low\";s:87:\"https://plugin-updates.wpengine.com/wpgraphql-acf/assets/banner-772x250.png?rev=3125402\";s:4:\"high\";s:88:\"https://plugin-updates.wpengine.com/wpgraphql-acf/assets/banner-1544x500.png?rev=3125402\";}s:11:\"banners_rtl\";a:0:{}s:6:\"tested\";s:5:\"6.5.5\";s:8:\"requires\";s:3:\"5.9\";s:12:\"requires_php\";s:3:\"7.3\";s:16:\"requires_plugins\";a:1:{i:0;s:10:\"wp-graphql\";}s:6:\"rating\";i:100;s:11:\"num_ratings\";i:1;s:15:\"support_threads\";i:0;s:24:\"support_threads_resolved\";i:0;}s:48:\"wpgraphql-smart-cache/wp-graphql-smart-cache.php\";O:8:\"stdClass\":17:{s:2:\"id\";s:35:\"w.org/plugins/wpgraphql-smart-cache\";s:4:\"slug\";s:21:\"wpgraphql-smart-cache\";s:6:\"plugin\";s:48:\"wpgraphql-smart-cache/wp-graphql-smart-cache.php\";s:11:\"new_version\";s:5:\"2.0.0\";s:3:\"url\";s:52:\"https://wordpress.org/plugins/wpgraphql-smart-cache/\";s:7:\"package\";s:89:\"https://plugin-updates.wpengine.com/wpgraphql-smart-cache/wpgraphql-smart-cache.2.0.0.zip\";s:5:\"icons\";a:2:{s:2:\"1x\";s:81:\"https://plugin-updates.wpengine.com/wpgraphql-smart-cache/assets/icon-128x128.png\";s:2:\"2x\";s:81:\"https://plugin-updates.wpengine.com/wpgraphql-smart-cache/assets/icon-256x256.png\";}s:7:\"banners\";a:2:{s:3:\"low\";s:95:\"https://plugin-updates.wpengine.com/wpgraphql-smart-cache/assets/banner-772x250.png?rev=3146563\";s:4:\"high\";s:96:\"https://plugin-updates.wpengine.com/wpgraphql-smart-cache/assets/banner-1544x500.png?rev=3146563\";}s:11:\"banners_rtl\";a:0:{}s:6:\"tested\";s:5:\"6.7.2\";s:8:\"requires\";s:3:\"6.0\";s:12:\"requires_php\";s:3:\"7.4\";s:16:\"requires_plugins\";a:0:{}s:6:\"rating\";i:100;s:11:\"num_ratings\";i:4;s:15:\"support_threads\";i:0;s:24:\"support_threads_resolved\";i:0;}}s:7:\"checked\";a:6:{s:30:\"advanced-custom-fields/acf.php\";s:5:\"6.4.2\";s:31:\"vibemake-core/vibemake-core.php\";s:5:\"1.0.0\";s:31:\"wordpress-mcp/wordpress-mcp.php\";s:5:\"0.2.3\";s:25:\"wp-graphql/wp-graphql.php\";s:5:\"2.3.3\";s:31:\"wpgraphql-acf/wpgraphql-acf.php\";s:5:\"2.4.1\";s:48:\"wpgraphql-smart-cache/wp-graphql-smart-cache.php\";s:5:\"2.0.0\";}}','off');
+INSERT INTO `wp_options` VALUES (745,'graphql_persisted_queries_section','','auto');
+INSERT INTO `wp_options` VALUES (746,'graphql_cache_section','a:6:{s:14:\"global_max_age\";N;s:12:\"cache_toggle\";s:2:\"on\";s:10:\"global_ttl\";N;s:16:\"log_purge_events\";s:3:\"off\";s:9:\"purge_all\";b:0;s:19:\"purge_all_timestamp\";b:0;}','auto');
+INSERT INTO `wp_options` VALUES (747,'wpgraphql-smart-cache_allow_tracking','no','auto');
+INSERT INTO `wp_options` VALUES (748,'wpgraphql-smart-cache_tracking_notice','hide','auto');
+INSERT INTO `wp_options` VALUES (749,'wpgraphql-smart-cache_tracking_skipped','yes','auto');
+INSERT INTO `wp_options` VALUES (750,'wpe_cache_config','a:19:{s:20:\"sanitized_post_types\";a:6:{s:4:\"post\";s:4:\"post\";s:4:\"page\";s:4:\"page\";s:5:\"maker\";s:5:\"maker\";s:17:\"community_project\";s:17:\"community_project\";s:4:\"tool\";s:4:\"tool\";s:7:\"example\";s:7:\"example\";}s:28:\"sanitized_builtin_post_types\";a:2:{s:4:\"post\";s:4:\"post\";s:4:\"page\";s:4:\"page\";}s:21:\"smarter_cache_enabled\";s:1:\"0\";s:21:\"last_modified_enabled\";s:1:\"0\";s:27:\"wpe_ac_global_last_modified\";s:10:\"1262304000\";s:24:\"post_cache_expires_value\";s:2:\"-1\";s:24:\"page_cache_expires_value\";s:2:\"-1\";s:25:\"maker_cache_expires_value\";s:2:\"-1\";s:37:\"community_project_cache_expires_value\";s:2:\"-1\";s:24:\"tool_cache_expires_value\";s:2:\"-1\";s:27:\"example_cache_expires_value\";s:2:\"-1\";s:10:\"namespaces\";a:7:{i:0;s:10:\"oembed/1.0\";i:1;s:19:\"wpe/cache-plugin/v1\";i:2;s:21:\"wpe_sign_on_plugin/v1\";i:3;s:5:\"wp/v2\";i:4;s:11:\"jwt-auth/v1\";i:5;s:17:\"wp-site-health/v1\";i:6;s:18:\"wp-block-editor/v1\";}s:30:\"oembed/1.0_cache_expires_value\";s:2:\"-1\";s:39:\"wpe/cache-plugin/v1_cache_expires_value\";s:2:\"-1\";s:41:\"wpe_sign_on_plugin/v1_cache_expires_value\";s:2:\"-1\";s:25:\"wp/v2_cache_expires_value\";s:2:\"-1\";s:31:\"jwt-auth/v1_cache_expires_value\";s:2:\"-1\";s:37:\"wp-site-health/v1_cache_expires_value\";s:2:\"-1\";s:38:\"wp-block-editor/v1_cache_expires_value\";s:2:\"-1\";}','auto');
+/*!40000 ALTER TABLE `wp_options` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `wp_postmeta`
+--
+
+DROP TABLE IF EXISTS `wp_postmeta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wp_postmeta` (
+  `meta_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `post_id` bigint unsigned NOT NULL DEFAULT '0',
+  `meta_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `meta_value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci,
+  PRIMARY KEY (`meta_id`),
+  KEY `post_id` (`post_id`),
+  KEY `meta_key` (`meta_key`(191))
+) ENGINE=InnoDB AUTO_INCREMENT=1520 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wp_postmeta`
+--
+
+LOCK TABLES `wp_postmeta` WRITE;
+/*!40000 ALTER TABLE `wp_postmeta` DISABLE KEYS */;
+INSERT INTO `wp_postmeta` VALUES (1,2,'_wp_page_template','default');
+INSERT INTO `wp_postmeta` VALUES (2,3,'_wp_page_template','default');
+INSERT INTO `wp_postmeta` VALUES (3,6,'tool_website','https://chat.openai.com');
+INSERT INTO `wp_postmeta` VALUES (4,6,'_tool_website','field_tool_website');
+INSERT INTO `wp_postmeta` VALUES (5,6,'tool_pricing','Free / $20/month');
+INSERT INTO `wp_postmeta` VALUES (6,6,'_tool_pricing','field_tool_pricing');
+INSERT INTO `wp_postmeta` VALUES (7,6,'tool_featured','1');
+INSERT INTO `wp_postmeta` VALUES (8,6,'_tool_featured','field_tool_featured');
+INSERT INTO `wp_postmeta` VALUES (9,7,'tool_website','https://midjourney.com');
+INSERT INTO `wp_postmeta` VALUES (10,7,'_tool_website','field_tool_website');
+INSERT INTO `wp_postmeta` VALUES (11,7,'tool_pricing','$10-60/month');
+INSERT INTO `wp_postmeta` VALUES (12,7,'_tool_pricing','field_tool_pricing');
+INSERT INTO `wp_postmeta` VALUES (13,7,'tool_featured','1');
+INSERT INTO `wp_postmeta` VALUES (14,7,'_tool_featured','field_tool_featured');
+INSERT INTO `wp_postmeta` VALUES (15,8,'tool_website','https://openai.com/dall-e-3');
+INSERT INTO `wp_postmeta` VALUES (16,8,'_tool_website','field_tool_website');
+INSERT INTO `wp_postmeta` VALUES (17,8,'tool_pricing','Via ChatGPT Plus ($20/month)');
+INSERT INTO `wp_postmeta` VALUES (18,8,'_tool_pricing','field_tool_pricing');
+INSERT INTO `wp_postmeta` VALUES (19,8,'tool_featured','');
+INSERT INTO `wp_postmeta` VALUES (20,8,'_tool_featured','field_tool_featured');
+INSERT INTO `wp_postmeta` VALUES (21,9,'tool_website','https://claude.ai');
+INSERT INTO `wp_postmeta` VALUES (22,9,'_tool_website','field_tool_website');
+INSERT INTO `wp_postmeta` VALUES (23,9,'tool_pricing','Free / $20/month');
+INSERT INTO `wp_postmeta` VALUES (24,9,'_tool_pricing','field_tool_pricing');
+INSERT INTO `wp_postmeta` VALUES (25,9,'tool_featured','1');
+INSERT INTO `wp_postmeta` VALUES (26,9,'_tool_featured','field_tool_featured');
+INSERT INTO `wp_postmeta` VALUES (27,10,'tool_website','https://stability.ai');
+INSERT INTO `wp_postmeta` VALUES (28,10,'_tool_website','field_tool_website');
+INSERT INTO `wp_postmeta` VALUES (29,10,'tool_pricing','Free (self-hosted) / Various cloud options');
+INSERT INTO `wp_postmeta` VALUES (30,10,'_tool_pricing','field_tool_pricing');
+INSERT INTO `wp_postmeta` VALUES (31,10,'tool_featured','');
+INSERT INTO `wp_postmeta` VALUES (32,10,'_tool_featured','field_tool_featured');
+INSERT INTO `wp_postmeta` VALUES (33,11,'tool_website','https://github.com/features/copilot');
+INSERT INTO `wp_postmeta` VALUES (34,11,'_tool_website','field_tool_website');
+INSERT INTO `wp_postmeta` VALUES (35,11,'tool_pricing','$10/month');
+INSERT INTO `wp_postmeta` VALUES (36,11,'_tool_pricing','field_tool_pricing');
+INSERT INTO `wp_postmeta` VALUES (37,11,'tool_featured','1');
+INSERT INTO `wp_postmeta` VALUES (38,11,'_tool_featured','field_tool_featured');
+INSERT INTO `wp_postmeta` VALUES (39,12,'tool_website','https://notion.so');
+INSERT INTO `wp_postmeta` VALUES (40,12,'_tool_website','field_tool_website');
+INSERT INTO `wp_postmeta` VALUES (41,12,'tool_pricing','Free / $8/month');
+INSERT INTO `wp_postmeta` VALUES (42,12,'_tool_pricing','field_tool_pricing');
+INSERT INTO `wp_postmeta` VALUES (43,12,'tool_featured','');
+INSERT INTO `wp_postmeta` VALUES (44,12,'_tool_featured','field_tool_featured');
+INSERT INTO `wp_postmeta` VALUES (45,13,'tool_website','https://perplexity.ai');
+INSERT INTO `wp_postmeta` VALUES (46,13,'_tool_website','field_tool_website');
+INSERT INTO `wp_postmeta` VALUES (47,13,'tool_pricing','Free / $20/month');
+INSERT INTO `wp_postmeta` VALUES (48,13,'_tool_pricing','field_tool_pricing');
+INSERT INTO `wp_postmeta` VALUES (49,13,'tool_featured','');
+INSERT INTO `wp_postmeta` VALUES (50,13,'_tool_featured','field_tool_featured');
+INSERT INTO `wp_postmeta` VALUES (51,14,'tool_website','https://runwayml.com');
+INSERT INTO `wp_postmeta` VALUES (52,14,'_tool_website','field_tool_website');
+INSERT INTO `wp_postmeta` VALUES (53,14,'tool_pricing','Free tier / $12+/month');
+INSERT INTO `wp_postmeta` VALUES (54,14,'_tool_pricing','field_tool_pricing');
+INSERT INTO `wp_postmeta` VALUES (55,14,'tool_featured','');
+INSERT INTO `wp_postmeta` VALUES (56,14,'_tool_featured','field_tool_featured');
+INSERT INTO `wp_postmeta` VALUES (57,15,'tool_website','https://cursor.sh');
+INSERT INTO `wp_postmeta` VALUES (58,15,'_tool_website','field_tool_website');
+INSERT INTO `wp_postmeta` VALUES (59,15,'tool_pricing','Free / $20/month');
+INSERT INTO `wp_postmeta` VALUES (60,15,'_tool_pricing','field_tool_pricing');
+INSERT INTO `wp_postmeta` VALUES (61,15,'tool_featured','');
+INSERT INTO `wp_postmeta` VALUES (62,15,'_tool_featured','field_tool_featured');
+INSERT INTO `wp_postmeta` VALUES (63,16,'project_year','2024');
+INSERT INTO `wp_postmeta` VALUES (64,16,'project_author','Hanna Inaiáh');
+INSERT INTO `wp_postmeta` VALUES (65,16,'project_url','https://impossible-garden.com');
+INSERT INTO `wp_postmeta` VALUES (66,16,'_is_hero_project','1');
+INSERT INTO `wp_postmeta` VALUES (67,17,'maker_location','Berlin, Germany');
+INSERT INTO `wp_postmeta` VALUES (68,17,'maker_bio','Blending massive datasets, sensory design, and neural networks, she crafts immersive paintings that transform memory, nature and architecture.');
+INSERT INTO `wp_postmeta` VALUES (69,18,'maker_location','Rio de janeiro, BRAZIL');
+INSERT INTO `wp_postmeta` VALUES (70,18,'maker_bio','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.');
+INSERT INTO `wp_postmeta` VALUES (71,19,'maker_location','London, United Kingdom');
+INSERT INTO `wp_postmeta` VALUES (72,19,'maker_bio','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.');
+INSERT INTO `wp_postmeta` VALUES (73,20,'maker_location','Istambul, turkey');
+INSERT INTO `wp_postmeta` VALUES (74,20,'maker_bio','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.');
+INSERT INTO `wp_postmeta` VALUES (75,21,'maker_location','LISBON, PORTUGAL');
+INSERT INTO `wp_postmeta` VALUES (76,21,'maker_bio','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.');
+INSERT INTO `wp_postmeta` VALUES (77,22,'article_category_badge','TRENDING');
+INSERT INTO `wp_postmeta` VALUES (78,22,'publication_date_override','13 MAY, 2025');
+INSERT INTO `wp_postmeta` VALUES (79,22,'featured_priority','10');
+INSERT INTO `wp_postmeta` VALUES (82,23,'article_category_badge','NEW RELEASE');
+INSERT INTO `wp_postmeta` VALUES (83,23,'publication_date_override','13 MAY, 2025');
+INSERT INTO `wp_postmeta` VALUES (84,23,'featured_priority','5');
+INSERT INTO `wp_postmeta` VALUES (87,24,'article_category_badge','IMAGE GENERATION');
+INSERT INTO `wp_postmeta` VALUES (88,24,'publication_date_override','13 MAY, 2025');
+INSERT INTO `wp_postmeta` VALUES (89,24,'featured_priority','8');
+INSERT INTO `wp_postmeta` VALUES (92,25,'article_category_badge','TRENDING');
+INSERT INTO `wp_postmeta` VALUES (93,25,'publication_date_override','13 MAY, 2025');
+INSERT INTO `wp_postmeta` VALUES (94,25,'featured_priority','1');
+INSERT INTO `wp_postmeta` VALUES (97,26,'article_category_badge','ANIMATION');
+INSERT INTO `wp_postmeta` VALUES (98,26,'publication_date_override','13 MAY, 2025');
+INSERT INTO `wp_postmeta` VALUES (99,26,'featured_priority','7');
+INSERT INTO `wp_postmeta` VALUES (102,27,'project_views','659');
+INSERT INTO `wp_postmeta` VALUES (103,27,'duration','');
+INSERT INTO `wp_postmeta` VALUES (104,27,'genre','FOOD & DRINK');
+INSERT INTO `wp_postmeta` VALUES (105,27,'project_tools','Various AI Tools');
+INSERT INTO `wp_postmeta` VALUES (106,28,'project_views','2695');
+INSERT INTO `wp_postmeta` VALUES (107,28,'duration','');
+INSERT INTO `wp_postmeta` VALUES (108,28,'genre','FOOD & DRINK');
+INSERT INTO `wp_postmeta` VALUES (109,28,'project_tools','Various AI Tools');
+INSERT INTO `wp_postmeta` VALUES (110,29,'project_views','717');
+INSERT INTO `wp_postmeta` VALUES (111,29,'duration','');
+INSERT INTO `wp_postmeta` VALUES (112,29,'genre','SKINCARE');
+INSERT INTO `wp_postmeta` VALUES (113,29,'project_tools','Various AI Tools');
+INSERT INTO `wp_postmeta` VALUES (114,30,'project_views','772');
+INSERT INTO `wp_postmeta` VALUES (115,30,'duration','');
+INSERT INTO `wp_postmeta` VALUES (116,30,'genre','FASHION');
+INSERT INTO `wp_postmeta` VALUES (117,30,'project_tools','Various AI Tools');
+INSERT INTO `wp_postmeta` VALUES (118,31,'project_views','969');
+INSERT INTO `wp_postmeta` VALUES (119,31,'duration','');
+INSERT INTO `wp_postmeta` VALUES (120,31,'genre','HEALTH');
+INSERT INTO `wp_postmeta` VALUES (121,31,'project_tools','Various AI Tools');
+INSERT INTO `wp_postmeta` VALUES (122,32,'project_views','2466');
+INSERT INTO `wp_postmeta` VALUES (123,32,'duration','2:39');
+INSERT INTO `wp_postmeta` VALUES (124,32,'genre','Rock');
+INSERT INTO `wp_postmeta` VALUES (125,32,'project_tools','KLINGAI.COM');
+INSERT INTO `wp_postmeta` VALUES (126,33,'project_views','1996');
+INSERT INTO `wp_postmeta` VALUES (127,33,'duration','2:11');
+INSERT INTO `wp_postmeta` VALUES (128,33,'genre','Celtic');
+INSERT INTO `wp_postmeta` VALUES (129,33,'project_tools','AIVA');
+INSERT INTO `wp_postmeta` VALUES (130,34,'project_views','1996');
+INSERT INTO `wp_postmeta` VALUES (131,34,'duration','2:11');
+INSERT INTO `wp_postmeta` VALUES (132,34,'genre','Samba');
+INSERT INTO `wp_postmeta` VALUES (133,34,'project_tools','BOOMY');
+INSERT INTO `wp_postmeta` VALUES (134,40,'project_year','2024');
+INSERT INTO `wp_postmeta` VALUES (135,40,'project_author','Hanna Inaiáh');
+INSERT INTO `wp_postmeta` VALUES (136,40,'project_url','https://impossible-garden.com');
+INSERT INTO `wp_postmeta` VALUES (137,40,'_is_hero_project','1');
+INSERT INTO `wp_postmeta` VALUES (138,41,'maker_location','Berlin, Germany');
+INSERT INTO `wp_postmeta` VALUES (139,41,'maker_bio','Blending massive datasets, sensory design, and neural networks, she crafts immersive paintings that transform memory, nature and architecture.');
+INSERT INTO `wp_postmeta` VALUES (140,42,'maker_location','Rio de janeiro, BRAZIL');
+INSERT INTO `wp_postmeta` VALUES (141,42,'maker_bio','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.');
+INSERT INTO `wp_postmeta` VALUES (142,43,'maker_location','London, United Kingdom');
+INSERT INTO `wp_postmeta` VALUES (143,43,'maker_bio','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.');
+INSERT INTO `wp_postmeta` VALUES (144,44,'maker_location','Istambul, turkey');
+INSERT INTO `wp_postmeta` VALUES (145,44,'maker_bio','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.');
+INSERT INTO `wp_postmeta` VALUES (146,45,'maker_location','LISBON, PORTUGAL');
+INSERT INTO `wp_postmeta` VALUES (147,45,'maker_bio','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.');
+INSERT INTO `wp_postmeta` VALUES (148,46,'article_category_badge','TRENDING');
+INSERT INTO `wp_postmeta` VALUES (149,46,'publication_date_override','20250513');
+INSERT INTO `wp_postmeta` VALUES (150,46,'featured_priority','8');
+INSERT INTO `wp_postmeta` VALUES (153,47,'article_category_badge','NEW RELEASE');
+INSERT INTO `wp_postmeta` VALUES (154,47,'publication_date_override','20250513');
+INSERT INTO `wp_postmeta` VALUES (155,47,'featured_priority','1');
+INSERT INTO `wp_postmeta` VALUES (158,48,'article_category_badge','IMAGE GENERATION');
+INSERT INTO `wp_postmeta` VALUES (159,48,'publication_date_override','13 MAY, 2025');
+INSERT INTO `wp_postmeta` VALUES (160,48,'featured_priority','8');
+INSERT INTO `wp_postmeta` VALUES (163,49,'article_category_badge','TRENDING');
+INSERT INTO `wp_postmeta` VALUES (164,49,'publication_date_override','13 MAY, 2025');
+INSERT INTO `wp_postmeta` VALUES (165,49,'featured_priority','9');
+INSERT INTO `wp_postmeta` VALUES (168,50,'article_category_badge','TRENDING');
+INSERT INTO `wp_postmeta` VALUES (169,50,'publication_date_override','20250513');
+INSERT INTO `wp_postmeta` VALUES (170,50,'featured_priority','4');
+INSERT INTO `wp_postmeta` VALUES (173,51,'project_views','2576');
+INSERT INTO `wp_postmeta` VALUES (174,51,'duration','');
+INSERT INTO `wp_postmeta` VALUES (175,51,'genre','FOOD & DRINK');
+INSERT INTO `wp_postmeta` VALUES (176,51,'project_tools','Various AI Tools');
+INSERT INTO `wp_postmeta` VALUES (177,52,'project_views','2018');
+INSERT INTO `wp_postmeta` VALUES (178,52,'duration','');
+INSERT INTO `wp_postmeta` VALUES (179,52,'genre','FOOD & DRINK');
+INSERT INTO `wp_postmeta` VALUES (180,52,'project_tools','Various AI Tools');
+INSERT INTO `wp_postmeta` VALUES (181,53,'project_views','448');
+INSERT INTO `wp_postmeta` VALUES (182,53,'duration','');
+INSERT INTO `wp_postmeta` VALUES (183,53,'genre','SKINCARE');
+INSERT INTO `wp_postmeta` VALUES (184,53,'project_tools','Various AI Tools');
+INSERT INTO `wp_postmeta` VALUES (185,54,'project_views','2463');
+INSERT INTO `wp_postmeta` VALUES (186,54,'duration','');
+INSERT INTO `wp_postmeta` VALUES (187,54,'genre','FASHION');
+INSERT INTO `wp_postmeta` VALUES (188,54,'project_tools','Various AI Tools');
+INSERT INTO `wp_postmeta` VALUES (189,55,'project_views','2283');
+INSERT INTO `wp_postmeta` VALUES (190,55,'duration','');
+INSERT INTO `wp_postmeta` VALUES (191,55,'genre','HEALTH');
+INSERT INTO `wp_postmeta` VALUES (192,55,'project_tools','Various AI Tools');
+INSERT INTO `wp_postmeta` VALUES (193,56,'project_views','2466');
+INSERT INTO `wp_postmeta` VALUES (194,56,'duration','2:39');
+INSERT INTO `wp_postmeta` VALUES (195,56,'genre','Rock');
+INSERT INTO `wp_postmeta` VALUES (196,56,'project_tools','KLINGAI.COM');
+INSERT INTO `wp_postmeta` VALUES (197,57,'project_views','1996');
+INSERT INTO `wp_postmeta` VALUES (198,57,'duration','2:11');
+INSERT INTO `wp_postmeta` VALUES (199,57,'genre','Celtic');
+INSERT INTO `wp_postmeta` VALUES (200,57,'project_tools','AIVA');
+INSERT INTO `wp_postmeta` VALUES (201,58,'project_views','1996');
+INSERT INTO `wp_postmeta` VALUES (202,58,'duration','2:11');
+INSERT INTO `wp_postmeta` VALUES (203,58,'genre','Samba');
+INSERT INTO `wp_postmeta` VALUES (204,58,'project_tools','BOOMY');
+INSERT INTO `wp_postmeta` VALUES (207,17,'_edit_lock','1751314560:1');
+INSERT INTO `wp_postmeta` VALUES (208,17,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (209,17,'_maker_location','field_maker_location');
+INSERT INTO `wp_postmeta` VALUES (210,17,'_maker_bio','field_maker_bio');
+INSERT INTO `wp_postmeta` VALUES (211,17,'profile_image','');
+INSERT INTO `wp_postmeta` VALUES (212,17,'_profile_image','field_profile_image');
+INSERT INTO `wp_postmeta` VALUES (213,17,'background_image','');
+INSERT INTO `wp_postmeta` VALUES (214,17,'_background_image','field_background_image');
+INSERT INTO `wp_postmeta` VALUES (215,17,'maker_website','');
+INSERT INTO `wp_postmeta` VALUES (216,17,'_maker_website','field_maker_website');
+INSERT INTO `wp_postmeta` VALUES (217,17,'maker_experience_level','intermediate');
+INSERT INTO `wp_postmeta` VALUES (218,17,'_maker_experience_level','field_maker_experience_level');
+INSERT INTO `wp_postmeta` VALUES (219,17,'maker_tools_expertise','');
+INSERT INTO `wp_postmeta` VALUES (220,17,'_maker_tools_expertise','field_maker_tools_expertise');
+INSERT INTO `wp_postmeta` VALUES (221,17,'maker_availability','selective');
+INSERT INTO `wp_postmeta` VALUES (222,17,'_maker_availability','field_maker_availability');
+INSERT INTO `wp_postmeta` VALUES (223,17,'featured_maker','1');
+INSERT INTO `wp_postmeta` VALUES (224,17,'_featured_maker','field_featured_maker');
+INSERT INTO `wp_postmeta` VALUES (225,17,'featured_position','7');
+INSERT INTO `wp_postmeta` VALUES (226,17,'_featured_position','field_featured_position');
+INSERT INTO `wp_postmeta` VALUES (227,66,'maker_location','Berlin, Germany');
+INSERT INTO `wp_postmeta` VALUES (228,66,'_maker_location','field_maker_location');
+INSERT INTO `wp_postmeta` VALUES (229,66,'maker_bio','Blending massive datasets, sensory design, and neural networks, she crafts immersive paintings that transform memory, nature and architecture.');
+INSERT INTO `wp_postmeta` VALUES (230,66,'_maker_bio','field_maker_bio');
+INSERT INTO `wp_postmeta` VALUES (231,66,'profile_image','');
+INSERT INTO `wp_postmeta` VALUES (232,66,'_profile_image','field_profile_image');
+INSERT INTO `wp_postmeta` VALUES (233,66,'background_image','');
+INSERT INTO `wp_postmeta` VALUES (234,66,'_background_image','field_background_image');
+INSERT INTO `wp_postmeta` VALUES (235,66,'maker_website','');
+INSERT INTO `wp_postmeta` VALUES (236,66,'_maker_website','field_maker_website');
+INSERT INTO `wp_postmeta` VALUES (237,66,'maker_experience_level','intermediate');
+INSERT INTO `wp_postmeta` VALUES (238,66,'_maker_experience_level','field_maker_experience_level');
+INSERT INTO `wp_postmeta` VALUES (239,66,'maker_tools_expertise','');
+INSERT INTO `wp_postmeta` VALUES (240,66,'_maker_tools_expertise','field_maker_tools_expertise');
+INSERT INTO `wp_postmeta` VALUES (241,66,'maker_availability','selective');
+INSERT INTO `wp_postmeta` VALUES (242,66,'_maker_availability','field_maker_availability');
+INSERT INTO `wp_postmeta` VALUES (243,66,'featured_maker','1');
+INSERT INTO `wp_postmeta` VALUES (244,66,'_featured_maker','field_featured_maker');
+INSERT INTO `wp_postmeta` VALUES (245,66,'featured_position','2');
+INSERT INTO `wp_postmeta` VALUES (246,66,'_featured_position','field_featured_position');
+INSERT INTO `wp_postmeta` VALUES (247,20,'_edit_lock','1751314572:1');
+INSERT INTO `wp_postmeta` VALUES (248,20,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (249,20,'_maker_location','field_maker_location');
+INSERT INTO `wp_postmeta` VALUES (250,20,'_maker_bio','field_maker_bio');
+INSERT INTO `wp_postmeta` VALUES (251,20,'profile_image','');
+INSERT INTO `wp_postmeta` VALUES (252,20,'_profile_image','field_profile_image');
+INSERT INTO `wp_postmeta` VALUES (253,20,'background_image','');
+INSERT INTO `wp_postmeta` VALUES (254,20,'_background_image','field_background_image');
+INSERT INTO `wp_postmeta` VALUES (255,20,'maker_website','');
+INSERT INTO `wp_postmeta` VALUES (256,20,'_maker_website','field_maker_website');
+INSERT INTO `wp_postmeta` VALUES (257,20,'maker_experience_level','intermediate');
+INSERT INTO `wp_postmeta` VALUES (258,20,'_maker_experience_level','field_maker_experience_level');
+INSERT INTO `wp_postmeta` VALUES (259,20,'maker_tools_expertise','');
+INSERT INTO `wp_postmeta` VALUES (260,20,'_maker_tools_expertise','field_maker_tools_expertise');
+INSERT INTO `wp_postmeta` VALUES (261,20,'maker_availability','selective');
+INSERT INTO `wp_postmeta` VALUES (262,20,'_maker_availability','field_maker_availability');
+INSERT INTO `wp_postmeta` VALUES (263,20,'featured_maker','1');
+INSERT INTO `wp_postmeta` VALUES (264,20,'_featured_maker','field_featured_maker');
+INSERT INTO `wp_postmeta` VALUES (265,20,'featured_position','6');
+INSERT INTO `wp_postmeta` VALUES (266,20,'_featured_position','field_featured_position');
+INSERT INTO `wp_postmeta` VALUES (267,67,'maker_location','Istambul, turkey');
+INSERT INTO `wp_postmeta` VALUES (268,67,'_maker_location','field_maker_location');
+INSERT INTO `wp_postmeta` VALUES (269,67,'maker_bio','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.');
+INSERT INTO `wp_postmeta` VALUES (270,67,'_maker_bio','field_maker_bio');
+INSERT INTO `wp_postmeta` VALUES (271,67,'profile_image','');
+INSERT INTO `wp_postmeta` VALUES (272,67,'_profile_image','field_profile_image');
+INSERT INTO `wp_postmeta` VALUES (273,67,'background_image','');
+INSERT INTO `wp_postmeta` VALUES (274,67,'_background_image','field_background_image');
+INSERT INTO `wp_postmeta` VALUES (275,67,'maker_website','');
+INSERT INTO `wp_postmeta` VALUES (276,67,'_maker_website','field_maker_website');
+INSERT INTO `wp_postmeta` VALUES (277,67,'maker_experience_level','intermediate');
+INSERT INTO `wp_postmeta` VALUES (278,67,'_maker_experience_level','field_maker_experience_level');
+INSERT INTO `wp_postmeta` VALUES (279,67,'maker_tools_expertise','');
+INSERT INTO `wp_postmeta` VALUES (280,67,'_maker_tools_expertise','field_maker_tools_expertise');
+INSERT INTO `wp_postmeta` VALUES (281,67,'maker_availability','selective');
+INSERT INTO `wp_postmeta` VALUES (282,67,'_maker_availability','field_maker_availability');
+INSERT INTO `wp_postmeta` VALUES (283,67,'featured_maker','1');
+INSERT INTO `wp_postmeta` VALUES (284,67,'_featured_maker','field_featured_maker');
+INSERT INTO `wp_postmeta` VALUES (285,67,'featured_position','1');
+INSERT INTO `wp_postmeta` VALUES (286,67,'_featured_position','field_featured_position');
+INSERT INTO `wp_postmeta` VALUES (287,19,'_edit_lock','1751314583:1');
+INSERT INTO `wp_postmeta` VALUES (288,19,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (289,19,'_maker_location','field_maker_location');
+INSERT INTO `wp_postmeta` VALUES (290,19,'_maker_bio','field_maker_bio');
+INSERT INTO `wp_postmeta` VALUES (291,19,'profile_image','');
+INSERT INTO `wp_postmeta` VALUES (292,19,'_profile_image','field_profile_image');
+INSERT INTO `wp_postmeta` VALUES (293,19,'background_image','');
+INSERT INTO `wp_postmeta` VALUES (294,19,'_background_image','field_background_image');
+INSERT INTO `wp_postmeta` VALUES (295,19,'maker_website','');
+INSERT INTO `wp_postmeta` VALUES (296,19,'_maker_website','field_maker_website');
+INSERT INTO `wp_postmeta` VALUES (297,19,'maker_experience_level','intermediate');
+INSERT INTO `wp_postmeta` VALUES (298,19,'_maker_experience_level','field_maker_experience_level');
+INSERT INTO `wp_postmeta` VALUES (299,19,'maker_tools_expertise','');
+INSERT INTO `wp_postmeta` VALUES (300,19,'_maker_tools_expertise','field_maker_tools_expertise');
+INSERT INTO `wp_postmeta` VALUES (301,19,'maker_availability','selective');
+INSERT INTO `wp_postmeta` VALUES (302,19,'_maker_availability','field_maker_availability');
+INSERT INTO `wp_postmeta` VALUES (303,19,'featured_maker','1');
+INSERT INTO `wp_postmeta` VALUES (304,19,'_featured_maker','field_featured_maker');
+INSERT INTO `wp_postmeta` VALUES (305,19,'featured_position','3');
+INSERT INTO `wp_postmeta` VALUES (306,19,'_featured_position','field_featured_position');
+INSERT INTO `wp_postmeta` VALUES (307,68,'maker_location','London, United Kingdom');
+INSERT INTO `wp_postmeta` VALUES (308,68,'_maker_location','field_maker_location');
+INSERT INTO `wp_postmeta` VALUES (309,68,'maker_bio','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.');
+INSERT INTO `wp_postmeta` VALUES (310,68,'_maker_bio','field_maker_bio');
+INSERT INTO `wp_postmeta` VALUES (311,68,'profile_image','');
+INSERT INTO `wp_postmeta` VALUES (312,68,'_profile_image','field_profile_image');
+INSERT INTO `wp_postmeta` VALUES (313,68,'background_image','');
+INSERT INTO `wp_postmeta` VALUES (314,68,'_background_image','field_background_image');
+INSERT INTO `wp_postmeta` VALUES (315,68,'maker_website','');
+INSERT INTO `wp_postmeta` VALUES (316,68,'_maker_website','field_maker_website');
+INSERT INTO `wp_postmeta` VALUES (317,68,'maker_experience_level','intermediate');
+INSERT INTO `wp_postmeta` VALUES (318,68,'_maker_experience_level','field_maker_experience_level');
+INSERT INTO `wp_postmeta` VALUES (319,68,'maker_tools_expertise','');
+INSERT INTO `wp_postmeta` VALUES (320,68,'_maker_tools_expertise','field_maker_tools_expertise');
+INSERT INTO `wp_postmeta` VALUES (321,68,'maker_availability','selective');
+INSERT INTO `wp_postmeta` VALUES (322,68,'_maker_availability','field_maker_availability');
+INSERT INTO `wp_postmeta` VALUES (323,68,'featured_maker','1');
+INSERT INTO `wp_postmeta` VALUES (324,68,'_featured_maker','field_featured_maker');
+INSERT INTO `wp_postmeta` VALUES (325,68,'featured_position','3');
+INSERT INTO `wp_postmeta` VALUES (326,68,'_featured_position','field_featured_position');
+INSERT INTO `wp_postmeta` VALUES (327,42,'_edit_lock','1751314597:1');
+INSERT INTO `wp_postmeta` VALUES (328,42,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (329,42,'_maker_location','field_maker_location');
+INSERT INTO `wp_postmeta` VALUES (330,42,'_maker_bio','field_maker_bio');
+INSERT INTO `wp_postmeta` VALUES (331,42,'profile_image','');
+INSERT INTO `wp_postmeta` VALUES (332,42,'_profile_image','field_profile_image');
+INSERT INTO `wp_postmeta` VALUES (333,42,'background_image','');
+INSERT INTO `wp_postmeta` VALUES (334,42,'_background_image','field_background_image');
+INSERT INTO `wp_postmeta` VALUES (335,42,'maker_website','');
+INSERT INTO `wp_postmeta` VALUES (336,42,'_maker_website','field_maker_website');
+INSERT INTO `wp_postmeta` VALUES (337,42,'maker_experience_level','intermediate');
+INSERT INTO `wp_postmeta` VALUES (338,42,'_maker_experience_level','field_maker_experience_level');
+INSERT INTO `wp_postmeta` VALUES (339,42,'maker_tools_expertise','');
+INSERT INTO `wp_postmeta` VALUES (340,42,'_maker_tools_expertise','field_maker_tools_expertise');
+INSERT INTO `wp_postmeta` VALUES (341,42,'maker_availability','selective');
+INSERT INTO `wp_postmeta` VALUES (342,42,'_maker_availability','field_maker_availability');
+INSERT INTO `wp_postmeta` VALUES (343,42,'featured_maker','1');
+INSERT INTO `wp_postmeta` VALUES (344,42,'_featured_maker','field_featured_maker');
+INSERT INTO `wp_postmeta` VALUES (345,42,'featured_position','4');
+INSERT INTO `wp_postmeta` VALUES (346,42,'_featured_position','field_featured_position');
+INSERT INTO `wp_postmeta` VALUES (347,69,'maker_location','Rio de janeiro, BRAZIL');
+INSERT INTO `wp_postmeta` VALUES (348,69,'_maker_location','field_maker_location');
+INSERT INTO `wp_postmeta` VALUES (349,69,'maker_bio','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.');
+INSERT INTO `wp_postmeta` VALUES (350,69,'_maker_bio','field_maker_bio');
+INSERT INTO `wp_postmeta` VALUES (351,69,'profile_image','');
+INSERT INTO `wp_postmeta` VALUES (352,69,'_profile_image','field_profile_image');
+INSERT INTO `wp_postmeta` VALUES (353,69,'background_image','');
+INSERT INTO `wp_postmeta` VALUES (354,69,'_background_image','field_background_image');
+INSERT INTO `wp_postmeta` VALUES (355,69,'maker_website','');
+INSERT INTO `wp_postmeta` VALUES (356,69,'_maker_website','field_maker_website');
+INSERT INTO `wp_postmeta` VALUES (357,69,'maker_experience_level','intermediate');
+INSERT INTO `wp_postmeta` VALUES (358,69,'_maker_experience_level','field_maker_experience_level');
+INSERT INTO `wp_postmeta` VALUES (359,69,'maker_tools_expertise','');
+INSERT INTO `wp_postmeta` VALUES (360,69,'_maker_tools_expertise','field_maker_tools_expertise');
+INSERT INTO `wp_postmeta` VALUES (361,69,'maker_availability','selective');
+INSERT INTO `wp_postmeta` VALUES (362,69,'_maker_availability','field_maker_availability');
+INSERT INTO `wp_postmeta` VALUES (363,69,'featured_maker','1');
+INSERT INTO `wp_postmeta` VALUES (364,69,'_featured_maker','field_featured_maker');
+INSERT INTO `wp_postmeta` VALUES (365,69,'featured_position','4');
+INSERT INTO `wp_postmeta` VALUES (366,69,'_featured_position','field_featured_position');
+INSERT INTO `wp_postmeta` VALUES (367,21,'_edit_lock','1751314958:1');
+INSERT INTO `wp_postmeta` VALUES (368,21,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (369,21,'_maker_location','field_maker_location');
+INSERT INTO `wp_postmeta` VALUES (370,21,'_maker_bio','field_maker_bio');
+INSERT INTO `wp_postmeta` VALUES (371,21,'profile_image','');
+INSERT INTO `wp_postmeta` VALUES (372,21,'_profile_image','field_profile_image');
+INSERT INTO `wp_postmeta` VALUES (373,21,'background_image','');
+INSERT INTO `wp_postmeta` VALUES (374,21,'_background_image','field_background_image');
+INSERT INTO `wp_postmeta` VALUES (375,21,'maker_website','');
+INSERT INTO `wp_postmeta` VALUES (376,21,'_maker_website','field_maker_website');
+INSERT INTO `wp_postmeta` VALUES (377,21,'maker_experience_level','intermediate');
+INSERT INTO `wp_postmeta` VALUES (378,21,'_maker_experience_level','field_maker_experience_level');
+INSERT INTO `wp_postmeta` VALUES (379,21,'maker_tools_expertise','');
+INSERT INTO `wp_postmeta` VALUES (380,21,'_maker_tools_expertise','field_maker_tools_expertise');
+INSERT INTO `wp_postmeta` VALUES (381,21,'maker_availability','selective');
+INSERT INTO `wp_postmeta` VALUES (382,21,'_maker_availability','field_maker_availability');
+INSERT INTO `wp_postmeta` VALUES (383,21,'featured_maker','1');
+INSERT INTO `wp_postmeta` VALUES (384,21,'_featured_maker','field_featured_maker');
+INSERT INTO `wp_postmeta` VALUES (385,21,'featured_position','5');
+INSERT INTO `wp_postmeta` VALUES (386,21,'_featured_position','field_featured_position');
+INSERT INTO `wp_postmeta` VALUES (387,70,'maker_location','LISBON, PORTUGAL');
+INSERT INTO `wp_postmeta` VALUES (388,70,'_maker_location','field_maker_location');
+INSERT INTO `wp_postmeta` VALUES (389,70,'maker_bio','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.');
+INSERT INTO `wp_postmeta` VALUES (390,70,'_maker_bio','field_maker_bio');
+INSERT INTO `wp_postmeta` VALUES (391,70,'profile_image','');
+INSERT INTO `wp_postmeta` VALUES (392,70,'_profile_image','field_profile_image');
+INSERT INTO `wp_postmeta` VALUES (393,70,'background_image','');
+INSERT INTO `wp_postmeta` VALUES (394,70,'_background_image','field_background_image');
+INSERT INTO `wp_postmeta` VALUES (395,70,'maker_website','');
+INSERT INTO `wp_postmeta` VALUES (396,70,'_maker_website','field_maker_website');
+INSERT INTO `wp_postmeta` VALUES (397,70,'maker_experience_level','intermediate');
+INSERT INTO `wp_postmeta` VALUES (398,70,'_maker_experience_level','field_maker_experience_level');
+INSERT INTO `wp_postmeta` VALUES (399,70,'maker_tools_expertise','');
+INSERT INTO `wp_postmeta` VALUES (400,70,'_maker_tools_expertise','field_maker_tools_expertise');
+INSERT INTO `wp_postmeta` VALUES (401,70,'maker_availability','selective');
+INSERT INTO `wp_postmeta` VALUES (402,70,'_maker_availability','field_maker_availability');
+INSERT INTO `wp_postmeta` VALUES (403,70,'featured_maker','1');
+INSERT INTO `wp_postmeta` VALUES (404,70,'_featured_maker','field_featured_maker');
+INSERT INTO `wp_postmeta` VALUES (405,70,'featured_position','5');
+INSERT INTO `wp_postmeta` VALUES (406,70,'_featured_position','field_featured_position');
+INSERT INTO `wp_postmeta` VALUES (407,55,'_edit_lock','1751316266:1');
+INSERT INTO `wp_postmeta` VALUES (408,55,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (409,55,'project_year','2025');
+INSERT INTO `wp_postmeta` VALUES (410,55,'_project_year','field_project_year');
+INSERT INTO `wp_postmeta` VALUES (411,55,'project_author','');
+INSERT INTO `wp_postmeta` VALUES (412,55,'_project_author','field_project_author');
+INSERT INTO `wp_postmeta` VALUES (413,55,'project_workflow','');
+INSERT INTO `wp_postmeta` VALUES (414,55,'_project_workflow','field_project_workflow');
+INSERT INTO `wp_postmeta` VALUES (415,55,'project_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (416,55,'_project_difficulty','field_project_difficulty');
+INSERT INTO `wp_postmeta` VALUES (417,55,'project_time_spent','');
+INSERT INTO `wp_postmeta` VALUES (418,55,'_project_time_spent','field_project_time_spent');
+INSERT INTO `wp_postmeta` VALUES (419,55,'project_url','');
+INSERT INTO `wp_postmeta` VALUES (420,55,'_project_url','field_project_url');
+INSERT INTO `wp_postmeta` VALUES (421,55,'hero_background','');
+INSERT INTO `wp_postmeta` VALUES (422,55,'_hero_background','field_hero_background');
+INSERT INTO `wp_postmeta` VALUES (423,55,'featured_in_hero','');
+INSERT INTO `wp_postmeta` VALUES (424,55,'_featured_in_hero','field_featured_in_hero');
+INSERT INTO `wp_postmeta` VALUES (425,55,'featured_in_showcase','0');
+INSERT INTO `wp_postmeta` VALUES (426,55,'_featured_in_showcase','field_featured_in_showcase');
+INSERT INTO `wp_postmeta` VALUES (427,55,'_project_views','field_project_views');
+INSERT INTO `wp_postmeta` VALUES (428,55,'project_demo_url','');
+INSERT INTO `wp_postmeta` VALUES (429,55,'_project_demo_url','field_project_demo_url');
+INSERT INTO `wp_postmeta` VALUES (430,55,'project_github_url','');
+INSERT INTO `wp_postmeta` VALUES (431,55,'_project_github_url','field_project_github_url');
+INSERT INTO `wp_postmeta` VALUES (432,55,'_duration','field_duration');
+INSERT INTO `wp_postmeta` VALUES (433,55,'_genre','field_genre');
+INSERT INTO `wp_postmeta` VALUES (434,55,'audio_file','');
+INSERT INTO `wp_postmeta` VALUES (435,55,'_audio_file','field_audio_file');
+INSERT INTO `wp_postmeta` VALUES (436,55,'video_file','');
+INSERT INTO `wp_postmeta` VALUES (437,55,'_video_file','field_video_file');
+INSERT INTO `wp_postmeta` VALUES (438,71,'project_views','2283');
+INSERT INTO `wp_postmeta` VALUES (439,71,'_project_views','field_project_views');
+INSERT INTO `wp_postmeta` VALUES (440,71,'duration','');
+INSERT INTO `wp_postmeta` VALUES (441,71,'_duration','field_duration');
+INSERT INTO `wp_postmeta` VALUES (442,71,'genre','HEALTH');
+INSERT INTO `wp_postmeta` VALUES (443,71,'_genre','field_genre');
+INSERT INTO `wp_postmeta` VALUES (444,71,'project_year','2025');
+INSERT INTO `wp_postmeta` VALUES (445,71,'_project_year','field_project_year');
+INSERT INTO `wp_postmeta` VALUES (446,71,'project_author','');
+INSERT INTO `wp_postmeta` VALUES (447,71,'_project_author','field_project_author');
+INSERT INTO `wp_postmeta` VALUES (448,71,'project_workflow','');
+INSERT INTO `wp_postmeta` VALUES (449,71,'_project_workflow','field_project_workflow');
+INSERT INTO `wp_postmeta` VALUES (450,71,'project_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (451,71,'_project_difficulty','field_project_difficulty');
+INSERT INTO `wp_postmeta` VALUES (452,71,'project_time_spent','');
+INSERT INTO `wp_postmeta` VALUES (453,71,'_project_time_spent','field_project_time_spent');
+INSERT INTO `wp_postmeta` VALUES (454,71,'project_url','');
+INSERT INTO `wp_postmeta` VALUES (455,71,'_project_url','field_project_url');
+INSERT INTO `wp_postmeta` VALUES (456,71,'hero_background','');
+INSERT INTO `wp_postmeta` VALUES (457,71,'_hero_background','field_hero_background');
+INSERT INTO `wp_postmeta` VALUES (458,71,'featured_in_hero','1');
+INSERT INTO `wp_postmeta` VALUES (459,71,'_featured_in_hero','field_featured_in_hero');
+INSERT INTO `wp_postmeta` VALUES (460,71,'featured_in_showcase','0');
+INSERT INTO `wp_postmeta` VALUES (461,71,'_featured_in_showcase','field_featured_in_showcase');
+INSERT INTO `wp_postmeta` VALUES (462,71,'project_demo_url','');
+INSERT INTO `wp_postmeta` VALUES (463,71,'_project_demo_url','field_project_demo_url');
+INSERT INTO `wp_postmeta` VALUES (464,71,'project_github_url','');
+INSERT INTO `wp_postmeta` VALUES (465,71,'_project_github_url','field_project_github_url');
+INSERT INTO `wp_postmeta` VALUES (466,71,'audio_file','');
+INSERT INTO `wp_postmeta` VALUES (467,71,'_audio_file','field_audio_file');
+INSERT INTO `wp_postmeta` VALUES (468,71,'video_file','');
+INSERT INTO `wp_postmeta` VALUES (469,71,'_video_file','field_video_file');
+INSERT INTO `wp_postmeta` VALUES (470,6,'_edit_lock','1751335681:1');
+INSERT INTO `wp_postmeta` VALUES (471,15,'_edit_lock','1751331961:1');
+INSERT INTO `wp_postmeta` VALUES (472,53,'_edit_lock','1751332816:1');
+INSERT INTO `wp_postmeta` VALUES (473,9,'_edit_lock','1751333033:1');
+INSERT INTO `wp_postmeta` VALUES (474,52,'_edit_lock','1751333941:1');
+INSERT INTO `wp_postmeta` VALUES (475,72,'tool_tagline','Create stunning AI art from your imagination');
+INSERT INTO `wp_postmeta` VALUES (476,72,'_tool_tagline','field_tool_tagline_modern');
+INSERT INTO `wp_postmeta` VALUES (477,72,'tool_website','https://www.midjourney.com');
+INSERT INTO `wp_postmeta` VALUES (478,72,'_tool_website','field_tool_website_modern');
+INSERT INTO `wp_postmeta` VALUES (479,72,'tool_featured','1');
+INSERT INTO `wp_postmeta` VALUES (480,72,'_tool_featured','field_tool_featured_modern');
+INSERT INTO `wp_postmeta` VALUES (481,72,'tool_use_cases','a:3:{i:0;s:6:\"images\";i:1;s:6:\"design\";i:2;s:8:\"business\";}');
+INSERT INTO `wp_postmeta` VALUES (482,72,'_tool_use_cases','field_tool_use_cases_modern');
+INSERT INTO `wp_postmeta` VALUES (483,72,'tool_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (484,72,'_tool_difficulty','field_tool_difficulty_modern');
+INSERT INTO `wp_postmeta` VALUES (485,72,'tool_key_features','a:3:{i:0;a:3:{s:12:\"feature_icon\";s:4:\"🎨\";s:13:\"feature_title\";s:24:\"Text-to-Image Generation\";s:19:\"feature_description\";s:49:\"Create stunning images from detailed text prompts\";}i:1;a:3:{s:12:\"feature_icon\";s:3:\"✨\";s:13:\"feature_title\";s:19:\"Multiple Art Styles\";s:19:\"feature_description\";s:50:\"Support for various artistic styles and aesthetics\";}i:2;a:3:{s:12:\"feature_icon\";s:4:\"🚀\";s:13:\"feature_title\";s:22:\"High Resolution Output\";s:19:\"feature_description\";s:43:\"Generate high-quality images with upscaling\";}}');
+INSERT INTO `wp_postmeta` VALUES (486,72,'_tool_key_features','field_tool_key_features_modern');
+INSERT INTO `wp_postmeta` VALUES (487,72,'tool_pricing_model','paid');
+INSERT INTO `wp_postmeta` VALUES (488,72,'_tool_pricing_model','field_tool_pricing_model_modern');
+INSERT INTO `wp_postmeta` VALUES (489,72,'tool_pricing_summary','Basic $10/month, Standard $30/month, Pro $60/month');
+INSERT INTO `wp_postmeta` VALUES (490,72,'_tool_pricing_summary','field_tool_pricing_summary_modern');
+INSERT INTO `wp_postmeta` VALUES (491,72,'_edit_lock','1751338934:1');
+INSERT INTO `wp_postmeta` VALUES (492,73,'tool_tagline','Activating humanity\'s potential through open-source generative AI');
+INSERT INTO `wp_postmeta` VALUES (493,73,'_tool_tagline','field_tool_tagline_modern');
+INSERT INTO `wp_postmeta` VALUES (494,73,'tool_website','https://stability.ai');
+INSERT INTO `wp_postmeta` VALUES (495,73,'_tool_website','field_tool_website_modern');
+INSERT INTO `wp_postmeta` VALUES (496,73,'tool_featured','1');
+INSERT INTO `wp_postmeta` VALUES (497,73,'_tool_featured','field_tool_featured_modern');
+INSERT INTO `wp_postmeta` VALUES (498,73,'tool_use_cases','a:4:{i:0;s:6:\"images\";i:1;s:5:\"video\";i:2;s:5:\"audio\";i:3;s:6:\"design\";}');
+INSERT INTO `wp_postmeta` VALUES (499,73,'_tool_use_cases','field_tool_use_cases_modern');
+INSERT INTO `wp_postmeta` VALUES (500,73,'tool_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (501,73,'_tool_difficulty','field_tool_difficulty_modern');
+INSERT INTO `wp_postmeta` VALUES (502,73,'tool_pricing_model','freemium');
+INSERT INTO `wp_postmeta` VALUES (503,73,'_tool_pricing_model','field_tool_pricing_model_modern');
+INSERT INTO `wp_postmeta` VALUES (504,73,'tool_pricing_summary','Free for personal use, Commercial licenses from $20/month, Enterprise custom');
+INSERT INTO `wp_postmeta` VALUES (505,73,'_tool_pricing_summary','field_tool_pricing_summary_modern');
+INSERT INTO `wp_postmeta` VALUES (506,74,'tool_tagline','The most realistic AI voices - Transform content with lifelike speech');
+INSERT INTO `wp_postmeta` VALUES (507,74,'_tool_tagline','field_tool_tagline_modern');
+INSERT INTO `wp_postmeta` VALUES (508,74,'tool_website','https://elevenlabs.io');
+INSERT INTO `wp_postmeta` VALUES (509,74,'_tool_website','field_tool_website_modern');
+INSERT INTO `wp_postmeta` VALUES (510,74,'tool_featured','1');
+INSERT INTO `wp_postmeta` VALUES (511,74,'_tool_featured','field_tool_featured_modern');
+INSERT INTO `wp_postmeta` VALUES (512,74,'tool_use_cases','a:4:{i:0;s:5:\"audio\";i:1;s:5:\"video\";i:2;s:8:\"business\";i:3;s:9:\"education\";}');
+INSERT INTO `wp_postmeta` VALUES (513,74,'_tool_use_cases','field_tool_use_cases_modern');
+INSERT INTO `wp_postmeta` VALUES (514,74,'tool_difficulty','beginner');
+INSERT INTO `wp_postmeta` VALUES (515,74,'_tool_difficulty','field_tool_difficulty_modern');
+INSERT INTO `wp_postmeta` VALUES (516,74,'tool_pricing_model','freemium');
+INSERT INTO `wp_postmeta` VALUES (517,74,'_tool_pricing_model','field_tool_pricing_model_modern');
+INSERT INTO `wp_postmeta` VALUES (518,74,'tool_pricing_summary','Free 10K chars/month, Starter $5/month, Creator $22/month, Enterprise custom');
+INSERT INTO `wp_postmeta` VALUES (519,74,'_tool_pricing_summary','field_tool_pricing_summary_modern');
+INSERT INTO `wp_postmeta` VALUES (520,75,'tool_tagline','Transform your projects with AI-powered creativity and style');
+INSERT INTO `wp_postmeta` VALUES (521,75,'_tool_tagline','field_tool_tagline_modern');
+INSERT INTO `wp_postmeta` VALUES (522,75,'tool_website','https://leonardo.ai');
+INSERT INTO `wp_postmeta` VALUES (523,75,'_tool_website','field_tool_website_modern');
+INSERT INTO `wp_postmeta` VALUES (524,75,'tool_featured','1');
+INSERT INTO `wp_postmeta` VALUES (525,75,'_tool_featured','field_tool_featured_modern');
+INSERT INTO `wp_postmeta` VALUES (526,75,'tool_use_cases','a:4:{i:0;s:6:\"images\";i:1;s:6:\"design\";i:2;s:5:\"video\";i:3;s:8:\"business\";}');
+INSERT INTO `wp_postmeta` VALUES (527,75,'_tool_use_cases','field_tool_use_cases_modern');
+INSERT INTO `wp_postmeta` VALUES (528,75,'tool_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (529,75,'_tool_difficulty','field_tool_difficulty_modern');
+INSERT INTO `wp_postmeta` VALUES (530,75,'tool_pricing_model','freemium');
+INSERT INTO `wp_postmeta` VALUES (531,75,'_tool_pricing_model','field_tool_pricing_model_modern');
+INSERT INTO `wp_postmeta` VALUES (532,75,'tool_pricing_summary','Free 150 tokens daily, Apprentice $10/month, Artisan $24/month, Maestro $48/month');
+INSERT INTO `wp_postmeta` VALUES (533,75,'_tool_pricing_summary','field_tool_pricing_summary_modern');
+INSERT INTO `wp_postmeta` VALUES (534,76,'tool_tagline','Bring your wildest video ideas to life with AI magic');
+INSERT INTO `wp_postmeta` VALUES (535,76,'_tool_tagline','field_tool_tagline_modern');
+INSERT INTO `wp_postmeta` VALUES (536,76,'tool_website','https://pika.art');
+INSERT INTO `wp_postmeta` VALUES (537,76,'_tool_website','field_tool_website_modern');
+INSERT INTO `wp_postmeta` VALUES (538,76,'tool_featured','1');
+INSERT INTO `wp_postmeta` VALUES (539,76,'_tool_featured','field_tool_featured_modern');
+INSERT INTO `wp_postmeta` VALUES (540,76,'tool_use_cases','a:4:{i:0;s:5:\"video\";i:1;s:9:\"animation\";i:2;s:8:\"business\";i:3;s:6:\"social\";}');
+INSERT INTO `wp_postmeta` VALUES (541,76,'_tool_use_cases','field_tool_use_cases_modern');
+INSERT INTO `wp_postmeta` VALUES (542,76,'tool_difficulty','beginner');
+INSERT INTO `wp_postmeta` VALUES (543,76,'_tool_difficulty','field_tool_difficulty_modern');
+INSERT INTO `wp_postmeta` VALUES (544,76,'tool_pricing_model','freemium');
+INSERT INTO `wp_postmeta` VALUES (545,76,'_tool_pricing_model','field_tool_pricing_model_modern');
+INSERT INTO `wp_postmeta` VALUES (546,76,'tool_pricing_summary','Free tier available, Standard $10/month, Pro $35/month, Ultra $70/month');
+INSERT INTO `wp_postmeta` VALUES (547,76,'_tool_pricing_summary','field_tool_pricing_summary_modern');
+INSERT INTO `wp_postmeta` VALUES (548,77,'tool_tagline','State-of-the-art AI for text and image generation');
+INSERT INTO `wp_postmeta` VALUES (549,77,'_tool_tagline','field_tool_tagline_modern');
+INSERT INTO `wp_postmeta` VALUES (550,77,'tool_website','https://ideogram.ai');
+INSERT INTO `wp_postmeta` VALUES (551,77,'_tool_website','field_tool_website_modern');
+INSERT INTO `wp_postmeta` VALUES (552,77,'tool_featured','1');
+INSERT INTO `wp_postmeta` VALUES (553,77,'_tool_featured','field_tool_featured_modern');
+INSERT INTO `wp_postmeta` VALUES (554,77,'tool_use_cases','a:4:{i:0;s:6:\"images\";i:1;s:6:\"design\";i:2;s:8:\"business\";i:3;s:9:\"marketing\";}');
+INSERT INTO `wp_postmeta` VALUES (555,77,'_tool_use_cases','field_tool_use_cases_modern');
+INSERT INTO `wp_postmeta` VALUES (556,77,'tool_difficulty','beginner');
+INSERT INTO `wp_postmeta` VALUES (557,77,'_tool_difficulty','field_tool_difficulty_modern');
+INSERT INTO `wp_postmeta` VALUES (558,77,'tool_pricing_model','freemium');
+INSERT INTO `wp_postmeta` VALUES (559,77,'_tool_pricing_model','field_tool_pricing_model_modern');
+INSERT INTO `wp_postmeta` VALUES (560,77,'tool_pricing_summary','Free 25 images/month, Basic $7/month, Plus $16/month, Pro $48/month');
+INSERT INTO `wp_postmeta` VALUES (561,77,'_tool_pricing_summary','field_tool_pricing_summary_modern');
+INSERT INTO `wp_postmeta` VALUES (562,78,'tool_tagline','The future of image synthesis - from the creators of Stable Diffusion');
+INSERT INTO `wp_postmeta` VALUES (563,78,'_tool_tagline','field_tool_tagline_modern');
+INSERT INTO `wp_postmeta` VALUES (564,78,'tool_website','https://blackforestlabs.ai');
+INSERT INTO `wp_postmeta` VALUES (565,78,'_tool_website','field_tool_website_modern');
+INSERT INTO `wp_postmeta` VALUES (566,78,'tool_featured','1');
+INSERT INTO `wp_postmeta` VALUES (567,78,'_tool_featured','field_tool_featured_modern');
+INSERT INTO `wp_postmeta` VALUES (568,78,'tool_use_cases','a:3:{i:0;s:6:\"images\";i:1;s:6:\"design\";i:2;s:8:\"business\";}');
+INSERT INTO `wp_postmeta` VALUES (569,78,'_tool_use_cases','field_tool_use_cases_modern');
+INSERT INTO `wp_postmeta` VALUES (570,78,'tool_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (571,78,'_tool_difficulty','field_tool_difficulty_modern');
+INSERT INTO `wp_postmeta` VALUES (572,78,'tool_pricing_model','free');
+INSERT INTO `wp_postmeta` VALUES (573,78,'_tool_pricing_model','field_tool_pricing_model_modern');
+INSERT INTO `wp_postmeta` VALUES (574,78,'tool_pricing_summary','API: Pro $0.055/image, Dev $0.025/image, Schnell $0.003/image');
+INSERT INTO `wp_postmeta` VALUES (575,78,'_tool_pricing_summary','field_tool_pricing_summary_modern');
+INSERT INTO `wp_postmeta` VALUES (576,79,'tool_tagline','Your personalized AI research assistant - Think faster with AI grounded in your sources');
+INSERT INTO `wp_postmeta` VALUES (577,79,'_tool_tagline','field_tool_tagline_modern');
+INSERT INTO `wp_postmeta` VALUES (578,79,'tool_website','https://notebooklm.google.com');
+INSERT INTO `wp_postmeta` VALUES (579,79,'_tool_website','field_tool_website_modern');
+INSERT INTO `wp_postmeta` VALUES (580,79,'tool_featured','1');
+INSERT INTO `wp_postmeta` VALUES (581,79,'_tool_featured','field_tool_featured_modern');
+INSERT INTO `wp_postmeta` VALUES (582,79,'tool_use_cases','a:4:{i:0;s:9:\"education\";i:1;s:7:\"writing\";i:2;s:8:\"business\";i:3;s:4:\"data\";}');
+INSERT INTO `wp_postmeta` VALUES (583,79,'_tool_use_cases','field_tool_use_cases_modern');
+INSERT INTO `wp_postmeta` VALUES (584,79,'tool_difficulty','beginner');
+INSERT INTO `wp_postmeta` VALUES (585,79,'_tool_difficulty','field_tool_difficulty_modern');
+INSERT INTO `wp_postmeta` VALUES (586,79,'tool_pricing_model','freemium');
+INSERT INTO `wp_postmeta` VALUES (587,79,'_tool_pricing_model','field_tool_pricing_model_modern');
+INSERT INTO `wp_postmeta` VALUES (588,79,'tool_pricing_summary','Free for all users, NotebookLM Plus with advanced features coming soon');
+INSERT INTO `wp_postmeta` VALUES (589,79,'_tool_pricing_summary','field_tool_pricing_summary_modern');
+INSERT INTO `wp_postmeta` VALUES (590,80,'tool_tagline','Personalized AI for every moment of your life');
+INSERT INTO `wp_postmeta` VALUES (591,80,'_tool_tagline','field_tool_tagline_modern');
+INSERT INTO `wp_postmeta` VALUES (592,80,'tool_website','https://character.ai');
+INSERT INTO `wp_postmeta` VALUES (593,80,'_tool_website','field_tool_website_modern');
+INSERT INTO `wp_postmeta` VALUES (594,80,'tool_featured','1');
+INSERT INTO `wp_postmeta` VALUES (595,80,'_tool_featured','field_tool_featured_modern');
+INSERT INTO `wp_postmeta` VALUES (596,80,'tool_use_cases','a:4:{i:0;s:6:\"social\";i:1;s:9:\"education\";i:2;s:13:\"entertainment\";i:3;s:7:\"writing\";}');
+INSERT INTO `wp_postmeta` VALUES (597,80,'_tool_use_cases','field_tool_use_cases_modern');
+INSERT INTO `wp_postmeta` VALUES (598,80,'tool_difficulty','beginner');
+INSERT INTO `wp_postmeta` VALUES (599,80,'_tool_difficulty','field_tool_difficulty_modern');
+INSERT INTO `wp_postmeta` VALUES (600,80,'tool_pricing_model','freemium');
+INSERT INTO `wp_postmeta` VALUES (601,80,'_tool_pricing_model','field_tool_pricing_model_modern');
+INSERT INTO `wp_postmeta` VALUES (602,80,'tool_pricing_summary','Free with limits, Character+ $14.99/month for priority access and features');
+INSERT INTO `wp_postmeta` VALUES (603,80,'_tool_pricing_summary','field_tool_pricing_summary_modern');
+INSERT INTO `wp_postmeta` VALUES (604,81,'tool_tagline','Run AI with an API - Machine learning doesn\'t need to be hard');
+INSERT INTO `wp_postmeta` VALUES (605,81,'_tool_tagline','field_tool_tagline_modern');
+INSERT INTO `wp_postmeta` VALUES (606,81,'tool_website','https://replicate.com');
+INSERT INTO `wp_postmeta` VALUES (607,81,'_tool_website','field_tool_website_modern');
+INSERT INTO `wp_postmeta` VALUES (608,81,'tool_featured','1');
+INSERT INTO `wp_postmeta` VALUES (609,81,'_tool_featured','field_tool_featured_modern');
+INSERT INTO `wp_postmeta` VALUES (610,81,'tool_use_cases','a:5:{i:0;s:4:\"code\";i:1;s:6:\"images\";i:2;s:5:\"video\";i:3;s:5:\"audio\";i:4;s:8:\"business\";}');
+INSERT INTO `wp_postmeta` VALUES (611,81,'_tool_use_cases','field_tool_use_cases_modern');
+INSERT INTO `wp_postmeta` VALUES (612,81,'tool_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (613,81,'_tool_difficulty','field_tool_difficulty_modern');
+INSERT INTO `wp_postmeta` VALUES (614,81,'tool_pricing_model','usage_based');
+INSERT INTO `wp_postmeta` VALUES (615,81,'_tool_pricing_model','field_tool_pricing_model_modern');
+INSERT INTO `wp_postmeta` VALUES (616,81,'tool_pricing_summary','Pay-per-second from $0.00025/sec, volume discounts available');
+INSERT INTO `wp_postmeta` VALUES (617,81,'_tool_pricing_summary','field_tool_pricing_summary_modern');
+INSERT INTO `wp_postmeta` VALUES (618,82,'tool_tagline','The platform where the machine learning community collaborates on models, datasets, and applications');
+INSERT INTO `wp_postmeta` VALUES (619,82,'_tool_tagline','field_tool_tagline_modern');
+INSERT INTO `wp_postmeta` VALUES (620,82,'tool_website','https://huggingface.co');
+INSERT INTO `wp_postmeta` VALUES (621,82,'_tool_website','field_tool_website_modern');
+INSERT INTO `wp_postmeta` VALUES (622,82,'tool_featured','1');
+INSERT INTO `wp_postmeta` VALUES (623,82,'_tool_featured','field_tool_featured_modern');
+INSERT INTO `wp_postmeta` VALUES (624,82,'tool_use_cases','a:4:{i:0;s:4:\"code\";i:1;s:9:\"education\";i:2;s:8:\"business\";i:3;s:3:\"all\";}');
+INSERT INTO `wp_postmeta` VALUES (625,82,'_tool_use_cases','field_tool_use_cases_modern');
+INSERT INTO `wp_postmeta` VALUES (626,82,'tool_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (627,82,'_tool_difficulty','field_tool_difficulty_modern');
+INSERT INTO `wp_postmeta` VALUES (628,82,'tool_pricing_model','freemium');
+INSERT INTO `wp_postmeta` VALUES (629,82,'_tool_pricing_model','field_tool_pricing_model_modern');
+INSERT INTO `wp_postmeta` VALUES (630,82,'tool_pricing_summary','Free community tier, Pro $9/month, Enterprise custom pricing');
+INSERT INTO `wp_postmeta` VALUES (631,82,'_tool_pricing_summary','field_tool_pricing_summary_modern');
+INSERT INTO `wp_postmeta` VALUES (632,83,'tool_tagline','Best-in-class AI for enterprise - Build with language AI that understands your business');
+INSERT INTO `wp_postmeta` VALUES (633,83,'_tool_tagline','field_tool_tagline_modern');
+INSERT INTO `wp_postmeta` VALUES (634,83,'tool_website','https://cohere.com');
+INSERT INTO `wp_postmeta` VALUES (635,83,'_tool_website','field_tool_website_modern');
+INSERT INTO `wp_postmeta` VALUES (636,83,'tool_featured','1');
+INSERT INTO `wp_postmeta` VALUES (637,83,'_tool_featured','field_tool_featured_modern');
+INSERT INTO `wp_postmeta` VALUES (638,83,'tool_use_cases','a:4:{i:0;s:8:\"business\";i:1;s:4:\"code\";i:2;s:4:\"data\";i:3;s:7:\"writing\";}');
+INSERT INTO `wp_postmeta` VALUES (639,83,'_tool_use_cases','field_tool_use_cases_modern');
+INSERT INTO `wp_postmeta` VALUES (640,83,'tool_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (641,83,'_tool_difficulty','field_tool_difficulty_modern');
+INSERT INTO `wp_postmeta` VALUES (642,83,'tool_pricing_model','usage_based');
+INSERT INTO `wp_postmeta` VALUES (643,83,'_tool_pricing_model','field_tool_pricing_model_modern');
+INSERT INTO `wp_postmeta` VALUES (644,83,'tool_pricing_summary','Pay-as-you-go API pricing, Enterprise contracts with SLAs available');
+INSERT INTO `wp_postmeta` VALUES (645,83,'_tool_pricing_summary','field_tool_pricing_summary_modern');
+INSERT INTO `wp_postmeta` VALUES (646,78,'_edit_lock','1751374857:1');
+INSERT INTO `wp_postmeta` VALUES (647,78,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (648,78,'tool_logo','');
+INSERT INTO `wp_postmeta` VALUES (649,78,'_tool_logo','field_tool_logo_modern');
+INSERT INTO `wp_postmeta` VALUES (650,78,'tool_stats_stat_users','');
+INSERT INTO `wp_postmeta` VALUES (651,78,'_tool_stats_stat_users','field_stat_users_modern');
+INSERT INTO `wp_postmeta` VALUES (652,78,'tool_stats_stat_rating','');
+INSERT INTO `wp_postmeta` VALUES (653,78,'_tool_stats_stat_rating','field_stat_rating_modern');
+INSERT INTO `wp_postmeta` VALUES (654,78,'tool_stats_stat_company','');
+INSERT INTO `wp_postmeta` VALUES (655,78,'_tool_stats_stat_company','field_stat_company_modern');
+INSERT INTO `wp_postmeta` VALUES (656,78,'tool_stats_stat_year','2025');
+INSERT INTO `wp_postmeta` VALUES (657,78,'_tool_stats_stat_year','field_stat_year_modern');
+INSERT INTO `wp_postmeta` VALUES (658,78,'tool_stats','');
+INSERT INTO `wp_postmeta` VALUES (659,78,'_tool_stats','field_tool_stats_modern');
+INSERT INTO `wp_postmeta` VALUES (660,78,'tool_platforms','');
+INSERT INTO `wp_postmeta` VALUES (661,78,'_tool_platforms','field_tool_platforms_modern');
+INSERT INTO `wp_postmeta` VALUES (662,84,'tool_tagline','Turn your SKUs into stunning photos & videos in minutes with AI');
+INSERT INTO `wp_postmeta` VALUES (663,84,'_tool_tagline','field_tool_tagline_modern');
+INSERT INTO `wp_postmeta` VALUES (664,84,'tool_website','https://www.maker.ai');
+INSERT INTO `wp_postmeta` VALUES (665,84,'_tool_website','field_tool_website_modern');
+INSERT INTO `wp_postmeta` VALUES (666,84,'tool_featured','1');
+INSERT INTO `wp_postmeta` VALUES (667,84,'_tool_featured','field_tool_featured_modern');
+INSERT INTO `wp_postmeta` VALUES (668,84,'tool_use_cases','a:4:{i:0;s:6:\"images\";i:1;s:5:\"video\";i:2;s:8:\"business\";i:3;s:9:\"marketing\";}');
+INSERT INTO `wp_postmeta` VALUES (669,84,'_tool_use_cases','field_tool_use_cases_modern');
+INSERT INTO `wp_postmeta` VALUES (670,84,'tool_difficulty','beginner');
+INSERT INTO `wp_postmeta` VALUES (671,84,'_tool_difficulty','field_tool_difficulty_modern');
+INSERT INTO `wp_postmeta` VALUES (672,84,'tool_pricing_model','subscription');
+INSERT INTO `wp_postmeta` VALUES (673,84,'_tool_pricing_model','field_tool_pricing_model_modern');
+INSERT INTO `wp_postmeta` VALUES (674,84,'tool_pricing_summary','Cost-effective alternative to traditional photoshoots - 1% of traditional costs');
+INSERT INTO `wp_postmeta` VALUES (675,84,'_tool_pricing_summary','field_tool_pricing_summary_modern');
+INSERT INTO `wp_postmeta` VALUES (676,84,'tool_key_features','a:6:{i:0;s:40:\"One image creates endless product photos\";i:1;s:37:\"Custom models and locations on demand\";i:2;s:35:\"Minutes instead of weeks turnaround\";i:3;s:34:\"1% of traditional photoshoot costs\";i:4;s:26:\"Works for any product type\";i:5;s:21:\"Studio-quality output\";}');
+INSERT INTO `wp_postmeta` VALUES (677,84,'_tool_key_features','field_tool_key_features_modern');
+INSERT INTO `wp_postmeta` VALUES (678,58,'_edit_lock','1751661699:1');
+INSERT INTO `wp_postmeta` VALUES (679,58,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (680,58,'project_year','2025');
+INSERT INTO `wp_postmeta` VALUES (681,58,'_project_year','field_project_year');
+INSERT INTO `wp_postmeta` VALUES (682,58,'project_author','');
+INSERT INTO `wp_postmeta` VALUES (683,58,'_project_author','field_project_author');
+INSERT INTO `wp_postmeta` VALUES (684,58,'project_workflow','');
+INSERT INTO `wp_postmeta` VALUES (685,58,'_project_workflow','field_project_workflow');
+INSERT INTO `wp_postmeta` VALUES (686,58,'project_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (687,58,'_project_difficulty','field_project_difficulty');
+INSERT INTO `wp_postmeta` VALUES (688,58,'project_time_spent','');
+INSERT INTO `wp_postmeta` VALUES (689,58,'_project_time_spent','field_project_time_spent');
+INSERT INTO `wp_postmeta` VALUES (690,58,'project_url','');
+INSERT INTO `wp_postmeta` VALUES (691,58,'_project_url','field_project_url');
+INSERT INTO `wp_postmeta` VALUES (692,58,'hero_background','');
+INSERT INTO `wp_postmeta` VALUES (693,58,'_hero_background','field_hero_background');
+INSERT INTO `wp_postmeta` VALUES (694,58,'featured_in_hero','');
+INSERT INTO `wp_postmeta` VALUES (695,58,'_featured_in_hero','field_featured_in_hero');
+INSERT INTO `wp_postmeta` VALUES (696,58,'featured_in_showcase','0');
+INSERT INTO `wp_postmeta` VALUES (697,58,'_featured_in_showcase','field_featured_in_showcase');
+INSERT INTO `wp_postmeta` VALUES (698,58,'_project_views','field_project_views');
+INSERT INTO `wp_postmeta` VALUES (699,58,'project_demo_url','');
+INSERT INTO `wp_postmeta` VALUES (700,58,'_project_demo_url','field_project_demo_url');
+INSERT INTO `wp_postmeta` VALUES (701,58,'project_github_url','');
+INSERT INTO `wp_postmeta` VALUES (702,58,'_project_github_url','field_project_github_url');
+INSERT INTO `wp_postmeta` VALUES (703,58,'_duration','field_duration');
+INSERT INTO `wp_postmeta` VALUES (704,58,'_genre','field_genre');
+INSERT INTO `wp_postmeta` VALUES (705,58,'audio_file','');
+INSERT INTO `wp_postmeta` VALUES (706,58,'_audio_file','field_audio_file');
+INSERT INTO `wp_postmeta` VALUES (707,58,'video_file','');
+INSERT INTO `wp_postmeta` VALUES (708,58,'_video_file','field_video_file');
+INSERT INTO `wp_postmeta` VALUES (709,85,'project_views','1996');
+INSERT INTO `wp_postmeta` VALUES (710,85,'_project_views','field_project_views');
+INSERT INTO `wp_postmeta` VALUES (711,85,'duration','2:11');
+INSERT INTO `wp_postmeta` VALUES (712,85,'_duration','field_duration');
+INSERT INTO `wp_postmeta` VALUES (713,85,'genre','Samba');
+INSERT INTO `wp_postmeta` VALUES (714,85,'_genre','field_genre');
+INSERT INTO `wp_postmeta` VALUES (715,85,'project_year','2025');
+INSERT INTO `wp_postmeta` VALUES (716,85,'_project_year','field_project_year');
+INSERT INTO `wp_postmeta` VALUES (717,85,'project_author','');
+INSERT INTO `wp_postmeta` VALUES (718,85,'_project_author','field_project_author');
+INSERT INTO `wp_postmeta` VALUES (719,85,'project_workflow','');
+INSERT INTO `wp_postmeta` VALUES (720,85,'_project_workflow','field_project_workflow');
+INSERT INTO `wp_postmeta` VALUES (721,85,'project_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (722,85,'_project_difficulty','field_project_difficulty');
+INSERT INTO `wp_postmeta` VALUES (723,85,'project_time_spent','');
+INSERT INTO `wp_postmeta` VALUES (724,85,'_project_time_spent','field_project_time_spent');
+INSERT INTO `wp_postmeta` VALUES (725,85,'project_url','');
+INSERT INTO `wp_postmeta` VALUES (726,85,'_project_url','field_project_url');
+INSERT INTO `wp_postmeta` VALUES (727,85,'hero_background','');
+INSERT INTO `wp_postmeta` VALUES (728,85,'_hero_background','field_hero_background');
+INSERT INTO `wp_postmeta` VALUES (729,85,'featured_in_hero','1');
+INSERT INTO `wp_postmeta` VALUES (730,85,'_featured_in_hero','field_featured_in_hero');
+INSERT INTO `wp_postmeta` VALUES (731,85,'featured_in_showcase','0');
+INSERT INTO `wp_postmeta` VALUES (732,85,'_featured_in_showcase','field_featured_in_showcase');
+INSERT INTO `wp_postmeta` VALUES (733,85,'project_demo_url','');
+INSERT INTO `wp_postmeta` VALUES (734,85,'_project_demo_url','field_project_demo_url');
+INSERT INTO `wp_postmeta` VALUES (735,85,'project_github_url','');
+INSERT INTO `wp_postmeta` VALUES (736,85,'_project_github_url','field_project_github_url');
+INSERT INTO `wp_postmeta` VALUES (737,85,'audio_file','');
+INSERT INTO `wp_postmeta` VALUES (738,85,'_audio_file','field_audio_file');
+INSERT INTO `wp_postmeta` VALUES (739,85,'video_file','');
+INSERT INTO `wp_postmeta` VALUES (740,85,'_video_file','field_video_file');
+INSERT INTO `wp_postmeta` VALUES (743,87,'_edit_lock','1751378595:1');
+INSERT INTO `wp_postmeta` VALUES (744,82,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (745,82,'_wp_trash_meta_time','1751392390');
+INSERT INTO `wp_postmeta` VALUES (746,82,'_wp_desired_post_slug','hugging-face');
+INSERT INTO `wp_postmeta` VALUES (747,81,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (748,81,'_wp_trash_meta_time','1751392397');
+INSERT INTO `wp_postmeta` VALUES (749,81,'_wp_desired_post_slug','replicate');
+INSERT INTO `wp_postmeta` VALUES (750,83,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (751,83,'_wp_trash_meta_time','1751392401');
+INSERT INTO `wp_postmeta` VALUES (752,83,'_wp_desired_post_slug','cohere');
+INSERT INTO `wp_postmeta` VALUES (753,113,'_edit_lock','1751401242:1');
+INSERT INTO `wp_postmeta` VALUES (754,97,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (755,97,'_wp_trash_meta_time','1751402391');
+INSERT INTO `wp_postmeta` VALUES (756,97,'_wp_desired_post_slug','github-copilot-3');
+INSERT INTO `wp_postmeta` VALUES (757,98,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (758,98,'_wp_trash_meta_time','1751402400');
+INSERT INTO `wp_postmeta` VALUES (759,98,'_wp_desired_post_slug','cursor-3');
+INSERT INTO `wp_postmeta` VALUES (760,99,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (761,99,'_wp_trash_meta_time','1751402409');
+INSERT INTO `wp_postmeta` VALUES (762,99,'_wp_desired_post_slug','v0-by-vercel-2');
+INSERT INTO `wp_postmeta` VALUES (763,100,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (764,100,'_wp_trash_meta_time','1751402419');
+INSERT INTO `wp_postmeta` VALUES (765,100,'_wp_desired_post_slug','replit-ai-2');
+INSERT INTO `wp_postmeta` VALUES (766,101,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (767,101,'_wp_trash_meta_time','1751402428');
+INSERT INTO `wp_postmeta` VALUES (768,101,'_wp_desired_post_slug','suno-ai-2');
+INSERT INTO `wp_postmeta` VALUES (769,102,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (770,102,'_wp_trash_meta_time','1751402443');
+INSERT INTO `wp_postmeta` VALUES (771,102,'_wp_desired_post_slug','udio-2');
+INSERT INTO `wp_postmeta` VALUES (772,103,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (773,103,'_wp_trash_meta_time','1751402455');
+INSERT INTO `wp_postmeta` VALUES (774,103,'_wp_desired_post_slug','elevenlabs-2');
+INSERT INTO `wp_postmeta` VALUES (775,104,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (776,104,'_wp_trash_meta_time','1751402466');
+INSERT INTO `wp_postmeta` VALUES (777,104,'_wp_desired_post_slug','mubert-2');
+INSERT INTO `wp_postmeta` VALUES (778,117,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (779,117,'_wp_trash_meta_time','1751402480');
+INSERT INTO `wp_postmeta` VALUES (780,117,'_wp_desired_post_slug','midjourney-3');
+INSERT INTO `wp_postmeta` VALUES (781,54,'_edit_lock','1751661739:1');
+INSERT INTO `wp_postmeta` VALUES (782,54,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (783,54,'project_year','2025');
+INSERT INTO `wp_postmeta` VALUES (784,54,'_project_year','field_project_year');
+INSERT INTO `wp_postmeta` VALUES (785,54,'project_author','');
+INSERT INTO `wp_postmeta` VALUES (786,54,'_project_author','field_project_author');
+INSERT INTO `wp_postmeta` VALUES (787,54,'project_workflow','');
+INSERT INTO `wp_postmeta` VALUES (788,54,'_project_workflow','field_project_workflow');
+INSERT INTO `wp_postmeta` VALUES (789,54,'project_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (790,54,'_project_difficulty','field_project_difficulty');
+INSERT INTO `wp_postmeta` VALUES (791,54,'project_time_spent','');
+INSERT INTO `wp_postmeta` VALUES (792,54,'_project_time_spent','field_project_time_spent');
+INSERT INTO `wp_postmeta` VALUES (793,54,'project_url','');
+INSERT INTO `wp_postmeta` VALUES (794,54,'_project_url','field_project_url');
+INSERT INTO `wp_postmeta` VALUES (795,54,'hero_background','');
+INSERT INTO `wp_postmeta` VALUES (796,54,'_hero_background','field_hero_background');
+INSERT INTO `wp_postmeta` VALUES (797,54,'featured_in_hero','');
+INSERT INTO `wp_postmeta` VALUES (798,54,'_featured_in_hero','field_featured_in_hero');
+INSERT INTO `wp_postmeta` VALUES (799,54,'featured_in_showcase','0');
+INSERT INTO `wp_postmeta` VALUES (800,54,'_featured_in_showcase','field_featured_in_showcase');
+INSERT INTO `wp_postmeta` VALUES (801,54,'_project_views','field_project_views');
+INSERT INTO `wp_postmeta` VALUES (802,54,'project_demo_url','');
+INSERT INTO `wp_postmeta` VALUES (803,54,'_project_demo_url','field_project_demo_url');
+INSERT INTO `wp_postmeta` VALUES (804,54,'project_github_url','');
+INSERT INTO `wp_postmeta` VALUES (805,54,'_project_github_url','field_project_github_url');
+INSERT INTO `wp_postmeta` VALUES (806,54,'_duration','field_duration');
+INSERT INTO `wp_postmeta` VALUES (807,54,'_genre','field_genre');
+INSERT INTO `wp_postmeta` VALUES (808,54,'audio_file','');
+INSERT INTO `wp_postmeta` VALUES (809,54,'_audio_file','field_audio_file');
+INSERT INTO `wp_postmeta` VALUES (810,54,'video_file','');
+INSERT INTO `wp_postmeta` VALUES (811,54,'_video_file','field_video_file');
+INSERT INTO `wp_postmeta` VALUES (812,139,'project_views','2463');
+INSERT INTO `wp_postmeta` VALUES (813,139,'_project_views','field_project_views');
+INSERT INTO `wp_postmeta` VALUES (814,139,'duration','');
+INSERT INTO `wp_postmeta` VALUES (815,139,'_duration','field_duration');
+INSERT INTO `wp_postmeta` VALUES (816,139,'genre','FASHION');
+INSERT INTO `wp_postmeta` VALUES (817,139,'_genre','field_genre');
+INSERT INTO `wp_postmeta` VALUES (818,139,'project_year','2025');
+INSERT INTO `wp_postmeta` VALUES (819,139,'_project_year','field_project_year');
+INSERT INTO `wp_postmeta` VALUES (820,139,'project_author','');
+INSERT INTO `wp_postmeta` VALUES (821,139,'_project_author','field_project_author');
+INSERT INTO `wp_postmeta` VALUES (822,139,'project_workflow','');
+INSERT INTO `wp_postmeta` VALUES (823,139,'_project_workflow','field_project_workflow');
+INSERT INTO `wp_postmeta` VALUES (824,139,'project_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (825,139,'_project_difficulty','field_project_difficulty');
+INSERT INTO `wp_postmeta` VALUES (826,139,'project_time_spent','');
+INSERT INTO `wp_postmeta` VALUES (827,139,'_project_time_spent','field_project_time_spent');
+INSERT INTO `wp_postmeta` VALUES (828,139,'project_url','');
+INSERT INTO `wp_postmeta` VALUES (829,139,'_project_url','field_project_url');
+INSERT INTO `wp_postmeta` VALUES (830,139,'hero_background','');
+INSERT INTO `wp_postmeta` VALUES (831,139,'_hero_background','field_hero_background');
+INSERT INTO `wp_postmeta` VALUES (832,139,'featured_in_hero','1');
+INSERT INTO `wp_postmeta` VALUES (833,139,'_featured_in_hero','field_featured_in_hero');
+INSERT INTO `wp_postmeta` VALUES (834,139,'featured_in_showcase','0');
+INSERT INTO `wp_postmeta` VALUES (835,139,'_featured_in_showcase','field_featured_in_showcase');
+INSERT INTO `wp_postmeta` VALUES (836,139,'project_demo_url','');
+INSERT INTO `wp_postmeta` VALUES (837,139,'_project_demo_url','field_project_demo_url');
+INSERT INTO `wp_postmeta` VALUES (838,139,'project_github_url','');
+INSERT INTO `wp_postmeta` VALUES (839,139,'_project_github_url','field_project_github_url');
+INSERT INTO `wp_postmeta` VALUES (840,139,'audio_file','');
+INSERT INTO `wp_postmeta` VALUES (841,139,'_audio_file','field_audio_file');
+INSERT INTO `wp_postmeta` VALUES (842,139,'video_file','');
+INSERT INTO `wp_postmeta` VALUES (843,139,'_video_file','field_video_file');
+INSERT INTO `wp_postmeta` VALUES (844,44,'_edit_lock','1751654578:1');
+INSERT INTO `wp_postmeta` VALUES (845,44,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (846,44,'_maker_location','field_maker_location');
+INSERT INTO `wp_postmeta` VALUES (847,44,'_maker_bio','field_maker_bio');
+INSERT INTO `wp_postmeta` VALUES (848,44,'profile_image','');
+INSERT INTO `wp_postmeta` VALUES (849,44,'_profile_image','field_profile_image');
+INSERT INTO `wp_postmeta` VALUES (850,44,'background_image','');
+INSERT INTO `wp_postmeta` VALUES (851,44,'_background_image','field_background_image');
+INSERT INTO `wp_postmeta` VALUES (852,44,'maker_website','');
+INSERT INTO `wp_postmeta` VALUES (853,44,'_maker_website','field_maker_website');
+INSERT INTO `wp_postmeta` VALUES (854,44,'maker_experience_level','intermediate');
+INSERT INTO `wp_postmeta` VALUES (855,44,'_maker_experience_level','field_maker_experience_level');
+INSERT INTO `wp_postmeta` VALUES (856,44,'maker_tools_expertise','a:2:{i:0;s:10:\"Midjourney\";i:1;s:16:\"Stable Diffusion\";}');
+INSERT INTO `wp_postmeta` VALUES (857,44,'_maker_tools_expertise','field_maker_tools_expertise');
+INSERT INTO `wp_postmeta` VALUES (858,44,'maker_availability','available');
+INSERT INTO `wp_postmeta` VALUES (859,44,'_maker_availability','field_maker_availability');
+INSERT INTO `wp_postmeta` VALUES (860,44,'featured_maker','1');
+INSERT INTO `wp_postmeta` VALUES (861,44,'_featured_maker','field_featured_maker');
+INSERT INTO `wp_postmeta` VALUES (862,44,'featured_position','1');
+INSERT INTO `wp_postmeta` VALUES (863,44,'_featured_position','field_featured_position');
+INSERT INTO `wp_postmeta` VALUES (864,140,'maker_location','Istambul, turkey');
+INSERT INTO `wp_postmeta` VALUES (865,140,'_maker_location','field_maker_location');
+INSERT INTO `wp_postmeta` VALUES (866,140,'maker_bio','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.');
+INSERT INTO `wp_postmeta` VALUES (867,140,'_maker_bio','field_maker_bio');
+INSERT INTO `wp_postmeta` VALUES (868,140,'profile_image','');
+INSERT INTO `wp_postmeta` VALUES (869,140,'_profile_image','field_profile_image');
+INSERT INTO `wp_postmeta` VALUES (870,140,'background_image','');
+INSERT INTO `wp_postmeta` VALUES (871,140,'_background_image','field_background_image');
+INSERT INTO `wp_postmeta` VALUES (872,140,'maker_website','');
+INSERT INTO `wp_postmeta` VALUES (873,140,'_maker_website','field_maker_website');
+INSERT INTO `wp_postmeta` VALUES (874,140,'maker_experience_level','intermediate');
+INSERT INTO `wp_postmeta` VALUES (875,140,'_maker_experience_level','field_maker_experience_level');
+INSERT INTO `wp_postmeta` VALUES (876,140,'maker_tools_expertise','a:2:{i:0;s:10:\"Midjourney\";i:1;s:16:\"Stable Diffusion\";}');
+INSERT INTO `wp_postmeta` VALUES (877,140,'_maker_tools_expertise','field_maker_tools_expertise');
+INSERT INTO `wp_postmeta` VALUES (878,140,'maker_availability','available');
+INSERT INTO `wp_postmeta` VALUES (879,140,'_maker_availability','field_maker_availability');
+INSERT INTO `wp_postmeta` VALUES (880,140,'featured_maker','1');
+INSERT INTO `wp_postmeta` VALUES (881,140,'_featured_maker','field_featured_maker');
+INSERT INTO `wp_postmeta` VALUES (882,140,'featured_position','1');
+INSERT INTO `wp_postmeta` VALUES (883,140,'_featured_position','field_featured_position');
+INSERT INTO `wp_postmeta` VALUES (884,141,'_edit_lock','1751654637:1');
+INSERT INTO `wp_postmeta` VALUES (885,141,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (886,141,'maker_location','Lisbon, Portugal');
+INSERT INTO `wp_postmeta` VALUES (887,141,'_maker_location','field_maker_location');
+INSERT INTO `wp_postmeta` VALUES (888,141,'maker_bio','she\'s awesome');
+INSERT INTO `wp_postmeta` VALUES (889,141,'_maker_bio','field_maker_bio');
+INSERT INTO `wp_postmeta` VALUES (890,141,'profile_image','');
+INSERT INTO `wp_postmeta` VALUES (891,141,'_profile_image','field_profile_image');
+INSERT INTO `wp_postmeta` VALUES (892,141,'background_image','');
+INSERT INTO `wp_postmeta` VALUES (893,141,'_background_image','field_background_image');
+INSERT INTO `wp_postmeta` VALUES (894,141,'maker_website','');
+INSERT INTO `wp_postmeta` VALUES (895,141,'_maker_website','field_maker_website');
+INSERT INTO `wp_postmeta` VALUES (896,141,'maker_experience_level','intermediate');
+INSERT INTO `wp_postmeta` VALUES (897,141,'_maker_experience_level','field_maker_experience_level');
+INSERT INTO `wp_postmeta` VALUES (898,141,'maker_tools_expertise','a:2:{i:0;s:7:\"ChatGPT\";i:1;s:10:\"Midjourney\";}');
+INSERT INTO `wp_postmeta` VALUES (899,141,'_maker_tools_expertise','field_maker_tools_expertise');
+INSERT INTO `wp_postmeta` VALUES (900,141,'maker_availability','selective');
+INSERT INTO `wp_postmeta` VALUES (901,141,'_maker_availability','field_maker_availability');
+INSERT INTO `wp_postmeta` VALUES (902,141,'featured_maker','1');
+INSERT INTO `wp_postmeta` VALUES (903,141,'_featured_maker','field_featured_maker');
+INSERT INTO `wp_postmeta` VALUES (904,141,'featured_position','2');
+INSERT INTO `wp_postmeta` VALUES (905,141,'_featured_position','field_featured_position');
+INSERT INTO `wp_postmeta` VALUES (906,142,'maker_location','Lisbon, Portugal');
+INSERT INTO `wp_postmeta` VALUES (907,142,'_maker_location','field_maker_location');
+INSERT INTO `wp_postmeta` VALUES (908,142,'maker_bio','she\'s awesome');
+INSERT INTO `wp_postmeta` VALUES (909,142,'_maker_bio','field_maker_bio');
+INSERT INTO `wp_postmeta` VALUES (910,142,'profile_image','');
+INSERT INTO `wp_postmeta` VALUES (911,142,'_profile_image','field_profile_image');
+INSERT INTO `wp_postmeta` VALUES (912,142,'background_image','');
+INSERT INTO `wp_postmeta` VALUES (913,142,'_background_image','field_background_image');
+INSERT INTO `wp_postmeta` VALUES (914,142,'maker_website','');
+INSERT INTO `wp_postmeta` VALUES (915,142,'_maker_website','field_maker_website');
+INSERT INTO `wp_postmeta` VALUES (916,142,'maker_experience_level','intermediate');
+INSERT INTO `wp_postmeta` VALUES (917,142,'_maker_experience_level','field_maker_experience_level');
+INSERT INTO `wp_postmeta` VALUES (918,142,'maker_tools_expertise','a:2:{i:0;s:7:\"ChatGPT\";i:1;s:10:\"Midjourney\";}');
+INSERT INTO `wp_postmeta` VALUES (919,142,'_maker_tools_expertise','field_maker_tools_expertise');
+INSERT INTO `wp_postmeta` VALUES (920,142,'maker_availability','selective');
+INSERT INTO `wp_postmeta` VALUES (921,142,'_maker_availability','field_maker_availability');
+INSERT INTO `wp_postmeta` VALUES (922,142,'featured_maker','1');
+INSERT INTO `wp_postmeta` VALUES (923,142,'_featured_maker','field_featured_maker');
+INSERT INTO `wp_postmeta` VALUES (924,142,'featured_position','2');
+INSERT INTO `wp_postmeta` VALUES (925,142,'_featured_position','field_featured_position');
+INSERT INTO `wp_postmeta` VALUES (926,46,'_edit_lock','1751656441:1');
+INSERT INTO `wp_postmeta` VALUES (927,143,'_wp_attached_file','2025/06/bhanu_maker_A_felt_art_style_little_Indian_girl_with_curly_ha_36e51095-199d-4634-8790-022893302f02_0.png');
+INSERT INTO `wp_postmeta` VALUES (928,143,'_wp_attachment_metadata','a:6:{s:5:\"width\";i:1024;s:6:\"height\";i:1024;s:4:\"file\";s:112:\"2025/06/bhanu_maker_A_felt_art_style_little_Indian_girl_with_curly_ha_36e51095-199d-4634-8790-022893302f02_0.png\";s:8:\"filesize\";i:1970549;s:5:\"sizes\";a:8:{s:6:\"medium\";a:5:{s:4:\"file\";s:112:\"bhanu_maker_A_felt_art_style_little_Indian_girl_with_curly_ha_36e51095-199d-4634-8790-022893302f02_0-300x300.png\";s:5:\"width\";i:300;s:6:\"height\";i:300;s:9:\"mime-type\";s:9:\"image/png\";s:8:\"filesize\";i:73263;}s:9:\"thumbnail\";a:5:{s:4:\"file\";s:112:\"bhanu_maker_A_felt_art_style_little_Indian_girl_with_curly_ha_36e51095-199d-4634-8790-022893302f02_0-150x150.png\";s:5:\"width\";i:150;s:6:\"height\";i:150;s:9:\"mime-type\";s:9:\"image/png\";s:8:\"filesize\";i:20807;}s:12:\"medium_large\";a:5:{s:4:\"file\";s:112:\"bhanu_maker_A_felt_art_style_little_Indian_girl_with_curly_ha_36e51095-199d-4634-8790-022893302f02_0-768x768.png\";s:5:\"width\";i:768;s:6:\"height\";i:768;s:9:\"mime-type\";s:9:\"image/png\";s:8:\"filesize\";i:428502;}s:16:\"thumbnail-mobile\";a:5:{s:4:\"file\";s:112:\"bhanu_maker_A_felt_art_style_little_Indian_girl_with_curly_ha_36e51095-199d-4634-8790-022893302f02_0-400x300.png\";s:5:\"width\";i:400;s:6:\"height\";i:300;s:9:\"mime-type\";s:9:\"image/png\";s:8:\"filesize\";i:102440;}s:16:\"thumbnail-tablet\";a:5:{s:4:\"file\";s:112:\"bhanu_maker_A_felt_art_style_little_Indian_girl_with_curly_ha_36e51095-199d-4634-8790-022893302f02_0-800x600.png\";s:5:\"width\";i:800;s:6:\"height\";i:600;s:9:\"mime-type\";s:9:\"image/png\";s:8:\"filesize\";i:380728;}s:17:\"thumbnail-desktop\";a:5:{s:4:\"file\";s:113:\"bhanu_maker_A_felt_art_style_little_Indian_girl_with_curly_ha_36e51095-199d-4634-8790-022893302f02_0-1024x900.png\";s:5:\"width\";i:1024;s:6:\"height\";i:900;s:9:\"mime-type\";s:9:\"image/png\";s:8:\"filesize\";i:723733;}s:11:\"hero-mobile\";a:5:{s:4:\"file\";s:112:\"bhanu_maker_A_felt_art_style_little_Indian_girl_with_curly_ha_36e51095-199d-4634-8790-022893302f02_0-768x400.png\";s:5:\"width\";i:768;s:6:\"height\";i:400;s:9:\"mime-type\";s:9:\"image/png\";s:8:\"filesize\";i:251842;}s:11:\"hero-tablet\";a:5:{s:4:\"file\";s:113:\"bhanu_maker_A_felt_art_style_little_Indian_girl_with_curly_ha_36e51095-199d-4634-8790-022893302f02_0-1024x600.png\";s:5:\"width\";i:1024;s:6:\"height\";i:600;s:9:\"mime-type\";s:9:\"image/png\";s:8:\"filesize\";i:507805;}}s:10:\"image_meta\";a:12:{s:8:\"aperture\";s:1:\"0\";s:6:\"credit\";s:0:\"\";s:6:\"camera\";s:0:\"\";s:7:\"caption\";s:0:\"\";s:17:\"created_timestamp\";s:1:\"0\";s:9:\"copyright\";s:0:\"\";s:12:\"focal_length\";s:1:\"0\";s:3:\"iso\";s:1:\"0\";s:13:\"shutter_speed\";s:1:\"0\";s:5:\"title\";s:0:\"\";s:11:\"orientation\";s:1:\"0\";s:8:\"keywords\";a:0:{}}}');
+INSERT INTO `wp_postmeta` VALUES (931,46,'_thumbnail_id','143');
+INSERT INTO `wp_postmeta` VALUES (932,46,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (933,46,'_article_category_badge','field_article_category_badge');
+INSERT INTO `wp_postmeta` VALUES (934,46,'_publication_date_override','field_publication_date_override');
+INSERT INTO `wp_postmeta` VALUES (935,144,'article_category_badge','TRENDING');
+INSERT INTO `wp_postmeta` VALUES (936,144,'_article_category_badge','field_article_category_badge');
+INSERT INTO `wp_postmeta` VALUES (937,144,'publication_date_override','20250513');
+INSERT INTO `wp_postmeta` VALUES (938,144,'_publication_date_override','field_publication_date_override');
+INSERT INTO `wp_postmeta` VALUES (939,50,'_edit_lock','1751656068:1');
+INSERT INTO `wp_postmeta` VALUES (942,50,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (943,50,'_article_category_badge','field_article_category_badge');
+INSERT INTO `wp_postmeta` VALUES (944,50,'_publication_date_override','field_publication_date_override');
+INSERT INTO `wp_postmeta` VALUES (945,145,'article_category_badge','TRENDING');
+INSERT INTO `wp_postmeta` VALUES (946,145,'_article_category_badge','field_article_category_badge');
+INSERT INTO `wp_postmeta` VALUES (947,145,'publication_date_override','20250513');
+INSERT INTO `wp_postmeta` VALUES (948,145,'_publication_date_override','field_publication_date_override');
+INSERT INTO `wp_postmeta` VALUES (949,47,'_edit_lock','1751656140:1');
+INSERT INTO `wp_postmeta` VALUES (950,47,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (951,47,'_article_category_badge','field_article_category_badge');
+INSERT INTO `wp_postmeta` VALUES (952,47,'_publication_date_override','field_publication_date_override');
+INSERT INTO `wp_postmeta` VALUES (953,146,'article_category_badge','NEW RELEASE');
+INSERT INTO `wp_postmeta` VALUES (954,146,'_article_category_badge','field_article_category_badge');
+INSERT INTO `wp_postmeta` VALUES (955,146,'publication_date_override','20250513');
+INSERT INTO `wp_postmeta` VALUES (956,146,'_publication_date_override','field_publication_date_override');
+INSERT INTO `wp_postmeta` VALUES (959,46,'_wp_old_date','2025-06-29');
+INSERT INTO `wp_postmeta` VALUES (960,51,'_edit_lock','1751889734:1');
+INSERT INTO `wp_postmeta` VALUES (963,57,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (964,57,'_wp_trash_meta_time','1751659202');
+INSERT INTO `wp_postmeta` VALUES (966,56,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (967,56,'_wp_trash_meta_time','1751659205');
+INSERT INTO `wp_postmeta` VALUES (969,52,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (970,52,'_wp_trash_meta_time','1751659207');
+INSERT INTO `wp_postmeta` VALUES (975,53,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (976,53,'_wp_trash_meta_time','1751659211');
+INSERT INTO `wp_postmeta` VALUES (978,55,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (979,55,'_wp_trash_meta_time','1751659214');
+INSERT INTO `wp_postmeta` VALUES (981,153,'_wp_attached_file','2025/07/federico-scarionati-nkVa4ylaWG0-unsplash-scaled.jpg');
+INSERT INTO `wp_postmeta` VALUES (982,153,'_wp_attachment_metadata','a:7:{s:5:\"width\";i:1709;s:6:\"height\";i:2560;s:4:\"file\";s:59:\"2025/07/federico-scarionati-nkVa4ylaWG0-unsplash-scaled.jpg\";s:8:\"filesize\";i:274683;s:5:\"sizes\";a:12:{s:6:\"medium\";a:5:{s:4:\"file\";s:52:\"federico-scarionati-nkVa4ylaWG0-unsplash-200x300.jpg\";s:5:\"width\";i:200;s:6:\"height\";i:300;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:10539;}s:5:\"large\";a:5:{s:4:\"file\";s:53:\"federico-scarionati-nkVa4ylaWG0-unsplash-683x1024.jpg\";s:5:\"width\";i:683;s:6:\"height\";i:1024;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:55190;}s:9:\"thumbnail\";a:5:{s:4:\"file\";s:52:\"federico-scarionati-nkVa4ylaWG0-unsplash-150x150.jpg\";s:5:\"width\";i:150;s:6:\"height\";i:150;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:6660;}s:12:\"medium_large\";a:5:{s:4:\"file\";s:53:\"federico-scarionati-nkVa4ylaWG0-unsplash-768x1151.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:1151;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:65853;}s:9:\"1536x1536\";a:5:{s:4:\"file\";s:54:\"federico-scarionati-nkVa4ylaWG0-unsplash-1025x1536.jpg\";s:5:\"width\";i:1025;s:6:\"height\";i:1536;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:106308;}s:9:\"2048x2048\";a:5:{s:4:\"file\";s:54:\"federico-scarionati-nkVa4ylaWG0-unsplash-1367x2048.jpg\";s:5:\"width\";i:1367;s:6:\"height\";i:2048;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:180018;}s:16:\"thumbnail-mobile\";a:5:{s:4:\"file\";s:52:\"federico-scarionati-nkVa4ylaWG0-unsplash-400x300.jpg\";s:5:\"width\";i:400;s:6:\"height\";i:300;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:17020;}s:16:\"thumbnail-tablet\";a:5:{s:4:\"file\";s:52:\"federico-scarionati-nkVa4ylaWG0-unsplash-800x600.jpg\";s:5:\"width\";i:800;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:48472;}s:17:\"thumbnail-desktop\";a:5:{s:4:\"file\";s:53:\"federico-scarionati-nkVa4ylaWG0-unsplash-1200x900.jpg\";s:5:\"width\";i:1200;s:6:\"height\";i:900;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:95928;}s:11:\"hero-mobile\";a:5:{s:4:\"file\";s:52:\"federico-scarionati-nkVa4ylaWG0-unsplash-768x400.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:400;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:34288;}s:11:\"hero-tablet\";a:5:{s:4:\"file\";s:53:\"federico-scarionati-nkVa4ylaWG0-unsplash-1024x600.jpg\";s:5:\"width\";i:1024;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:64397;}s:12:\"hero-desktop\";a:5:{s:4:\"file\";s:54:\"federico-scarionati-nkVa4ylaWG0-unsplash-1920x1080.jpg\";s:5:\"width\";i:1920;s:6:\"height\";i:1080;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:188509;}}s:10:\"image_meta\";a:12:{s:8:\"aperture\";s:1:\"0\";s:6:\"credit\";s:0:\"\";s:6:\"camera\";s:0:\"\";s:7:\"caption\";s:0:\"\";s:17:\"created_timestamp\";s:1:\"0\";s:9:\"copyright\";s:0:\"\";s:12:\"focal_length\";s:1:\"0\";s:3:\"iso\";s:1:\"0\";s:13:\"shutter_speed\";s:1:\"0\";s:5:\"title\";s:0:\"\";s:11:\"orientation\";s:1:\"0\";s:8:\"keywords\";a:0:{}}s:14:\"original_image\";s:44:\"federico-scarionati-nkVa4ylaWG0-unsplash.jpg\";}');
+INSERT INTO `wp_postmeta` VALUES (983,154,'_wp_attached_file','2025/07/federico-scarionati-nkVa4ylaWG0-unsplash-1-scaled.jpg');
+INSERT INTO `wp_postmeta` VALUES (984,154,'_wp_attachment_metadata','a:7:{s:5:\"width\";i:1709;s:6:\"height\";i:2560;s:4:\"file\";s:61:\"2025/07/federico-scarionati-nkVa4ylaWG0-unsplash-1-scaled.jpg\";s:8:\"filesize\";i:274683;s:5:\"sizes\";a:12:{s:6:\"medium\";a:5:{s:4:\"file\";s:54:\"federico-scarionati-nkVa4ylaWG0-unsplash-1-200x300.jpg\";s:5:\"width\";i:200;s:6:\"height\";i:300;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:10539;}s:5:\"large\";a:5:{s:4:\"file\";s:55:\"federico-scarionati-nkVa4ylaWG0-unsplash-1-683x1024.jpg\";s:5:\"width\";i:683;s:6:\"height\";i:1024;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:55190;}s:9:\"thumbnail\";a:5:{s:4:\"file\";s:54:\"federico-scarionati-nkVa4ylaWG0-unsplash-1-150x150.jpg\";s:5:\"width\";i:150;s:6:\"height\";i:150;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:6660;}s:12:\"medium_large\";a:5:{s:4:\"file\";s:55:\"federico-scarionati-nkVa4ylaWG0-unsplash-1-768x1151.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:1151;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:65853;}s:9:\"1536x1536\";a:5:{s:4:\"file\";s:56:\"federico-scarionati-nkVa4ylaWG0-unsplash-1-1025x1536.jpg\";s:5:\"width\";i:1025;s:6:\"height\";i:1536;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:106308;}s:9:\"2048x2048\";a:5:{s:4:\"file\";s:56:\"federico-scarionati-nkVa4ylaWG0-unsplash-1-1367x2048.jpg\";s:5:\"width\";i:1367;s:6:\"height\";i:2048;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:180018;}s:16:\"thumbnail-mobile\";a:5:{s:4:\"file\";s:54:\"federico-scarionati-nkVa4ylaWG0-unsplash-1-400x300.jpg\";s:5:\"width\";i:400;s:6:\"height\";i:300;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:17020;}s:16:\"thumbnail-tablet\";a:5:{s:4:\"file\";s:54:\"federico-scarionati-nkVa4ylaWG0-unsplash-1-800x600.jpg\";s:5:\"width\";i:800;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:48472;}s:17:\"thumbnail-desktop\";a:5:{s:4:\"file\";s:55:\"federico-scarionati-nkVa4ylaWG0-unsplash-1-1200x900.jpg\";s:5:\"width\";i:1200;s:6:\"height\";i:900;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:95928;}s:11:\"hero-mobile\";a:5:{s:4:\"file\";s:54:\"federico-scarionati-nkVa4ylaWG0-unsplash-1-768x400.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:400;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:34288;}s:11:\"hero-tablet\";a:5:{s:4:\"file\";s:55:\"federico-scarionati-nkVa4ylaWG0-unsplash-1-1024x600.jpg\";s:5:\"width\";i:1024;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:64397;}s:12:\"hero-desktop\";a:5:{s:4:\"file\";s:56:\"federico-scarionati-nkVa4ylaWG0-unsplash-1-1920x1080.jpg\";s:5:\"width\";i:1920;s:6:\"height\";i:1080;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:188509;}}s:10:\"image_meta\";a:12:{s:8:\"aperture\";s:1:\"0\";s:6:\"credit\";s:0:\"\";s:6:\"camera\";s:0:\"\";s:7:\"caption\";s:0:\"\";s:17:\"created_timestamp\";s:1:\"0\";s:9:\"copyright\";s:0:\"\";s:12:\"focal_length\";s:1:\"0\";s:3:\"iso\";s:1:\"0\";s:13:\"shutter_speed\";s:1:\"0\";s:5:\"title\";s:0:\"\";s:11:\"orientation\";s:1:\"0\";s:8:\"keywords\";a:0:{}}s:14:\"original_image\";s:46:\"federico-scarionati-nkVa4ylaWG0-unsplash-1.jpg\";}');
+INSERT INTO `wp_postmeta` VALUES (985,155,'_wp_attached_file','2025/07/egor-myznik-sSjPuD8QJxs-unsplash-scaled.jpg');
+INSERT INTO `wp_postmeta` VALUES (986,155,'_wp_attachment_metadata','a:7:{s:5:\"width\";i:1704;s:6:\"height\";i:2560;s:4:\"file\";s:51:\"2025/07/egor-myznik-sSjPuD8QJxs-unsplash-scaled.jpg\";s:8:\"filesize\";i:506990;s:5:\"sizes\";a:12:{s:6:\"medium\";a:5:{s:4:\"file\";s:44:\"egor-myznik-sSjPuD8QJxs-unsplash-200x300.jpg\";s:5:\"width\";i:200;s:6:\"height\";i:300;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:13484;}s:5:\"large\";a:5:{s:4:\"file\";s:45:\"egor-myznik-sSjPuD8QJxs-unsplash-682x1024.jpg\";s:5:\"width\";i:682;s:6:\"height\";i:1024;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:75680;}s:9:\"thumbnail\";a:5:{s:4:\"file\";s:44:\"egor-myznik-sSjPuD8QJxs-unsplash-150x150.jpg\";s:5:\"width\";i:150;s:6:\"height\";i:150;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:8082;}s:12:\"medium_large\";a:5:{s:4:\"file\";s:45:\"egor-myznik-sSjPuD8QJxs-unsplash-768x1154.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:1154;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:94267;}s:9:\"1536x1536\";a:5:{s:4:\"file\";s:46:\"egor-myznik-sSjPuD8QJxs-unsplash-1022x1536.jpg\";s:5:\"width\";i:1022;s:6:\"height\";i:1536;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:160857;}s:9:\"2048x2048\";a:5:{s:4:\"file\";s:46:\"egor-myznik-sSjPuD8QJxs-unsplash-1363x2048.jpg\";s:5:\"width\";i:1363;s:6:\"height\";i:2048;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:298816;}s:16:\"thumbnail-mobile\";a:5:{s:4:\"file\";s:44:\"egor-myznik-sSjPuD8QJxs-unsplash-400x300.jpg\";s:5:\"width\";i:400;s:6:\"height\";i:300;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:17413;}s:16:\"thumbnail-tablet\";a:5:{s:4:\"file\";s:44:\"egor-myznik-sSjPuD8QJxs-unsplash-800x600.jpg\";s:5:\"width\";i:800;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:48887;}s:17:\"thumbnail-desktop\";a:5:{s:4:\"file\";s:45:\"egor-myznik-sSjPuD8QJxs-unsplash-1200x900.jpg\";s:5:\"width\";i:1200;s:6:\"height\";i:900;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:108941;}s:11:\"hero-mobile\";a:5:{s:4:\"file\";s:44:\"egor-myznik-sSjPuD8QJxs-unsplash-768x400.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:400;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:31111;}s:11:\"hero-tablet\";a:5:{s:4:\"file\";s:45:\"egor-myznik-sSjPuD8QJxs-unsplash-1024x600.jpg\";s:5:\"width\";i:1024;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:58964;}s:12:\"hero-desktop\";a:5:{s:4:\"file\";s:46:\"egor-myznik-sSjPuD8QJxs-unsplash-1920x1080.jpg\";s:5:\"width\";i:1920;s:6:\"height\";i:1080;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:244685;}}s:10:\"image_meta\";a:12:{s:8:\"aperture\";s:1:\"0\";s:6:\"credit\";s:0:\"\";s:6:\"camera\";s:0:\"\";s:7:\"caption\";s:0:\"\";s:17:\"created_timestamp\";s:1:\"0\";s:9:\"copyright\";s:0:\"\";s:12:\"focal_length\";s:1:\"0\";s:3:\"iso\";s:1:\"0\";s:13:\"shutter_speed\";s:1:\"0\";s:5:\"title\";s:0:\"\";s:11:\"orientation\";s:1:\"0\";s:8:\"keywords\";a:0:{}}s:14:\"original_image\";s:36:\"egor-myznik-sSjPuD8QJxs-unsplash.jpg\";}');
+INSERT INTO `wp_postmeta` VALUES (987,156,'_wp_attached_file','2025/07/maxim-berg-pEb1rA-fElU-unsplash-scaled.jpg');
+INSERT INTO `wp_postmeta` VALUES (988,156,'_wp_attachment_metadata','a:7:{s:5:\"width\";i:2114;s:6:\"height\";i:2560;s:4:\"file\";s:50:\"2025/07/maxim-berg-pEb1rA-fElU-unsplash-scaled.jpg\";s:8:\"filesize\";i:616725;s:5:\"sizes\";a:12:{s:6:\"medium\";a:5:{s:4:\"file\";s:43:\"maxim-berg-pEb1rA-fElU-unsplash-248x300.jpg\";s:5:\"width\";i:248;s:6:\"height\";i:300;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:16309;}s:5:\"large\";a:5:{s:4:\"file\";s:44:\"maxim-berg-pEb1rA-fElU-unsplash-846x1024.jpg\";s:5:\"width\";i:846;s:6:\"height\";i:1024;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:119737;}s:9:\"thumbnail\";a:5:{s:4:\"file\";s:43:\"maxim-berg-pEb1rA-fElU-unsplash-150x150.jpg\";s:5:\"width\";i:150;s:6:\"height\";i:150;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:8126;}s:12:\"medium_large\";a:5:{s:4:\"file\";s:43:\"maxim-berg-pEb1rA-fElU-unsplash-768x930.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:930;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:101759;}s:9:\"1536x1536\";a:5:{s:4:\"file\";s:45:\"maxim-berg-pEb1rA-fElU-unsplash-1268x1536.jpg\";s:5:\"width\";i:1268;s:6:\"height\";i:1536;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:246128;}s:9:\"2048x2048\";a:5:{s:4:\"file\";s:45:\"maxim-berg-pEb1rA-fElU-unsplash-1691x2048.jpg\";s:5:\"width\";i:1691;s:6:\"height\";i:2048;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:412180;}s:16:\"thumbnail-mobile\";a:5:{s:4:\"file\";s:43:\"maxim-berg-pEb1rA-fElU-unsplash-400x300.jpg\";s:5:\"width\";i:400;s:6:\"height\";i:300;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:22967;}s:16:\"thumbnail-tablet\";a:5:{s:4:\"file\";s:43:\"maxim-berg-pEb1rA-fElU-unsplash-800x600.jpg\";s:5:\"width\";i:800;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:70367;}s:17:\"thumbnail-desktop\";a:5:{s:4:\"file\";s:44:\"maxim-berg-pEb1rA-fElU-unsplash-1200x900.jpg\";s:5:\"width\";i:1200;s:6:\"height\";i:900;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:143300;}s:11:\"hero-mobile\";a:5:{s:4:\"file\";s:43:\"maxim-berg-pEb1rA-fElU-unsplash-768x400.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:400;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:44816;}s:11:\"hero-tablet\";a:5:{s:4:\"file\";s:44:\"maxim-berg-pEb1rA-fElU-unsplash-1024x600.jpg\";s:5:\"width\";i:1024;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:82943;}s:12:\"hero-desktop\";a:5:{s:4:\"file\";s:45:\"maxim-berg-pEb1rA-fElU-unsplash-1920x1080.jpg\";s:5:\"width\";i:1920;s:6:\"height\";i:1080;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:239713;}}s:10:\"image_meta\";a:12:{s:8:\"aperture\";s:1:\"0\";s:6:\"credit\";s:0:\"\";s:6:\"camera\";s:0:\"\";s:7:\"caption\";s:0:\"\";s:17:\"created_timestamp\";s:1:\"0\";s:9:\"copyright\";s:0:\"\";s:12:\"focal_length\";s:1:\"0\";s:3:\"iso\";s:1:\"0\";s:13:\"shutter_speed\";s:1:\"0\";s:5:\"title\";s:0:\"\";s:11:\"orientation\";s:1:\"0\";s:8:\"keywords\";a:0:{}}s:14:\"original_image\";s:35:\"maxim-berg-pEb1rA-fElU-unsplash.jpg\";}');
+INSERT INTO `wp_postmeta` VALUES (989,157,'_wp_attached_file','2025/07/julien-tromeur-VY_Io5Ik3u4-unsplash-scaled.jpg');
+INSERT INTO `wp_postmeta` VALUES (990,157,'_wp_attachment_metadata','a:7:{s:5:\"width\";i:2560;s:6:\"height\";i:1912;s:4:\"file\";s:54:\"2025/07/julien-tromeur-VY_Io5Ik3u4-unsplash-scaled.jpg\";s:8:\"filesize\";i:520952;s:5:\"sizes\";a:12:{s:6:\"medium\";a:5:{s:4:\"file\";s:47:\"julien-tromeur-VY_Io5Ik3u4-unsplash-300x224.jpg\";s:5:\"width\";i:300;s:6:\"height\";i:224;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:17586;}s:5:\"large\";a:5:{s:4:\"file\";s:48:\"julien-tromeur-VY_Io5Ik3u4-unsplash-1024x765.jpg\";s:5:\"width\";i:1024;s:6:\"height\";i:765;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:119908;}s:9:\"thumbnail\";a:5:{s:4:\"file\";s:47:\"julien-tromeur-VY_Io5Ik3u4-unsplash-150x150.jpg\";s:5:\"width\";i:150;s:6:\"height\";i:150;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:10294;}s:12:\"medium_large\";a:5:{s:4:\"file\";s:47:\"julien-tromeur-VY_Io5Ik3u4-unsplash-768x574.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:574;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:74780;}s:9:\"1536x1536\";a:5:{s:4:\"file\";s:49:\"julien-tromeur-VY_Io5Ik3u4-unsplash-1536x1147.jpg\";s:5:\"width\";i:1536;s:6:\"height\";i:1147;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:232315;}s:9:\"2048x2048\";a:5:{s:4:\"file\";s:49:\"julien-tromeur-VY_Io5Ik3u4-unsplash-2048x1529.jpg\";s:5:\"width\";i:2048;s:6:\"height\";i:1529;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:367583;}s:16:\"thumbnail-mobile\";a:5:{s:4:\"file\";s:47:\"julien-tromeur-VY_Io5Ik3u4-unsplash-400x300.jpg\";s:5:\"width\";i:400;s:6:\"height\";i:300;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:27002;}s:16:\"thumbnail-tablet\";a:5:{s:4:\"file\";s:47:\"julien-tromeur-VY_Io5Ik3u4-unsplash-800x600.jpg\";s:5:\"width\";i:800;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:80960;}s:17:\"thumbnail-desktop\";a:5:{s:4:\"file\";s:48:\"julien-tromeur-VY_Io5Ik3u4-unsplash-1200x900.jpg\";s:5:\"width\";i:1200;s:6:\"height\";i:900;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:156546;}s:11:\"hero-mobile\";a:5:{s:4:\"file\";s:47:\"julien-tromeur-VY_Io5Ik3u4-unsplash-768x400.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:400;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:67370;}s:11:\"hero-tablet\";a:5:{s:4:\"file\";s:48:\"julien-tromeur-VY_Io5Ik3u4-unsplash-1024x600.jpg\";s:5:\"width\";i:1024;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:113669;}s:12:\"hero-desktop\";a:5:{s:4:\"file\";s:49:\"julien-tromeur-VY_Io5Ik3u4-unsplash-1920x1080.jpg\";s:5:\"width\";i:1920;s:6:\"height\";i:1080;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:312079;}}s:10:\"image_meta\";a:12:{s:8:\"aperture\";s:1:\"0\";s:6:\"credit\";s:0:\"\";s:6:\"camera\";s:0:\"\";s:7:\"caption\";s:0:\"\";s:17:\"created_timestamp\";s:1:\"0\";s:9:\"copyright\";s:0:\"\";s:12:\"focal_length\";s:1:\"0\";s:3:\"iso\";s:1:\"0\";s:13:\"shutter_speed\";s:1:\"0\";s:5:\"title\";s:0:\"\";s:11:\"orientation\";s:1:\"0\";s:8:\"keywords\";a:0:{}}s:14:\"original_image\";s:39:\"julien-tromeur-VY_Io5Ik3u4-unsplash.jpg\";}');
+INSERT INTO `wp_postmeta` VALUES (991,158,'_wp_attached_file','2025/07/nikhil-dafare-Z2-fNSX4zjI-unsplash.jpg');
+INSERT INTO `wp_postmeta` VALUES (992,158,'_wp_attachment_metadata','a:6:{s:5:\"width\";i:2000;s:6:\"height\";i:2500;s:4:\"file\";s:46:\"2025/07/nikhil-dafare-Z2-fNSX4zjI-unsplash.jpg\";s:8:\"filesize\";i:544272;s:5:\"sizes\";a:12:{s:6:\"medium\";a:5:{s:4:\"file\";s:46:\"nikhil-dafare-Z2-fNSX4zjI-unsplash-240x300.jpg\";s:5:\"width\";i:240;s:6:\"height\";i:300;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:15309;}s:5:\"large\";a:5:{s:4:\"file\";s:47:\"nikhil-dafare-Z2-fNSX4zjI-unsplash-819x1024.jpg\";s:5:\"width\";i:819;s:6:\"height\";i:1024;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:100390;}s:9:\"thumbnail\";a:5:{s:4:\"file\";s:46:\"nikhil-dafare-Z2-fNSX4zjI-unsplash-150x150.jpg\";s:5:\"width\";i:150;s:6:\"height\";i:150;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:8542;}s:12:\"medium_large\";a:5:{s:4:\"file\";s:46:\"nikhil-dafare-Z2-fNSX4zjI-unsplash-768x960.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:960;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:90165;}s:9:\"1536x1536\";a:5:{s:4:\"file\";s:48:\"nikhil-dafare-Z2-fNSX4zjI-unsplash-1229x1536.jpg\";s:5:\"width\";i:1229;s:6:\"height\";i:1536;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:194120;}s:9:\"2048x2048\";a:5:{s:4:\"file\";s:48:\"nikhil-dafare-Z2-fNSX4zjI-unsplash-1638x2048.jpg\";s:5:\"width\";i:1638;s:6:\"height\";i:2048;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:309034;}s:16:\"thumbnail-mobile\";a:5:{s:4:\"file\";s:46:\"nikhil-dafare-Z2-fNSX4zjI-unsplash-400x300.jpg\";s:5:\"width\";i:400;s:6:\"height\";i:300;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:28548;}s:16:\"thumbnail-tablet\";a:5:{s:4:\"file\";s:46:\"nikhil-dafare-Z2-fNSX4zjI-unsplash-800x600.jpg\";s:5:\"width\";i:800;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:86119;}s:17:\"thumbnail-desktop\";a:5:{s:4:\"file\";s:47:\"nikhil-dafare-Z2-fNSX4zjI-unsplash-1200x900.jpg\";s:5:\"width\";i:1200;s:6:\"height\";i:900;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:167425;}s:11:\"hero-mobile\";a:5:{s:4:\"file\";s:46:\"nikhil-dafare-Z2-fNSX4zjI-unsplash-768x400.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:400;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:65144;}s:11:\"hero-tablet\";a:5:{s:4:\"file\";s:47:\"nikhil-dafare-Z2-fNSX4zjI-unsplash-1024x600.jpg\";s:5:\"width\";i:1024;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:112964;}s:12:\"hero-desktop\";a:5:{s:4:\"file\";s:48:\"nikhil-dafare-Z2-fNSX4zjI-unsplash-1920x1080.jpg\";s:5:\"width\";i:1920;s:6:\"height\";i:1080;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:300693;}}s:10:\"image_meta\";a:12:{s:8:\"aperture\";s:1:\"0\";s:6:\"credit\";s:0:\"\";s:6:\"camera\";s:0:\"\";s:7:\"caption\";s:0:\"\";s:17:\"created_timestamp\";s:1:\"0\";s:9:\"copyright\";s:0:\"\";s:12:\"focal_length\";s:1:\"0\";s:3:\"iso\";s:1:\"0\";s:13:\"shutter_speed\";s:1:\"0\";s:5:\"title\";s:0:\"\";s:11:\"orientation\";s:1:\"0\";s:8:\"keywords\";a:0:{}}}');
+INSERT INTO `wp_postmeta` VALUES (993,159,'_wp_attached_file','2025/07/hans-eiskonen-8Pm_A-OHJGg-unsplash-scaled.jpg');
+INSERT INTO `wp_postmeta` VALUES (994,159,'_wp_attachment_metadata','a:7:{s:5:\"width\";i:2560;s:6:\"height\";i:2560;s:4:\"file\";s:53:\"2025/07/hans-eiskonen-8Pm_A-OHJGg-unsplash-scaled.jpg\";s:8:\"filesize\";i:720248;s:5:\"sizes\";a:12:{s:6:\"medium\";a:5:{s:4:\"file\";s:46:\"hans-eiskonen-8Pm_A-OHJGg-unsplash-300x300.jpg\";s:5:\"width\";i:300;s:6:\"height\";i:300;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:11761;}s:5:\"large\";a:5:{s:4:\"file\";s:48:\"hans-eiskonen-8Pm_A-OHJGg-unsplash-1024x1024.jpg\";s:5:\"width\";i:1024;s:6:\"height\";i:1024;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:101024;}s:9:\"thumbnail\";a:5:{s:4:\"file\";s:46:\"hans-eiskonen-8Pm_A-OHJGg-unsplash-150x150.jpg\";s:5:\"width\";i:150;s:6:\"height\";i:150;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:6418;}s:12:\"medium_large\";a:5:{s:4:\"file\";s:46:\"hans-eiskonen-8Pm_A-OHJGg-unsplash-768x768.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:768;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:52657;}s:9:\"1536x1536\";a:5:{s:4:\"file\";s:48:\"hans-eiskonen-8Pm_A-OHJGg-unsplash-1536x1536.jpg\";s:5:\"width\";i:1536;s:6:\"height\";i:1536;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:255877;}s:9:\"2048x2048\";a:5:{s:4:\"file\";s:48:\"hans-eiskonen-8Pm_A-OHJGg-unsplash-2048x2048.jpg\";s:5:\"width\";i:2048;s:6:\"height\";i:2048;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:471372;}s:16:\"thumbnail-mobile\";a:5:{s:4:\"file\";s:46:\"hans-eiskonen-8Pm_A-OHJGg-unsplash-400x300.jpg\";s:5:\"width\";i:400;s:6:\"height\";i:300;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:15384;}s:16:\"thumbnail-tablet\";a:5:{s:4:\"file\";s:46:\"hans-eiskonen-8Pm_A-OHJGg-unsplash-800x600.jpg\";s:5:\"width\";i:800;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:47637;}s:17:\"thumbnail-desktop\";a:5:{s:4:\"file\";s:47:\"hans-eiskonen-8Pm_A-OHJGg-unsplash-1200x900.jpg\";s:5:\"width\";i:1200;s:6:\"height\";i:900;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:114131;}s:11:\"hero-mobile\";a:5:{s:4:\"file\";s:46:\"hans-eiskonen-8Pm_A-OHJGg-unsplash-768x400.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:400;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:33417;}s:11:\"hero-tablet\";a:5:{s:4:\"file\";s:47:\"hans-eiskonen-8Pm_A-OHJGg-unsplash-1024x600.jpg\";s:5:\"width\";i:1024;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:64994;}s:12:\"hero-desktop\";a:5:{s:4:\"file\";s:48:\"hans-eiskonen-8Pm_A-OHJGg-unsplash-1920x1080.jpg\";s:5:\"width\";i:1920;s:6:\"height\";i:1080;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:235719;}}s:10:\"image_meta\";a:12:{s:8:\"aperture\";s:1:\"0\";s:6:\"credit\";s:0:\"\";s:6:\"camera\";s:0:\"\";s:7:\"caption\";s:0:\"\";s:17:\"created_timestamp\";s:1:\"0\";s:9:\"copyright\";s:0:\"\";s:12:\"focal_length\";s:1:\"0\";s:3:\"iso\";s:1:\"0\";s:13:\"shutter_speed\";s:1:\"0\";s:5:\"title\";s:0:\"\";s:11:\"orientation\";s:1:\"0\";s:8:\"keywords\";a:0:{}}s:14:\"original_image\";s:38:\"hans-eiskonen-8Pm_A-OHJGg-unsplash.jpg\";}');
+INSERT INTO `wp_postmeta` VALUES (995,160,'_wp_attached_file','2025/07/google-deepmind-pLh_n9pnRhw-unsplash-scaled.jpg');
+INSERT INTO `wp_postmeta` VALUES (996,160,'_wp_attachment_metadata','a:7:{s:5:\"width\";i:2560;s:6:\"height\";i:2560;s:4:\"file\";s:55:\"2025/07/google-deepmind-pLh_n9pnRhw-unsplash-scaled.jpg\";s:8:\"filesize\";i:721422;s:5:\"sizes\";a:12:{s:6:\"medium\";a:5:{s:4:\"file\";s:48:\"google-deepmind-pLh_n9pnRhw-unsplash-300x300.jpg\";s:5:\"width\";i:300;s:6:\"height\";i:300;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:23307;}s:5:\"large\";a:5:{s:4:\"file\";s:50:\"google-deepmind-pLh_n9pnRhw-unsplash-1024x1024.jpg\";s:5:\"width\";i:1024;s:6:\"height\";i:1024;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:147020;}s:9:\"thumbnail\";a:5:{s:4:\"file\";s:48:\"google-deepmind-pLh_n9pnRhw-unsplash-150x150.jpg\";s:5:\"width\";i:150;s:6:\"height\";i:150;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:9777;}s:12:\"medium_large\";a:5:{s:4:\"file\";s:48:\"google-deepmind-pLh_n9pnRhw-unsplash-768x768.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:768;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:93097;}s:9:\"1536x1536\";a:5:{s:4:\"file\";s:50:\"google-deepmind-pLh_n9pnRhw-unsplash-1536x1536.jpg\";s:5:\"width\";i:1536;s:6:\"height\";i:1536;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:284282;}s:9:\"2048x2048\";a:5:{s:4:\"file\";s:50:\"google-deepmind-pLh_n9pnRhw-unsplash-2048x2048.jpg\";s:5:\"width\";i:2048;s:6:\"height\";i:2048;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:468718;}s:16:\"thumbnail-mobile\";a:5:{s:4:\"file\";s:48:\"google-deepmind-pLh_n9pnRhw-unsplash-400x300.jpg\";s:5:\"width\";i:400;s:6:\"height\";i:300;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:28193;}s:16:\"thumbnail-tablet\";a:5:{s:4:\"file\";s:48:\"google-deepmind-pLh_n9pnRhw-unsplash-800x600.jpg\";s:5:\"width\";i:800;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:79501;}s:17:\"thumbnail-desktop\";a:5:{s:4:\"file\";s:49:\"google-deepmind-pLh_n9pnRhw-unsplash-1200x900.jpg\";s:5:\"width\";i:1200;s:6:\"height\";i:900;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:149658;}s:11:\"hero-mobile\";a:5:{s:4:\"file\";s:48:\"google-deepmind-pLh_n9pnRhw-unsplash-768x400.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:400;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:54446;}s:11:\"hero-tablet\";a:5:{s:4:\"file\";s:49:\"google-deepmind-pLh_n9pnRhw-unsplash-1024x600.jpg\";s:5:\"width\";i:1024;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:95002;}s:12:\"hero-desktop\";a:5:{s:4:\"file\";s:50:\"google-deepmind-pLh_n9pnRhw-unsplash-1920x1080.jpg\";s:5:\"width\";i:1920;s:6:\"height\";i:1080;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:255114;}}s:10:\"image_meta\";a:12:{s:8:\"aperture\";s:1:\"0\";s:6:\"credit\";s:0:\"\";s:6:\"camera\";s:0:\"\";s:7:\"caption\";s:0:\"\";s:17:\"created_timestamp\";s:1:\"0\";s:9:\"copyright\";s:0:\"\";s:12:\"focal_length\";s:1:\"0\";s:3:\"iso\";s:1:\"0\";s:13:\"shutter_speed\";s:1:\"0\";s:5:\"title\";s:0:\"\";s:11:\"orientation\";s:1:\"0\";s:8:\"keywords\";a:0:{}}s:14:\"original_image\";s:40:\"google-deepmind-pLh_n9pnRhw-unsplash.jpg\";}');
+INSERT INTO `wp_postmeta` VALUES (997,161,'_wp_attached_file','2025/07/steve-johnson-ZPOoDQc8yMw-unsplash-scaled.jpg');
+INSERT INTO `wp_postmeta` VALUES (998,161,'_wp_attachment_metadata','a:7:{s:5:\"width\";i:2560;s:6:\"height\";i:1440;s:4:\"file\";s:53:\"2025/07/steve-johnson-ZPOoDQc8yMw-unsplash-scaled.jpg\";s:8:\"filesize\";i:659464;s:5:\"sizes\";a:12:{s:6:\"medium\";a:5:{s:4:\"file\";s:46:\"steve-johnson-ZPOoDQc8yMw-unsplash-300x169.jpg\";s:5:\"width\";i:300;s:6:\"height\";i:169;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:18358;}s:5:\"large\";a:5:{s:4:\"file\";s:47:\"steve-johnson-ZPOoDQc8yMw-unsplash-1024x576.jpg\";s:5:\"width\";i:1024;s:6:\"height\";i:576;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:150131;}s:9:\"thumbnail\";a:5:{s:4:\"file\";s:46:\"steve-johnson-ZPOoDQc8yMw-unsplash-150x150.jpg\";s:5:\"width\";i:150;s:6:\"height\";i:150;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:10479;}s:12:\"medium_large\";a:5:{s:4:\"file\";s:46:\"steve-johnson-ZPOoDQc8yMw-unsplash-768x432.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:432;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:90199;}s:9:\"1536x1536\";a:5:{s:4:\"file\";s:47:\"steve-johnson-ZPOoDQc8yMw-unsplash-1536x864.jpg\";s:5:\"width\";i:1536;s:6:\"height\";i:864;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:297221;}s:9:\"2048x2048\";a:5:{s:4:\"file\";s:48:\"steve-johnson-ZPOoDQc8yMw-unsplash-2048x1152.jpg\";s:5:\"width\";i:2048;s:6:\"height\";i:1152;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:470431;}s:16:\"thumbnail-mobile\";a:5:{s:4:\"file\";s:46:\"steve-johnson-ZPOoDQc8yMw-unsplash-400x300.jpg\";s:5:\"width\";i:400;s:6:\"height\";i:300;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:37289;}s:16:\"thumbnail-tablet\";a:5:{s:4:\"file\";s:46:\"steve-johnson-ZPOoDQc8yMw-unsplash-800x600.jpg\";s:5:\"width\";i:800;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:126394;}s:17:\"thumbnail-desktop\";a:5:{s:4:\"file\";s:47:\"steve-johnson-ZPOoDQc8yMw-unsplash-1200x900.jpg\";s:5:\"width\";i:1200;s:6:\"height\";i:900;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:249952;}s:11:\"hero-mobile\";a:5:{s:4:\"file\";s:46:\"steve-johnson-ZPOoDQc8yMw-unsplash-768x400.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:400;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:84558;}s:11:\"hero-tablet\";a:5:{s:4:\"file\";s:47:\"steve-johnson-ZPOoDQc8yMw-unsplash-1024x600.jpg\";s:5:\"width\";i:1024;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:156212;}s:12:\"hero-desktop\";a:5:{s:4:\"file\";s:48:\"steve-johnson-ZPOoDQc8yMw-unsplash-1920x1080.jpg\";s:5:\"width\";i:1920;s:6:\"height\";i:1080;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:425148;}}s:10:\"image_meta\";a:12:{s:8:\"aperture\";s:1:\"0\";s:6:\"credit\";s:0:\"\";s:6:\"camera\";s:0:\"\";s:7:\"caption\";s:0:\"\";s:17:\"created_timestamp\";s:1:\"0\";s:9:\"copyright\";s:0:\"\";s:12:\"focal_length\";s:1:\"0\";s:3:\"iso\";s:1:\"0\";s:13:\"shutter_speed\";s:1:\"0\";s:5:\"title\";s:0:\"\";s:11:\"orientation\";s:1:\"0\";s:8:\"keywords\";a:0:{}}s:14:\"original_image\";s:38:\"steve-johnson-ZPOoDQc8yMw-unsplash.jpg\";}');
+INSERT INTO `wp_postmeta` VALUES (999,162,'_wp_attached_file','2025/07/possessed-photography-U3sOwViXhkY-unsplash-scaled.jpg');
+INSERT INTO `wp_postmeta` VALUES (1000,162,'_wp_attachment_metadata','a:7:{s:5:\"width\";i:2560;s:6:\"height\";i:1920;s:4:\"file\";s:61:\"2025/07/possessed-photography-U3sOwViXhkY-unsplash-scaled.jpg\";s:8:\"filesize\";i:592280;s:5:\"sizes\";a:12:{s:6:\"medium\";a:5:{s:4:\"file\";s:54:\"possessed-photography-U3sOwViXhkY-unsplash-300x225.jpg\";s:5:\"width\";i:300;s:6:\"height\";i:225;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:18689;}s:5:\"large\";a:5:{s:4:\"file\";s:55:\"possessed-photography-U3sOwViXhkY-unsplash-1024x768.jpg\";s:5:\"width\";i:1024;s:6:\"height\";i:768;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:109630;}s:9:\"thumbnail\";a:5:{s:4:\"file\";s:54:\"possessed-photography-U3sOwViXhkY-unsplash-150x150.jpg\";s:5:\"width\";i:150;s:6:\"height\";i:150;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:9799;}s:12:\"medium_large\";a:5:{s:4:\"file\";s:54:\"possessed-photography-U3sOwViXhkY-unsplash-768x576.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:576;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:70167;}s:9:\"1536x1536\";a:5:{s:4:\"file\";s:56:\"possessed-photography-U3sOwViXhkY-unsplash-1536x1152.jpg\";s:5:\"width\";i:1536;s:6:\"height\";i:1152;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:221404;}s:9:\"2048x2048\";a:5:{s:4:\"file\";s:56:\"possessed-photography-U3sOwViXhkY-unsplash-2048x1536.jpg\";s:5:\"width\";i:2048;s:6:\"height\";i:1536;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:381274;}s:16:\"thumbnail-mobile\";a:5:{s:4:\"file\";s:54:\"possessed-photography-U3sOwViXhkY-unsplash-400x300.jpg\";s:5:\"width\";i:400;s:6:\"height\";i:300;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:27299;}s:16:\"thumbnail-tablet\";a:5:{s:4:\"file\";s:54:\"possessed-photography-U3sOwViXhkY-unsplash-800x600.jpg\";s:5:\"width\";i:800;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:74931;}s:17:\"thumbnail-desktop\";a:5:{s:4:\"file\";s:55:\"possessed-photography-U3sOwViXhkY-unsplash-1200x900.jpg\";s:5:\"width\";i:1200;s:6:\"height\";i:900;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:144564;}s:11:\"hero-mobile\";a:5:{s:4:\"file\";s:54:\"possessed-photography-U3sOwViXhkY-unsplash-768x400.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:400;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:55080;}s:11:\"hero-tablet\";a:5:{s:4:\"file\";s:55:\"possessed-photography-U3sOwViXhkY-unsplash-1024x600.jpg\";s:5:\"width\";i:1024;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:93927;}s:12:\"hero-desktop\";a:5:{s:4:\"file\";s:56:\"possessed-photography-U3sOwViXhkY-unsplash-1920x1080.jpg\";s:5:\"width\";i:1920;s:6:\"height\";i:1080;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:272104;}}s:10:\"image_meta\";a:12:{s:8:\"aperture\";s:1:\"0\";s:6:\"credit\";s:0:\"\";s:6:\"camera\";s:0:\"\";s:7:\"caption\";s:0:\"\";s:17:\"created_timestamp\";s:1:\"0\";s:9:\"copyright\";s:0:\"\";s:12:\"focal_length\";s:1:\"0\";s:3:\"iso\";s:1:\"0\";s:13:\"shutter_speed\";s:1:\"0\";s:5:\"title\";s:0:\"\";s:11:\"orientation\";s:1:\"0\";s:8:\"keywords\";a:0:{}}s:14:\"original_image\";s:46:\"possessed-photography-U3sOwViXhkY-unsplash.jpg\";}');
+INSERT INTO `wp_postmeta` VALUES (1001,163,'_wp_attached_file','2025/07/andrii-solok-XUleys_6nwM-unsplash-scaled.jpg');
+INSERT INTO `wp_postmeta` VALUES (1002,163,'_wp_attachment_metadata','a:7:{s:5:\"width\";i:1920;s:6:\"height\";i:2560;s:4:\"file\";s:52:\"2025/07/andrii-solok-XUleys_6nwM-unsplash-scaled.jpg\";s:8:\"filesize\";i:623899;s:5:\"sizes\";a:12:{s:6:\"medium\";a:5:{s:4:\"file\";s:45:\"andrii-solok-XUleys_6nwM-unsplash-225x300.jpg\";s:5:\"width\";i:225;s:6:\"height\";i:300;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:19399;}s:5:\"large\";a:5:{s:4:\"file\";s:46:\"andrii-solok-XUleys_6nwM-unsplash-768x1024.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:1024;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:134685;}s:9:\"thumbnail\";a:5:{s:4:\"file\";s:45:\"andrii-solok-XUleys_6nwM-unsplash-150x150.jpg\";s:5:\"width\";i:150;s:6:\"height\";i:150;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:10003;}s:12:\"medium_large\";a:5:{s:4:\"file\";s:46:\"andrii-solok-XUleys_6nwM-unsplash-768x1024.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:1024;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:134685;}s:9:\"1536x1536\";a:5:{s:4:\"file\";s:47:\"andrii-solok-XUleys_6nwM-unsplash-1152x1536.jpg\";s:5:\"width\";i:1152;s:6:\"height\";i:1536;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:265229;}s:9:\"2048x2048\";a:5:{s:4:\"file\";s:47:\"andrii-solok-XUleys_6nwM-unsplash-1536x2048.jpg\";s:5:\"width\";i:1536;s:6:\"height\";i:2048;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:428090;}s:16:\"thumbnail-mobile\";a:5:{s:4:\"file\";s:45:\"andrii-solok-XUleys_6nwM-unsplash-400x300.jpg\";s:5:\"width\";i:400;s:6:\"height\";i:300;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:33298;}s:16:\"thumbnail-tablet\";a:5:{s:4:\"file\";s:45:\"andrii-solok-XUleys_6nwM-unsplash-800x600.jpg\";s:5:\"width\";i:800;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:101627;}s:17:\"thumbnail-desktop\";a:5:{s:4:\"file\";s:46:\"andrii-solok-XUleys_6nwM-unsplash-1200x900.jpg\";s:5:\"width\";i:1200;s:6:\"height\";i:900;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:197331;}s:11:\"hero-mobile\";a:5:{s:4:\"file\";s:45:\"andrii-solok-XUleys_6nwM-unsplash-768x400.jpg\";s:5:\"width\";i:768;s:6:\"height\";i:400;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:74424;}s:11:\"hero-tablet\";a:5:{s:4:\"file\";s:46:\"andrii-solok-XUleys_6nwM-unsplash-1024x600.jpg\";s:5:\"width\";i:1024;s:6:\"height\";i:600;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:130161;}s:12:\"hero-desktop\";a:5:{s:4:\"file\";s:47:\"andrii-solok-XUleys_6nwM-unsplash-1920x1080.jpg\";s:5:\"width\";i:1920;s:6:\"height\";i:1080;s:9:\"mime-type\";s:10:\"image/jpeg\";s:8:\"filesize\";i:347268;}}s:10:\"image_meta\";a:12:{s:8:\"aperture\";s:1:\"0\";s:6:\"credit\";s:0:\"\";s:6:\"camera\";s:0:\"\";s:7:\"caption\";s:0:\"\";s:17:\"created_timestamp\";s:1:\"0\";s:9:\"copyright\";s:0:\"\";s:12:\"focal_length\";s:1:\"0\";s:3:\"iso\";s:1:\"0\";s:13:\"shutter_speed\";s:1:\"0\";s:5:\"title\";s:0:\"\";s:11:\"orientation\";s:1:\"0\";s:8:\"keywords\";a:0:{}}s:14:\"original_image\";s:37:\"andrii-solok-XUleys_6nwM-unsplash.jpg\";}');
+INSERT INTO `wp_postmeta` VALUES (1003,58,'_thumbnail_id','163');
+INSERT INTO `wp_postmeta` VALUES (1004,57,'_thumbnail_id','162');
+INSERT INTO `wp_postmeta` VALUES (1005,56,'_thumbnail_id','161');
+INSERT INTO `wp_postmeta` VALUES (1006,55,'_thumbnail_id','160');
+INSERT INTO `wp_postmeta` VALUES (1007,54,'_thumbnail_id','159');
+INSERT INTO `wp_postmeta` VALUES (1008,53,'_thumbnail_id','158');
+INSERT INTO `wp_postmeta` VALUES (1009,52,'_thumbnail_id','157');
+INSERT INTO `wp_postmeta` VALUES (1010,51,'_thumbnail_id','156');
+INSERT INTO `wp_postmeta` VALUES (1011,34,'_thumbnail_id','155');
+INSERT INTO `wp_postmeta` VALUES (1012,33,'_thumbnail_id','154');
+INSERT INTO `wp_postmeta` VALUES (1013,57,'_wp_old_slug','beat-of-rebellion-by-mrdj-2__trashed');
+INSERT INTO `wp_postmeta` VALUES (1014,56,'_wp_old_slug','bourbon-serenade-for-vanished-affection-2__trashed');
+INSERT INTO `wp_postmeta` VALUES (1015,55,'_wp_old_slug','wild-dose-2__trashed');
+INSERT INTO `wp_postmeta` VALUES (1016,53,'_wp_old_slug','shaz-kiks-2__trashed');
+INSERT INTO `wp_postmeta` VALUES (1017,52,'_wp_old_slug','off-limits-2__trashed');
+INSERT INTO `wp_postmeta` VALUES (1018,51,'_wp_old_slug','poppi-2__trashed');
+INSERT INTO `wp_postmeta` VALUES (1019,57,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (1020,57,'_wp_trash_meta_time','1751661798');
+INSERT INTO `wp_postmeta` VALUES (1021,57,'_wp_desired_post_slug','beat-of-rebellion-by-mrdj-2');
+INSERT INTO `wp_postmeta` VALUES (1022,56,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (1023,56,'_wp_trash_meta_time','1751661800');
+INSERT INTO `wp_postmeta` VALUES (1024,56,'_wp_desired_post_slug','bourbon-serenade-for-vanished-affection-2');
+INSERT INTO `wp_postmeta` VALUES (1025,52,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (1026,52,'_wp_trash_meta_time','1751661802');
+INSERT INTO `wp_postmeta` VALUES (1027,52,'_wp_desired_post_slug','off-limits-2');
+INSERT INTO `wp_postmeta` VALUES (1028,27,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (1029,27,'_wp_trash_meta_time','1751661805');
+INSERT INTO `wp_postmeta` VALUES (1030,27,'_wp_desired_post_slug','poppi');
+INSERT INTO `wp_postmeta` VALUES (1031,55,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (1032,55,'_wp_trash_meta_time','1751661809');
+INSERT INTO `wp_postmeta` VALUES (1033,55,'_wp_desired_post_slug','wild-dose-2');
+INSERT INTO `wp_postmeta` VALUES (1034,53,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (1035,53,'_wp_trash_meta_time','1751661813');
+INSERT INTO `wp_postmeta` VALUES (1036,53,'_wp_desired_post_slug','shaz-kiks-2');
+INSERT INTO `wp_postmeta` VALUES (1037,32,'_edit_lock','1751928344:1');
+INSERT INTO `wp_postmeta` VALUES (1038,33,'_edit_lock','1751852020:1');
+INSERT INTO `wp_postmeta` VALUES (1039,32,'_thumbnail_id','158');
+INSERT INTO `wp_postmeta` VALUES (1040,32,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (1041,32,'project_year','2025');
+INSERT INTO `wp_postmeta` VALUES (1042,32,'_project_year','field_project_year');
+INSERT INTO `wp_postmeta` VALUES (1043,32,'project_author','');
+INSERT INTO `wp_postmeta` VALUES (1044,32,'_project_author','field_project_author');
+INSERT INTO `wp_postmeta` VALUES (1045,32,'project_workflow','');
+INSERT INTO `wp_postmeta` VALUES (1046,32,'_project_workflow','field_project_workflow');
+INSERT INTO `wp_postmeta` VALUES (1047,32,'project_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (1048,32,'_project_difficulty','field_project_difficulty');
+INSERT INTO `wp_postmeta` VALUES (1049,32,'project_time_spent','');
+INSERT INTO `wp_postmeta` VALUES (1050,32,'_project_time_spent','field_project_time_spent');
+INSERT INTO `wp_postmeta` VALUES (1051,32,'project_url','');
+INSERT INTO `wp_postmeta` VALUES (1052,32,'_project_url','field_project_url');
+INSERT INTO `wp_postmeta` VALUES (1053,32,'hero_background','');
+INSERT INTO `wp_postmeta` VALUES (1054,32,'_hero_background','field_hero_background');
+INSERT INTO `wp_postmeta` VALUES (1055,32,'featured_in_hero','0');
+INSERT INTO `wp_postmeta` VALUES (1056,32,'_featured_in_hero','field_featured_in_hero');
+INSERT INTO `wp_postmeta` VALUES (1057,32,'featured_in_showcase','1');
+INSERT INTO `wp_postmeta` VALUES (1058,32,'_featured_in_showcase','field_featured_in_showcase');
+INSERT INTO `wp_postmeta` VALUES (1059,32,'_project_views','field_project_views');
+INSERT INTO `wp_postmeta` VALUES (1060,32,'project_demo_url','');
+INSERT INTO `wp_postmeta` VALUES (1061,32,'_project_demo_url','field_project_demo_url');
+INSERT INTO `wp_postmeta` VALUES (1062,32,'project_github_url','');
+INSERT INTO `wp_postmeta` VALUES (1063,32,'_project_github_url','field_project_github_url');
+INSERT INTO `wp_postmeta` VALUES (1064,32,'_duration','field_duration');
+INSERT INTO `wp_postmeta` VALUES (1065,32,'_genre','field_genre');
+INSERT INTO `wp_postmeta` VALUES (1066,32,'audio_file','');
+INSERT INTO `wp_postmeta` VALUES (1067,32,'_audio_file','field_audio_file');
+INSERT INTO `wp_postmeta` VALUES (1068,32,'video_file','');
+INSERT INTO `wp_postmeta` VALUES (1069,32,'_video_file','field_video_file');
+INSERT INTO `wp_postmeta` VALUES (1070,167,'project_views','2466');
+INSERT INTO `wp_postmeta` VALUES (1071,167,'_project_views','field_project_views');
+INSERT INTO `wp_postmeta` VALUES (1072,167,'duration','2:39');
+INSERT INTO `wp_postmeta` VALUES (1073,167,'_duration','field_duration');
+INSERT INTO `wp_postmeta` VALUES (1074,167,'genre','Rock');
+INSERT INTO `wp_postmeta` VALUES (1075,167,'_genre','field_genre');
+INSERT INTO `wp_postmeta` VALUES (1076,167,'project_year','2025');
+INSERT INTO `wp_postmeta` VALUES (1077,167,'_project_year','field_project_year');
+INSERT INTO `wp_postmeta` VALUES (1078,167,'project_author','');
+INSERT INTO `wp_postmeta` VALUES (1079,167,'_project_author','field_project_author');
+INSERT INTO `wp_postmeta` VALUES (1080,167,'project_workflow','');
+INSERT INTO `wp_postmeta` VALUES (1081,167,'_project_workflow','field_project_workflow');
+INSERT INTO `wp_postmeta` VALUES (1082,167,'project_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (1083,167,'_project_difficulty','field_project_difficulty');
+INSERT INTO `wp_postmeta` VALUES (1084,167,'project_time_spent','');
+INSERT INTO `wp_postmeta` VALUES (1085,167,'_project_time_spent','field_project_time_spent');
+INSERT INTO `wp_postmeta` VALUES (1086,167,'project_url','');
+INSERT INTO `wp_postmeta` VALUES (1087,167,'_project_url','field_project_url');
+INSERT INTO `wp_postmeta` VALUES (1088,167,'hero_background','');
+INSERT INTO `wp_postmeta` VALUES (1089,167,'_hero_background','field_hero_background');
+INSERT INTO `wp_postmeta` VALUES (1090,167,'featured_in_hero','0');
+INSERT INTO `wp_postmeta` VALUES (1091,167,'_featured_in_hero','field_featured_in_hero');
+INSERT INTO `wp_postmeta` VALUES (1092,167,'featured_in_showcase','1');
+INSERT INTO `wp_postmeta` VALUES (1093,167,'_featured_in_showcase','field_featured_in_showcase');
+INSERT INTO `wp_postmeta` VALUES (1094,167,'project_demo_url','');
+INSERT INTO `wp_postmeta` VALUES (1095,167,'_project_demo_url','field_project_demo_url');
+INSERT INTO `wp_postmeta` VALUES (1096,167,'project_github_url','');
+INSERT INTO `wp_postmeta` VALUES (1097,167,'_project_github_url','field_project_github_url');
+INSERT INTO `wp_postmeta` VALUES (1098,167,'audio_file','');
+INSERT INTO `wp_postmeta` VALUES (1099,167,'_audio_file','field_audio_file');
+INSERT INTO `wp_postmeta` VALUES (1100,167,'video_file','');
+INSERT INTO `wp_postmeta` VALUES (1101,167,'_video_file','field_video_file');
+INSERT INTO `wp_postmeta` VALUES (1102,28,'_edit_lock','1751852037:1');
+INSERT INTO `wp_postmeta` VALUES (1103,28,'_thumbnail_id','156');
+INSERT INTO `wp_postmeta` VALUES (1104,28,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (1105,28,'project_year','2025');
+INSERT INTO `wp_postmeta` VALUES (1106,28,'_project_year','field_project_year');
+INSERT INTO `wp_postmeta` VALUES (1107,28,'project_author','');
+INSERT INTO `wp_postmeta` VALUES (1108,28,'_project_author','field_project_author');
+INSERT INTO `wp_postmeta` VALUES (1109,28,'project_workflow','');
+INSERT INTO `wp_postmeta` VALUES (1110,28,'_project_workflow','field_project_workflow');
+INSERT INTO `wp_postmeta` VALUES (1111,28,'project_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (1112,28,'_project_difficulty','field_project_difficulty');
+INSERT INTO `wp_postmeta` VALUES (1113,28,'project_time_spent','');
+INSERT INTO `wp_postmeta` VALUES (1114,28,'_project_time_spent','field_project_time_spent');
+INSERT INTO `wp_postmeta` VALUES (1115,28,'project_url','');
+INSERT INTO `wp_postmeta` VALUES (1116,28,'_project_url','field_project_url');
+INSERT INTO `wp_postmeta` VALUES (1117,28,'hero_background','');
+INSERT INTO `wp_postmeta` VALUES (1118,28,'_hero_background','field_hero_background');
+INSERT INTO `wp_postmeta` VALUES (1119,28,'featured_in_hero','0');
+INSERT INTO `wp_postmeta` VALUES (1120,28,'_featured_in_hero','field_featured_in_hero');
+INSERT INTO `wp_postmeta` VALUES (1121,28,'featured_in_showcase','0');
+INSERT INTO `wp_postmeta` VALUES (1122,28,'_featured_in_showcase','field_featured_in_showcase');
+INSERT INTO `wp_postmeta` VALUES (1123,28,'_project_views','field_project_views');
+INSERT INTO `wp_postmeta` VALUES (1124,28,'project_demo_url','');
+INSERT INTO `wp_postmeta` VALUES (1125,28,'_project_demo_url','field_project_demo_url');
+INSERT INTO `wp_postmeta` VALUES (1126,28,'project_github_url','');
+INSERT INTO `wp_postmeta` VALUES (1127,28,'_project_github_url','field_project_github_url');
+INSERT INTO `wp_postmeta` VALUES (1128,28,'_duration','field_duration');
+INSERT INTO `wp_postmeta` VALUES (1129,28,'_genre','field_genre');
+INSERT INTO `wp_postmeta` VALUES (1130,28,'audio_file','');
+INSERT INTO `wp_postmeta` VALUES (1131,28,'_audio_file','field_audio_file');
+INSERT INTO `wp_postmeta` VALUES (1132,28,'video_file','');
+INSERT INTO `wp_postmeta` VALUES (1133,28,'_video_file','field_video_file');
+INSERT INTO `wp_postmeta` VALUES (1134,168,'project_views','2695');
+INSERT INTO `wp_postmeta` VALUES (1135,168,'_project_views','field_project_views');
+INSERT INTO `wp_postmeta` VALUES (1136,168,'duration','');
+INSERT INTO `wp_postmeta` VALUES (1137,168,'_duration','field_duration');
+INSERT INTO `wp_postmeta` VALUES (1138,168,'genre','FOOD & DRINK');
+INSERT INTO `wp_postmeta` VALUES (1139,168,'_genre','field_genre');
+INSERT INTO `wp_postmeta` VALUES (1140,168,'project_year','2025');
+INSERT INTO `wp_postmeta` VALUES (1141,168,'_project_year','field_project_year');
+INSERT INTO `wp_postmeta` VALUES (1142,168,'project_author','');
+INSERT INTO `wp_postmeta` VALUES (1143,168,'_project_author','field_project_author');
+INSERT INTO `wp_postmeta` VALUES (1144,168,'project_workflow','');
+INSERT INTO `wp_postmeta` VALUES (1145,168,'_project_workflow','field_project_workflow');
+INSERT INTO `wp_postmeta` VALUES (1146,168,'project_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (1147,168,'_project_difficulty','field_project_difficulty');
+INSERT INTO `wp_postmeta` VALUES (1148,168,'project_time_spent','');
+INSERT INTO `wp_postmeta` VALUES (1149,168,'_project_time_spent','field_project_time_spent');
+INSERT INTO `wp_postmeta` VALUES (1150,168,'project_url','');
+INSERT INTO `wp_postmeta` VALUES (1151,168,'_project_url','field_project_url');
+INSERT INTO `wp_postmeta` VALUES (1152,168,'hero_background','');
+INSERT INTO `wp_postmeta` VALUES (1153,168,'_hero_background','field_hero_background');
+INSERT INTO `wp_postmeta` VALUES (1154,168,'featured_in_hero','0');
+INSERT INTO `wp_postmeta` VALUES (1155,168,'_featured_in_hero','field_featured_in_hero');
+INSERT INTO `wp_postmeta` VALUES (1156,168,'featured_in_showcase','0');
+INSERT INTO `wp_postmeta` VALUES (1157,168,'_featured_in_showcase','field_featured_in_showcase');
+INSERT INTO `wp_postmeta` VALUES (1158,168,'project_demo_url','');
+INSERT INTO `wp_postmeta` VALUES (1159,168,'_project_demo_url','field_project_demo_url');
+INSERT INTO `wp_postmeta` VALUES (1160,168,'project_github_url','');
+INSERT INTO `wp_postmeta` VALUES (1161,168,'_project_github_url','field_project_github_url');
+INSERT INTO `wp_postmeta` VALUES (1162,168,'audio_file','');
+INSERT INTO `wp_postmeta` VALUES (1163,168,'_audio_file','field_audio_file');
+INSERT INTO `wp_postmeta` VALUES (1164,168,'video_file','');
+INSERT INTO `wp_postmeta` VALUES (1165,168,'_video_file','field_video_file');
+INSERT INTO `wp_postmeta` VALUES (1166,29,'_edit_lock','1751852029:1');
+INSERT INTO `wp_postmeta` VALUES (1167,29,'_thumbnail_id','161');
+INSERT INTO `wp_postmeta` VALUES (1168,29,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (1169,29,'project_year','2025');
+INSERT INTO `wp_postmeta` VALUES (1170,29,'_project_year','field_project_year');
+INSERT INTO `wp_postmeta` VALUES (1171,29,'project_author','');
+INSERT INTO `wp_postmeta` VALUES (1172,29,'_project_author','field_project_author');
+INSERT INTO `wp_postmeta` VALUES (1173,29,'project_workflow','');
+INSERT INTO `wp_postmeta` VALUES (1174,29,'_project_workflow','field_project_workflow');
+INSERT INTO `wp_postmeta` VALUES (1175,29,'project_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (1176,29,'_project_difficulty','field_project_difficulty');
+INSERT INTO `wp_postmeta` VALUES (1177,29,'project_time_spent','');
+INSERT INTO `wp_postmeta` VALUES (1178,29,'_project_time_spent','field_project_time_spent');
+INSERT INTO `wp_postmeta` VALUES (1179,29,'project_url','');
+INSERT INTO `wp_postmeta` VALUES (1180,29,'_project_url','field_project_url');
+INSERT INTO `wp_postmeta` VALUES (1181,29,'hero_background','');
+INSERT INTO `wp_postmeta` VALUES (1182,29,'_hero_background','field_hero_background');
+INSERT INTO `wp_postmeta` VALUES (1183,29,'featured_in_hero','0');
+INSERT INTO `wp_postmeta` VALUES (1184,29,'_featured_in_hero','field_featured_in_hero');
+INSERT INTO `wp_postmeta` VALUES (1185,29,'featured_in_showcase','0');
+INSERT INTO `wp_postmeta` VALUES (1186,29,'_featured_in_showcase','field_featured_in_showcase');
+INSERT INTO `wp_postmeta` VALUES (1187,29,'_project_views','field_project_views');
+INSERT INTO `wp_postmeta` VALUES (1188,29,'project_demo_url','');
+INSERT INTO `wp_postmeta` VALUES (1189,29,'_project_demo_url','field_project_demo_url');
+INSERT INTO `wp_postmeta` VALUES (1190,29,'project_github_url','');
+INSERT INTO `wp_postmeta` VALUES (1191,29,'_project_github_url','field_project_github_url');
+INSERT INTO `wp_postmeta` VALUES (1192,29,'_duration','field_duration');
+INSERT INTO `wp_postmeta` VALUES (1193,29,'_genre','field_genre');
+INSERT INTO `wp_postmeta` VALUES (1194,29,'audio_file','');
+INSERT INTO `wp_postmeta` VALUES (1195,29,'_audio_file','field_audio_file');
+INSERT INTO `wp_postmeta` VALUES (1196,29,'video_file','');
+INSERT INTO `wp_postmeta` VALUES (1197,29,'_video_file','field_video_file');
+INSERT INTO `wp_postmeta` VALUES (1198,169,'project_views','717');
+INSERT INTO `wp_postmeta` VALUES (1199,169,'_project_views','field_project_views');
+INSERT INTO `wp_postmeta` VALUES (1200,169,'duration','');
+INSERT INTO `wp_postmeta` VALUES (1201,169,'_duration','field_duration');
+INSERT INTO `wp_postmeta` VALUES (1202,169,'genre','SKINCARE');
+INSERT INTO `wp_postmeta` VALUES (1203,169,'_genre','field_genre');
+INSERT INTO `wp_postmeta` VALUES (1204,169,'project_year','2025');
+INSERT INTO `wp_postmeta` VALUES (1205,169,'_project_year','field_project_year');
+INSERT INTO `wp_postmeta` VALUES (1206,169,'project_author','');
+INSERT INTO `wp_postmeta` VALUES (1207,169,'_project_author','field_project_author');
+INSERT INTO `wp_postmeta` VALUES (1208,169,'project_workflow','');
+INSERT INTO `wp_postmeta` VALUES (1209,169,'_project_workflow','field_project_workflow');
+INSERT INTO `wp_postmeta` VALUES (1210,169,'project_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (1211,169,'_project_difficulty','field_project_difficulty');
+INSERT INTO `wp_postmeta` VALUES (1212,169,'project_time_spent','');
+INSERT INTO `wp_postmeta` VALUES (1213,169,'_project_time_spent','field_project_time_spent');
+INSERT INTO `wp_postmeta` VALUES (1214,169,'project_url','');
+INSERT INTO `wp_postmeta` VALUES (1215,169,'_project_url','field_project_url');
+INSERT INTO `wp_postmeta` VALUES (1216,169,'hero_background','');
+INSERT INTO `wp_postmeta` VALUES (1217,169,'_hero_background','field_hero_background');
+INSERT INTO `wp_postmeta` VALUES (1218,169,'featured_in_hero','0');
+INSERT INTO `wp_postmeta` VALUES (1219,169,'_featured_in_hero','field_featured_in_hero');
+INSERT INTO `wp_postmeta` VALUES (1220,169,'featured_in_showcase','0');
+INSERT INTO `wp_postmeta` VALUES (1221,169,'_featured_in_showcase','field_featured_in_showcase');
+INSERT INTO `wp_postmeta` VALUES (1222,169,'project_demo_url','');
+INSERT INTO `wp_postmeta` VALUES (1223,169,'_project_demo_url','field_project_demo_url');
+INSERT INTO `wp_postmeta` VALUES (1224,169,'project_github_url','');
+INSERT INTO `wp_postmeta` VALUES (1225,169,'_project_github_url','field_project_github_url');
+INSERT INTO `wp_postmeta` VALUES (1226,169,'audio_file','');
+INSERT INTO `wp_postmeta` VALUES (1227,169,'_audio_file','field_audio_file');
+INSERT INTO `wp_postmeta` VALUES (1228,169,'video_file','');
+INSERT INTO `wp_postmeta` VALUES (1229,169,'_video_file','field_video_file');
+INSERT INTO `wp_postmeta` VALUES (1230,34,'_edit_lock','1751852056:1');
+INSERT INTO `wp_postmeta` VALUES (1231,30,'_edit_lock','1751928436:1');
+INSERT INTO `wp_postmeta` VALUES (1232,30,'_thumbnail_id','160');
+INSERT INTO `wp_postmeta` VALUES (1233,30,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (1234,30,'project_year','2025');
+INSERT INTO `wp_postmeta` VALUES (1235,30,'_project_year','field_project_year');
+INSERT INTO `wp_postmeta` VALUES (1236,30,'project_author','');
+INSERT INTO `wp_postmeta` VALUES (1237,30,'_project_author','field_project_author');
+INSERT INTO `wp_postmeta` VALUES (1238,30,'project_workflow','');
+INSERT INTO `wp_postmeta` VALUES (1239,30,'_project_workflow','field_project_workflow');
+INSERT INTO `wp_postmeta` VALUES (1240,30,'project_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (1241,30,'_project_difficulty','field_project_difficulty');
+INSERT INTO `wp_postmeta` VALUES (1242,30,'project_time_spent','');
+INSERT INTO `wp_postmeta` VALUES (1243,30,'_project_time_spent','field_project_time_spent');
+INSERT INTO `wp_postmeta` VALUES (1244,30,'project_url','');
+INSERT INTO `wp_postmeta` VALUES (1245,30,'_project_url','field_project_url');
+INSERT INTO `wp_postmeta` VALUES (1246,30,'hero_background','');
+INSERT INTO `wp_postmeta` VALUES (1247,30,'_hero_background','field_hero_background');
+INSERT INTO `wp_postmeta` VALUES (1248,30,'featured_in_hero','1');
+INSERT INTO `wp_postmeta` VALUES (1249,30,'_featured_in_hero','field_featured_in_hero');
+INSERT INTO `wp_postmeta` VALUES (1250,30,'featured_in_showcase','0');
+INSERT INTO `wp_postmeta` VALUES (1251,30,'_featured_in_showcase','field_featured_in_showcase');
+INSERT INTO `wp_postmeta` VALUES (1252,30,'_project_views','field_project_views');
+INSERT INTO `wp_postmeta` VALUES (1253,30,'project_demo_url','');
+INSERT INTO `wp_postmeta` VALUES (1254,30,'_project_demo_url','field_project_demo_url');
+INSERT INTO `wp_postmeta` VALUES (1255,30,'project_github_url','');
+INSERT INTO `wp_postmeta` VALUES (1256,30,'_project_github_url','field_project_github_url');
+INSERT INTO `wp_postmeta` VALUES (1257,30,'_duration','field_duration');
+INSERT INTO `wp_postmeta` VALUES (1258,30,'_genre','field_genre');
+INSERT INTO `wp_postmeta` VALUES (1259,30,'audio_file','');
+INSERT INTO `wp_postmeta` VALUES (1260,30,'_audio_file','field_audio_file');
+INSERT INTO `wp_postmeta` VALUES (1261,30,'video_file','');
+INSERT INTO `wp_postmeta` VALUES (1262,30,'_video_file','field_video_file');
+INSERT INTO `wp_postmeta` VALUES (1263,170,'project_views','772');
+INSERT INTO `wp_postmeta` VALUES (1264,170,'_project_views','field_project_views');
+INSERT INTO `wp_postmeta` VALUES (1265,170,'duration','');
+INSERT INTO `wp_postmeta` VALUES (1266,170,'_duration','field_duration');
+INSERT INTO `wp_postmeta` VALUES (1267,170,'genre','FASHION');
+INSERT INTO `wp_postmeta` VALUES (1268,170,'_genre','field_genre');
+INSERT INTO `wp_postmeta` VALUES (1269,170,'project_year','2025');
+INSERT INTO `wp_postmeta` VALUES (1270,170,'_project_year','field_project_year');
+INSERT INTO `wp_postmeta` VALUES (1271,170,'project_author','');
+INSERT INTO `wp_postmeta` VALUES (1272,170,'_project_author','field_project_author');
+INSERT INTO `wp_postmeta` VALUES (1273,170,'project_workflow','');
+INSERT INTO `wp_postmeta` VALUES (1274,170,'_project_workflow','field_project_workflow');
+INSERT INTO `wp_postmeta` VALUES (1275,170,'project_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (1276,170,'_project_difficulty','field_project_difficulty');
+INSERT INTO `wp_postmeta` VALUES (1277,170,'project_time_spent','');
+INSERT INTO `wp_postmeta` VALUES (1278,170,'_project_time_spent','field_project_time_spent');
+INSERT INTO `wp_postmeta` VALUES (1279,170,'project_url','');
+INSERT INTO `wp_postmeta` VALUES (1280,170,'_project_url','field_project_url');
+INSERT INTO `wp_postmeta` VALUES (1281,170,'hero_background','');
+INSERT INTO `wp_postmeta` VALUES (1282,170,'_hero_background','field_hero_background');
+INSERT INTO `wp_postmeta` VALUES (1283,170,'featured_in_hero','0');
+INSERT INTO `wp_postmeta` VALUES (1284,170,'_featured_in_hero','field_featured_in_hero');
+INSERT INTO `wp_postmeta` VALUES (1285,170,'featured_in_showcase','0');
+INSERT INTO `wp_postmeta` VALUES (1286,170,'_featured_in_showcase','field_featured_in_showcase');
+INSERT INTO `wp_postmeta` VALUES (1287,170,'project_demo_url','');
+INSERT INTO `wp_postmeta` VALUES (1288,170,'_project_demo_url','field_project_demo_url');
+INSERT INTO `wp_postmeta` VALUES (1289,170,'project_github_url','');
+INSERT INTO `wp_postmeta` VALUES (1290,170,'_project_github_url','field_project_github_url');
+INSERT INTO `wp_postmeta` VALUES (1291,170,'audio_file','');
+INSERT INTO `wp_postmeta` VALUES (1292,170,'_audio_file','field_audio_file');
+INSERT INTO `wp_postmeta` VALUES (1293,170,'video_file','');
+INSERT INTO `wp_postmeta` VALUES (1294,170,'_video_file','field_video_file');
+INSERT INTO `wp_postmeta` VALUES (1295,31,'_edit_lock','1751928236:1');
+INSERT INTO `wp_postmeta` VALUES (1296,31,'_thumbnail_id','162');
+INSERT INTO `wp_postmeta` VALUES (1297,31,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (1298,31,'project_year','2025');
+INSERT INTO `wp_postmeta` VALUES (1299,31,'_project_year','field_project_year');
+INSERT INTO `wp_postmeta` VALUES (1300,31,'project_author','');
+INSERT INTO `wp_postmeta` VALUES (1301,31,'_project_author','field_project_author');
+INSERT INTO `wp_postmeta` VALUES (1302,31,'project_workflow','');
+INSERT INTO `wp_postmeta` VALUES (1303,31,'_project_workflow','field_project_workflow');
+INSERT INTO `wp_postmeta` VALUES (1304,31,'project_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (1305,31,'_project_difficulty','field_project_difficulty');
+INSERT INTO `wp_postmeta` VALUES (1306,31,'project_time_spent','');
+INSERT INTO `wp_postmeta` VALUES (1307,31,'_project_time_spent','field_project_time_spent');
+INSERT INTO `wp_postmeta` VALUES (1308,31,'project_url','');
+INSERT INTO `wp_postmeta` VALUES (1309,31,'_project_url','field_project_url');
+INSERT INTO `wp_postmeta` VALUES (1310,31,'hero_background','');
+INSERT INTO `wp_postmeta` VALUES (1311,31,'_hero_background','field_hero_background');
+INSERT INTO `wp_postmeta` VALUES (1312,31,'featured_in_hero','0');
+INSERT INTO `wp_postmeta` VALUES (1313,31,'_featured_in_hero','field_featured_in_hero');
+INSERT INTO `wp_postmeta` VALUES (1314,31,'featured_in_showcase','0');
+INSERT INTO `wp_postmeta` VALUES (1315,31,'_featured_in_showcase','field_featured_in_showcase');
+INSERT INTO `wp_postmeta` VALUES (1316,31,'_project_views','field_project_views');
+INSERT INTO `wp_postmeta` VALUES (1317,31,'project_demo_url','');
+INSERT INTO `wp_postmeta` VALUES (1318,31,'_project_demo_url','field_project_demo_url');
+INSERT INTO `wp_postmeta` VALUES (1319,31,'project_github_url','');
+INSERT INTO `wp_postmeta` VALUES (1320,31,'_project_github_url','field_project_github_url');
+INSERT INTO `wp_postmeta` VALUES (1321,31,'_duration','field_duration');
+INSERT INTO `wp_postmeta` VALUES (1322,31,'_genre','field_genre');
+INSERT INTO `wp_postmeta` VALUES (1323,31,'audio_file','');
+INSERT INTO `wp_postmeta` VALUES (1324,31,'_audio_file','field_audio_file');
+INSERT INTO `wp_postmeta` VALUES (1325,31,'video_file','');
+INSERT INTO `wp_postmeta` VALUES (1326,31,'_video_file','field_video_file');
+INSERT INTO `wp_postmeta` VALUES (1327,171,'project_views','969');
+INSERT INTO `wp_postmeta` VALUES (1328,171,'_project_views','field_project_views');
+INSERT INTO `wp_postmeta` VALUES (1329,171,'duration','');
+INSERT INTO `wp_postmeta` VALUES (1330,171,'_duration','field_duration');
+INSERT INTO `wp_postmeta` VALUES (1331,171,'genre','HEALTH');
+INSERT INTO `wp_postmeta` VALUES (1332,171,'_genre','field_genre');
+INSERT INTO `wp_postmeta` VALUES (1333,171,'project_year','2025');
+INSERT INTO `wp_postmeta` VALUES (1334,171,'_project_year','field_project_year');
+INSERT INTO `wp_postmeta` VALUES (1335,171,'project_author','');
+INSERT INTO `wp_postmeta` VALUES (1336,171,'_project_author','field_project_author');
+INSERT INTO `wp_postmeta` VALUES (1337,171,'project_workflow','');
+INSERT INTO `wp_postmeta` VALUES (1338,171,'_project_workflow','field_project_workflow');
+INSERT INTO `wp_postmeta` VALUES (1339,171,'project_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (1340,171,'_project_difficulty','field_project_difficulty');
+INSERT INTO `wp_postmeta` VALUES (1341,171,'project_time_spent','');
+INSERT INTO `wp_postmeta` VALUES (1342,171,'_project_time_spent','field_project_time_spent');
+INSERT INTO `wp_postmeta` VALUES (1343,171,'project_url','');
+INSERT INTO `wp_postmeta` VALUES (1344,171,'_project_url','field_project_url');
+INSERT INTO `wp_postmeta` VALUES (1345,171,'hero_background','');
+INSERT INTO `wp_postmeta` VALUES (1346,171,'_hero_background','field_hero_background');
+INSERT INTO `wp_postmeta` VALUES (1347,171,'featured_in_hero','0');
+INSERT INTO `wp_postmeta` VALUES (1348,171,'_featured_in_hero','field_featured_in_hero');
+INSERT INTO `wp_postmeta` VALUES (1349,171,'featured_in_showcase','0');
+INSERT INTO `wp_postmeta` VALUES (1350,171,'_featured_in_showcase','field_featured_in_showcase');
+INSERT INTO `wp_postmeta` VALUES (1351,171,'project_demo_url','');
+INSERT INTO `wp_postmeta` VALUES (1352,171,'_project_demo_url','field_project_demo_url');
+INSERT INTO `wp_postmeta` VALUES (1353,171,'project_github_url','');
+INSERT INTO `wp_postmeta` VALUES (1354,171,'_project_github_url','field_project_github_url');
+INSERT INTO `wp_postmeta` VALUES (1355,171,'audio_file','');
+INSERT INTO `wp_postmeta` VALUES (1356,171,'_audio_file','field_audio_file');
+INSERT INTO `wp_postmeta` VALUES (1357,171,'video_file','');
+INSERT INTO `wp_postmeta` VALUES (1358,171,'_video_file','field_video_file');
+INSERT INTO `wp_postmeta` VALUES (1361,50,'_thumbnail_id','163');
+INSERT INTO `wp_postmeta` VALUES (1364,49,'_thumbnail_id','162');
+INSERT INTO `wp_postmeta` VALUES (1367,48,'_thumbnail_id','161');
+INSERT INTO `wp_postmeta` VALUES (1370,26,'_thumbnail_id','160');
+INSERT INTO `wp_postmeta` VALUES (1373,25,'_thumbnail_id','159');
+INSERT INTO `wp_postmeta` VALUES (1376,24,'_thumbnail_id','158');
+INSERT INTO `wp_postmeta` VALUES (1379,23,'_thumbnail_id','157');
+INSERT INTO `wp_postmeta` VALUES (1382,22,'_thumbnail_id','156');
+INSERT INTO `wp_postmeta` VALUES (1385,1,'_thumbnail_id','155');
+INSERT INTO `wp_postmeta` VALUES (1386,141,'_thumbnail_id','154');
+INSERT INTO `wp_postmeta` VALUES (1387,87,'_thumbnail_id','163');
+INSERT INTO `wp_postmeta` VALUES (1388,45,'_thumbnail_id','162');
+INSERT INTO `wp_postmeta` VALUES (1389,44,'_thumbnail_id','161');
+INSERT INTO `wp_postmeta` VALUES (1390,43,'_thumbnail_id','160');
+INSERT INTO `wp_postmeta` VALUES (1391,42,'_thumbnail_id','159');
+INSERT INTO `wp_postmeta` VALUES (1392,41,'_thumbnail_id','158');
+INSERT INTO `wp_postmeta` VALUES (1393,21,'_thumbnail_id','157');
+INSERT INTO `wp_postmeta` VALUES (1394,20,'_thumbnail_id','156');
+INSERT INTO `wp_postmeta` VALUES (1395,19,'_thumbnail_id','155');
+INSERT INTO `wp_postmeta` VALUES (1396,183,'_thumbnail_id','157');
+INSERT INTO `wp_postmeta` VALUES (1397,183,'_edit_lock','1751668716:1');
+INSERT INTO `wp_postmeta` VALUES (1398,183,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (1399,183,'maker_location','');
+INSERT INTO `wp_postmeta` VALUES (1400,183,'_maker_location','field_maker_location');
+INSERT INTO `wp_postmeta` VALUES (1401,183,'maker_bio','');
+INSERT INTO `wp_postmeta` VALUES (1402,183,'_maker_bio','field_maker_bio');
+INSERT INTO `wp_postmeta` VALUES (1403,183,'profile_image','');
+INSERT INTO `wp_postmeta` VALUES (1404,183,'_profile_image','field_profile_image');
+INSERT INTO `wp_postmeta` VALUES (1405,183,'background_image','');
+INSERT INTO `wp_postmeta` VALUES (1406,183,'_background_image','field_background_image');
+INSERT INTO `wp_postmeta` VALUES (1407,183,'maker_website','');
+INSERT INTO `wp_postmeta` VALUES (1408,183,'_maker_website','field_maker_website');
+INSERT INTO `wp_postmeta` VALUES (1409,183,'maker_experience_level','intermediate');
+INSERT INTO `wp_postmeta` VALUES (1410,183,'_maker_experience_level','field_maker_experience_level');
+INSERT INTO `wp_postmeta` VALUES (1411,183,'maker_tools_expertise','');
+INSERT INTO `wp_postmeta` VALUES (1412,183,'_maker_tools_expertise','field_maker_tools_expertise');
+INSERT INTO `wp_postmeta` VALUES (1413,183,'maker_availability','selective');
+INSERT INTO `wp_postmeta` VALUES (1414,183,'_maker_availability','field_maker_availability');
+INSERT INTO `wp_postmeta` VALUES (1415,183,'featured_maker','0');
+INSERT INTO `wp_postmeta` VALUES (1416,183,'_featured_maker','field_featured_maker');
+INSERT INTO `wp_postmeta` VALUES (1417,183,'featured_position','');
+INSERT INTO `wp_postmeta` VALUES (1418,183,'_featured_position','field_featured_position');
+INSERT INTO `wp_postmeta` VALUES (1419,185,'maker_location','');
+INSERT INTO `wp_postmeta` VALUES (1420,185,'_maker_location','field_maker_location');
+INSERT INTO `wp_postmeta` VALUES (1421,185,'maker_bio','');
+INSERT INTO `wp_postmeta` VALUES (1422,185,'_maker_bio','field_maker_bio');
+INSERT INTO `wp_postmeta` VALUES (1423,185,'profile_image','');
+INSERT INTO `wp_postmeta` VALUES (1424,185,'_profile_image','field_profile_image');
+INSERT INTO `wp_postmeta` VALUES (1425,185,'background_image','');
+INSERT INTO `wp_postmeta` VALUES (1426,185,'_background_image','field_background_image');
+INSERT INTO `wp_postmeta` VALUES (1427,185,'maker_website','');
+INSERT INTO `wp_postmeta` VALUES (1428,185,'_maker_website','field_maker_website');
+INSERT INTO `wp_postmeta` VALUES (1429,185,'maker_experience_level','intermediate');
+INSERT INTO `wp_postmeta` VALUES (1430,185,'_maker_experience_level','field_maker_experience_level');
+INSERT INTO `wp_postmeta` VALUES (1431,185,'maker_tools_expertise','');
+INSERT INTO `wp_postmeta` VALUES (1432,185,'_maker_tools_expertise','field_maker_tools_expertise');
+INSERT INTO `wp_postmeta` VALUES (1433,185,'maker_availability','selective');
+INSERT INTO `wp_postmeta` VALUES (1434,185,'_maker_availability','field_maker_availability');
+INSERT INTO `wp_postmeta` VALUES (1435,185,'featured_maker','0');
+INSERT INTO `wp_postmeta` VALUES (1436,185,'_featured_maker','field_featured_maker');
+INSERT INTO `wp_postmeta` VALUES (1437,185,'featured_position','');
+INSERT INTO `wp_postmeta` VALUES (1438,185,'_featured_position','field_featured_position');
+INSERT INTO `wp_postmeta` VALUES (1439,51,'_edit_last','1');
+INSERT INTO `wp_postmeta` VALUES (1440,51,'project_year','2025');
+INSERT INTO `wp_postmeta` VALUES (1441,51,'_project_year','field_project_year');
+INSERT INTO `wp_postmeta` VALUES (1442,51,'project_author','');
+INSERT INTO `wp_postmeta` VALUES (1443,51,'_project_author','field_project_author');
+INSERT INTO `wp_postmeta` VALUES (1444,51,'project_workflow','');
+INSERT INTO `wp_postmeta` VALUES (1445,51,'_project_workflow','field_project_workflow');
+INSERT INTO `wp_postmeta` VALUES (1446,51,'project_difficulty','intermediate');
+INSERT INTO `wp_postmeta` VALUES (1447,51,'_project_difficulty','field_project_difficulty');
+INSERT INTO `wp_postmeta` VALUES (1448,51,'project_time_spent','');
+INSERT INTO `wp_postmeta` VALUES (1449,51,'_project_time_spent','field_project_time_spent');
+INSERT INTO `wp_postmeta` VALUES (1450,51,'project_url','');
+INSERT INTO `wp_postmeta` VALUES (1451,51,'_project_url','field_project_url');
+INSERT INTO `wp_postmeta` VALUES (1452,51,'hero_background','');
+INSERT INTO `wp_postmeta` VALUES (1453,51,'_hero_background','field_hero_background');
+INSERT INTO `wp_postmeta` VALUES (1454,51,'featured_in_hero','0');
+INSERT INTO `wp_postmeta` VALUES (1455,51,'_featured_in_hero','field_featured_in_hero');
+INSERT INTO `wp_postmeta` VALUES (1456,51,'featured_in_showcase','0');
+INSERT INTO `wp_postmeta` VALUES (1457,51,'_featured_in_showcase','field_featured_in_showcase');
+INSERT INTO `wp_postmeta` VALUES (1458,51,'_project_views','field_project_views');
+INSERT INTO `wp_postmeta` VALUES (1459,51,'project_demo_url','');
+INSERT INTO `wp_postmeta` VALUES (1460,51,'_project_demo_url','field_project_demo_url');
+INSERT INTO `wp_postmeta` VALUES (1461,51,'project_github_url','');
+INSERT INTO `wp_postmeta` VALUES (1462,51,'_project_github_url','field_project_github_url');
+INSERT INTO `wp_postmeta` VALUES (1463,51,'_duration','field_duration');
+INSERT INTO `wp_postmeta` VALUES (1464,51,'_genre','field_genre');
+INSERT INTO `wp_postmeta` VALUES (1465,51,'audio_file','');
+INSERT INTO `wp_postmeta` VALUES (1466,51,'_audio_file','field_audio_file');
+INSERT INTO `wp_postmeta` VALUES (1467,51,'video_file','');
+INSERT INTO `wp_postmeta` VALUES (1468,51,'_video_file','field_video_file');
+INSERT INTO `wp_postmeta` VALUES (1469,1,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (1470,1,'_wp_trash_meta_time','1752006894');
+INSERT INTO `wp_postmeta` VALUES (1471,1,'_wp_desired_post_slug','hello-world');
+INSERT INTO `wp_postmeta` VALUES (1472,1,'_wp_trash_meta_comments_status','a:1:{i:1;s:1:\"1\";}');
+INSERT INTO `wp_postmeta` VALUES (1473,23,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (1474,23,'_wp_trash_meta_time','1752006900');
+INSERT INTO `wp_postmeta` VALUES (1475,23,'_wp_desired_post_slug','an-immersive-introduction-to-flow-tv');
+INSERT INTO `wp_postmeta` VALUES (1476,26,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (1477,26,'_wp_trash_meta_time','1752006908');
+INSERT INTO `wp_postmeta` VALUES (1478,26,'_wp_desired_post_slug','toonify-pro-cartoon-style-animation-from-photos');
+INSERT INTO `wp_postmeta` VALUES (1479,50,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (1480,50,'_wp_trash_meta_time','1752006914');
+INSERT INTO `wp_postmeta` VALUES (1481,50,'_wp_desired_post_slug','toonify-pro-cartoon-style-animation-from-photos-2');
+INSERT INTO `wp_postmeta` VALUES (1482,24,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (1483,24,'_wp_trash_meta_time','1752006920');
+INSERT INTO `wp_postmeta` VALUES (1484,24,'_wp_desired_post_slug','midjourney-v6-photorealism-at-your-fingertips');
+INSERT INTO `wp_postmeta` VALUES (1485,25,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (1486,25,'_wp_trash_meta_time','1752006928');
+INSERT INTO `wp_postmeta` VALUES (1487,25,'_wp_desired_post_slug','runway-gen-4-video-magic-unleashed');
+INSERT INTO `wp_postmeta` VALUES (1488,22,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (1489,22,'_wp_trash_meta_time','1752006934');
+INSERT INTO `wp_postmeta` VALUES (1490,22,'_wp_desired_post_slug','sudowrite-3-0-ai-driven-plot-twists');
+INSERT INTO `wp_postmeta` VALUES (1491,129,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (1492,129,'_wp_trash_meta_time','1752006946');
+INSERT INTO `wp_postmeta` VALUES (1493,129,'_wp_desired_post_slug','character-ai-2');
+INSERT INTO `wp_postmeta` VALUES (1494,141,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (1495,141,'_wp_trash_meta_time','1752006957');
+INSERT INTO `wp_postmeta` VALUES (1496,141,'_wp_desired_post_slug','luisa');
+INSERT INTO `wp_postmeta` VALUES (1497,20,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (1498,20,'_wp_trash_meta_time','1752006964');
+INSERT INTO `wp_postmeta` VALUES (1499,20,'_wp_desired_post_slug','refik-anadol');
+INSERT INTO `wp_postmeta` VALUES (1500,21,'_wp_trash_meta_status','publish');
+INSERT INTO `wp_postmeta` VALUES (1501,21,'_wp_trash_meta_time','1752006971');
+INSERT INTO `wp_postmeta` VALUES (1502,21,'_wp_desired_post_slug','sofia-crespo');
+INSERT INTO `wp_postmeta` VALUES (1519,187,'_thumbnail_id','162');
+/*!40000 ALTER TABLE `wp_postmeta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `wp_posts`
+--
+
+DROP TABLE IF EXISTS `wp_posts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wp_posts` (
+  `ID` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `post_author` bigint unsigned NOT NULL DEFAULT '0',
+  `post_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `post_date_gmt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `post_content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `post_title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `post_excerpt` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `post_status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'publish',
+  `comment_status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'open',
+  `ping_status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'open',
+  `post_password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `post_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `to_ping` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `pinged` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `post_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `post_modified_gmt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `post_content_filtered` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `post_parent` bigint unsigned NOT NULL DEFAULT '0',
+  `guid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `menu_order` int NOT NULL DEFAULT '0',
+  `post_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT 'post',
+  `post_mime_type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `comment_count` bigint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`),
+  KEY `post_name` (`post_name`(191)),
+  KEY `type_status_date` (`post_type`,`post_status`,`post_date`,`ID`),
+  KEY `post_parent` (`post_parent`),
+  KEY `post_author` (`post_author`)
+) ENGINE=InnoDB AUTO_INCREMENT=192 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wp_posts`
+--
+
+LOCK TABLES `wp_posts` WRITE;
+/*!40000 ALTER TABLE `wp_posts` DISABLE KEYS */;
+INSERT INTO `wp_posts` VALUES (1,1,'2025-06-29 21:40:54','2025-06-29 21:40:54','<!-- wp:paragraph -->\n<p>Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p>\n<!-- /wp:paragraph -->','Hello world!','','trash','open','open','','hello-world__trashed','','','2025-07-08 20:34:54','2025-07-08 20:34:54','',0,'http://vibemake.local/?p=1',0,'post','',1);
+INSERT INTO `wp_posts` VALUES (2,1,'2025-06-29 21:40:54','2025-06-29 21:40:54','<!-- wp:paragraph -->\n<p>This is an example page. It\'s different from a blog post because it will stay in one place and will show up in your site navigation (in most themes). Most people start with an About page that introduces them to potential site visitors. It might say something like this:</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:quote -->\n<blockquote class=\"wp-block-quote\"><p>Hi there! I\'m a bike messenger by day, aspiring actor by night, and this is my website. I live in Los Angeles, have a great dog named Jack, and I like pi&#241;a coladas. (And gettin\' caught in the rain.)</p></blockquote>\n<!-- /wp:quote -->\n\n<!-- wp:paragraph -->\n<p>...or something like this:</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:quote -->\n<blockquote class=\"wp-block-quote\"><p>The XYZ Doohickey Company was founded in 1971, and has been providing quality doohickeys to the public ever since. Located in Gotham City, XYZ employs over 2,000 people and does all kinds of awesome things for the Gotham community.</p></blockquote>\n<!-- /wp:quote -->\n\n<!-- wp:paragraph -->\n<p>As a new WordPress user, you should go to <a href=\"http://vibemake.local/wp-admin/\">your dashboard</a> to delete this page and create new pages for your content. Have fun!</p>\n<!-- /wp:paragraph -->','Sample Page','','publish','closed','open','','sample-page','','','2025-06-29 21:40:54','2025-06-29 21:40:54','',0,'http://vibemake.local/?page_id=2',0,'page','',0);
+INSERT INTO `wp_posts` VALUES (3,1,'2025-06-29 21:40:54','2025-06-29 21:40:54','<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">Who we are</h2>\n<!-- /wp:heading -->\n<!-- wp:paragraph -->\n<p><strong class=\"privacy-policy-tutorial\">Suggested text: </strong>Our website address is: http://vibemake.local.</p>\n<!-- /wp:paragraph -->\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">Comments</h2>\n<!-- /wp:heading -->\n<!-- wp:paragraph -->\n<p><strong class=\"privacy-policy-tutorial\">Suggested text: </strong>When visitors leave comments on the site we collect the data shown in the comments form, and also the visitor&#8217;s IP address and browser user agent string to help spam detection.</p>\n<!-- /wp:paragraph -->\n<!-- wp:paragraph -->\n<p>An anonymized string created from your email address (also called a hash) may be provided to the Gravatar service to see if you are using it. The Gravatar service privacy policy is available here: https://automattic.com/privacy/. After approval of your comment, your profile picture is visible to the public in the context of your comment.</p>\n<!-- /wp:paragraph -->\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">Media</h2>\n<!-- /wp:heading -->\n<!-- wp:paragraph -->\n<p><strong class=\"privacy-policy-tutorial\">Suggested text: </strong>If you upload images to the website, you should avoid uploading images with embedded location data (EXIF GPS) included. Visitors to the website can download and extract any location data from images on the website.</p>\n<!-- /wp:paragraph -->\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">Cookies</h2>\n<!-- /wp:heading -->\n<!-- wp:paragraph -->\n<p><strong class=\"privacy-policy-tutorial\">Suggested text: </strong>If you leave a comment on our site you may opt-in to saving your name, email address and website in cookies. These are for your convenience so that you do not have to fill in your details again when you leave another comment. These cookies will last for one year.</p>\n<!-- /wp:paragraph -->\n<!-- wp:paragraph -->\n<p>If you visit our login page, we will set a temporary cookie to determine if your browser accepts cookies. This cookie contains no personal data and is discarded when you close your browser.</p>\n<!-- /wp:paragraph -->\n<!-- wp:paragraph -->\n<p>When you log in, we will also set up several cookies to save your login information and your screen display choices. Login cookies last for two days, and screen options cookies last for a year. If you select &quot;Remember Me&quot;, your login will persist for two weeks. If you log out of your account, the login cookies will be removed.</p>\n<!-- /wp:paragraph -->\n<!-- wp:paragraph -->\n<p>If you edit or publish an article, an additional cookie will be saved in your browser. This cookie includes no personal data and simply indicates the post ID of the article you just edited. It expires after 1 day.</p>\n<!-- /wp:paragraph -->\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">Embedded content from other websites</h2>\n<!-- /wp:heading -->\n<!-- wp:paragraph -->\n<p><strong class=\"privacy-policy-tutorial\">Suggested text: </strong>Articles on this site may include embedded content (e.g. videos, images, articles, etc.). Embedded content from other websites behaves in the exact same way as if the visitor has visited the other website.</p>\n<!-- /wp:paragraph -->\n<!-- wp:paragraph -->\n<p>These websites may collect data about you, use cookies, embed additional third-party tracking, and monitor your interaction with that embedded content, including tracking your interaction with the embedded content if you have an account and are logged in to that website.</p>\n<!-- /wp:paragraph -->\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">Who we share your data with</h2>\n<!-- /wp:heading -->\n<!-- wp:paragraph -->\n<p><strong class=\"privacy-policy-tutorial\">Suggested text: </strong>If you request a password reset, your IP address will be included in the reset email.</p>\n<!-- /wp:paragraph -->\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">How long we retain your data</h2>\n<!-- /wp:heading -->\n<!-- wp:paragraph -->\n<p><strong class=\"privacy-policy-tutorial\">Suggested text: </strong>If you leave a comment, the comment and its metadata are retained indefinitely. This is so we can recognize and approve any follow-up comments automatically instead of holding them in a moderation queue.</p>\n<!-- /wp:paragraph -->\n<!-- wp:paragraph -->\n<p>For users that register on our website (if any), we also store the personal information they provide in their user profile. All users can see, edit, or delete their personal information at any time (except they cannot change their username). Website administrators can also see and edit that information.</p>\n<!-- /wp:paragraph -->\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">What rights you have over your data</h2>\n<!-- /wp:heading -->\n<!-- wp:paragraph -->\n<p><strong class=\"privacy-policy-tutorial\">Suggested text: </strong>If you have an account on this site, or have left comments, you can request to receive an exported file of the personal data we hold about you, including any data you have provided to us. You can also request that we erase any personal data we hold about you. This does not include any data we are obliged to keep for administrative, legal, or security purposes.</p>\n<!-- /wp:paragraph -->\n<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">Where your data is sent</h2>\n<!-- /wp:heading -->\n<!-- wp:paragraph -->\n<p><strong class=\"privacy-policy-tutorial\">Suggested text: </strong>Visitor comments may be checked through an automated spam detection service.</p>\n<!-- /wp:paragraph -->\n','Privacy Policy','','draft','closed','open','','privacy-policy','','','2025-06-29 21:40:54','2025-06-29 21:40:54','',0,'http://vibemake.local/?page_id=3',0,'page','',0);
+INSERT INTO `wp_posts` VALUES (4,0,'2025-06-29 21:44:20','2025-06-29 21:44:20','<!-- wp:page-list /-->','Navigation','','publish','closed','closed','','navigation','','','2025-06-29 21:44:20','2025-06-29 21:44:20','',0,'http://vibemake.local/navigation/',0,'wp_navigation','',0);
+INSERT INTO `wp_posts` VALUES (6,1,'2025-06-29 22:05:28','2025-06-29 22:05:28','ChatGPT is an advanced conversational AI developed by OpenAI. It can assist with writing, coding, creative tasks, analysis, and general conversation. With its natural language understanding, it helps users brainstorm ideas, solve problems, and learn new concepts.','ChatGPT','Advanced conversational AI for writing, coding, and creative tasks','publish','closed','closed','','chatgpt','','','2025-06-29 22:05:28','2025-06-29 22:05:28','',0,'http://vibemake.local/tool/chatgpt/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (7,1,'2025-06-29 22:05:28','2025-06-29 22:05:28','Midjourney is a generative AI art tool that creates stunning visual artwork from text descriptions. It excels at creating dreamlike, artistic imagery and has become a favorite among digital artists and designers for its unique aesthetic style.','Midjourney','AI image generation tool for creating stunning visual art','publish','closed','closed','','midjourney','','','2025-06-29 22:05:28','2025-06-29 22:05:28','',0,'http://vibemake.local/tool/midjourney/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (8,1,'2025-06-29 22:05:28','2025-06-29 22:05:28','DALL-E 3 is OpenAI\'s latest image generation model that creates highly detailed and accurate images from text descriptions. It offers improved understanding of prompts and better integration with ChatGPT for refined image creation.','DALL-E 3','OpenAI\'s advanced text-to-image generation model','publish','closed','closed','','dall-e-3','','','2025-06-29 22:05:28','2025-06-29 22:05:28','',0,'http://vibemake.local/tool/dall-e-3/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (9,1,'2025-06-29 22:05:28','2025-06-29 22:05:28','Claude is an AI assistant created by Anthropic, known for its helpful, harmless, and honest approach. It excels at analysis, writing, coding, and math, with a focus on safety and accuracy in its responses.','Claude','Anthropic\'s helpful, harmless, and honest AI assistant','publish','closed','closed','','claude','','','2025-06-29 22:05:28','2025-06-29 22:05:28','',0,'http://vibemake.local/tool/claude/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (10,1,'2025-06-29 22:05:28','2025-06-29 22:05:28','Stable Diffusion is an open-source image generation model that runs locally or in the cloud. It offers unprecedented control and customization options for AI art generation, with a vibrant community creating tools and models.','Stable Diffusion','Open-source image generation model with extensive customization','publish','closed','closed','','stable-diffusion','','','2025-06-29 22:05:28','2025-06-29 22:05:28','',0,'http://vibemake.local/tool/stable-diffusion/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (11,1,'2025-06-29 22:05:28','2025-06-29 22:05:28','GitHub Copilot is an AI pair programmer that helps you write code faster. It suggests whole lines or blocks of code as you type, trained on billions of lines of public code.','GitHub Copilot','AI pair programmer for faster code development','publish','closed','closed','','github-copilot','','','2025-06-29 22:05:28','2025-06-29 22:05:28','',0,'http://vibemake.local/tool/github-copilot/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (12,1,'2025-06-29 22:05:28','2025-06-29 22:05:28','Notion AI enhances the popular workspace tool with AI capabilities for writing, summarizing, and organizing content. It helps with everything from meeting notes to creative writing within your existing workflow.','Notion AI','AI-powered workspace for organizing and managing content','publish','closed','closed','','notion-ai','','','2025-06-29 22:05:28','2025-06-29 22:05:28','',0,'http://vibemake.local/tool/notion-ai/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (13,1,'2025-06-29 22:05:28','2025-06-29 22:05:28','Perplexity is an AI-powered search engine that provides direct answers with sources. It combines the power of large language models with real-time web search to deliver accurate, up-to-date information.','Perplexity','AI-powered search engine with real-time information','publish','closed','closed','','perplexity','','','2025-06-29 22:05:28','2025-06-29 22:05:28','',0,'http://vibemake.local/tool/perplexity/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (14,1,'2025-06-29 22:05:28','2025-06-29 22:05:28','Runway ML is a creative AI platform offering various tools for video editing, image generation, and more. It\'s particularly popular for its AI video generation and editing capabilities.','Runway ML','AI platform for video and creative content generation','publish','closed','closed','','runway-ml','','','2025-06-29 22:05:28','2025-06-29 22:05:28','',0,'http://vibemake.local/tool/runway-ml/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (15,1,'2025-06-29 22:05:28','2025-06-29 22:05:28','Cursor is an AI-powered code editor built for pair programming with AI. It offers deep integration with language models to help write, edit, and understand code more efficiently.','Cursor','AI-first code editor for enhanced programming','publish','closed','closed','','cursor','','','2025-06-29 22:05:28','2025-06-29 22:05:28','',0,'http://vibemake.local/tool/cursor/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (16,1,'2025-06-29 22:24:39','2025-06-29 22:24:39','An immersive AI-generated art installation that explores the intersection of nature and technology through machine learning algorithms.','The Impossible Garden','','publish','closed','closed','','the-impossible-garden','','','2025-06-29 22:24:39','2025-06-29 22:24:39','',0,'http://vibemake.local/?p=16',0,'ai_project','',0);
+INSERT INTO `wp_posts` VALUES (17,1,'2025-06-29 22:24:39','2025-06-29 22:24:39','Blending massive datasets, sensory design, and neural networks, she crafts immersive paintings that transform memory, nature and architecture.','Holly Herndon','','publish','closed','closed','','holly-herndon','','','2025-06-30 20:14:36','2025-06-30 20:14:36','',0,'http://vibemake.local/maker/holly-herndon/',0,'maker','',0);
+INSERT INTO `wp_posts` VALUES (18,1,'2025-06-29 22:24:39','2025-06-29 22:24:39','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.','Hanna Inaiáh','','publish','closed','closed','','hanna-inaiah','','','2025-06-29 22:24:39','2025-06-29 22:24:39','',0,'http://vibemake.local/maker/hanna-inaiah/',0,'maker','',0);
+INSERT INTO `wp_posts` VALUES (19,1,'2025-06-29 22:24:39','2025-06-29 22:24:39','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.','Anna Ridler','','publish','closed','closed','','anna-ridler','','','2025-07-04 21:26:30','2025-07-04 21:26:30','',0,'http://vibemake.local/maker/anna-ridler/',0,'maker','',0);
+INSERT INTO `wp_posts` VALUES (20,1,'2025-06-29 22:24:39','2025-06-29 22:24:39','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.','Refik Anadol','','trash','closed','closed','','refik-anadol__trashed','','','2025-07-08 20:36:04','2025-07-08 20:36:04','',0,'http://vibemake.local/maker/refik-anadol/',0,'maker','',0);
+INSERT INTO `wp_posts` VALUES (21,1,'2025-06-29 22:24:39','2025-06-29 22:24:39','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.','Sofia SHamraCrespo','','trash','closed','closed','','sofia-crespo__trashed','','','2025-07-08 20:36:11','2025-07-08 20:36:11','',0,'http://vibemake.local/maker/sofia-crespo/',0,'maker','',0);
+INSERT INTO `wp_posts` VALUES (22,1,'2025-06-29 22:24:39','2025-06-29 22:24:39','The latest version of Sudowrite introduces revolutionary AI-powered storytelling capabilities that help writers craft compelling narratives.','Sudowrite 3.0: AI-Driven Plot Twists','','trash','closed','closed','','sudowrite-3-0-ai-driven-plot-twists__trashed','','','2025-07-08 20:35:34','2025-07-08 20:35:34','',0,'http://vibemake.local/sudowrite-3-0-ai-driven-plot-twists/',0,'post','',0);
+INSERT INTO `wp_posts` VALUES (23,1,'2025-06-29 22:24:39','2025-06-29 22:24:39','Flow TV launches with an innovative approach to streaming content using AI-generated personalized experiences.','An Immersive Introduction to Flow TV','','trash','closed','closed','','an-immersive-introduction-to-flow-tv__trashed','','','2025-07-08 20:35:00','2025-07-08 20:35:00','',0,'http://vibemake.local/an-immersive-introduction-to-flow-tv/',0,'post','',0);
+INSERT INTO `wp_posts` VALUES (24,1,'2025-06-29 22:24:39','2025-06-29 22:24:39','The newest version of Midjourney achieves unprecedented levels of photorealistic image generation.','Midjourney v6: Photorealism at Your Fingertips','','trash','closed','closed','','midjourney-v6-photorealism-at-your-fingertips__trashed','','','2025-07-08 20:35:20','2025-07-08 20:35:20','',0,'http://vibemake.local/midjourney-v6-photorealism-at-your-fingertips/',0,'post','',0);
+INSERT INTO `wp_posts` VALUES (25,1,'2025-06-29 22:24:39','2025-06-29 22:24:39','Runway\'s fourth generation video AI model brings Hollywood-quality effects to everyone.','Runway Gen-4: Video Magic Unleashed','','trash','closed','closed','','runway-gen-4-video-magic-unleashed__trashed','','','2025-07-08 20:35:28','2025-07-08 20:35:28','',0,'http://vibemake.local/runway-gen-4-video-magic-unleashed/',0,'post','',0);
+INSERT INTO `wp_posts` VALUES (26,1,'2025-06-29 22:24:39','2025-06-29 22:24:39','Transform any photo into professional cartoon-style animations with this new AI tool.','Toonify Pro: Cartoon-Style Animation from Photos','','trash','closed','closed','','toonify-pro-cartoon-style-animation-from-photos__trashed','','','2025-07-08 20:35:08','2025-07-08 20:35:08','',0,'http://vibemake.local/toonify-pro-cartoon-style-animation-from-photos/',0,'post','',0);
+INSERT INTO `wp_posts` VALUES (27,1,'2025-06-29 22:24:39','2025-06-29 22:24:39','A creative project showcasing AI-generated content.','POPPI','','trash','closed','closed','','poppi__trashed','','','2025-07-04 20:43:25','2025-07-04 20:43:25','',0,'http://vibemake.local/community_project/poppi/',0,'community_project','',0);
+INSERT INTO `wp_posts` VALUES (28,1,'2025-06-29 22:24:39','2025-06-29 22:24:39','A creative project showcasing AI-generated content.','OFF LIMITS','','publish','closed','closed','','off-limits','','','2025-07-04 22:32:24','2025-07-04 22:32:24','',0,'http://vibemake.local/community_project/off-limits/',0,'community_project','',0);
+INSERT INTO `wp_posts` VALUES (29,1,'2025-06-29 22:24:39','2025-06-29 22:24:39','A creative project showcasing AI-generated content.','SHAZ & KIKS','','publish','closed','closed','','shaz-kiks','','','2025-07-04 22:32:19','2025-07-04 22:32:19','',0,'http://vibemake.local/community_project/shaz-kiks/',0,'community_project','',0);
+INSERT INTO `wp_posts` VALUES (30,1,'2025-06-29 22:24:39','2025-06-29 22:24:39','A creative project showcasing AI-generated content.','upwest story','','publish','closed','closed','','upwest','','','2025-07-07 22:47:15','2025-07-07 22:47:15','',0,'http://vibemake.local/community_project/upwest/',0,'community_project','',0);
+INSERT INTO `wp_posts` VALUES (31,1,'2025-06-29 22:24:39','2025-06-29 22:24:39','A creative project showcasing AI-generated content.','wild dose','','publish','closed','closed','','wild-dose','','','2025-07-07 22:45:59','2025-07-07 22:45:59','',0,'http://vibemake.local/community_project/wild-dose/',0,'community_project','',0);
+INSERT INTO `wp_posts` VALUES (32,1,'2025-06-29 22:24:39','2025-06-29 22:24:39','A creative project showcasing AI-generated content.','bourbon serenade for vanished affection','','publish','closed','closed','','bourbon-serenade-for-vanished-affection','','','2025-07-07 22:45:43','2025-07-07 22:45:43','',0,'http://vibemake.local/community_project/bourbon-serenade-for-vanished-affection/',0,'community_project','',0);
+INSERT INTO `wp_posts` VALUES (33,1,'2025-06-29 22:24:39','2025-06-29 22:24:39','A creative project showcasing AI-generated content.','BEAT OF REBELLION BY MRDJ','','publish','closed','closed','','beat-of-rebellion-by-mrdj','','','2025-07-04 22:32:47','2025-07-04 22:32:47','',0,'http://vibemake.local/community_project/beat-of-rebellion-by-mrdj/',0,'community_project','',0);
+INSERT INTO `wp_posts` VALUES (34,1,'2025-06-29 22:24:39','2025-06-29 22:24:39','A creative project showcasing AI-generated content.','THE JOURNEY OF ENLIGHTENMENT BY TIMOTHE','','publish','closed','closed','','the-journey-of-enlightenment-by-timothe','','','2025-07-04 22:32:41','2025-07-04 22:32:41','',0,'http://vibemake.local/community_project/the-journey-of-enlightenment-by-timothe/',0,'community_project','',0);
+INSERT INTO `wp_posts` VALUES (40,1,'2025-06-29 22:25:47','2025-06-29 22:25:47','An immersive AI-generated art installation that explores the intersection of nature and technology through machine learning algorithms.','The Impossible Garden','','publish','closed','closed','','the-impossible-garden-2','','','2025-06-29 22:25:47','2025-06-29 22:25:47','',0,'http://vibemake.local/?p=40',0,'ai_project','',0);
+INSERT INTO `wp_posts` VALUES (41,1,'2025-06-29 22:25:47','2025-06-29 22:25:47','Blending massive datasets, sensory design, and neural networks, she crafts immersive paintings that transform memory, nature and architecture.','Holly Herndon','','publish','closed','closed','','holly-herndon-2','','','2025-07-04 21:26:15','2025-07-04 21:26:15','',0,'http://vibemake.local/maker/holly-herndon-2/',0,'maker','',0);
+INSERT INTO `wp_posts` VALUES (42,1,'2025-06-29 22:25:47','2025-06-29 22:25:47','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.','Hanna Inaiáh','','publish','closed','closed','','hanna-inaiah-2','','','2025-07-04 21:26:11','2025-07-04 21:26:11','',0,'http://vibemake.local/maker/hanna-inaiah-2/',0,'maker','',0);
+INSERT INTO `wp_posts` VALUES (43,1,'2025-06-29 22:25:47','2025-06-29 22:25:47','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.','Anna Ridler','','publish','closed','closed','','anna-ridler-2','','','2025-07-04 21:26:06','2025-07-04 21:26:06','',0,'http://vibemake.local/maker/anna-ridler-2/',0,'maker','',0);
+INSERT INTO `wp_posts` VALUES (44,1,'2025-06-29 22:25:47','2025-06-29 22:25:47','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.','Refik Anadol','','publish','closed','closed','','refik-anadol-2','','','2025-07-04 21:26:01','2025-07-04 21:26:01','',0,'http://vibemake.local/maker/refik-anadol-2/',0,'maker','',0);
+INSERT INTO `wp_posts` VALUES (45,1,'2025-06-29 22:25:47','2025-06-29 22:25:47','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.','Sofia Crespo','','publish','closed','closed','','sofia-crespo-2','','','2025-07-04 21:25:56','2025-07-04 21:25:56','',0,'http://vibemake.local/maker/sofia-crespo-2/',0,'maker','',0);
+INSERT INTO `wp_posts` VALUES (46,1,'2025-07-03 22:25:00','2025-07-03 22:25:00','Sudowrite 3.0 revolutionizes content marketing with AI-powered storytelling that generates blog posts, email campaigns, and brand narratives in minutes. Marketing teams can now craft compelling copy that converts, with built-in tone matching to maintain brand voice across all content.','Sudowrite 3.0: AI-Driven Plot Twists','','publish','closed','closed','','sudowrite-3-0-ai-driven-plot-twists-2','','','2025-07-08 20:36:22','2025-07-08 20:36:22','',0,'http://vibemake.local/sudowrite-3-0-ai-driven-plot-twists-2/',0,'post','',0);
+INSERT INTO `wp_posts` VALUES (47,1,'2025-07-29 22:25:00','2025-07-29 22:25:00','Flow TV launches with an innovative approach to streaming content using AI-generated personalized experiences.','An Immersive Introduction to Flow TV','','future','closed','closed','','an-immersive-introduction-to-flow-tv-2','','','2025-07-04 19:08:28','2025-07-04 19:08:28','',0,'http://vibemake.local/an-immersive-introduction-to-flow-tv-2/',0,'post','',0);
+INSERT INTO `wp_posts` VALUES (48,1,'2025-06-29 22:25:47','2025-06-29 22:25:47','Midjourney v6 delivers photorealistic product shots, lifestyle imagery, and campaign visuals that rival professional photography. Marketing teams can generate unlimited variations for A/B testing, seasonal campaigns, and social media content at a fraction of traditional photoshoot costs.','Midjourney v6: Photorealism at Your Fingertips','','publish','closed','closed','','midjourney-v6-photorealism-at-your-fingertips-2','','','2025-07-08 20:36:37','2025-07-08 20:36:37','',0,'http://vibemake.local/midjourney-v6-photorealism-at-your-fingertips-2/',0,'post','',0);
+INSERT INTO `wp_posts` VALUES (49,1,'2025-06-29 22:25:47','2025-06-29 22:25:47','Runway Gen-4 empowers marketers to create professional video ads and social content without production budgets. Generate product demos, explainer videos, and social media clips from text prompts, saving thousands on video production while maintaining brand quality.','Runway Gen-4: Video Magic Unleashed','','publish','closed','closed','','runway-gen-4-video-magic-unleashed-2','','','2025-07-08 20:36:30','2025-07-08 20:36:30','',0,'http://vibemake.local/runway-gen-4-video-magic-unleashed-2/',0,'post','',0);
+INSERT INTO `wp_posts` VALUES (50,1,'2025-06-29 22:25:47','2025-06-29 22:25:47','Transform any photo into professional cartoon-style animations with this new AI tool.','Toonify Pro: Cartoon-Style Animation from Photos','','trash','closed','closed','','toonify-pro-cartoon-style-animation-from-photos-2__trashed','','','2025-07-08 20:35:14','2025-07-08 20:35:14','',0,'http://vibemake.local/toonify-pro-cartoon-style-animation-from-photos-2/',0,'post','',0);
+INSERT INTO `wp_posts` VALUES (51,1,'2025-06-29 22:25:47','2025-06-29 22:25:47','A creative project showcasing AI-generated content.','POPPY','','publish','closed','closed','','poppi-2','','','2025-07-07 12:02:13','2025-07-07 12:02:13','',0,'http://vibemake.local/community_project/poppi-2/',0,'community_project','',0);
+INSERT INTO `wp_posts` VALUES (52,1,'2025-06-29 22:25:47','2025-06-29 22:25:47','A creative project showcasing AI-generated content.','OFF LIMITS','','trash','closed','closed','','off-limits-2__trashed','','','2025-07-04 20:43:22','2025-07-04 20:43:22','',0,'http://vibemake.local/community_project/off-limits-2/',0,'community_project','',0);
+INSERT INTO `wp_posts` VALUES (53,1,'2025-06-29 22:25:47','2025-06-29 22:25:47','A creative project showcasing AI-generated content.','SHAZ & KIKS','','trash','closed','closed','','shaz-kiks-2__trashed','','','2025-07-04 20:43:33','2025-07-04 20:43:33','',0,'http://vibemake.local/community_project/shaz-kiks-2/',0,'community_project','',0);
+INSERT INTO `wp_posts` VALUES (54,1,'2025-06-29 22:25:47','2025-06-29 22:25:47','A creative project showcasing AI-generated content.','Portugal Times','','publish','closed','closed','','upwest-2','','','2025-07-04 22:32:30','2025-07-04 22:32:30','',0,'http://vibemake.local/community_project/upwest-2/',0,'community_project','',0);
+INSERT INTO `wp_posts` VALUES (55,1,'2025-06-29 22:25:47','2025-06-29 22:25:47','A creative project showcasing AI-generated content.','WILD DOSE','','trash','closed','closed','','wild-dose-2__trashed','','','2025-07-04 20:43:29','2025-07-04 20:43:29','',0,'http://vibemake.local/community_project/wild-dose-2/',0,'community_project','',0);
+INSERT INTO `wp_posts` VALUES (56,1,'2025-06-29 22:25:47','2025-06-29 22:25:47','A creative project showcasing AI-generated content.','BOURBON SERENADE FOR VANISHED AFFECTION','','trash','closed','closed','','bourbon-serenade-for-vanished-affection-2__trashed','','','2025-07-04 20:43:20','2025-07-04 20:43:20','',0,'http://vibemake.local/community_project/bourbon-serenade-for-vanished-affection-2/',0,'community_project','',0);
+INSERT INTO `wp_posts` VALUES (57,1,'2025-06-29 22:25:47','2025-06-29 22:25:47','A creative project showcasing AI-generated content.','BEAT OF REBELLION BY MRDJ','','trash','closed','closed','','beat-of-rebellion-by-mrdj-2__trashed','','','2025-07-04 20:43:18','2025-07-04 20:43:18','',0,'http://vibemake.local/community_project/beat-of-rebellion-by-mrdj-2/',0,'community_project','',0);
+INSERT INTO `wp_posts` VALUES (58,1,'2025-06-29 22:25:47','2025-06-29 22:25:47','A creative project showcasing AI-generated content.','Anna OF ENLIGHTENMENT BY TIMOTHE','','publish','closed','closed','','the-journey-of-enlightenment-by-timothe-2','','','2025-07-04 22:32:36','2025-07-04 22:32:36','',0,'http://vibemake.local/community_project/the-journey-of-enlightenment-by-timothe-2/',0,'community_project','',0);
+INSERT INTO `wp_posts` VALUES (66,1,'2025-06-30 20:14:36','2025-06-30 20:14:36','Blending massive datasets, sensory design, and neural networks, she crafts immersive paintings that transform memory, nature and architecture.','Holly Herndon','','inherit','closed','closed','','17-revision-v1','','','2025-06-30 20:14:36','2025-06-30 20:14:36','',17,'http://vibemake.local/?p=66',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (67,1,'2025-06-30 20:16:12','2025-06-30 20:16:12','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.','Refik Anadol','','inherit','closed','closed','','20-revision-v1','','','2025-06-30 20:16:12','2025-06-30 20:16:12','',20,'http://vibemake.local/?p=67',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (68,1,'2025-06-30 20:16:23','2025-06-30 20:16:23','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.','Anna Ridler','','inherit','closed','closed','','19-revision-v1','','','2025-06-30 20:16:23','2025-06-30 20:16:23','',19,'http://vibemake.local/?p=68',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (69,1,'2025-06-30 20:16:35','2025-06-30 20:16:35','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.','Hanna Inaiáh','','inherit','closed','closed','','42-revision-v1','','','2025-06-30 20:16:35','2025-06-30 20:16:35','',42,'http://vibemake.local/?p=69',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (70,1,'2025-06-30 20:16:53','2025-06-30 20:16:53','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.','Sofia SHamraCrespo','','inherit','closed','closed','','21-revision-v1','','','2025-06-30 20:16:53','2025-06-30 20:16:53','',21,'http://vibemake.local/?p=70',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (71,1,'2025-06-30 20:23:11','2025-06-30 20:23:11','A creative project showcasing AI-generated content.','WILD DOSE','','inherit','closed','closed','','55-revision-v1','','','2025-06-30 20:23:11','2025-06-30 20:23:11','',55,'http://vibemake.local/?p=71',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (72,1,'2025-07-01 03:01:39','2025-07-01 03:01:39','Midjourney is an independent research lab exploring new mediums of thought and expanding the imaginative powers of the human species. Create stunning visual content from text prompts with unparalleled artistic quality.','Midjourney','AI-powered image generator that creates stunning visual content from text prompts with artistic flair.','publish','closed','closed','','midjourney-2','','','2025-07-01 03:01:39','2025-07-01 03:01:39','',0,'http://vibemake.local/tool/midjourney-2/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (73,1,'2025-07-01 12:25:21','2025-07-01 12:25:21','Stability AI is the open-source leader revolutionizing generative AI with Stable Diffusion models. Creator of SD 3.5 Medium, SDXL Turbo, and Stable Video Diffusion, they champion accessible AI for everyone. Despite financial challenges, they maintain 300M+ downloads and power countless applications. Features include ultra-fast generation, commercial licensing, and extensive model ecosystem including audio, video, and 3D capabilities.','Stability AI','Open-source AI leader behind Stable Diffusion, democratizing image, video, and audio generation for millions.','publish','closed','closed','','stability-ai','','','2025-07-01 12:25:21','2025-07-01 12:25:21','',0,'http://vibemake.local/tool/stability-ai/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (74,1,'2025-07-01 12:25:21','2025-07-01 12:25:21','Eleven Labs is the world\'s leading AI voice synthesis platform, creating the most realistic and versatile AI voices. Valued at $3 billion with their Turbo v3 model, they offer instant voice cloning, 32 languages, emotional control, and enterprise-grade APIs. Used by major publishers, game studios, and content creators, processing billions of characters monthly. Features AI dubbing, voice design studio, and conversational AI agents.','Eleven Labs','Premier AI voice synthesis platform offering ultra-realistic voice cloning, multilingual support, and emotional speech control.','publish','closed','closed','','eleven-labs','','','2025-07-01 12:25:21','2025-07-01 12:25:21','',0,'http://vibemake.local/tool/eleven-labs/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (75,1,'2025-07-01 12:25:21','2025-07-01 12:25:21','Leonardo AI is the professional-grade AI image generation platform trusted by 30 million creators. Featuring the groundbreaking Phoenix model with unmatched prompt adherence, it offers complete creative control through Canvas editor, real-time generation, and video animation. Specialized in game assets, concept art, and professional design work. Includes AI-powered editing, upscaling, background removal, and team collaboration features.','Leonardo AI','Professional AI art platform with Phoenix model, offering precision control for game assets, concept art, and creative projects.','publish','closed','closed','','leonardo-ai','','','2025-07-01 12:25:21','2025-07-01 12:25:21','',0,'http://vibemake.local/tool/leonardo-ai/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (76,1,'2025-07-01 12:25:21','2025-07-01 12:25:21','Pika is the AI video generation platform making professional video creation effortless. With Pika 2.0 featuring Scene Ingredients, it offers unprecedented control over cinematography, VFX, and characters. Valued at $500M+, Pika enables creators to generate cinematic videos from text, images, or existing footage. Features include precise camera controls, character consistency, sound effects generation, and real-time editing capabilities.','Pika','AI-powered video creation platform with Scene Ingredients for cinematic control and professional-quality output.','publish','closed','closed','','pika','','','2025-07-01 12:25:21','2025-07-01 12:25:21','',0,'http://vibemake.local/tool/pika/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (77,1,'2025-07-01 12:25:21','2025-07-01 12:25:21','Ideogram is the AI image generator that finally solved text rendering, making it the go-to choice for designs requiring perfect typography. With Ideogram 2.0, it offers photorealistic quality, magic prompt enhancement, and unmatched text accuracy. Valued at $1 billion, it excels at logos, posters, t-shirt designs, and any visual requiring readable text. Features include style presets, color palettes, and seamless Canvas editing.','Ideogram','AI image generation with perfect text rendering, ideal for logos, posters, and designs requiring typography.','publish','closed','closed','','ideogram','','','2025-07-01 12:25:21','2025-07-01 12:25:21','',0,'http://vibemake.local/tool/ideogram/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (78,1,'2025-07-01 12:25:21','2025-07-01 12:25:21','Flux by Black Forest Labs represents the next generation of image AI, created by the original Stable Diffusion team. With Flux.1 Pro, Dev, and Schnell variants, it delivers unmatched photorealism, prompt adherence, and speed. The 12B parameter model excels at human anatomy, complex compositions, and artistic styles. Integrated into major platforms and offering both API and open-source options.','Flux','Next-gen image AI from Stable Diffusion creators, offering state-of-the-art quality, speed, and versatility.','publish','closed','closed','','flux','','','2025-07-01 13:00:57','2025-07-01 13:00:57','',0,'http://vibemake.local/tool/flux/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (79,1,'2025-07-01 12:25:21','2025-07-01 12:25:21','NotebookLM is Google\'s AI-powered research assistant that transforms how you understand complex information. Powered by Gemini 2.5 Pro, it creates personalized AI experts from your documents. Famous for Audio Overviews that turn any content into engaging podcast-style discussions. Features source-grounded responses, YouTube/audio transcription, collaborative notebooks, and the ability to handle 50 sources with 2M tokens each.','NotebookLM','Google\'s AI research assistant that turns documents into personalized experts and creates viral podcast-style summaries.','publish','closed','closed','','notebooklm','','','2025-07-01 12:25:21','2025-07-01 12:25:21','',0,'http://vibemake.local/tool/notebooklm/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (80,1,'2025-07-01 12:25:21','2025-07-01 12:25:21','Character AI is the leading AI companion platform where users create and interact with personalized AI characters. With 20M+ user-created characters and billions of messages daily, it offers emotional support, creative roleplay, language learning, and entertainment. Despite challenges, it maintains massive Gen Z engagement. Features include voice calls, character groups, memory persistence, and the new Character Composer for enhanced creation.','Character AI','Premier AI companion platform for creating and chatting with millions of user-generated AI characters.','publish','closed','closed','','character-ai','','','2025-07-01 12:25:21','2025-07-01 12:25:21','',0,'http://vibemake.local/tool/character-ai/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (81,1,'2025-07-01 12:25:21','2025-07-01 12:25:21','Replicate is the cloud platform making AI accessible to every developer. Run open-source models with a simple API, deploy custom models, and scale automatically. Hosting thousands of models from Flux to Llama, SDXL to Whisper. Valued at $500M+, it powers AI features for GitHub, Canva, and thousands of startups. Features one-line deployment, automatic scaling, and pay-per-second billing.','Replicate','Cloud platform for running AI models with simple APIs, hosting thousands of open-source models ready to use.','trash','closed','closed','','replicate__trashed','','','2025-07-01 17:53:17','2025-07-01 17:53:17','',0,'http://vibemake.local/tool/replicate/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (82,1,'2025-07-01 12:25:21','2025-07-01 12:25:21','Hugging Face is the AI community\'s home, hosting 1M+ models, 300K+ datasets, and 500K+ apps. Valued at $7 billion, it\'s where researchers and developers collaborate on open AI. Features the Transformers library, Spaces for demos, model hosting, and enterprise solutions. Home to Llama, Mistral, Stable Diffusion, and virtually every open model. The GitHub of AI with 20M+ monthly users.','Hugging Face','The AI community platform hosting millions of models, datasets, and demos - the collaboration hub for open AI.','trash','closed','closed','','hugging-face__trashed','','','2025-07-01 17:53:10','2025-07-01 17:53:10','',0,'http://vibemake.local/tool/hugging-face/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (83,1,'2025-07-01 12:25:21','2025-07-01 12:25:21','Cohere is the enterprise AI platform building foundation models for business. With Command R+ for RAG, Embed 3 for semantic search, and Rerank 3 for relevance, it powers AI for Fortune 500 companies. Valued at $6.5 billion, Cohere offers multilingual models supporting 100+ languages, on-premise deployment, and data privacy guarantees. Trusted by Notion, Spotify, Oracle, and thousands of enterprises.','Cohere','Enterprise-focused AI platform with world-class models for search, generation, and understanding at scale.','trash','closed','closed','','cohere__trashed','','','2025-07-01 17:53:21','2025-07-01 17:53:21','',0,'http://vibemake.local/tool/cohere/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (84,1,'2025-07-01 13:01:17','2025-07-01 13:01:17','Maker is an AI-powered photo and video generation platform specifically designed for e-commerce brands. It revolutionizes product photography by allowing businesses to create studio-quality images and videos at just 1% of the traditional cost. With just a single product image, Maker generates endless variations with different models, locations, and scenes in minutes instead of weeks. Perfect for everything from jewelry to furniture, luxury fashion to streetwear, Maker eliminates the need for expensive photoshoots while maintaining professional quality.','Maker','AI photo & video generation for e-commerce - create studio-quality product shots instantly at 1% of traditional cost.','publish','closed','closed','','maker','','','2025-07-01 13:01:17','2025-07-01 13:01:17','',0,'http://vibemake.local/tool/maker/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (85,1,'2025-07-01 13:02:35','2025-07-01 13:02:35','A creative project showcasing AI-generated content.','Anna OF ENLIGHTENMENT BY TIMOTHE','','inherit','closed','closed','','58-revision-v1','','','2025-07-01 13:02:35','2025-07-01 13:02:35','',58,'http://vibemake.local/?p=85',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (87,1,'2025-07-01 14:01:00','2025-07-01 14:01:00','A multidisciplinary artist and technologist who combines generative art, music, and coding to create innovative digital experiences. His work explores the intersection of algorithms, sound design, and visual aesthetics, pushing the boundaries of computational creativity.','Zubin Sharma','','publish','closed','closed','','zubin-sharma','','','2025-07-04 21:25:51','2025-07-04 21:25:51','',0,'http://vibemake.local/maker/zubin-sharma/',0,'maker','',0);
+INSERT INTO `wp_posts` VALUES (88,1,'2025-07-01 14:08:06','2025-07-01 14:08:06','A multidisciplinary artist and technologist who combines generative art, music, and coding to create innovative digital experiences. His work explores the intersection of algorithms, sound design, and visual aesthetics, pushing the boundaries of computational creativity.','Zubin Sharma','','inherit','closed','closed','','87-revision-v1','','','2025-07-01 14:08:06','2025-07-01 14:08:06','',87,'http://vibemake.local/?p=88',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (89,1,'2025-07-01 19:38:12','2025-07-01 19:38:12','GitHub Copilot is the world\'s most widely adopted AI developer tool, transforming how millions code. Powered by OpenAI Codex, it suggests entire lines and functions in real-time directly in your editor. Supporting dozens of languages and integrating seamlessly with VS Code, JetBrains, and Neovim, Copilot writes boilerplate, implements algorithms, and even creates tests. With 55% faster coding and 1.5 million users, it\'s become essential for modern development.','GitHub Copilot','AI pair programmer that suggests code and entire functions in real-time, used by millions of developers worldwide.','publish','closed','closed','','github-copilot-2','','','2025-07-01 19:38:12','2025-07-01 19:38:12','',0,'http://vibemake.local/tool/github-copilot-2/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (90,1,'2025-07-01 19:38:23','2025-07-01 19:38:23','Cursor is the AI-first code editor that\'s revolutionizing how developers write code. Built from the ground up for pair programming with AI, it offers features beyond traditional copilots: chat with your codebase, multi-file editing, automatic bug detection, and natural language code changes. Cursor understands your entire project context and can refactor across files, write tests, and even debug complex issues. Backed by OpenAI and adopted by top engineers, it\'s the future of coding.','Cursor','The AI-first code editor built for pair programming with AI, featuring codebase chat and multi-file editing.','publish','closed','closed','','cursor-2','','','2025-07-01 19:38:23','2025-07-01 19:38:23','',0,'http://vibemake.local/tool/cursor-2/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (91,1,'2025-07-01 19:38:33','2025-07-01 19:38:33','v0 by Vercel is the generative UI tool that creates React components from simple text descriptions. Just describe what you want, and v0 generates production-ready code using Tailwind CSS and shadcn/ui. It\'s revolutionizing frontend development by allowing developers to iterate on designs in natural language, export to Next.js, and ship faster than ever. From landing pages to complex dashboards, v0 bridges the gap between idea and implementation.','v0 by Vercel','Generate UI components from text descriptions - create React code with Tailwind CSS instantly.','publish','closed','closed','','v0-by-vercel','','','2025-07-01 19:38:33','2025-07-01 19:38:33','',0,'http://vibemake.local/tool/v0-by-vercel/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (92,1,'2025-07-01 19:38:43','2025-07-01 19:38:43','Replit AI transforms the browser into a complete AI-powered development environment. With Ghostwriter, their AI pair programmer, you can generate, edit, and explain code in 50+ languages. But Replit goes beyond code completion - deploy instantly, collaborate in real-time, and even build entire apps from prompts. Used by 30M+ developers, it\'s where ideas become live applications without setup, servers, or deployment hassles.','Replit AI','Complete AI development environment in your browser - code, collaborate, and deploy instantly.','publish','closed','closed','','replit-ai','','','2025-07-01 19:38:43','2025-07-01 19:38:43','',0,'http://vibemake.local/tool/replit-ai/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (93,1,'2025-07-01 19:38:55','2025-07-01 19:38:55','Suno AI is the breakthrough music generation platform that creates complete songs - with vocals, instruments, and professional production - from text prompts. V3.5 can generate radio-quality 2-minute songs in any genre in seconds. From pop hits to metal anthems, jazz to EDM, Suno handles lyrics, melodies, and arrangements. With millions of songs created daily, custom styles, and voice cloning capabilities, it\'s democratizing music creation for everyone.','Suno AI','Create full songs with vocals in any genre from text - the ChatGPT of music generation.','publish','closed','closed','','suno-ai','','','2025-07-01 19:38:55','2025-07-01 19:38:55','',0,'http://vibemake.local/tool/suno-ai/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (94,1,'2025-07-01 19:39:06','2025-07-01 19:39:06','Udio is the advanced AI music creation platform backed by a16z and created by former Google DeepMind researchers. It generates stunningly realistic music with exceptional vocal quality, competing directly with Suno. Udio excels at capturing subtle musical nuances, emotion in vocals, and complex arrangements. With features like extended generation, remixing, and custom lyrics, it\'s become the choice for musicians seeking professional-grade AI music generation.','Udio','Professional AI music generation with exceptional vocal quality from Google DeepMind alumni.','publish','closed','closed','','udio','','','2025-07-01 19:39:06','2025-07-01 19:39:06','',0,'http://vibemake.local/tool/udio/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (95,1,'2025-07-01 19:39:17','2025-07-01 19:39:17','ElevenLabs is the industry leader in AI voice technology, offering the most realistic text-to-speech and voice cloning available. Their models capture emotion, intonation, and personality with uncanny accuracy. Create custom voices from just minutes of audio, generate speech in 29 languages, and even dub videos automatically. Trusted by publishers, game developers, and content creators, ElevenLabs powers millions of AI voices across audiobooks, videos, and virtual assistants.','ElevenLabs','Industry-leading AI voice cloning and text-to-speech with emotional, realistic voices in 29 languages.','publish','closed','closed','','elevenlabs','','','2025-07-01 19:39:17','2025-07-01 19:39:17','',0,'http://vibemake.local/tool/elevenlabs/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (96,1,'2025-07-01 19:40:46','2025-07-01 19:40:46','Mubert is the AI music ecosystem generating royalty-free soundtracks for content creators, apps, and businesses. Unlike song-based platforms, Mubert creates infinite, adaptive music streams perfect for videos, podcasts, and games. With instant generation, mood-based creation, and API access, it\'s the go-to for creators needing copyright-safe background music. Millions of samples combine in real-time to create unique tracks that never repeat.','Mubert','Royalty-free AI music generation for content creators - infinite adaptive soundtracks on demand.','publish','closed','closed','','mubert','','','2025-07-01 19:40:46','2025-07-01 19:40:46','',0,'http://vibemake.local/tool/mubert/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (97,1,'2025-07-01 19:51:37','2025-07-01 19:51:37','GitHub Copilot is the world\'s most widely adopted AI developer tool, used by millions of developers and thousands of businesses. It\'s an AI pair programmer that helps you write code faster and with less effort, drawing from billions of lines of open-source code to suggest whole lines or entire functions right inside your editor.','GitHub Copilot','','trash','closed','closed','','github-copilot-3__trashed','','','2025-07-01 20:39:51','2025-07-01 20:39:51','',0,'http://vibemake.local/tool/github-copilot-3/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (98,1,'2025-07-01 19:51:47','2025-07-01 19:51:47','Cursor is the AI-first code editor that\'s taking over Silicon Valley. Built from the ground up for AI-powered development, it combines the familiarity of VS Code with powerful AI capabilities. Features include multi-file editing, codebase-wide understanding, natural language commands, and intelligent code generation that understands your entire project context.','Cursor','','trash','closed','closed','','cursor-3__trashed','','','2025-07-01 20:40:00','2025-07-01 20:40:00','',0,'http://vibemake.local/tool/cursor-3/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (99,1,'2025-07-01 19:51:55','2025-07-01 19:51:55','v0 is Vercel\'s generative UI tool that creates React components from text descriptions. Simply describe the UI you want, and v0 generates production-ready code using shadcn/ui and Tailwind CSS. Perfect for rapidly prototyping interfaces, building landing pages, or creating custom components without writing code from scratch.','v0 by Vercel','','trash','closed','closed','','v0-by-vercel-2__trashed','','','2025-07-01 20:40:09','2025-07-01 20:40:09','',0,'http://vibemake.local/tool/v0-by-vercel-2/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (100,1,'2025-07-01 19:52:03','2025-07-01 19:52:03','Replit AI transforms the online IDE into an AI-powered development environment. Get code completions, explanations, and generation across multiple languages. Features include AI chat for debugging, automatic code reviews, and the ability to build entire applications through conversation. The integrated environment means you can code, test, and deploy all in one place.','Replit AI','','trash','closed','closed','','replit-ai-2__trashed','','','2025-07-01 20:40:19','2025-07-01 20:40:19','',0,'http://vibemake.local/tool/replit-ai-2/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (101,1,'2025-07-01 19:52:13','2025-07-01 19:52:13','Suno AI is revolutionizing music creation by allowing anyone to generate full songs with vocals in any genre. From pop to metal, jazz to electronic, simply describe the style and mood you want, and Suno creates original music complete with lyrics and vocals. Perfect for content creators, game developers, or anyone who needs custom music without hiring musicians.','Suno AI','','trash','closed','closed','','suno-ai-2__trashed','','','2025-07-01 20:40:28','2025-07-01 20:40:28','',0,'http://vibemake.local/tool/suno-ai-2/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (102,1,'2025-07-01 19:52:22','2025-07-01 19:52:22','Udio is an advanced AI music generation platform that creates high-quality songs across all genres. Known for its exceptional vocal synthesis and musical understanding, Udio can generate everything from intimate acoustic ballads to full orchestral pieces. The platform offers fine control over song structure, allowing you to extend, remix, and iterate on your creations.','Udio','','trash','closed','closed','','udio-2__trashed','','','2025-07-01 20:40:43','2025-07-01 20:40:43','',0,'http://vibemake.local/tool/udio-2/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (103,1,'2025-07-01 19:52:30','2025-07-01 19:52:30','ElevenLabs is the industry-leading AI voice platform, offering the most realistic text-to-speech and voice cloning technology available. Create natural-sounding voiceovers in 29 languages, clone voices with just minutes of audio, or choose from a library of thousands of voices. Used by content creators, game developers, and businesses for audiobooks, dubbing, and interactive voice applications.','ElevenLabs','','trash','closed','closed','','elevenlabs-2__trashed','','','2025-07-01 20:40:55','2025-07-01 20:40:55','',0,'http://vibemake.local/tool/elevenlabs-2/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (104,1,'2025-07-01 19:52:38','2025-07-01 19:52:38','Mubert generates royalty-free AI music tailored to your content needs. Whether you need background music for videos, streams, podcasts, or apps, Mubert creates endless unique tracks that perfectly match your mood and duration requirements. With genre-specific channels and real-time generation, it\'s the go-to solution for content creators who need copyright-safe music on demand.','Mubert','','trash','closed','closed','','mubert-2__trashed','','','2025-07-01 20:41:06','2025-07-01 20:41:06','',0,'http://vibemake.local/tool/mubert-2/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (105,1,'2025-07-01 19:52:48','2025-07-01 19:52:48','Framer AI revolutionizes web design by generating complete, responsive websites from simple text prompts. Design and publish professional sites with AI-powered layout suggestions, copywriting, and styling. The visual editor lets you fine-tune every detail while the AI handles the heavy lifting. Ships with built-in CMS, SEO optimization, and lightning-fast hosting.','Framer AI','','publish','closed','closed','','framer-ai','','','2025-07-01 19:52:48','2025-07-01 19:52:48','',0,'http://vibemake.local/tool/framer-ai/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (106,1,'2025-07-01 19:52:56','2025-07-01 19:52:56','Durable can build you a complete business website in just 30 seconds using AI. Get a professional site with copy, images, and a contact form instantly. The AI understands your business type and generates industry-specific content, while built-in tools for invoicing, CRM, and marketing help you run your entire business from one platform.','Durable','','publish','closed','closed','','durable','','','2025-07-01 19:52:56','2025-07-01 19:52:56','',0,'http://vibemake.local/tool/durable/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (107,1,'2025-07-01 19:53:05','2025-07-01 19:53:05','10Web brings AI-powered website building to WordPress. Their AI Website Builder creates or recreates any website in minutes, complete with content and images tailored to your business. Features AI-powered hosting with 99.9% uptime, automated real-time backups, and PageSpeed Booster that guarantees 90+ PageSpeed scores. Perfect for agencies and businesses wanting the power of WordPress with AI efficiency.','10Web','','publish','closed','closed','','10web','','','2025-07-01 19:53:05','2025-07-01 19:53:05','',0,'http://vibemake.local/tool/10web/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (108,1,'2025-07-01 19:53:13','2025-07-01 19:53:13','Spline AI brings text-to-3D generation directly to the web. Create 3D objects, animations, and interactive experiences using simple text prompts. The browser-based editor makes 3D design accessible to everyone, with real-time collaboration and the ability to embed your creations directly into websites. Perfect for creating engaging web experiences without complex 3D software.','Spline AI','','publish','closed','closed','','spline-ai','','','2025-07-01 19:53:13','2025-07-01 19:53:13','',0,'http://vibemake.local/tool/spline-ai/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (109,1,'2025-07-01 19:53:20','2025-07-01 19:53:20','Meshy instantly converts 2D images into 3D models with impressive accuracy. Upload any image and get a textured 3D model in minutes, or generate 3D models from text descriptions. With support for various export formats and automatic texturing, it\'s perfect for game developers, 3D artists, and anyone needing quick 3D assets for AR/VR projects or 3D printing.','Meshy','','publish','closed','closed','','meshy','','','2025-07-01 19:53:20','2025-07-01 19:53:20','',0,'http://vibemake.local/tool/meshy/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (110,1,'2025-07-01 19:53:29','2025-07-01 19:53:29','ChatGPT by OpenAI is the AI assistant that started the revolution. Engage in natural conversations, get help with writing, coding, analysis, and creative tasks. With GPT-4\'s advanced reasoning capabilities, custom GPTs for specialized tasks, and plugins for extended functionality, ChatGPT remains one of the most versatile and widely-used AI tools available.','ChatGPT','','publish','closed','closed','','chatgpt-2','','','2025-07-01 19:53:29','2025-07-01 19:53:29','',0,'http://vibemake.local/tool/chatgpt-2/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (111,1,'2025-07-01 19:53:39','2025-07-01 19:53:39','Claude by Anthropic is an AI assistant focused on being helpful, harmless, and honest. Known for strong reasoning, nuanced understanding, and the ability to work with long documents (up to 200K tokens), Claude excels at writing, analysis, coding, and creative tasks. Features thoughtful responses, constitutional AI training for safety, and the ability to admit uncertainty when appropriate.','Claude','','publish','closed','closed','','claude-2','','','2025-07-01 19:53:39','2025-07-01 19:53:39','',0,'http://vibemake.local/tool/claude-2/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (112,1,'2025-07-01 19:53:48','2025-07-01 19:53:48','Perplexity is the AI-powered search engine that\'s replacing Google for many users. Get instant, accurate answers with sources cited. Unlike traditional search engines, Perplexity understands your question, searches the web, and synthesizes information into clear, comprehensive answers. Features include follow-up questions, focus modes for academic or Reddit searches, and the ability to share research threads.','Perplexity','','publish','closed','closed','','perplexity-2','','','2025-07-01 19:53:48','2025-07-01 19:53:48','',0,'http://vibemake.local/tool/perplexity-2/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (113,1,'2025-07-01 19:53:56','2025-07-01 19:53:56','Jasper is the enterprise-grade AI copilot for marketing teams. Create on-brand content at scale with AI that learns your brand voice, style guidelines, and company knowledge. Features include campaign generation, blog post writing, social media content, and team collaboration. Trusted by over 100,000 businesses for maintaining consistent brand messaging across all content.','Jasper AI','','publish','closed','closed','','jasper-ai','','','2025-07-01 19:53:56','2025-07-01 19:53:56','',0,'http://vibemake.local/tool/jasper-ai/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (114,1,'2025-07-01 19:54:04','2025-07-01 19:54:04','Tome is the AI-native presentation builder that creates stunning decks in minutes. Simply describe what you need, and Tome generates a complete presentation with compelling narratives, beautiful layouts, and relevant imagery. Features AI-powered storytelling, automatic formatting, web embeds, and interactive elements. Perfect for pitch decks, sales presentations, and educational content.','Tome','','publish','closed','closed','','tome','','','2025-07-01 19:54:04','2025-07-01 19:54:04','',0,'http://vibemake.local/tool/tome/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (115,1,'2025-07-01 19:54:11','2025-07-01 19:54:11','Gamma is a new medium for presenting ideas, powered by AI. Create beautiful presentations, documents, and webpages in seconds. Unlike traditional slides, Gamma creates dynamic, interactive content that adapts to any device. Features include AI-powered design, live collaboration, analytics, and the ability to embed anything from videos to interactive charts.','Gamma','','publish','closed','closed','','gamma','','','2025-07-01 19:54:11','2025-07-01 19:54:11','',0,'http://vibemake.local/tool/gamma/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (116,1,'2025-07-01 19:54:22','2025-07-01 19:54:22','Copy.ai is the GTM AI platform built for sales and marketing teams. Go from blank page to high-converting copy in seconds. Features include sales email sequences, blog content workflows, social media posts, and product descriptions. The platform learns from your best-performing content to maintain consistency and includes built-in SEO optimization and A/B testing insights.','Copy.ai','','publish','closed','closed','','copy-ai','','','2025-07-01 19:54:22','2025-07-01 19:54:22','',0,'http://vibemake.local/tool/copy-ai/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (117,1,'2025-07-01 19:54:35','2025-07-01 19:54:35','Midjourney is the leading AI art generator, creating stunning, artistic images from text prompts. Known for its distinctive aesthetic and exceptional quality, Midjourney excels at creating everything from photorealistic images to abstract art. Access through Discord, with features like image variations, upscaling, and style remixing. The go-to choice for professional artists and designers.','Midjourney','','trash','closed','closed','','midjourney-3__trashed','','','2025-07-01 20:41:20','2025-07-01 20:41:20','',0,'http://vibemake.local/tool/midjourney-3/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (118,1,'2025-07-01 19:54:43','2025-07-01 19:54:43','DALL-E 3 by OpenAI generates remarkably accurate images from detailed text descriptions. Integrated directly into ChatGPT Plus, it understands nuanced prompts and creates images that precisely match your vision. Features include built-in safety measures, the ability to edit and iterate on generations, and seamless integration with ChatGPT for refined prompting.','DALL-E 3','','publish','closed','closed','','dall-e-3-2','','','2025-07-01 19:54:43','2025-07-01 19:54:43','',0,'http://vibemake.local/tool/dall-e-3-2/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (119,1,'2025-07-01 19:54:52','2025-07-01 19:54:52','Canva\'s Magic Studio brings AI to every aspect of design. Create professional graphics, presentations, and videos with AI-powered tools including Magic Design, Magic Write, and Background Remover. The platform offers text-to-image generation, automatic resizing for all social platforms, and brand kit integration. Perfect for teams needing consistent, professional designs without hiring designers.','Canva Magic Studio','','publish','closed','closed','','canva-magic-studio','','','2025-07-01 19:54:52','2025-07-01 19:54:52','',0,'http://vibemake.local/tool/canva-magic-studio/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (120,1,'2025-07-01 19:55:00','2025-07-01 19:55:00','Adobe Firefly integrates generative AI across the entire Creative Cloud suite. Generate images, apply styles, remove backgrounds, and extend images with AI—all within Photoshop, Illustrator, and other Adobe apps. Trained on Adobe Stock and openly licensed content, Firefly is designed for commercial use with content credentials for transparency. The professional choice for AI-enhanced creative workflows.','Adobe Firefly','','publish','closed','closed','','adobe-firefly','','','2025-07-01 19:55:00','2025-07-01 19:55:00','',0,'http://vibemake.local/tool/adobe-firefly/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (121,1,'2025-07-01 19:55:10','2025-07-01 19:55:10','Figma AI transforms the design process with intelligent features built right into the collaborative design platform. Generate UI designs from text prompts, automatically create design systems, and get AI-powered suggestions for layouts and components. Features include auto-layout improvements, smart animate, and AI-assisted prototyping. The standard for modern product design teams.','Figma AI','','publish','closed','closed','','figma-ai','','','2025-07-01 19:55:10','2025-07-01 19:55:10','',0,'http://vibemake.local/tool/figma-ai/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (122,1,'2025-07-01 19:55:20','2025-07-01 19:55:20','RunwayML is the leading AI platform for video creation and editing. Generate videos from text, animate images, remove backgrounds in real-time, and apply AI magic tools to transform your footage. Used by Hollywood studios and content creators alike, Runway offers over 30 AI-powered tools including Gen-2 video generation, motion tracking, and green screen removal without a green screen.','RunwayML','','publish','closed','closed','','runwayml','','','2025-07-01 19:55:20','2025-07-01 19:55:20','',0,'http://vibemake.local/tool/runwayml/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (123,1,'2025-07-01 19:55:29','2025-07-01 19:55:29','Zapier brings AI to workflow automation, allowing you to create powerful automations using natural language. Connect 6,000+ apps and let AI handle repetitive tasks. Features include AI-powered data formatting, intelligent routing, and the ability to chain AI actions together. Perfect for sales teams automating lead nurturing, marketing teams scaling campaigns, and anyone looking to eliminate manual work.','Zapier AI','','publish','closed','closed','','zapier-ai','','','2025-07-01 19:55:29','2025-07-01 19:55:29','',0,'http://vibemake.local/tool/zapier-ai/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (124,1,'2025-07-01 19:55:37','2025-07-01 19:55:37','Clay is the AI-powered sales automation platform that helps teams build pipeline at scale. Enrich leads with data from 75+ sources, use AI to write personalized outreach, and automate your entire prospecting workflow. Features include company and contact enrichment, AI research agents, and integrations with your CRM. The secret weapon of fast-growing sales teams building predictable revenue.','Clay','','publish','closed','closed','','clay','','','2025-07-01 19:55:37','2025-07-01 19:55:37','',0,'http://vibemake.local/tool/clay/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (125,1,'2025-07-01 19:55:50','2025-07-01 19:55:50','Notion AI transforms your workspace with AI built directly into where you work. Write faster with AI assistance, auto-fill tables, summarize meeting notes, and turn messy notes into actionable items. The AI understands your entire workspace context, making it perfect for creating SOPs, documenting processes, and managing knowledge bases. Essential for startups organizing their operations.','Notion AI','','publish','closed','closed','','notion-ai-2','','','2025-07-01 19:55:50','2025-07-01 19:55:50','',0,'http://vibemake.local/tool/notion-ai-2/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (126,1,'2025-07-01 19:55:59','2025-07-01 19:55:59','Warp is the AI-powered terminal reimagined for the modern developer. Get intelligent command suggestions, natural language to command translation, and AI debugging assistance right in your terminal. Features include command search, workflow sharing, and collaborative debugging. The terminal that understands what you\'re trying to do and helps you get there faster.','Warp AI','','publish','closed','closed','','warp-ai','','','2025-07-01 19:55:59','2025-07-01 19:55:59','',0,'http://vibemake.local/tool/warp-ai/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (127,1,'2025-07-01 19:56:06','2025-07-01 19:56:06','Google Gemini is Google\'s most capable AI model, offering multimodal understanding across text, images, video, and code. With direct integration to Google Workspace, search, and other Google services, Gemini excels at research, analysis, and creative tasks. Features include real-time web access, document analysis, and the ability to generate and debug code across multiple languages.','Google Gemini','','publish','closed','closed','','google-gemini','','','2025-07-01 19:56:06','2025-07-01 19:56:06','',0,'http://vibemake.local/tool/google-gemini/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (128,1,'2025-07-02 01:19:41','2025-07-02 01:19:41','DeepSeek is the Chinese AI assistant that\'s giving ChatGPT serious competition with its advanced reasoning model. What makes it special for creators: DeepSeek excels at complex creative tasks like screenplay writing, detailed world-building, and technical creative projects. Its R1 model offers transparent thinking process, showing how it approaches creative problems step-by-step. Free to use with generous limits, making it perfect for creators on a budget. Particularly strong at maintaining narrative consistency across long creative projects and understanding nuanced creative briefs. Best for writers, game designers, and creators who need deep logical reasoning combined with creativity.','DeepSeek','','publish','closed','closed','','deepseek','','','2025-07-02 01:19:41','2025-07-02 01:19:41','',0,'http://vibemake.local/tool/deepseek/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (129,1,'2025-07-02 01:19:51','2025-07-02 01:19:51','Character.AI lets you create and chat with AI-powered characters that feel remarkably human. For creators: Design unique personalities with distinct voices, backstories, and conversational styles. Build interactive storytelling experiences, RPG characters, or educational personas. Your characters can remember context and maintain personality across conversations. Popular with writers for character development, game designers for NPC creation, and educators building interactive learning experiences. Features group chats where multiple AI characters interact. Free tier available with unlimited chats. The platform that proved AI companions could be creative tools, not just chatbots.','Character.AI','','trash','closed','closed','','character-ai-2__trashed','','','2025-07-08 20:35:46','2025-07-08 20:35:46','',0,'http://vibemake.local/tool/character-ai-2/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (130,1,'2025-07-02 01:20:03','2025-07-02 01:20:03','Hailuo (MiniMax) is the Chinese AI video generator that\'s winning creators over with its exceptional prompt adherence and creative flexibility. What creators love: Generate 6-second clips that actually match your vision - no more \'close enough\' results. Excels at complex scenes with multiple subjects, maintaining character consistency throughout. Features include image-to-video animation, making it perfect for bringing illustrations to life. Particularly strong at action sequences, transformations, and surreal creative concepts. Free tier includes 3 videos daily. Creators praise its ability to handle abstract artistic concepts that other models struggle with. Best for music videos, social media content, and experimental visual art.','Hailuo AI','','publish','closed','closed','','hailuo-ai','','','2025-07-02 01:20:03','2025-07-02 01:20:03','',0,'http://vibemake.local/tool/hailuo-ai/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (131,1,'2025-07-02 01:20:17','2025-07-02 01:20:17','Kling AI is the Chinese video generation platform giving creators unprecedented control over their AI videos. Creator superpowers: Generate videos up to 2 minutes long (in professional mode), far exceeding most competitors. Advanced camera movement controls let you specify pans, zooms, and tracking shots. The lip-sync feature is remarkably accurate for creating talking head videos or animated characters. Image-to-video mode brings your artwork to life with natural motion. Standout feature: temporal consistency that keeps characters looking the same throughout longer clips. Pricing starts free with watermarked outputs, paid tiers remove watermarks and unlock longer videos. Perfect for filmmakers, animators, and content creators who need professional-looking video content fast.','Kling AI','','publish','closed','closed','','kling-ai','','','2025-07-02 01:20:17','2025-07-02 01:20:17','',0,'http://vibemake.local/tool/kling-ai/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (132,1,'2025-07-02 01:20:33','2025-07-02 01:20:33','Sora is OpenAI\'s groundbreaking text-to-video model that creates stunning, cinema-quality videos from text prompts. What sets it apart for creators: Generates videos up to 20 seconds with remarkable visual consistency and physics understanding. Excels at complex scenes with multiple characters, specific motion types, and accurate details. The model understands not just what you ask for, but how those things exist in the physical world. Particularly impressive with reflections, textures, and lighting. Currently available to ChatGPT Plus and Pro subscribers at $20-200/month. Outputs are 480p-1080p resolution. Best for filmmakers, advertisers, and visual artists who need photorealistic video content. Known for creating viral artistic videos that blur the line between AI and traditional filmmaking.','Sora','','publish','closed','closed','','sora','','','2025-07-02 01:20:33','2025-07-02 01:20:33','',0,'http://vibemake.local/tool/sora/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (133,1,'2025-07-02 01:20:46','2025-07-02 01:20:46','Bolt is revolutionizing how non-coders build web applications - just describe what you want in plain English and watch it come to life. Creator\'s dream features: Build full-stack web apps with databases, authentication, and APIs without writing code. Real-time preview as you build, with the ability to deploy instantly to the web. The AI understands context and can iterate on your app based on feedback. Particularly strong at creating SaaS tools, dashboards, and interactive websites. Integrates popular libraries and frameworks automatically. Free tier lets you experiment, paid plans from $20/month for deployment. Perfect for entrepreneurs testing ideas, designers who want functional prototypes, and creators building tools for their audience. The bridge between imagination and implementation.','Bolt','','publish','closed','closed','','bolt','','','2025-07-02 01:20:46','2025-07-02 01:20:46','',0,'http://vibemake.local/tool/bolt/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (134,1,'2025-07-02 01:21:01','2025-07-02 01:21:01','Harvey is the AI platform transforming legal work from hours to minutes, trusted by the world\'s top law firms. Creator capabilities: Draft complex legal documents with appropriate citations and jurisdiction-specific language. Generate contracts, briefs, memos, and research summaries that actually pass legal review. Analyze thousands of documents in seconds for due diligence or case preparation. The AI understands legal nuance and can adapt tone from formal court filings to client-friendly explanations. Particularly powerful for creating first drafts that lawyers refine rather than starting from scratch. While primarily enterprise-focused, it\'s reshaping how legal content is created. Best for legal professionals, paralegals, and businesses needing professional legal document generation. The tool that\'s making elite legal work accessible.','Harvey AI','','publish','closed','closed','','harvey-ai','','','2025-07-02 01:21:01','2025-07-02 01:21:01','',0,'http://vibemake.local/tool/harvey-ai/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (135,1,'2025-07-02 01:21:12','2025-07-02 01:21:12','InVideo is the AI video creation platform that turns your ideas into publish-ready videos in minutes, not hours. Creator\'s toolkit: 5000+ professionally designed templates across every niche imaginable. AI script generator writes compelling video scripts from just a topic. Text-to-video feature creates entire videos from articles or scripts automatically. Massive stock library with 8M+ assets included. Real game-changer: AI voice cloning in multiple languages for consistent branding. Collaborative editing for teams. Exports without watermark start at $15/month. Perfect for YouTubers, marketers, educators, and social media creators who need to produce lots of quality video content quickly. The tool that democratized professional video production.','InVideo','','publish','closed','closed','','invideo','','','2025-07-02 01:21:12','2025-07-02 01:21:12','',0,'http://vibemake.local/tool/invideo/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (136,1,'2025-07-02 01:21:25','2025-07-02 01:21:25','Veed is the browser-based video editor that makes professional editing accessible to everyone, powered by smart AI features. What creators love: One-click subtitles with 98% accuracy in 100+ languages - the feature that made Veed famous. AI avatars create talking head videos without filming yourself. Magic cut removes silences and filler words automatically. Screen recording with webcam overlay perfect for tutorials. Eye contact correction makes you look at the camera even when reading scripts. Background removal, noise cancellation, and auto-chapters included. Free tier available, pro features from $12/month. Ideal for course creators, social media managers, and anyone creating educational or marketing videos. The Swiss Army knife of online video editing.','Veed','','publish','closed','closed','','veed','','','2025-07-02 01:21:25','2025-07-02 01:21:25','',0,'http://vibemake.local/tool/veed/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (137,1,'2025-07-02 01:21:37','2025-07-02 01:21:37','Captions is the AI-powered video creation app that\'s become essential for social media creators and influencers. Creator superpowers: AI Eye Contact makes you look directly at the camera even when reading scripts. AI Creators (avatars) can deliver your content in multiple languages. Dynamic captions with word-by-word animations that boost engagement. AI script writer generates viral hooks and full video scripts. Automatic jump cuts remove dead space like a pro editor. Voice cloning lets you dub content in 28 languages with your own voice. Trending templates based on what\'s viral right now. Mobile-first design perfect for TikTok, Instagram Reels, and YouTube Shorts. Subscription from $7/month. The secret weapon of creators going viral daily.','Captions','','publish','closed','closed','','captions','','','2025-07-02 01:21:37','2025-07-02 01:21:37','',0,'http://vibemake.local/tool/captions/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (138,1,'2025-07-02 01:21:49','2025-07-02 01:21:49','Clipchamp is Microsoft\'s free video editor that brings AI-powered features to Windows users and anyone with a browser. Creator advantages: Built-in AI voiceover in 70+ languages with natural-sounding voices. Auto-captions and subtitles with customizable styles. Green screen removal without actual green screen. Speed ramping for dramatic effects. Text-to-speech that sounds surprisingly human. Massive library of stock footage, music, and sound effects included. Direct export to TikTok, YouTube, and other platforms. Free tier generous enough for most creators, premium unlocks 4K export and advanced features. Perfect integration with OneDrive and Microsoft ecosystem. The accessible option that doesn\'t compromise on features.','Clipchamp','','publish','closed','closed','','clipchamp','','','2025-07-02 01:21:49','2025-07-02 01:21:49','',0,'http://vibemake.local/tool/clipchamp/',0,'tool','',0);
+INSERT INTO `wp_posts` VALUES (139,1,'2025-07-04 17:24:46','2025-07-04 17:24:46','A creative project showcasing AI-generated content.','Portugal Times','','inherit','closed','closed','','54-revision-v1','','','2025-07-04 17:24:46','2025-07-04 17:24:46','',54,'http://vibemake.local/?p=139',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (140,1,'2025-07-04 18:32:14','2025-07-04 18:32:14','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.','Refik Anadol','','inherit','closed','closed','','44-revision-v1','','','2025-07-04 18:32:14','2025-07-04 18:32:14','',44,'http://vibemake.local/?p=140',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (141,1,'2025-07-04 18:43:47','2025-07-04 18:43:47','','Luisa','','trash','closed','closed','','luisa__trashed','','','2025-07-08 20:35:57','2025-07-08 20:35:57','',0,'http://vibemake.local/?post_type=maker&#038;p=141',0,'maker','',0);
+INSERT INTO `wp_posts` VALUES (142,1,'2025-07-04 18:43:47','2025-07-04 18:43:47','','Luisa','','inherit','closed','closed','','141-revision-v1','','','2025-07-04 18:43:47','2025-07-04 18:43:47','',141,'http://vibemake.local/?p=142',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (143,1,'2025-07-04 19:01:22','2025-07-04 19:01:22','','bhanu_maker_A_felt_art_style_little_Indian_girl_with_curly_ha_36e51095-199d-4634-8790-022893302f02_0','','inherit','closed','closed','','bhanu_maker_a_felt_art_style_little_indian_girl_with_curly_ha_36e51095-199d-4634-8790-022893302f02_0','','','2025-07-04 19:01:22','2025-07-04 19:01:22','',46,'http://vibemake.local/wp-content/uploads/2025/06/bhanu_maker_A_felt_art_style_little_Indian_girl_with_curly_ha_36e51095-199d-4634-8790-022893302f02_0.png',0,'attachment','image/png',0);
+INSERT INTO `wp_posts` VALUES (144,1,'2025-07-04 19:01:30','2025-07-04 19:01:30','The latest version of Sudowrite introduces revolutionary AI-powered storytelling capabilities that help writers craft compelling narratives.','Sudowrite 3.0: AI-Driven Plot Twists','','inherit','closed','closed','','46-revision-v1','','','2025-07-04 19:01:30','2025-07-04 19:01:30','',46,'http://vibemake.local/?p=144',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (145,1,'2025-07-04 19:07:15','2025-07-04 19:07:15','Transform any photo into professional cartoon-style animations with this new AI tool.','Toonify Pro: Cartoon-Style Animation from Photos','','inherit','closed','closed','','50-revision-v1','','','2025-07-04 19:07:15','2025-07-04 19:07:15','',50,'http://vibemake.local/?p=145',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (146,1,'2025-07-04 19:08:28','2025-07-04 19:08:28','Flow TV launches with an innovative approach to streaming content using AI-generated personalized experiences.','An Immersive Introduction to Flow TV','','inherit','closed','closed','','47-revision-v1','','','2025-07-04 19:08:28','2025-07-04 19:08:28','',47,'http://vibemake.local/?p=146',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (148,1,'2025-07-04 20:00:02','2025-07-04 20:00:02','A creative project showcasing AI-generated content.','BEAT OF REBELLION BY MRDJ','','inherit','closed','closed','','57-revision-v1','','','2025-07-04 20:00:02','2025-07-04 20:00:02','',57,'http://vibemake.local/?p=148',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (149,1,'2025-07-04 20:00:05','2025-07-04 20:00:05','A creative project showcasing AI-generated content.','BOURBON SERENADE FOR VANISHED AFFECTION','','inherit','closed','closed','','56-revision-v1','','','2025-07-04 20:00:05','2025-07-04 20:00:05','',56,'http://vibemake.local/?p=149',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (150,1,'2025-07-04 20:00:07','2025-07-04 20:00:07','A creative project showcasing AI-generated content.','OFF LIMITS','','inherit','closed','closed','','52-revision-v1','','','2025-07-04 20:00:07','2025-07-04 20:00:07','',52,'http://vibemake.local/?p=150',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (151,1,'2025-07-04 20:00:09','2025-07-04 20:00:09','A creative project showcasing AI-generated content.','POPPI','','inherit','closed','closed','','51-revision-v1','','','2025-07-04 20:00:09','2025-07-04 20:00:09','',51,'http://vibemake.local/?p=151',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (152,1,'2025-07-04 20:00:11','2025-07-04 20:00:11','A creative project showcasing AI-generated content.','SHAZ & KIKS','','inherit','closed','closed','','53-revision-v1','','','2025-07-04 20:00:11','2025-07-04 20:00:11','',53,'http://vibemake.local/?p=152',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (153,1,'2025-07-04 20:15:02','2025-07-04 20:15:02','','federico-scarionati-nkVa4ylaWG0-unsplash','','inherit','closed','closed','','federico-scarionati-nkva4ylawg0-unsplash','','','2025-07-04 20:15:02','2025-07-04 20:15:02','',0,'http://vibemake.local/wp-content/uploads/2025/07/federico-scarionati-nkVa4ylaWG0-unsplash.jpg',0,'attachment','image/jpeg',0);
+INSERT INTO `wp_posts` VALUES (154,1,'2025-07-04 20:15:52','2025-07-04 20:15:52','','federico-scarionati-nkVa4ylaWG0-unsplash','','inherit','closed','closed','','federico-scarionati-nkva4ylawg0-unsplash-2','','','2025-07-04 20:15:52','2025-07-04 20:15:52','',0,'http://vibemake.local/wp-content/uploads/2025/07/federico-scarionati-nkVa4ylaWG0-unsplash-1.jpg',0,'attachment','image/jpeg',0);
+INSERT INTO `wp_posts` VALUES (155,1,'2025-07-04 20:15:58','2025-07-04 20:15:58','','egor-myznik-sSjPuD8QJxs-unsplash','','inherit','closed','closed','','egor-myznik-ssjpud8qjxs-unsplash','','','2025-07-04 20:15:58','2025-07-04 20:15:58','',0,'http://vibemake.local/wp-content/uploads/2025/07/egor-myznik-sSjPuD8QJxs-unsplash.jpg',0,'attachment','image/jpeg',0);
+INSERT INTO `wp_posts` VALUES (156,1,'2025-07-04 20:16:02','2025-07-04 20:16:02','','maxim-berg-pEb1rA-fElU-unsplash','','inherit','closed','closed','','maxim-berg-peb1ra-felu-unsplash','','','2025-07-04 20:16:02','2025-07-04 20:16:02','',0,'http://vibemake.local/wp-content/uploads/2025/07/maxim-berg-pEb1rA-fElU-unsplash.jpg',0,'attachment','image/jpeg',0);
+INSERT INTO `wp_posts` VALUES (157,1,'2025-07-04 20:16:06','2025-07-04 20:16:06','','julien-tromeur-VY_Io5Ik3u4-unsplash','','inherit','closed','closed','','julien-tromeur-vy_io5ik3u4-unsplash','','','2025-07-04 20:16:06','2025-07-04 20:16:06','',0,'http://vibemake.local/wp-content/uploads/2025/07/julien-tromeur-VY_Io5Ik3u4-unsplash.jpg',0,'attachment','image/jpeg',0);
+INSERT INTO `wp_posts` VALUES (158,1,'2025-07-04 20:16:13','2025-07-04 20:16:13','','nikhil-dafare-Z2-fNSX4zjI-unsplash','','inherit','closed','closed','','nikhil-dafare-z2-fnsx4zji-unsplash','','','2025-07-04 20:16:13','2025-07-04 20:16:13','',0,'http://vibemake.local/wp-content/uploads/2025/07/nikhil-dafare-Z2-fNSX4zjI-unsplash.jpg',0,'attachment','image/jpeg',0);
+INSERT INTO `wp_posts` VALUES (159,1,'2025-07-04 20:16:15','2025-07-04 20:16:15','','hans-eiskonen-8Pm_A-OHJGg-unsplash','','inherit','closed','closed','','hans-eiskonen-8pm_a-ohjgg-unsplash','','','2025-07-04 20:16:15','2025-07-04 20:16:15','',0,'http://vibemake.local/wp-content/uploads/2025/07/hans-eiskonen-8Pm_A-OHJGg-unsplash.jpg',0,'attachment','image/jpeg',0);
+INSERT INTO `wp_posts` VALUES (160,1,'2025-07-04 20:16:19','2025-07-04 20:16:19','','google-deepmind-pLh_n9pnRhw-unsplash','','inherit','closed','closed','','google-deepmind-plh_n9pnrhw-unsplash','','','2025-07-04 20:16:19','2025-07-04 20:16:19','',0,'http://vibemake.local/wp-content/uploads/2025/07/google-deepmind-pLh_n9pnRhw-unsplash.jpg',0,'attachment','image/jpeg',0);
+INSERT INTO `wp_posts` VALUES (161,1,'2025-07-04 20:16:23','2025-07-04 20:16:23','','steve-johnson-ZPOoDQc8yMw-unsplash','','inherit','closed','closed','','steve-johnson-zpoodqc8ymw-unsplash','','','2025-07-04 20:16:23','2025-07-04 20:16:23','',0,'http://vibemake.local/wp-content/uploads/2025/07/steve-johnson-ZPOoDQc8yMw-unsplash.jpg',0,'attachment','image/jpeg',0);
+INSERT INTO `wp_posts` VALUES (162,1,'2025-07-04 20:16:27','2025-07-04 20:16:27','','possessed-photography-U3sOwViXhkY-unsplash','','inherit','closed','closed','','possessed-photography-u3sowvixhky-unsplash','','','2025-07-04 20:16:27','2025-07-04 20:16:27','',0,'http://vibemake.local/wp-content/uploads/2025/07/possessed-photography-U3sOwViXhkY-unsplash.jpg',0,'attachment','image/jpeg',0);
+INSERT INTO `wp_posts` VALUES (163,1,'2025-07-04 20:16:32','2025-07-04 20:16:32','','andrii-solok-XUleys_6nwM-unsplash','','inherit','closed','closed','','andrii-solok-xuleys_6nwm-unsplash','','','2025-07-04 20:16:32','2025-07-04 20:16:32','',0,'http://vibemake.local/wp-content/uploads/2025/07/andrii-solok-XUleys_6nwM-unsplash.jpg',0,'attachment','image/jpeg',0);
+INSERT INTO `wp_posts` VALUES (164,1,'2025-07-04 20:18:09','2025-07-04 20:18:09','A creative project showcasing AI-generated content.','THE JOURNEY OF ENLIGHTENMENT BY TIMOTHE','','inherit','closed','closed','','34-revision-v1','','','2025-07-04 20:18:09','2025-07-04 20:18:09','',34,'http://vibemake.local/?p=164',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (165,1,'2025-07-04 20:18:15','2025-07-04 20:18:15','A creative project showcasing AI-generated content.','BEAT OF REBELLION BY MRDJ','','inherit','closed','closed','','33-revision-v1','','','2025-07-04 20:18:15','2025-07-04 20:18:15','',33,'http://vibemake.local/?p=165',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (166,1,'2025-07-04 20:43:25','2025-07-04 20:43:25','A creative project showcasing AI-generated content.','POPPI','','inherit','closed','closed','','27-revision-v1','','','2025-07-04 20:43:25','2025-07-04 20:43:25','',27,'http://vibemake.local/?p=166',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (167,1,'2025-07-04 20:44:22','2025-07-04 20:44:22','A creative project showcasing AI-generated content.','BOURBON SERENADE FOR VANISHED AFFECTION','','inherit','closed','closed','','32-revision-v1','','','2025-07-04 20:44:22','2025-07-04 20:44:22','',32,'http://vibemake.local/?p=167',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (168,1,'2025-07-04 20:44:36','2025-07-04 20:44:36','A creative project showcasing AI-generated content.','OFF LIMITS','','inherit','closed','closed','','28-revision-v1','','','2025-07-04 20:44:36','2025-07-04 20:44:36','',28,'http://vibemake.local/?p=168',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (169,1,'2025-07-04 20:44:54','2025-07-04 20:44:54','A creative project showcasing AI-generated content.','SHAZ & KIKS','','inherit','closed','closed','','29-revision-v1','','','2025-07-04 20:44:54','2025-07-04 20:44:54','',29,'http://vibemake.local/?p=169',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (170,1,'2025-07-04 20:45:13','2025-07-04 20:45:13','A creative project showcasing AI-generated content.','UPWEST','','inherit','closed','closed','','30-revision-v1','','','2025-07-04 20:45:13','2025-07-04 20:45:13','',30,'http://vibemake.local/?p=170',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (171,1,'2025-07-04 20:45:25','2025-07-04 20:45:25','A creative project showcasing AI-generated content.','WILD DOSE','','inherit','closed','closed','','31-revision-v1','','','2025-07-04 20:45:25','2025-07-04 20:45:25','',31,'http://vibemake.local/?p=171',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (172,1,'2025-07-04 21:07:42','2025-07-04 21:07:42','Runway\'s fourth generation video AI model brings Hollywood-quality effects to everyone.','Runway Gen-4: Video Magic Unleashed','','inherit','closed','closed','','49-revision-v1','','','2025-07-04 21:07:42','2025-07-04 21:07:42','',49,'http://vibemake.local/?p=172',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (173,1,'2025-07-04 21:07:49','2025-07-04 21:07:49','The newest version of Midjourney achieves unprecedented levels of photorealistic image generation.','Midjourney v6: Photorealism at Your Fingertips','','inherit','closed','closed','','48-revision-v1','','','2025-07-04 21:07:49','2025-07-04 21:07:49','',48,'http://vibemake.local/?p=173',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (174,1,'2025-07-04 21:07:55','2025-07-04 21:07:55','Transform any photo into professional cartoon-style animations with this new AI tool.','Toonify Pro: Cartoon-Style Animation from Photos','','inherit','closed','closed','','26-revision-v1','','','2025-07-04 21:07:55','2025-07-04 21:07:55','',26,'http://vibemake.local/?p=174',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (175,1,'2025-07-04 21:08:00','2025-07-04 21:08:00','Runway\'s fourth generation video AI model brings Hollywood-quality effects to everyone.','Runway Gen-4: Video Magic Unleashed','','inherit','closed','closed','','25-revision-v1','','','2025-07-04 21:08:00','2025-07-04 21:08:00','',25,'http://vibemake.local/?p=175',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (176,1,'2025-07-04 21:08:05','2025-07-04 21:08:05','The newest version of Midjourney achieves unprecedented levels of photorealistic image generation.','Midjourney v6: Photorealism at Your Fingertips','','inherit','closed','closed','','24-revision-v1','','','2025-07-04 21:08:05','2025-07-04 21:08:05','',24,'http://vibemake.local/?p=176',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (177,1,'2025-07-04 21:08:10','2025-07-04 21:08:10','Flow TV launches with an innovative approach to streaming content using AI-generated personalized experiences.','An Immersive Introduction to Flow TV','','inherit','closed','closed','','23-revision-v1','','','2025-07-04 21:08:10','2025-07-04 21:08:10','',23,'http://vibemake.local/?p=177',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (178,1,'2025-07-04 21:08:15','2025-07-04 21:08:15','The latest version of Sudowrite introduces revolutionary AI-powered storytelling capabilities that help writers craft compelling narratives.','Sudowrite 3.0: AI-Driven Plot Twists','','inherit','closed','closed','','22-revision-v1','','','2025-07-04 21:08:15','2025-07-04 21:08:15','',22,'http://vibemake.local/?p=178',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (179,1,'2025-07-04 21:08:20','2025-07-04 21:08:20','<!-- wp:paragraph -->\n<p>Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p>\n<!-- /wp:paragraph -->','Hello world!','','inherit','closed','closed','','1-revision-v1','','','2025-07-04 21:08:20','2025-07-04 21:08:20','',1,'http://vibemake.local/?p=179',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (180,1,'2025-07-04 21:25:56','2025-07-04 21:25:56','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.','Sofia Crespo','','inherit','closed','closed','','45-revision-v1','','','2025-07-04 21:25:56','2025-07-04 21:25:56','',45,'http://vibemake.local/?p=180',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (181,1,'2025-07-04 21:26:06','2025-07-04 21:26:06','Blending massive datasets, sensory design, and neural networks, he crafts immersive paintings that transform memory, nature and architecture.','Anna Ridler','','inherit','closed','closed','','43-revision-v1','','','2025-07-04 21:26:06','2025-07-04 21:26:06','',43,'http://vibemake.local/?p=181',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (182,1,'2025-07-04 21:26:15','2025-07-04 21:26:15','Blending massive datasets, sensory design, and neural networks, she crafts immersive paintings that transform memory, nature and architecture.','Holly Herndon','','inherit','closed','closed','','41-revision-v1','','','2025-07-04 21:26:15','2025-07-04 21:26:15','',41,'http://vibemake.local/?p=182',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (183,1,'2025-07-04 22:25:13','2025-07-04 22:25:13','A Lisbon-based multidisciplinary artist who seamlessly blends AI-generated soundscapes with striking visual narratives. Richie\'s work explores the intersection of digital consciousness and human emotion, creating immersive experiences that challenge our perception of art in the age of artificial intelligence. Her innovative approach combines generative music algorithms with neural network imagery to produce pieces that feel both futuristic and deeply personal.','Ruchi Sharma','','publish','closed','closed','','richie-sharma','','','2025-07-04 22:26:10','2025-07-04 22:26:10','',0,'http://vibemake.local/maker/richie-sharma/',0,'maker','',0);
+INSERT INTO `wp_posts` VALUES (184,1,'2025-07-04 22:25:24','2025-07-04 22:25:24','A Lisbon-based multidisciplinary artist who seamlessly blends AI-generated soundscapes with striking visual narratives. Richie\'s work explores the intersection of digital consciousness and human emotion, creating immersive experiences that challenge our perception of art in the age of artificial intelligence. Her innovative approach combines generative music algorithms with neural network imagery to produce pieces that feel both futuristic and deeply personal.','Richie Sharma','','inherit','closed','closed','','183-revision-v1','','','2025-07-04 22:25:24','2025-07-04 22:25:24','',183,'http://vibemake.local/?p=184',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (185,1,'2025-07-04 22:26:10','2025-07-04 22:26:10','A Lisbon-based multidisciplinary artist who seamlessly blends AI-generated soundscapes with striking visual narratives. Richie\'s work explores the intersection of digital consciousness and human emotion, creating immersive experiences that challenge our perception of art in the age of artificial intelligence. Her innovative approach combines generative music algorithms with neural network imagery to produce pieces that feel both futuristic and deeply personal.','Ruchi Sharma','','inherit','closed','closed','','183-revision-v1','','','2025-07-04 22:26:10','2025-07-04 22:26:10','',183,'http://vibemake.local/?p=185',0,'revision','',0);
+INSERT INTO `wp_posts` VALUES (186,1,'2025-07-07 01:30:50','0000-00-00 00:00:00','','Auto Draft','','auto-draft','closed','closed','','','','','2025-07-07 01:30:50','0000-00-00 00:00:00','',0,'https://vibemake.local/?p=186',0,'post','',0);
+INSERT INTO `wp_posts` VALUES (187,1,'2025-07-08 22:36:27','2025-07-08 22:36:27','<p>Canva unveiled Sheets at Create 2025, a revolutionary spreadsheet tool that turns data into designed content instantly. Marketing teams can now generate hundreds of personalized social posts, ads, and presentations from a single spreadsheet using Magic Studio\'s AI capabilities.</p>\n\n<p>Unlike traditional spreadsheets, Canva Sheets is built for the AI era – deeply visual and designed from the ground up. With Magic Charts, you can turn complex data into beautiful, on-brand visuals with just a few clicks. Need to create 100 localized social media posts? Magic Studio at scale generates entire campaigns directly from your Sheets, applying tools like Magic Write, Background Remover, Translate, and Magic Resize across your entire dataset.</p>\n\n<p>The platform connects seamlessly with Google Analytics, HubSpot, Snowflake, and more, keeping your data-driven designs updated in real-time. With over 16 billion uses of Magic Studio to date, Canva is bridging the gap between productivity and creativity, enabling teams to create at the speed and scale modern marketing demands.</p>','Canva Sheets: AI-Powered Spreadsheets Transform Content Creation at Scale','','publish','open','open','','canva-sheets-ai-powered-spreadsheets-transform-content-creation-at-scale','','','2025-07-08 22:37:45','2025-07-08 22:37:45','',0,'https://vibemake.local/canva-sheets-ai-powered-spreadsheets-transform-content-creation-at-scale/',0,'post','',0);
+INSERT INTO `wp_posts` VALUES (188,1,'2025-07-08 22:36:46','2025-07-08 22:36:46','<p>Google\'s latest Gemini 2.5 Pro brings \"thinking\" capabilities to content creation, delivering superior copywriting, code generation, and strategic planning. Marketing teams can now get AI that reasons through complex campaigns before executing, ensuring better outcomes.</p>\n\n<p>As the company\'s most intelligent AI model yet, Gemini 2.5 Pro excels at reasoning through multi-step problems before responding. It topped the LMArena leaderboard by a significant margin and leads in coding benchmarks like SWE-Bench Verified with a 63.8% score. For marketers, this means AI that can analyze your entire campaign strategy, consider multiple approaches, and deliver more thoughtful, effective content.</p>\n\n<p>The model features a massive 1 million token context window (with 2 million coming soon), allowing it to comprehend entire marketing campaigns, brand guidelines, and customer data sets in a single interaction. With built-in thinking capabilities and adaptive controls that balance performance and cost, Gemini 2.5 Pro represents a new era where AI doesn\'t just generate content – it strategically plans and reasons through your marketing challenges first.</p>','Google Gemini 2.5 Pro: AI That Thinks Before Creating Your Marketing Content','','publish','open','open','','google-gemini-2-5-pro-ai-that-thinks-before-creating-your-marketing-content','','','2025-07-08 22:36:46','2025-07-08 22:36:46','',0,'https://vibemake.local/google-gemini-2-5-pro-ai-that-thinks-before-creating-your-marketing-content/',0,'post','',0);
+INSERT INTO `wp_posts` VALUES (189,1,'2025-07-08 22:37:05','2025-07-08 22:37:05','<p>Anthropic transformed Claude into a no-code app builder, enabling marketers to create interactive calculators, landing pages, and data visualizers without coding. Over 500 million artifacts have been created, from price calculators to interactive demos.</p>\n\n<p>With the latest update, Claude can now create artifacts that interact with Claude through an API, turning these artifacts into AI-powered apps. Think bigger than \"make me flashcards\" – instead, ask Claude to \"build me a flashcard app\" that generates cards for any topic. Marketing teams are already building smart tutors that adapt to user understanding, data analyzers that answer plain-English questions about spreadsheets, and interactive demos that remember user choices.</p>\n\n<p>The revolutionary billing model means when you share your Claude-powered app, viewers authenticate with their own Claude account, so their usage counts against their subscription, not yours. This removes all financial barriers to sharing and scaling applications. With 70% of new applications expected to use low-code/no-code technologies by 2025, Claude Artifacts positions every marketer as a potential app developer – no coding required, no deployment hassle, just describe your idea and watch it come to life.</p>','Claude Artifacts: Every Marketer Can Now Build Custom Web Apps','','publish','open','open','','claude-artifacts-every-marketer-can-now-build-custom-web-apps','','','2025-07-08 22:37:05','2025-07-08 22:37:05','',0,'https://vibemake.local/claude-artifacts-every-marketer-can-now-build-custom-web-apps/',0,'post','',0);
+INSERT INTO `wp_posts` VALUES (190,1,'2025-07-08 22:37:24','2025-07-08 22:37:24','<p>Framer\'s latest AI updates let marketers describe websites in plain English and watch them materialize instantly. With built-in vector editing, AI translations, and one-click publishing, teams can launch professional sites without designers or developers.</p>\n\n<p>Start with a simple prompt like \"Create a portfolio for Nova, a design agency\" and Framer AI generates a responsive page with structure and starter content, ready to edit. The AI Workshop lets you build advanced components – from cookie banners to interactive effects – without coding. Need to go global? AI translation adapts your entire site into multiple languages with a single click, no plugins or manual work required.</p>\n\n<p>Framer\'s approach combines a Figma-like design experience with instant web publishing. The AI Wireframer helps you quickly mock up sites by describing what you need, while the freeform canvas gives you total design flexibility without the constraints of traditional website builders. With over 230 million monthly active users and integration with AI models from OpenAI, Anthropic, and Gemini, Framer is redefining how marketing teams create and launch websites – from idea to live site in minutes, not weeks.</p>','Framer AI: Design Websites by Voice Command','','publish','open','open','','framer-ai-design-websites-by-voice-command','','','2025-07-08 22:37:24','2025-07-08 22:37:24','',0,'https://vibemake.local/framer-ai-design-websites-by-voice-command/',0,'post','',0);
+INSERT INTO `wp_posts` VALUES (191,2,'2025-07-10 01:19:55','0000-00-00 00:00:00','','Auto Draft','','auto-draft','closed','closed','','','','','2025-07-10 01:19:55','0000-00-00 00:00:00','',0,'https://vibemake.local/?p=191',0,'post','',0);
+/*!40000 ALTER TABLE `wp_posts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `wp_term_relationships`
+--
+
+DROP TABLE IF EXISTS `wp_term_relationships`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wp_term_relationships` (
+  `object_id` bigint unsigned NOT NULL DEFAULT '0',
+  `term_taxonomy_id` bigint unsigned NOT NULL DEFAULT '0',
+  `term_order` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`object_id`,`term_taxonomy_id`),
+  KEY `term_taxonomy_id` (`term_taxonomy_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wp_term_relationships`
+--
+
+LOCK TABLES `wp_term_relationships` WRITE;
+/*!40000 ALTER TABLE `wp_term_relationships` DISABLE KEYS */;
+INSERT INTO `wp_term_relationships` VALUES (1,1,0);
+INSERT INTO `wp_term_relationships` VALUES (7,19,0);
+INSERT INTO `wp_term_relationships` VALUES (9,23,0);
+INSERT INTO `wp_term_relationships` VALUES (11,28,0);
+INSERT INTO `wp_term_relationships` VALUES (12,23,0);
+INSERT INTO `wp_term_relationships` VALUES (13,23,0);
+INSERT INTO `wp_term_relationships` VALUES (14,19,0);
+INSERT INTO `wp_term_relationships` VALUES (14,25,0);
+INSERT INTO `wp_term_relationships` VALUES (15,28,0);
+INSERT INTO `wp_term_relationships` VALUES (17,6,0);
+INSERT INTO `wp_term_relationships` VALUES (17,7,0);
+INSERT INTO `wp_term_relationships` VALUES (18,8,0);
+INSERT INTO `wp_term_relationships` VALUES (18,9,0);
+INSERT INTO `wp_term_relationships` VALUES (19,9,0);
+INSERT INTO `wp_term_relationships` VALUES (20,7,0);
+INSERT INTO `wp_term_relationships` VALUES (21,9,0);
+INSERT INTO `wp_term_relationships` VALUES (21,10,0);
+INSERT INTO `wp_term_relationships` VALUES (22,1,0);
+INSERT INTO `wp_term_relationships` VALUES (22,15,0);
+INSERT INTO `wp_term_relationships` VALUES (23,1,0);
+INSERT INTO `wp_term_relationships` VALUES (23,16,0);
+INSERT INTO `wp_term_relationships` VALUES (24,1,0);
+INSERT INTO `wp_term_relationships` VALUES (24,17,0);
+INSERT INTO `wp_term_relationships` VALUES (25,1,0);
+INSERT INTO `wp_term_relationships` VALUES (25,15,0);
+INSERT INTO `wp_term_relationships` VALUES (26,1,0);
+INSERT INTO `wp_term_relationships` VALUES (26,18,0);
+INSERT INTO `wp_term_relationships` VALUES (27,11,0);
+INSERT INTO `wp_term_relationships` VALUES (28,11,0);
+INSERT INTO `wp_term_relationships` VALUES (28,12,0);
+INSERT INTO `wp_term_relationships` VALUES (29,11,0);
+INSERT INTO `wp_term_relationships` VALUES (29,12,0);
+INSERT INTO `wp_term_relationships` VALUES (30,11,0);
+INSERT INTO `wp_term_relationships` VALUES (30,13,0);
+INSERT INTO `wp_term_relationships` VALUES (31,11,0);
+INSERT INTO `wp_term_relationships` VALUES (31,12,0);
+INSERT INTO `wp_term_relationships` VALUES (32,13,0);
+INSERT INTO `wp_term_relationships` VALUES (32,14,0);
+INSERT INTO `wp_term_relationships` VALUES (33,13,0);
+INSERT INTO `wp_term_relationships` VALUES (33,14,0);
+INSERT INTO `wp_term_relationships` VALUES (34,13,0);
+INSERT INTO `wp_term_relationships` VALUES (34,14,0);
+INSERT INTO `wp_term_relationships` VALUES (41,6,0);
+INSERT INTO `wp_term_relationships` VALUES (41,7,0);
+INSERT INTO `wp_term_relationships` VALUES (42,8,0);
+INSERT INTO `wp_term_relationships` VALUES (42,9,0);
+INSERT INTO `wp_term_relationships` VALUES (43,9,0);
+INSERT INTO `wp_term_relationships` VALUES (44,7,0);
+INSERT INTO `wp_term_relationships` VALUES (45,9,0);
+INSERT INTO `wp_term_relationships` VALUES (45,10,0);
+INSERT INTO `wp_term_relationships` VALUES (46,1,0);
+INSERT INTO `wp_term_relationships` VALUES (46,15,0);
+INSERT INTO `wp_term_relationships` VALUES (47,1,0);
+INSERT INTO `wp_term_relationships` VALUES (47,16,0);
+INSERT INTO `wp_term_relationships` VALUES (48,1,0);
+INSERT INTO `wp_term_relationships` VALUES (48,17,0);
+INSERT INTO `wp_term_relationships` VALUES (49,1,0);
+INSERT INTO `wp_term_relationships` VALUES (49,15,0);
+INSERT INTO `wp_term_relationships` VALUES (50,1,0);
+INSERT INTO `wp_term_relationships` VALUES (50,18,0);
+INSERT INTO `wp_term_relationships` VALUES (51,11,0);
+INSERT INTO `wp_term_relationships` VALUES (51,12,0);
+INSERT INTO `wp_term_relationships` VALUES (52,11,0);
+INSERT INTO `wp_term_relationships` VALUES (53,11,0);
+INSERT INTO `wp_term_relationships` VALUES (54,11,0);
+INSERT INTO `wp_term_relationships` VALUES (54,12,0);
+INSERT INTO `wp_term_relationships` VALUES (55,11,0);
+INSERT INTO `wp_term_relationships` VALUES (56,14,0);
+INSERT INTO `wp_term_relationships` VALUES (57,14,0);
+INSERT INTO `wp_term_relationships` VALUES (58,13,0);
+INSERT INTO `wp_term_relationships` VALUES (58,14,0);
+INSERT INTO `wp_term_relationships` VALUES (72,37,0);
+INSERT INTO `wp_term_relationships` VALUES (78,25,0);
+INSERT INTO `wp_term_relationships` VALUES (87,6,0);
+INSERT INTO `wp_term_relationships` VALUES (87,7,0);
+INSERT INTO `wp_term_relationships` VALUES (89,28,0);
+INSERT INTO `wp_term_relationships` VALUES (90,28,0);
+INSERT INTO `wp_term_relationships` VALUES (91,28,0);
+INSERT INTO `wp_term_relationships` VALUES (92,28,0);
+INSERT INTO `wp_term_relationships` VALUES (93,20,0);
+INSERT INTO `wp_term_relationships` VALUES (94,20,0);
+INSERT INTO `wp_term_relationships` VALUES (95,20,0);
+INSERT INTO `wp_term_relationships` VALUES (96,20,0);
+INSERT INTO `wp_term_relationships` VALUES (97,28,0);
+INSERT INTO `wp_term_relationships` VALUES (98,28,0);
+INSERT INTO `wp_term_relationships` VALUES (99,28,0);
+INSERT INTO `wp_term_relationships` VALUES (100,28,0);
+INSERT INTO `wp_term_relationships` VALUES (101,20,0);
+INSERT INTO `wp_term_relationships` VALUES (102,20,0);
+INSERT INTO `wp_term_relationships` VALUES (103,20,0);
+INSERT INTO `wp_term_relationships` VALUES (104,20,0);
+INSERT INTO `wp_term_relationships` VALUES (105,21,0);
+INSERT INTO `wp_term_relationships` VALUES (106,21,0);
+INSERT INTO `wp_term_relationships` VALUES (107,21,0);
+INSERT INTO `wp_term_relationships` VALUES (108,24,0);
+INSERT INTO `wp_term_relationships` VALUES (109,24,0);
+INSERT INTO `wp_term_relationships` VALUES (110,23,0);
+INSERT INTO `wp_term_relationships` VALUES (111,23,0);
+INSERT INTO `wp_term_relationships` VALUES (112,23,0);
+INSERT INTO `wp_term_relationships` VALUES (113,23,0);
+INSERT INTO `wp_term_relationships` VALUES (114,26,0);
+INSERT INTO `wp_term_relationships` VALUES (115,26,0);
+INSERT INTO `wp_term_relationships` VALUES (116,23,0);
+INSERT INTO `wp_term_relationships` VALUES (117,19,0);
+INSERT INTO `wp_term_relationships` VALUES (118,19,0);
+INSERT INTO `wp_term_relationships` VALUES (119,22,0);
+INSERT INTO `wp_term_relationships` VALUES (120,22,0);
+INSERT INTO `wp_term_relationships` VALUES (121,22,0);
+INSERT INTO `wp_term_relationships` VALUES (122,25,0);
+INSERT INTO `wp_term_relationships` VALUES (123,23,0);
+INSERT INTO `wp_term_relationships` VALUES (124,23,0);
+INSERT INTO `wp_term_relationships` VALUES (125,23,0);
+INSERT INTO `wp_term_relationships` VALUES (126,28,0);
+INSERT INTO `wp_term_relationships` VALUES (127,23,0);
+INSERT INTO `wp_term_relationships` VALUES (128,23,0);
+INSERT INTO `wp_term_relationships` VALUES (129,23,0);
+INSERT INTO `wp_term_relationships` VALUES (130,25,0);
+INSERT INTO `wp_term_relationships` VALUES (131,25,0);
+INSERT INTO `wp_term_relationships` VALUES (132,25,0);
+INSERT INTO `wp_term_relationships` VALUES (133,21,0);
+INSERT INTO `wp_term_relationships` VALUES (134,23,0);
+INSERT INTO `wp_term_relationships` VALUES (135,25,0);
+INSERT INTO `wp_term_relationships` VALUES (136,25,0);
+INSERT INTO `wp_term_relationships` VALUES (137,25,0);
+INSERT INTO `wp_term_relationships` VALUES (138,25,0);
+INSERT INTO `wp_term_relationships` VALUES (183,6,0);
+INSERT INTO `wp_term_relationships` VALUES (183,9,0);
+INSERT INTO `wp_term_relationships` VALUES (187,1,0);
+INSERT INTO `wp_term_relationships` VALUES (187,16,0);
+INSERT INTO `wp_term_relationships` VALUES (188,1,0);
+INSERT INTO `wp_term_relationships` VALUES (188,15,0);
+INSERT INTO `wp_term_relationships` VALUES (189,1,0);
+INSERT INTO `wp_term_relationships` VALUES (189,15,0);
+INSERT INTO `wp_term_relationships` VALUES (190,1,0);
+INSERT INTO `wp_term_relationships` VALUES (190,16,0);
+/*!40000 ALTER TABLE `wp_term_relationships` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `wp_term_taxonomy`
+--
+
+DROP TABLE IF EXISTS `wp_term_taxonomy`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wp_term_taxonomy` (
+  `term_taxonomy_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `term_id` bigint unsigned NOT NULL DEFAULT '0',
+  `taxonomy` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `parent` bigint unsigned NOT NULL DEFAULT '0',
+  `count` bigint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`term_taxonomy_id`),
+  UNIQUE KEY `term_id_taxonomy` (`term_id`,`taxonomy`),
+  KEY `taxonomy` (`taxonomy`)
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wp_term_taxonomy`
+--
+
+LOCK TABLES `wp_term_taxonomy` WRITE;
+/*!40000 ALTER TABLE `wp_term_taxonomy` DISABLE KEYS */;
+INSERT INTO `wp_term_taxonomy` VALUES (1,1,'category','',0,7);
+INSERT INTO `wp_term_taxonomy` VALUES (6,6,'maker_specialty','',0,4);
+INSERT INTO `wp_term_taxonomy` VALUES (7,7,'maker_specialty','',0,4);
+INSERT INTO `wp_term_taxonomy` VALUES (8,8,'maker_specialty','',0,2);
+INSERT INTO `wp_term_taxonomy` VALUES (9,9,'maker_specialty','',0,6);
+INSERT INTO `wp_term_taxonomy` VALUES (10,10,'maker_specialty','',0,1);
+INSERT INTO `wp_term_taxonomy` VALUES (11,11,'community_type','',0,6);
+INSERT INTO `wp_term_taxonomy` VALUES (12,12,'community_type','',0,5);
+INSERT INTO `wp_term_taxonomy` VALUES (13,13,'community_type','',0,5);
+INSERT INTO `wp_term_taxonomy` VALUES (14,14,'community_type','',0,4);
+INSERT INTO `wp_term_taxonomy` VALUES (15,15,'news_category','',0,4);
+INSERT INTO `wp_term_taxonomy` VALUES (16,16,'news_category','',0,2);
+INSERT INTO `wp_term_taxonomy` VALUES (17,17,'news_category','',0,1);
+INSERT INTO `wp_term_taxonomy` VALUES (18,18,'news_category','',0,0);
+INSERT INTO `wp_term_taxonomy` VALUES (19,19,'tool_category','AI tools for creating images, art, and visual content',0,3);
+INSERT INTO `wp_term_taxonomy` VALUES (20,20,'tool_category','Tools for music production, audio generation, and sound design',0,4);
+INSERT INTO `wp_term_taxonomy` VALUES (21,21,'tool_category','Website builders, app creators, and no-code platforms',0,4);
+INSERT INTO `wp_term_taxonomy` VALUES (22,22,'tool_category','Design tools for graphics, logos, and visual assets',0,3);
+INSERT INTO `wp_term_taxonomy` VALUES (23,23,'tool_category','AI writing assistants, content generators, and copywriting tools',0,14);
+INSERT INTO `wp_term_taxonomy` VALUES (24,24,'tool_category','3D modeling, rendering, and animation tools',0,2);
+INSERT INTO `wp_term_taxonomy` VALUES (25,25,'tool_category','Video editing, generation, and film production tools',0,10);
+INSERT INTO `wp_term_taxonomy` VALUES (26,26,'tool_category','Tools for creating presentations and slides',0,2);
+INSERT INTO `wp_term_taxonomy` VALUES (27,27,'tool_category','Animation creation and motion graphics tools',0,0);
+INSERT INTO `wp_term_taxonomy` VALUES (28,28,'tool_category','Code assistants, IDEs, and development tools',0,7);
+INSERT INTO `wp_term_taxonomy` VALUES (29,29,'creation_type','Create compelling written content with AI-powered writing tools',0,0);
+INSERT INTO `wp_term_taxonomy` VALUES (30,30,'creation_type','Generate stunning visuals and artwork with AI image creation tools',0,0);
+INSERT INTO `wp_term_taxonomy` VALUES (31,31,'creation_type','Produce engaging videos and films with AI video generation tools',0,0);
+INSERT INTO `wp_term_taxonomy` VALUES (32,32,'creation_type','Compose music and create audio content with AI-powered tools',0,0);
+INSERT INTO `wp_term_taxonomy` VALUES (33,33,'creation_type','Build applications and write code with AI development assistants',0,0);
+INSERT INTO `wp_term_taxonomy` VALUES (34,34,'creation_type','Scale your business with AI-powered marketing and business tools',0,0);
+INSERT INTO `wp_term_taxonomy` VALUES (35,35,'user_situation','Students and lifelong learners using AI to accelerate their education and personal growth',0,0);
+INSERT INTO `wp_term_taxonomy` VALUES (36,36,'user_situation','Working professionals using AI to enhance productivity and advance their careers',0,0);
+INSERT INTO `wp_term_taxonomy` VALUES (37,37,'user_situation','Creators, influencers, and social media professionals using AI to scale content production',0,1);
+INSERT INTO `wp_term_taxonomy` VALUES (38,38,'user_situation','Startup founders and entrepreneurs using AI to build and scale their businesses efficiently',0,0);
+INSERT INTO `wp_term_taxonomy` VALUES (39,39,'user_situation','Software developers and tech professionals using AI to accelerate development and solve complex problems',0,0);
+INSERT INTO `wp_term_taxonomy` VALUES (40,40,'user_situation','Marketing professionals and growth hackers using AI to optimize campaigns and drive results',0,0);
+INSERT INTO `wp_term_taxonomy` VALUES (41,41,'user_situation','Independent professionals and consultants using AI to deliver better results for clients',0,0);
+INSERT INTO `wp_term_taxonomy` VALUES (42,42,'example_difficulty','Perfect for first-time users with no AI experience. These examples require no technical knowledge and can be completed by anyone.',0,0);
+INSERT INTO `wp_term_taxonomy` VALUES (43,43,'example_difficulty','For users with some AI tool experience. Requires basic understanding of prompts and AI capabilities.',0,0);
+INSERT INTO `wp_term_taxonomy` VALUES (44,44,'example_difficulty','For experienced AI users. Requires deep understanding of AI capabilities, advanced prompting techniques, and workflow optimization.',0,0);
+/*!40000 ALTER TABLE `wp_term_taxonomy` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `wp_termmeta`
+--
+
+DROP TABLE IF EXISTS `wp_termmeta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wp_termmeta` (
+  `meta_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `term_id` bigint unsigned NOT NULL DEFAULT '0',
+  `meta_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `meta_value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci,
+  PRIMARY KEY (`meta_id`),
+  KEY `term_id` (`term_id`),
+  KEY `meta_key` (`meta_key`(191))
+) ENGINE=InnoDB AUTO_INCREMENT=321 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wp_termmeta`
+--
+
+LOCK TABLES `wp_termmeta` WRITE;
+/*!40000 ALTER TABLE `wp_termmeta` DISABLE KEYS */;
+INSERT INTO `wp_termmeta` VALUES (17,29,'creation_type_icon','✍️');
+INSERT INTO `wp_termmeta` VALUES (18,29,'_creation_type_icon','field_creation_type_icon');
+INSERT INTO `wp_termmeta` VALUES (19,29,'creation_type_color','#3b82f6');
+INSERT INTO `wp_termmeta` VALUES (20,29,'_creation_type_color','field_creation_type_color');
+INSERT INTO `wp_termmeta` VALUES (21,29,'creation_type_gradient','#1d4ed8');
+INSERT INTO `wp_termmeta` VALUES (22,29,'_creation_type_gradient','field_creation_type_gradient');
+INSERT INTO `wp_termmeta` VALUES (23,29,'creation_type_tagline','Bring your words to life');
+INSERT INTO `wp_termmeta` VALUES (24,29,'_creation_type_tagline','field_creation_type_tagline');
+INSERT INTO `wp_termmeta` VALUES (25,29,'creation_type_description','From blog posts to novels, marketing copy to technical documentation - AI writing tools help you create compelling content faster than ever. Whether you need help with ideation, drafting, editing, or polishing, these tools understand context and style to produce human-quality text.');
+INSERT INTO `wp_termmeta` VALUES (26,29,'_creation_type_description','field_creation_type_description');
+INSERT INTO `wp_termmeta` VALUES (27,29,'creation_type_examples','a:5:{i:0;a:2:{s:14:\"example_prompt\";s:42:\"Write a blog post about sustainable living\";s:16:\"example_featured\";b:1;}i:1;a:2:{s:14:\"example_prompt\";s:43:\"Create marketing copy for my product launch\";s:16:\"example_featured\";b:1;}i:2;a:2:{s:14:\"example_prompt\";s:34:\"Help me write a professional email\";s:16:\"example_featured\";b:0;}i:3;a:2:{s:14:\"example_prompt\";s:30:\"Generate social media captions\";s:16:\"example_featured\";b:0;}i:4;a:2:{s:14:\"example_prompt\";s:22:\"Write a creative story\";s:16:\"example_featured\";b:0;}}');
+INSERT INTO `wp_termmeta` VALUES (28,29,'_creation_type_examples','field_creation_type_examples');
+INSERT INTO `wp_termmeta` VALUES (29,29,'creation_type_stats_stat_tools_count','25+ tools');
+INSERT INTO `wp_termmeta` VALUES (30,29,'_creation_type_stats_stat_tools_count','field_stat_tools_count');
+INSERT INTO `wp_termmeta` VALUES (31,29,'creation_type_stats_stat_difficulty','beginner');
+INSERT INTO `wp_termmeta` VALUES (32,29,'_creation_type_stats_stat_difficulty','field_stat_difficulty');
+INSERT INTO `wp_termmeta` VALUES (33,29,'creation_type_stats_stat_popularity','9');
+INSERT INTO `wp_termmeta` VALUES (34,29,'_creation_type_stats_stat_popularity','field_stat_popularity');
+INSERT INTO `wp_termmeta` VALUES (35,29,'creation_type_stats','');
+INSERT INTO `wp_termmeta` VALUES (36,29,'_creation_type_stats','field_creation_type_stats');
+INSERT INTO `wp_termmeta` VALUES (37,30,'creation_type_icon','🎨');
+INSERT INTO `wp_termmeta` VALUES (38,30,'_creation_type_icon','field_creation_type_icon');
+INSERT INTO `wp_termmeta` VALUES (39,30,'creation_type_color','#ec4899');
+INSERT INTO `wp_termmeta` VALUES (40,30,'_creation_type_color','field_creation_type_color');
+INSERT INTO `wp_termmeta` VALUES (41,30,'creation_type_gradient','#be185d');
+INSERT INTO `wp_termmeta` VALUES (42,30,'_creation_type_gradient','field_creation_type_gradient');
+INSERT INTO `wp_termmeta` VALUES (43,30,'creation_type_tagline','Turn imagination into visuals');
+INSERT INTO `wp_termmeta` VALUES (44,30,'_creation_type_tagline','field_creation_type_tagline');
+INSERT INTO `wp_termmeta` VALUES (45,30,'creation_type_description','Create breathtaking images, artwork, logos, and designs without needing artistic skills. AI image generators can produce photorealistic images, abstract art, product mockups, and everything in between from simple text descriptions.');
+INSERT INTO `wp_termmeta` VALUES (46,30,'_creation_type_description','field_creation_type_description');
+INSERT INTO `wp_termmeta` VALUES (47,30,'creation_type_examples','a:5:{i:0;a:2:{s:14:\"example_prompt\";s:28:\"Create a logo for my startup\";s:16:\"example_featured\";b:1;}i:1;a:2:{s:14:\"example_prompt\";s:24:\"Generate product mockups\";s:16:\"example_featured\";b:1;}i:2;a:2:{s:14:\"example_prompt\";s:28:\"Design a poster for my event\";s:16:\"example_featured\";b:0;}i:3;a:2:{s:14:\"example_prompt\";s:26:\"Create artwork for my room\";s:16:\"example_featured\";b:0;}i:4;a:2:{s:14:\"example_prompt\";s:30:\"Generate social media graphics\";s:16:\"example_featured\";b:0;}}');
+INSERT INTO `wp_termmeta` VALUES (48,30,'_creation_type_examples','field_creation_type_examples');
+INSERT INTO `wp_termmeta` VALUES (49,30,'creation_type_stats_stat_tools_count','30+ tools');
+INSERT INTO `wp_termmeta` VALUES (50,30,'_creation_type_stats_stat_tools_count','field_stat_tools_count');
+INSERT INTO `wp_termmeta` VALUES (51,30,'creation_type_stats_stat_difficulty','beginner');
+INSERT INTO `wp_termmeta` VALUES (52,30,'_creation_type_stats_stat_difficulty','field_stat_difficulty');
+INSERT INTO `wp_termmeta` VALUES (53,30,'creation_type_stats_stat_popularity','10');
+INSERT INTO `wp_termmeta` VALUES (54,30,'_creation_type_stats_stat_popularity','field_stat_popularity');
+INSERT INTO `wp_termmeta` VALUES (55,30,'creation_type_stats','');
+INSERT INTO `wp_termmeta` VALUES (56,30,'_creation_type_stats','field_creation_type_stats');
+INSERT INTO `wp_termmeta` VALUES (57,31,'creation_type_icon','🎬');
+INSERT INTO `wp_termmeta` VALUES (58,31,'_creation_type_icon','field_creation_type_icon');
+INSERT INTO `wp_termmeta` VALUES (59,31,'creation_type_color','#8b5cf6');
+INSERT INTO `wp_termmeta` VALUES (60,31,'_creation_type_color','field_creation_type_color');
+INSERT INTO `wp_termmeta` VALUES (61,31,'creation_type_gradient','#7c3aed');
+INSERT INTO `wp_termmeta` VALUES (62,31,'_creation_type_gradient','field_creation_type_gradient');
+INSERT INTO `wp_termmeta` VALUES (63,31,'creation_type_tagline','Movies made simple');
+INSERT INTO `wp_termmeta` VALUES (64,31,'_creation_type_tagline','field_creation_type_tagline');
+INSERT INTO `wp_termmeta` VALUES (65,31,'creation_type_description','Create professional-quality videos from scripts, images, or simple prompts. AI video tools can generate animations, edit footage, create talking avatars, and even produce entire films with minimal input.');
+INSERT INTO `wp_termmeta` VALUES (66,31,'_creation_type_description','field_creation_type_description');
+INSERT INTO `wp_termmeta` VALUES (67,31,'creation_type_examples','a:5:{i:0;a:2:{s:14:\"example_prompt\";s:41:\"Create an explainer video for my business\";s:16:\"example_featured\";b:1;}i:1;a:2:{s:14:\"example_prompt\";s:26:\"Generate a marketing video\";s:16:\"example_featured\";b:1;}i:2;a:2:{s:14:\"example_prompt\";s:25:\"Make a social media video\";s:16:\"example_featured\";b:0;}i:3;a:2:{s:14:\"example_prompt\";s:31:\"Create an animated presentation\";s:16:\"example_featured\";b:0;}i:4;a:2:{s:14:\"example_prompt\";s:21:\"Edit my video footage\";s:16:\"example_featured\";b:0;}}');
+INSERT INTO `wp_termmeta` VALUES (68,31,'_creation_type_examples','field_creation_type_examples');
+INSERT INTO `wp_termmeta` VALUES (69,31,'creation_type_stats_stat_tools_count','15+ tools');
+INSERT INTO `wp_termmeta` VALUES (70,31,'_creation_type_stats_stat_tools_count','field_stat_tools_count');
+INSERT INTO `wp_termmeta` VALUES (71,31,'creation_type_stats_stat_difficulty','intermediate');
+INSERT INTO `wp_termmeta` VALUES (72,31,'_creation_type_stats_stat_difficulty','field_stat_difficulty');
+INSERT INTO `wp_termmeta` VALUES (73,31,'creation_type_stats_stat_popularity','8');
+INSERT INTO `wp_termmeta` VALUES (74,31,'_creation_type_stats_stat_popularity','field_stat_popularity');
+INSERT INTO `wp_termmeta` VALUES (75,31,'creation_type_stats','');
+INSERT INTO `wp_termmeta` VALUES (76,31,'_creation_type_stats','field_creation_type_stats');
+INSERT INTO `wp_termmeta` VALUES (77,32,'creation_type_icon','🎵');
+INSERT INTO `wp_termmeta` VALUES (78,32,'_creation_type_icon','field_creation_type_icon');
+INSERT INTO `wp_termmeta` VALUES (79,32,'creation_type_color','#f59e0b');
+INSERT INTO `wp_termmeta` VALUES (80,32,'_creation_type_color','field_creation_type_color');
+INSERT INTO `wp_termmeta` VALUES (81,32,'creation_type_gradient','#d97706');
+INSERT INTO `wp_termmeta` VALUES (82,32,'_creation_type_gradient','field_creation_type_gradient');
+INSERT INTO `wp_termmeta` VALUES (83,32,'creation_type_tagline','Compose like a maestro');
+INSERT INTO `wp_termmeta` VALUES (84,32,'_creation_type_tagline','field_creation_type_tagline');
+INSERT INTO `wp_termmeta` VALUES (85,32,'creation_type_description','Generate original music, create podcasts, design sound effects, and produce audio content. AI audio tools can compose in any style, generate realistic voices, and create professional-quality soundtracks.');
+INSERT INTO `wp_termmeta` VALUES (86,32,'_creation_type_description','field_creation_type_description');
+INSERT INTO `wp_termmeta` VALUES (87,32,'creation_type_examples','a:5:{i:0;a:2:{s:14:\"example_prompt\";s:36:\"Create background music for my video\";s:16:\"example_featured\";b:1;}i:1;a:2:{s:14:\"example_prompt\";s:24:\"Generate a podcast intro\";s:16:\"example_featured\";b:1;}i:2;a:2:{s:14:\"example_prompt\";s:29:\"Compose a jingle for my brand\";s:16:\"example_featured\";b:0;}i:3;a:2:{s:14:\"example_prompt\";s:35:\"Create ambient music for relaxation\";s:16:\"example_featured\";b:0;}i:4;a:2:{s:14:\"example_prompt\";s:22:\"Generate sound effects\";s:16:\"example_featured\";b:0;}}');
+INSERT INTO `wp_termmeta` VALUES (88,32,'_creation_type_examples','field_creation_type_examples');
+INSERT INTO `wp_termmeta` VALUES (89,32,'creation_type_stats_stat_tools_count','12+ tools');
+INSERT INTO `wp_termmeta` VALUES (90,32,'_creation_type_stats_stat_tools_count','field_stat_tools_count');
+INSERT INTO `wp_termmeta` VALUES (91,32,'creation_type_stats_stat_difficulty','beginner');
+INSERT INTO `wp_termmeta` VALUES (92,32,'_creation_type_stats_stat_difficulty','field_stat_difficulty');
+INSERT INTO `wp_termmeta` VALUES (93,32,'creation_type_stats_stat_popularity','7');
+INSERT INTO `wp_termmeta` VALUES (94,32,'_creation_type_stats_stat_popularity','field_stat_popularity');
+INSERT INTO `wp_termmeta` VALUES (95,32,'creation_type_stats','');
+INSERT INTO `wp_termmeta` VALUES (96,32,'_creation_type_stats','field_creation_type_stats');
+INSERT INTO `wp_termmeta` VALUES (97,33,'creation_type_icon','💻');
+INSERT INTO `wp_termmeta` VALUES (98,33,'_creation_type_icon','field_creation_type_icon');
+INSERT INTO `wp_termmeta` VALUES (99,33,'creation_type_color','#10b981');
+INSERT INTO `wp_termmeta` VALUES (100,33,'_creation_type_color','field_creation_type_color');
+INSERT INTO `wp_termmeta` VALUES (101,33,'creation_type_gradient','#059669');
+INSERT INTO `wp_termmeta` VALUES (102,33,'_creation_type_gradient','field_creation_type_gradient');
+INSERT INTO `wp_termmeta` VALUES (103,33,'creation_type_tagline','Code at the speed of thought');
+INSERT INTO `wp_termmeta` VALUES (104,33,'_creation_type_tagline','field_creation_type_tagline');
+INSERT INTO `wp_termmeta` VALUES (105,33,'creation_type_description','Accelerate software development with AI coding assistants. Generate code, debug issues, explain complex functions, and build entire applications faster with intelligent code completion and generation.');
+INSERT INTO `wp_termmeta` VALUES (106,33,'_creation_type_description','field_creation_type_description');
+INSERT INTO `wp_termmeta` VALUES (107,33,'creation_type_examples','a:5:{i:0;a:2:{s:14:\"example_prompt\";s:22:\"Build a simple web app\";s:16:\"example_featured\";b:1;}i:1;a:2:{s:14:\"example_prompt\";s:13:\"Debug my code\";s:16:\"example_featured\";b:1;}i:2;a:2:{s:14:\"example_prompt\";s:29:\"Create a mobile app prototype\";s:16:\"example_featured\";b:0;}i:3;a:2:{s:14:\"example_prompt\";s:26:\"Generate API documentation\";s:16:\"example_featured\";b:0;}i:4;a:2:{s:14:\"example_prompt\";s:28:\"Optimize my database queries\";s:16:\"example_featured\";b:0;}}');
+INSERT INTO `wp_termmeta` VALUES (108,33,'_creation_type_examples','field_creation_type_examples');
+INSERT INTO `wp_termmeta` VALUES (109,33,'creation_type_stats_stat_tools_count','20+ tools');
+INSERT INTO `wp_termmeta` VALUES (110,33,'_creation_type_stats_stat_tools_count','field_stat_tools_count');
+INSERT INTO `wp_termmeta` VALUES (111,33,'creation_type_stats_stat_difficulty','intermediate');
+INSERT INTO `wp_termmeta` VALUES (112,33,'_creation_type_stats_stat_difficulty','field_stat_difficulty');
+INSERT INTO `wp_termmeta` VALUES (113,33,'creation_type_stats_stat_popularity','9');
+INSERT INTO `wp_termmeta` VALUES (114,33,'_creation_type_stats_stat_popularity','field_stat_popularity');
+INSERT INTO `wp_termmeta` VALUES (115,33,'creation_type_stats','');
+INSERT INTO `wp_termmeta` VALUES (116,33,'_creation_type_stats','field_creation_type_stats');
+INSERT INTO `wp_termmeta` VALUES (117,34,'creation_type_icon','💼');
+INSERT INTO `wp_termmeta` VALUES (118,34,'_creation_type_icon','field_creation_type_icon');
+INSERT INTO `wp_termmeta` VALUES (119,34,'creation_type_color','#ef4444');
+INSERT INTO `wp_termmeta` VALUES (120,34,'_creation_type_color','field_creation_type_color');
+INSERT INTO `wp_termmeta` VALUES (121,34,'creation_type_gradient','#dc2626');
+INSERT INTO `wp_termmeta` VALUES (122,34,'_creation_type_gradient','field_creation_type_gradient');
+INSERT INTO `wp_termmeta` VALUES (123,34,'creation_type_tagline','Grow smarter, not harder');
+INSERT INTO `wp_termmeta` VALUES (124,34,'_creation_type_tagline','field_creation_type_tagline');
+INSERT INTO `wp_termmeta` VALUES (125,34,'creation_type_description','Streamline business operations, create marketing campaigns, analyze data, and automate workflows. AI business tools help entrepreneurs and companies scale efficiently and make data-driven decisions.');
+INSERT INTO `wp_termmeta` VALUES (126,34,'_creation_type_description','field_creation_type_description');
+INSERT INTO `wp_termmeta` VALUES (127,34,'creation_type_examples','a:5:{i:0;a:2:{s:14:\"example_prompt\";s:27:\"Create a marketing strategy\";s:16:\"example_featured\";b:1;}i:1;a:2:{s:14:\"example_prompt\";s:21:\"Analyze my sales data\";s:16:\"example_featured\";b:1;}i:2;a:2:{s:14:\"example_prompt\";s:24:\"Generate a business plan\";s:16:\"example_featured\";b:0;}i:3;a:2:{s:14:\"example_prompt\";s:24:\"Create customer personas\";s:16:\"example_featured\";b:0;}i:4;a:2:{s:14:\"example_prompt\";s:27:\"Automate my email campaigns\";s:16:\"example_featured\";b:0;}}');
+INSERT INTO `wp_termmeta` VALUES (128,34,'_creation_type_examples','field_creation_type_examples');
+INSERT INTO `wp_termmeta` VALUES (129,34,'creation_type_stats_stat_tools_count','18+ tools');
+INSERT INTO `wp_termmeta` VALUES (130,34,'_creation_type_stats_stat_tools_count','field_stat_tools_count');
+INSERT INTO `wp_termmeta` VALUES (131,34,'creation_type_stats_stat_difficulty','beginner');
+INSERT INTO `wp_termmeta` VALUES (132,34,'_creation_type_stats_stat_difficulty','field_stat_difficulty');
+INSERT INTO `wp_termmeta` VALUES (133,34,'creation_type_stats_stat_popularity','8');
+INSERT INTO `wp_termmeta` VALUES (134,34,'_creation_type_stats_stat_popularity','field_stat_popularity');
+INSERT INTO `wp_termmeta` VALUES (135,34,'creation_type_stats','');
+INSERT INTO `wp_termmeta` VALUES (136,34,'_creation_type_stats','field_creation_type_stats');
+INSERT INTO `wp_termmeta` VALUES (137,35,'user_situation_icon','🎓');
+INSERT INTO `wp_termmeta` VALUES (138,35,'_user_situation_icon','field_user_situation_icon');
+INSERT INTO `wp_termmeta` VALUES (139,35,'user_situation_color','#3b82f6');
+INSERT INTO `wp_termmeta` VALUES (140,35,'_user_situation_color','field_user_situation_color');
+INSERT INTO `wp_termmeta` VALUES (141,35,'user_situation_accent','#1d4ed8');
+INSERT INTO `wp_termmeta` VALUES (142,35,'_user_situation_accent','field_user_situation_accent');
+INSERT INTO `wp_termmeta` VALUES (143,35,'user_situation_tagline','Learn faster with AI');
+INSERT INTO `wp_termmeta` VALUES (144,35,'_user_situation_tagline','field_user_situation_tagline');
+INSERT INTO `wp_termmeta` VALUES (145,35,'user_situation_description','Whether you\'re in school, college, or pursuing personal learning goals, AI can be your study companion. From research assistance to creating study materials, AI tools help you understand complex topics, write better papers, and learn more efficiently.');
+INSERT INTO `wp_termmeta` VALUES (146,35,'_user_situation_description','field_user_situation_description');
+INSERT INTO `wp_termmeta` VALUES (147,35,'user_situation_pain_points','a:4:{i:0;a:2:{s:16:\"pain_point_title\";s:37:\"Information overload when researching\";s:19:\"pain_point_severity\";s:4:\"high\";}i:1;a:2:{s:16:\"pain_point_title\";s:29:\"Writer\'s block on assignments\";s:19:\"pain_point_severity\";s:6:\"medium\";}i:2;a:2:{s:16:\"pain_point_title\";s:31:\"Creating engaging presentations\";s:19:\"pain_point_severity\";s:6:\"medium\";}i:3;a:2:{s:16:\"pain_point_title\";s:30:\"Understanding complex concepts\";s:19:\"pain_point_severity\";s:4:\"high\";}}');
+INSERT INTO `wp_termmeta` VALUES (148,35,'_user_situation_pain_points','field_user_situation_pain_points');
+INSERT INTO `wp_termmeta` VALUES (149,35,'user_situation_goals','a:4:{i:0;a:2:{s:10:\"goal_title\";s:38:\"Research topics quickly and thoroughly\";s:13:\"goal_priority\";s:4:\"high\";}i:1;a:2:{s:10:\"goal_title\";s:30:\"Write better essays and papers\";s:13:\"goal_priority\";s:4:\"high\";}i:2;a:2:{s:10:\"goal_title\";s:37:\"Create study materials and flashcards\";s:13:\"goal_priority\";s:6:\"medium\";}i:3;a:2:{s:10:\"goal_title\";s:29:\"Understand difficult subjects\";s:13:\"goal_priority\";s:4:\"high\";}}');
+INSERT INTO `wp_termmeta` VALUES (150,35,'_user_situation_goals','field_user_situation_goals');
+INSERT INTO `wp_termmeta` VALUES (151,35,'user_situation_personas_persona_experience_level','beginner');
+INSERT INTO `wp_termmeta` VALUES (152,35,'_user_situation_personas_persona_experience_level','field_persona_experience_level');
+INSERT INTO `wp_termmeta` VALUES (153,35,'user_situation_personas_persona_budget_range','free');
+INSERT INTO `wp_termmeta` VALUES (154,35,'_user_situation_personas_persona_budget_range','field_persona_budget_range');
+INSERT INTO `wp_termmeta` VALUES (155,35,'user_situation_personas_persona_time_availability','moderate');
+INSERT INTO `wp_termmeta` VALUES (156,35,'_user_situation_personas_persona_time_availability','field_persona_time_availability');
+INSERT INTO `wp_termmeta` VALUES (157,35,'user_situation_personas','');
+INSERT INTO `wp_termmeta` VALUES (158,35,'_user_situation_personas','field_user_situation_personas');
+INSERT INTO `wp_termmeta` VALUES (159,36,'user_situation_icon','💼');
+INSERT INTO `wp_termmeta` VALUES (160,36,'_user_situation_icon','field_user_situation_icon');
+INSERT INTO `wp_termmeta` VALUES (161,36,'user_situation_color','#059669');
+INSERT INTO `wp_termmeta` VALUES (162,36,'_user_situation_color','field_user_situation_color');
+INSERT INTO `wp_termmeta` VALUES (163,36,'user_situation_accent','#047857');
+INSERT INTO `wp_termmeta` VALUES (164,36,'_user_situation_accent','field_user_situation_accent');
+INSERT INTO `wp_termmeta` VALUES (165,36,'user_situation_tagline','Work smarter, achieve more');
+INSERT INTO `wp_termmeta` VALUES (166,36,'_user_situation_tagline','field_user_situation_tagline');
+INSERT INTO `wp_termmeta` VALUES (167,36,'user_situation_description','From executives to team members, AI helps professionals streamline workflows, create better presentations, analyze data, and communicate more effectively. Boost your productivity and make data-driven decisions with intelligent assistance.');
+INSERT INTO `wp_termmeta` VALUES (168,36,'_user_situation_description','field_user_situation_description');
+INSERT INTO `wp_termmeta` VALUES (169,36,'user_situation_pain_points','a:4:{i:0;a:2:{s:16:\"pain_point_title\";s:25:\"Too many repetitive tasks\";s:19:\"pain_point_severity\";s:4:\"high\";}i:1;a:2:{s:16:\"pain_point_title\";s:33:\"Creating compelling presentations\";s:19:\"pain_point_severity\";s:6:\"medium\";}i:2;a:2:{s:16:\"pain_point_title\";s:24:\"Analyzing large datasets\";s:19:\"pain_point_severity\";s:4:\"high\";}i:3;a:2:{s:16:\"pain_point_title\";s:39:\"Writing professional emails and reports\";s:19:\"pain_point_severity\";s:6:\"medium\";}}');
+INSERT INTO `wp_termmeta` VALUES (170,36,'_user_situation_pain_points','field_user_situation_pain_points');
+INSERT INTO `wp_termmeta` VALUES (171,36,'user_situation_goals','a:4:{i:0;a:2:{s:10:\"goal_title\";s:27:\"Automate routine work tasks\";s:13:\"goal_priority\";s:4:\"high\";}i:1;a:2:{s:10:\"goal_title\";s:41:\"Create professional presentations quickly\";s:13:\"goal_priority\";s:4:\"high\";}i:2;a:2:{s:10:\"goal_title\";s:36:\"Generate insights from business data\";s:13:\"goal_priority\";s:4:\"high\";}i:3;a:2:{s:10:\"goal_title\";s:29:\"Improve written communication\";s:13:\"goal_priority\";s:6:\"medium\";}}');
+INSERT INTO `wp_termmeta` VALUES (172,36,'_user_situation_goals','field_user_situation_goals');
+INSERT INTO `wp_termmeta` VALUES (173,36,'user_situation_personas_persona_experience_level','intermediate');
+INSERT INTO `wp_termmeta` VALUES (174,36,'_user_situation_personas_persona_experience_level','field_persona_experience_level');
+INSERT INTO `wp_termmeta` VALUES (175,36,'user_situation_personas_persona_budget_range','medium');
+INSERT INTO `wp_termmeta` VALUES (176,36,'_user_situation_personas_persona_budget_range','field_persona_budget_range');
+INSERT INTO `wp_termmeta` VALUES (177,36,'user_situation_personas_persona_time_availability','minimal');
+INSERT INTO `wp_termmeta` VALUES (178,36,'_user_situation_personas_persona_time_availability','field_persona_time_availability');
+INSERT INTO `wp_termmeta` VALUES (179,36,'user_situation_personas','');
+INSERT INTO `wp_termmeta` VALUES (180,36,'_user_situation_personas','field_user_situation_personas');
+INSERT INTO `wp_termmeta` VALUES (181,37,'user_situation_icon','📱');
+INSERT INTO `wp_termmeta` VALUES (182,37,'_user_situation_icon','field_user_situation_icon');
+INSERT INTO `wp_termmeta` VALUES (183,37,'user_situation_color','#ec4899');
+INSERT INTO `wp_termmeta` VALUES (184,37,'_user_situation_color','field_user_situation_color');
+INSERT INTO `wp_termmeta` VALUES (185,37,'user_situation_accent','#be185d');
+INSERT INTO `wp_termmeta` VALUES (186,37,'_user_situation_accent','field_user_situation_accent');
+INSERT INTO `wp_termmeta` VALUES (187,37,'user_situation_tagline','Create content that captivates');
+INSERT INTO `wp_termmeta` VALUES (188,37,'_user_situation_tagline','field_user_situation_tagline');
+INSERT INTO `wp_termmeta` VALUES (189,37,'user_situation_description','Whether you\'re a YouTuber, TikToker, blogger, or social media manager, AI can help you generate ideas, create graphics, write captions, edit videos, and maintain a consistent content calendar that engages your audience.');
+INSERT INTO `wp_termmeta` VALUES (190,37,'_user_situation_description','field_user_situation_description');
+INSERT INTO `wp_termmeta` VALUES (191,37,'user_situation_pain_points','a:4:{i:0;a:2:{s:16:\"pain_point_title\";s:37:\"Constant need for fresh content ideas\";s:19:\"pain_point_severity\";s:4:\"high\";}i:1;a:2:{s:16:\"pain_point_title\";s:28:\"Time-consuming video editing\";s:19:\"pain_point_severity\";s:4:\"high\";}i:2;a:2:{s:16:\"pain_point_title\";s:45:\"Creating eye-catching thumbnails and graphics\";s:19:\"pain_point_severity\";s:6:\"medium\";}i:3;a:2:{s:16:\"pain_point_title\";s:42:\"Writing engaging captions and descriptions\";s:19:\"pain_point_severity\";s:6:\"medium\";}}');
+INSERT INTO `wp_termmeta` VALUES (192,37,'_user_situation_pain_points','field_user_situation_pain_points');
+INSERT INTO `wp_termmeta` VALUES (193,37,'user_situation_goals','a:4:{i:0;a:2:{s:10:\"goal_title\";s:32:\"Generate unlimited content ideas\";s:13:\"goal_priority\";s:4:\"high\";}i:1;a:2:{s:10:\"goal_title\";s:35:\"Create professional visuals quickly\";s:13:\"goal_priority\";s:4:\"high\";}i:2;a:2:{s:10:\"goal_title\";s:29:\"Edit videos faster and better\";s:13:\"goal_priority\";s:4:\"high\";}i:3;a:2:{s:10:\"goal_title\";s:34:\"Write compelling social media copy\";s:13:\"goal_priority\";s:6:\"medium\";}}');
+INSERT INTO `wp_termmeta` VALUES (194,37,'_user_situation_goals','field_user_situation_goals');
+INSERT INTO `wp_termmeta` VALUES (195,37,'user_situation_personas_persona_experience_level','intermediate');
+INSERT INTO `wp_termmeta` VALUES (196,37,'_user_situation_personas_persona_experience_level','field_persona_experience_level');
+INSERT INTO `wp_termmeta` VALUES (197,37,'user_situation_personas_persona_budget_range','low');
+INSERT INTO `wp_termmeta` VALUES (198,37,'_user_situation_personas_persona_budget_range','field_persona_budget_range');
+INSERT INTO `wp_termmeta` VALUES (199,37,'user_situation_personas_persona_time_availability','minimal');
+INSERT INTO `wp_termmeta` VALUES (200,37,'_user_situation_personas_persona_time_availability','field_persona_time_availability');
+INSERT INTO `wp_termmeta` VALUES (201,37,'user_situation_personas','');
+INSERT INTO `wp_termmeta` VALUES (202,37,'_user_situation_personas','field_user_situation_personas');
+INSERT INTO `wp_termmeta` VALUES (203,38,'user_situation_icon','🚀');
+INSERT INTO `wp_termmeta` VALUES (204,38,'_user_situation_icon','field_user_situation_icon');
+INSERT INTO `wp_termmeta` VALUES (205,38,'user_situation_color','#f59e0b');
+INSERT INTO `wp_termmeta` VALUES (206,38,'_user_situation_color','field_user_situation_color');
+INSERT INTO `wp_termmeta` VALUES (207,38,'user_situation_accent','#d97706');
+INSERT INTO `wp_termmeta` VALUES (208,38,'_user_situation_accent','field_user_situation_accent');
+INSERT INTO `wp_termmeta` VALUES (209,38,'user_situation_tagline','Build the future with AI');
+INSERT INTO `wp_termmeta` VALUES (210,38,'_user_situation_tagline','field_user_situation_tagline');
+INSERT INTO `wp_termmeta` VALUES (211,38,'user_situation_description','As a founder, you wear many hats. AI can be your co-founder, helping with market research, product development, marketing strategies, code generation, and business planning. Move faster and make better decisions with AI assistance.');
+INSERT INTO `wp_termmeta` VALUES (212,38,'_user_situation_description','field_user_situation_description');
+INSERT INTO `wp_termmeta` VALUES (213,38,'user_situation_pain_points','a:4:{i:0;a:2:{s:16:\"pain_point_title\";s:32:\"Limited resources for everything\";s:19:\"pain_point_severity\";s:4:\"high\";}i:1;a:2:{s:16:\"pain_point_title\";s:30:\"Need to validate ideas quickly\";s:19:\"pain_point_severity\";s:4:\"high\";}i:2;a:2:{s:16:\"pain_point_title\";s:38:\"Creating marketing materials on budget\";s:19:\"pain_point_severity\";s:6:\"medium\";}i:3;a:2:{s:16:\"pain_point_title\";s:36:\"Building MVPs without technical team\";s:19:\"pain_point_severity\";s:4:\"high\";}}');
+INSERT INTO `wp_termmeta` VALUES (214,38,'_user_situation_pain_points','field_user_situation_pain_points');
+INSERT INTO `wp_termmeta` VALUES (215,38,'user_situation_goals','a:4:{i:0;a:2:{s:10:\"goal_title\";s:30:\"Validate business ideas faster\";s:13:\"goal_priority\";s:4:\"high\";}i:1;a:2:{s:10:\"goal_title\";s:39:\"Create professional marketing materials\";s:13:\"goal_priority\";s:4:\"high\";}i:2;a:2:{s:10:\"goal_title\";s:25:\"Build prototypes and MVPs\";s:13:\"goal_priority\";s:4:\"high\";}i:3;a:2:{s:10:\"goal_title\";s:37:\"Analyze market trends and competition\";s:13:\"goal_priority\";s:6:\"medium\";}}');
+INSERT INTO `wp_termmeta` VALUES (216,38,'_user_situation_goals','field_user_situation_goals');
+INSERT INTO `wp_termmeta` VALUES (217,38,'user_situation_personas_persona_experience_level','intermediate');
+INSERT INTO `wp_termmeta` VALUES (218,38,'_user_situation_personas_persona_experience_level','field_persona_experience_level');
+INSERT INTO `wp_termmeta` VALUES (219,38,'user_situation_personas_persona_budget_range','medium');
+INSERT INTO `wp_termmeta` VALUES (220,38,'_user_situation_personas_persona_budget_range','field_persona_budget_range');
+INSERT INTO `wp_termmeta` VALUES (221,38,'user_situation_personas_persona_time_availability','minimal');
+INSERT INTO `wp_termmeta` VALUES (222,38,'_user_situation_personas_persona_time_availability','field_persona_time_availability');
+INSERT INTO `wp_termmeta` VALUES (223,38,'user_situation_personas','');
+INSERT INTO `wp_termmeta` VALUES (224,38,'_user_situation_personas','field_user_situation_personas');
+INSERT INTO `wp_termmeta` VALUES (225,39,'user_situation_icon','💻');
+INSERT INTO `wp_termmeta` VALUES (226,39,'_user_situation_icon','field_user_situation_icon');
+INSERT INTO `wp_termmeta` VALUES (227,39,'user_situation_color','#8b5cf6');
+INSERT INTO `wp_termmeta` VALUES (228,39,'_user_situation_color','field_user_situation_color');
+INSERT INTO `wp_termmeta` VALUES (229,39,'user_situation_accent','#7c3aed');
+INSERT INTO `wp_termmeta` VALUES (230,39,'_user_situation_accent','field_user_situation_accent');
+INSERT INTO `wp_termmeta` VALUES (231,39,'user_situation_tagline','Code at the speed of thought');
+INSERT INTO `wp_termmeta` VALUES (232,39,'_user_situation_tagline','field_user_situation_tagline');
+INSERT INTO `wp_termmeta` VALUES (233,39,'user_situation_description','Whether you\'re a frontend, backend, or full-stack developer, AI coding assistants can help you write better code faster, debug issues, generate documentation, and learn new technologies. Level up your development workflow.');
+INSERT INTO `wp_termmeta` VALUES (234,39,'_user_situation_description','field_user_situation_description');
+INSERT INTO `wp_termmeta` VALUES (235,39,'user_situation_pain_points','a:4:{i:0;a:2:{s:16:\"pain_point_title\";s:24:\"Debugging complex issues\";s:19:\"pain_point_severity\";s:4:\"high\";}i:1;a:2:{s:16:\"pain_point_title\";s:31:\"Learning new frameworks quickly\";s:19:\"pain_point_severity\";s:6:\"medium\";}i:2;a:2:{s:16:\"pain_point_title\";s:31:\"Writing documentation and tests\";s:19:\"pain_point_severity\";s:6:\"medium\";}i:3;a:2:{s:16:\"pain_point_title\";s:34:\"Keeping up with technology changes\";s:19:\"pain_point_severity\";s:4:\"high\";}}');
+INSERT INTO `wp_termmeta` VALUES (236,39,'_user_situation_pain_points','field_user_situation_pain_points');
+INSERT INTO `wp_termmeta` VALUES (237,39,'user_situation_goals','a:4:{i:0;a:2:{s:10:\"goal_title\";s:34:\"Write cleaner, more efficient code\";s:13:\"goal_priority\";s:4:\"high\";}i:1;a:2:{s:10:\"goal_title\";s:27:\"Debug and fix issues faster\";s:13:\"goal_priority\";s:4:\"high\";}i:2;a:2:{s:10:\"goal_title\";s:36:\"Generate comprehensive documentation\";s:13:\"goal_priority\";s:6:\"medium\";}i:3;a:2:{s:10:\"goal_title\";s:30:\"Learn new technologies quickly\";s:13:\"goal_priority\";s:4:\"high\";}}');
+INSERT INTO `wp_termmeta` VALUES (238,39,'_user_situation_goals','field_user_situation_goals');
+INSERT INTO `wp_termmeta` VALUES (239,39,'user_situation_personas_persona_experience_level','advanced');
+INSERT INTO `wp_termmeta` VALUES (240,39,'_user_situation_personas_persona_experience_level','field_persona_experience_level');
+INSERT INTO `wp_termmeta` VALUES (241,39,'user_situation_personas_persona_budget_range','medium');
+INSERT INTO `wp_termmeta` VALUES (242,39,'_user_situation_personas_persona_budget_range','field_persona_budget_range');
+INSERT INTO `wp_termmeta` VALUES (243,39,'user_situation_personas_persona_time_availability','moderate');
+INSERT INTO `wp_termmeta` VALUES (244,39,'_user_situation_personas_persona_time_availability','field_persona_time_availability');
+INSERT INTO `wp_termmeta` VALUES (245,39,'user_situation_personas','');
+INSERT INTO `wp_termmeta` VALUES (246,39,'_user_situation_personas','field_user_situation_personas');
+INSERT INTO `wp_termmeta` VALUES (247,40,'user_situation_icon','📈');
+INSERT INTO `wp_termmeta` VALUES (248,40,'_user_situation_icon','field_user_situation_icon');
+INSERT INTO `wp_termmeta` VALUES (249,40,'user_situation_color','#ef4444');
+INSERT INTO `wp_termmeta` VALUES (250,40,'_user_situation_color','field_user_situation_color');
+INSERT INTO `wp_termmeta` VALUES (251,40,'user_situation_accent','#dc2626');
+INSERT INTO `wp_termmeta` VALUES (252,40,'_user_situation_accent','field_user_situation_accent');
+INSERT INTO `wp_termmeta` VALUES (253,40,'user_situation_tagline','Growth hacking with intelligence');
+INSERT INTO `wp_termmeta` VALUES (254,40,'_user_situation_tagline','field_user_situation_tagline');
+INSERT INTO `wp_termmeta` VALUES (255,40,'user_situation_description','From digital marketers to growth managers, AI helps you create compelling campaigns, analyze customer data, optimize ad spend, generate content at scale, and predict market trends for better ROI.');
+INSERT INTO `wp_termmeta` VALUES (256,40,'_user_situation_description','field_user_situation_description');
+INSERT INTO `wp_termmeta` VALUES (257,40,'user_situation_pain_points','a:4:{i:0;a:2:{s:16:\"pain_point_title\";s:40:\"Creating enough content for all channels\";s:19:\"pain_point_severity\";s:4:\"high\";}i:1;a:2:{s:16:\"pain_point_title\";s:32:\"Analyzing complex marketing data\";s:19:\"pain_point_severity\";s:4:\"high\";}i:2;a:2:{s:16:\"pain_point_title\";s:32:\"Personalizing campaigns at scale\";s:19:\"pain_point_severity\";s:6:\"medium\";}i:3;a:2:{s:16:\"pain_point_title\";s:33:\"Staying ahead of marketing trends\";s:19:\"pain_point_severity\";s:6:\"medium\";}}');
+INSERT INTO `wp_termmeta` VALUES (258,40,'_user_situation_pain_points','field_user_situation_pain_points');
+INSERT INTO `wp_termmeta` VALUES (259,40,'user_situation_goals','a:4:{i:0;a:2:{s:10:\"goal_title\";s:37:\"Create high-converting marketing copy\";s:13:\"goal_priority\";s:4:\"high\";}i:1;a:2:{s:10:\"goal_title\";s:36:\"Analyze customer behavior and trends\";s:13:\"goal_priority\";s:4:\"high\";}i:2;a:2:{s:10:\"goal_title\";s:35:\"Optimize ad campaigns automatically\";s:13:\"goal_priority\";s:4:\"high\";}i:3;a:2:{s:10:\"goal_title\";s:38:\"Generate content for multiple channels\";s:13:\"goal_priority\";s:6:\"medium\";}}');
+INSERT INTO `wp_termmeta` VALUES (260,40,'_user_situation_goals','field_user_situation_goals');
+INSERT INTO `wp_termmeta` VALUES (261,40,'user_situation_personas_persona_experience_level','intermediate');
+INSERT INTO `wp_termmeta` VALUES (262,40,'_user_situation_personas_persona_experience_level','field_persona_experience_level');
+INSERT INTO `wp_termmeta` VALUES (263,40,'user_situation_personas_persona_budget_range','high');
+INSERT INTO `wp_termmeta` VALUES (264,40,'_user_situation_personas_persona_budget_range','field_persona_budget_range');
+INSERT INTO `wp_termmeta` VALUES (265,40,'user_situation_personas_persona_time_availability','minimal');
+INSERT INTO `wp_termmeta` VALUES (266,40,'_user_situation_personas_persona_time_availability','field_persona_time_availability');
+INSERT INTO `wp_termmeta` VALUES (267,40,'user_situation_personas','');
+INSERT INTO `wp_termmeta` VALUES (268,40,'_user_situation_personas','field_user_situation_personas');
+INSERT INTO `wp_termmeta` VALUES (269,41,'user_situation_icon','🎯');
+INSERT INTO `wp_termmeta` VALUES (270,41,'_user_situation_icon','field_user_situation_icon');
+INSERT INTO `wp_termmeta` VALUES (271,41,'user_situation_color','#06b6d4');
+INSERT INTO `wp_termmeta` VALUES (272,41,'_user_situation_color','field_user_situation_color');
+INSERT INTO `wp_termmeta` VALUES (273,41,'user_situation_accent','#0891b2');
+INSERT INTO `wp_termmeta` VALUES (274,41,'_user_situation_accent','field_user_situation_accent');
+INSERT INTO `wp_termmeta` VALUES (275,41,'user_situation_tagline','Deliver excellence, scale impact');
+INSERT INTO `wp_termmeta` VALUES (276,41,'_user_situation_tagline','field_user_situation_tagline');
+INSERT INTO `wp_termmeta` VALUES (277,41,'user_situation_description','As a freelancer or consultant, your time is money. AI helps you work more efficiently, deliver higher quality work, research faster, create better proposals, and provide more value to your clients while scaling your business.');
+INSERT INTO `wp_termmeta` VALUES (278,41,'_user_situation_description','field_user_situation_description');
+INSERT INTO `wp_termmeta` VALUES (279,41,'user_situation_pain_points','a:4:{i:0;a:2:{s:16:\"pain_point_title\";s:33:\"Managing multiple client projects\";s:19:\"pain_point_severity\";s:4:\"high\";}i:1;a:2:{s:16:\"pain_point_title\";s:37:\"Creating compelling proposals quickly\";s:19:\"pain_point_severity\";s:6:\"medium\";}i:2;a:2:{s:16:\"pain_point_title\";s:36:\"Researching client industries deeply\";s:19:\"pain_point_severity\";s:6:\"medium\";}i:3;a:2:{s:16:\"pain_point_title\";s:34:\"Delivering consistent quality work\";s:19:\"pain_point_severity\";s:4:\"high\";}}');
+INSERT INTO `wp_termmeta` VALUES (280,41,'_user_situation_pain_points','field_user_situation_pain_points');
+INSERT INTO `wp_termmeta` VALUES (281,41,'user_situation_goals','a:4:{i:0;a:2:{s:10:\"goal_title\";s:39:\"Increase project efficiency and quality\";s:13:\"goal_priority\";s:4:\"high\";}i:1;a:2:{s:10:\"goal_title\";s:31:\"Create winning proposals faster\";s:13:\"goal_priority\";s:4:\"high\";}i:2;a:2:{s:10:\"goal_title\";s:32:\"Research client needs thoroughly\";s:13:\"goal_priority\";s:6:\"medium\";}i:3;a:2:{s:10:\"goal_title\";s:29:\"Scale business without hiring\";s:13:\"goal_priority\";s:4:\"high\";}}');
+INSERT INTO `wp_termmeta` VALUES (282,41,'_user_situation_goals','field_user_situation_goals');
+INSERT INTO `wp_termmeta` VALUES (283,41,'user_situation_personas_persona_experience_level','intermediate');
+INSERT INTO `wp_termmeta` VALUES (284,41,'_user_situation_personas_persona_experience_level','field_persona_experience_level');
+INSERT INTO `wp_termmeta` VALUES (285,41,'user_situation_personas_persona_budget_range','low');
+INSERT INTO `wp_termmeta` VALUES (286,41,'_user_situation_personas_persona_budget_range','field_persona_budget_range');
+INSERT INTO `wp_termmeta` VALUES (287,41,'user_situation_personas_persona_time_availability','minimal');
+INSERT INTO `wp_termmeta` VALUES (288,41,'_user_situation_personas_persona_time_availability','field_persona_time_availability');
+INSERT INTO `wp_termmeta` VALUES (289,41,'user_situation_personas','');
+INSERT INTO `wp_termmeta` VALUES (290,41,'_user_situation_personas','field_user_situation_personas');
+INSERT INTO `wp_termmeta` VALUES (291,42,'difficulty_icon','🟢');
+INSERT INTO `wp_termmeta` VALUES (292,42,'_difficulty_icon','');
+INSERT INTO `wp_termmeta` VALUES (293,42,'difficulty_color','#22c55e');
+INSERT INTO `wp_termmeta` VALUES (294,42,'_difficulty_color','');
+INSERT INTO `wp_termmeta` VALUES (295,42,'difficulty_description','Perfect for first-time users with no AI experience. Simple prompts, clear instructions, and immediate results.');
+INSERT INTO `wp_termmeta` VALUES (296,42,'_difficulty_description','');
+INSERT INTO `wp_termmeta` VALUES (297,42,'difficulty_time_estimate','5-30 minutes');
+INSERT INTO `wp_termmeta` VALUES (298,42,'_difficulty_time_estimate','');
+INSERT INTO `wp_termmeta` VALUES (299,42,'difficulty_prerequisites','None! Just curiosity and willingness to try something new.');
+INSERT INTO `wp_termmeta` VALUES (300,42,'_difficulty_prerequisites','');
+INSERT INTO `wp_termmeta` VALUES (301,43,'difficulty_icon','🟡');
+INSERT INTO `wp_termmeta` VALUES (302,43,'_difficulty_icon','');
+INSERT INTO `wp_termmeta` VALUES (303,43,'difficulty_color','#eab308');
+INSERT INTO `wp_termmeta` VALUES (304,43,'_difficulty_color','');
+INSERT INTO `wp_termmeta` VALUES (305,43,'difficulty_description','For users with some AI tool experience. Involves more complex prompts, multiple steps, and fine-tuning results.');
+INSERT INTO `wp_termmeta` VALUES (306,43,'_difficulty_description','');
+INSERT INTO `wp_termmeta` VALUES (307,43,'difficulty_time_estimate','30 minutes - 2 hours');
+INSERT INTO `wp_termmeta` VALUES (308,43,'_difficulty_time_estimate','');
+INSERT INTO `wp_termmeta` VALUES (309,43,'difficulty_prerequisites','Basic familiarity with AI chat interfaces, understanding of prompt structure, some experience with AI tools.');
+INSERT INTO `wp_termmeta` VALUES (310,43,'_difficulty_prerequisites','');
+INSERT INTO `wp_termmeta` VALUES (311,44,'difficulty_icon','🔴');
+INSERT INTO `wp_termmeta` VALUES (312,44,'_difficulty_icon','');
+INSERT INTO `wp_termmeta` VALUES (313,44,'difficulty_color','#ef4444');
+INSERT INTO `wp_termmeta` VALUES (314,44,'_difficulty_color','');
+INSERT INTO `wp_termmeta` VALUES (315,44,'difficulty_description','For experienced AI users. Complex workflows, advanced prompting techniques, integration of multiple tools, and optimization strategies.');
+INSERT INTO `wp_termmeta` VALUES (316,44,'_difficulty_description','');
+INSERT INTO `wp_termmeta` VALUES (317,44,'difficulty_time_estimate','2+ hours');
+INSERT INTO `wp_termmeta` VALUES (318,44,'_difficulty_time_estimate','');
+INSERT INTO `wp_termmeta` VALUES (319,44,'difficulty_prerequisites','Extensive AI tool experience, understanding of prompt engineering, knowledge of AI model capabilities and limitations.');
+INSERT INTO `wp_termmeta` VALUES (320,44,'_difficulty_prerequisites','');
+/*!40000 ALTER TABLE `wp_termmeta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `wp_terms`
+--
+
+DROP TABLE IF EXISTS `wp_terms`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wp_terms` (
+  `term_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `slug` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `term_group` bigint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`term_id`),
+  KEY `slug` (`slug`(191)),
+  KEY `name` (`name`(191))
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wp_terms`
+--
+
+LOCK TABLES `wp_terms` WRITE;
+/*!40000 ALTER TABLE `wp_terms` DISABLE KEYS */;
+INSERT INTO `wp_terms` VALUES (1,'Uncategorized','uncategorized',0);
+INSERT INTO `wp_terms` VALUES (6,'MUSIC','music',0);
+INSERT INTO `wp_terms` VALUES (7,'GENERATIVE ART','generative-art',0);
+INSERT INTO `wp_terms` VALUES (8,'FASHION','fashion',0);
+INSERT INTO `wp_terms` VALUES (9,'IMAGE GENERATION','image-generation',0);
+INSERT INTO `wp_terms` VALUES (10,'BOTANICAL','botanical',0);
+INSERT INTO `wp_terms` VALUES (11,'websites','websites',0);
+INSERT INTO `wp_terms` VALUES (12,'images','images',0);
+INSERT INTO `wp_terms` VALUES (13,'videos','videos',0);
+INSERT INTO `wp_terms` VALUES (14,'music','music',0);
+INSERT INTO `wp_terms` VALUES (15,'TRENDING','trending',0);
+INSERT INTO `wp_terms` VALUES (16,'NEW RELEASE','new-release',0);
+INSERT INTO `wp_terms` VALUES (17,'IMAGE GENERATION','image-generation',0);
+INSERT INTO `wp_terms` VALUES (18,'ANIMATION','animation',0);
+INSERT INTO `wp_terms` VALUES (19,'Image Generation','image-generation',0);
+INSERT INTO `wp_terms` VALUES (20,'Music / Audio','music-audio',0);
+INSERT INTO `wp_terms` VALUES (21,'Website / App','website-app',0);
+INSERT INTO `wp_terms` VALUES (22,'Graphic Design','graphic-design',0);
+INSERT INTO `wp_terms` VALUES (23,'Text / Copywriting','text-copywriting',0);
+INSERT INTO `wp_terms` VALUES (24,'3D','3d',0);
+INSERT INTO `wp_terms` VALUES (25,'Video / Film','video-film',0);
+INSERT INTO `wp_terms` VALUES (26,'Presentation','presentation',0);
+INSERT INTO `wp_terms` VALUES (27,'Animation','animation',0);
+INSERT INTO `wp_terms` VALUES (28,'Coding','coding',0);
+INSERT INTO `wp_terms` VALUES (29,'Writing &amp; Text','writing-text',0);
+INSERT INTO `wp_terms` VALUES (30,'Images &amp; Art','images-art',0);
+INSERT INTO `wp_terms` VALUES (31,'Video &amp; Film','video-film',0);
+INSERT INTO `wp_terms` VALUES (32,'Audio &amp; Music','audio-music',0);
+INSERT INTO `wp_terms` VALUES (33,'Code &amp; Development','code-development',0);
+INSERT INTO `wp_terms` VALUES (34,'Business &amp; Marketing','business-marketing',0);
+INSERT INTO `wp_terms` VALUES (35,'Student &amp; Learner','student-learner',0);
+INSERT INTO `wp_terms` VALUES (36,'Business Professional','business-professional',0);
+INSERT INTO `wp_terms` VALUES (37,'Content Creator &amp; Influencer','content-creator-influencer',0);
+INSERT INTO `wp_terms` VALUES (38,'Entrepreneur &amp; Founder','entrepreneur-founder',0);
+INSERT INTO `wp_terms` VALUES (39,'Developer &amp; Tech Professional','developer-tech',0);
+INSERT INTO `wp_terms` VALUES (40,'Marketer &amp; Growth Professional','marketer-growth',0);
+INSERT INTO `wp_terms` VALUES (41,'Freelancer &amp; Consultant','freelancer-consultant',0);
+INSERT INTO `wp_terms` VALUES (42,'Beginner','beginner',0);
+INSERT INTO `wp_terms` VALUES (43,'Intermediate','intermediate',0);
+INSERT INTO `wp_terms` VALUES (44,'Advanced','advanced',0);
+/*!40000 ALTER TABLE `wp_terms` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `wp_usermeta`
+--
+
+DROP TABLE IF EXISTS `wp_usermeta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wp_usermeta` (
+  `umeta_id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint unsigned NOT NULL DEFAULT '0',
+  `meta_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
+  `meta_value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci,
+  PRIMARY KEY (`umeta_id`),
+  KEY `user_id` (`user_id`),
+  KEY `meta_key` (`meta_key`(191))
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wp_usermeta`
+--
+
+LOCK TABLES `wp_usermeta` WRITE;
+/*!40000 ALTER TABLE `wp_usermeta` DISABLE KEYS */;
+INSERT INTO `wp_usermeta` VALUES (1,1,'nickname','admin');
+INSERT INTO `wp_usermeta` VALUES (2,1,'first_name','');
+INSERT INTO `wp_usermeta` VALUES (3,1,'last_name','');
+INSERT INTO `wp_usermeta` VALUES (4,1,'description','');
+INSERT INTO `wp_usermeta` VALUES (5,1,'rich_editing','true');
+INSERT INTO `wp_usermeta` VALUES (6,1,'syntax_highlighting','true');
+INSERT INTO `wp_usermeta` VALUES (7,1,'comment_shortcuts','false');
+INSERT INTO `wp_usermeta` VALUES (8,1,'admin_color','fresh');
+INSERT INTO `wp_usermeta` VALUES (9,1,'use_ssl','0');
+INSERT INTO `wp_usermeta` VALUES (10,1,'show_admin_bar_front','true');
+INSERT INTO `wp_usermeta` VALUES (11,1,'locale','');
+INSERT INTO `wp_usermeta` VALUES (12,1,'wp_capabilities','a:1:{s:13:\"administrator\";b:1;}');
+INSERT INTO `wp_usermeta` VALUES (13,1,'wp_user_level','10');
+INSERT INTO `wp_usermeta` VALUES (14,1,'dismissed_wp_pointers','');
+INSERT INTO `wp_usermeta` VALUES (15,1,'show_welcome_panel','0');
+INSERT INTO `wp_usermeta` VALUES (17,1,'wp_user-settings','libraryContent=browse');
+INSERT INTO `wp_usermeta` VALUES (18,1,'wp_user-settings-time','1751234086');
+INSERT INTO `wp_usermeta` VALUES (19,1,'wp_dashboard_quick_press_last_post_id','186');
+INSERT INTO `wp_usermeta` VALUES (20,1,'community-events-location','a:1:{s:2:\"ip\";s:12:\"46.189.241.0\";}');
+INSERT INTO `wp_usermeta` VALUES (21,1,'wp_persisted_preferences','a:3:{s:4:\"core\";a:2:{s:26:\"isComplementaryAreaVisible\";b:1;s:10:\"openPanels\";a:5:{i:0;s:11:\"post-status\";i:1;s:28:\"taxonomy-panel-tool_category\";i:2;s:30:\"taxonomy-panel-maker_specialty\";i:3;s:28:\"taxonomy-panel-news_category\";i:4;s:23:\"taxonomy-panel-post_tag\";}}s:14:\"core/edit-post\";a:2:{s:12:\"welcomeGuide\";b:0;s:23:\"metaBoxesMainOpenHeight\";i:832;}s:9:\"_modified\";s:24:\"2025-07-04T19:07:56.383Z\";}');
+INSERT INTO `wp_usermeta` VALUES (22,1,'closedpostboxes_tool','a:0:{}');
+INSERT INTO `wp_usermeta` VALUES (23,1,'metaboxhidden_tool','a:0:{}');
+INSERT INTO `wp_usermeta` VALUES (24,1,'meta-box-order_post','a:4:{s:6:\"normal\";s:0:\"\";s:8:\"advanced\";s:0:\"\";s:4:\"side\";s:0:\"\";s:15:\"acf_after_title\";s:0:\"\";}');
+INSERT INTO `wp_usermeta` VALUES (25,1,'wp_media_library_mode','list');
+INSERT INTO `wp_usermeta` VALUES (26,1,'session_tokens','a:5:{s:64:\"b85791ab960af1ad8818943b964798513a3a17108c1d9204b3bc44fbc754fe3e\";a:4:{s:10:\"expiration\";i:1753061525;s:2:\"ip\";s:14:\"46.189.241.143\";s:2:\"ua\";s:117:\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36\";s:5:\"login\";i:1751851925;}s:64:\"e7587fc6e2dfc53b9dc036373865900ff85a832da120c6b38b69ed61028851f3\";a:4:{s:10:\"expiration\";i:1752288581;s:2:\"ip\";s:9:\"127.0.0.1\";s:2:\"ua\";s:117:\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36\";s:5:\"login\";i:1752115781;}s:64:\"cc36e2d4bc5d84ea63042dc875625d9f1c56891a3c223c30ead4d2a508741450\";a:4:{s:10:\"expiration\";i:1752288727;s:2:\"ip\";s:9:\"127.0.0.1\";s:2:\"ua\";s:117:\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36\";s:5:\"login\";i:1752115927;}s:64:\"f8de3688fe13c6013fd73d56df3631448036a73785f68b0ff2d3d3a7f59e577c\";a:4:{s:10:\"expiration\";i:1752289084;s:2:\"ip\";s:9:\"127.0.0.1\";s:2:\"ua\";s:117:\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36\";s:5:\"login\";i:1752116284;}s:64:\"4bb907efe29e8926dabc0f7e8519ab92ed26fde849a05fb4ba2ee029a4275861\";a:4:{s:10:\"expiration\";i:1753325903;s:2:\"ip\";s:9:\"127.0.0.1\";s:2:\"ua\";s:117:\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36\";s:5:\"login\";i:1752116303;}}');
+INSERT INTO `wp_usermeta` VALUES (27,2,'nickname','accounts@maker.me');
+INSERT INTO `wp_usermeta` VALUES (28,2,'first_name','Bhanu');
+INSERT INTO `wp_usermeta` VALUES (29,2,'last_name','Sharma');
+INSERT INTO `wp_usermeta` VALUES (30,2,'description','');
+INSERT INTO `wp_usermeta` VALUES (31,2,'rich_editing','true');
+INSERT INTO `wp_usermeta` VALUES (32,2,'syntax_highlighting','true');
+INSERT INTO `wp_usermeta` VALUES (33,2,'comment_shortcuts','false');
+INSERT INTO `wp_usermeta` VALUES (34,2,'admin_color','fresh');
+INSERT INTO `wp_usermeta` VALUES (35,2,'use_ssl','0');
+INSERT INTO `wp_usermeta` VALUES (36,2,'show_admin_bar_front','true');
+INSERT INTO `wp_usermeta` VALUES (37,2,'locale','');
+INSERT INTO `wp_usermeta` VALUES (38,2,'wp_capabilities','a:1:{s:13:\"administrator\";b:1;}');
+INSERT INTO `wp_usermeta` VALUES (39,2,'wp_user_level','10');
+INSERT INTO `wp_usermeta` VALUES (40,2,'dismissed_wp_pointers','');
+INSERT INTO `wp_usermeta` VALUES (41,2,'WPE_USER_CREATED_TIME','1752110394');
+INSERT INTO `wp_usermeta` VALUES (43,2,'session_tokens','a:1:{s:64:\"fc84b6f7c116cb8d15c417502eb16d0733ca31734d04423d55e1a4ba33dad370\";a:4:{s:10:\"expiration\";i:1753319994;s:2:\"ip\";s:14:\"46.189.241.143\";s:2:\"ua\";s:117:\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36\";s:5:\"login\";i:1752110394;}}');
+INSERT INTO `wp_usermeta` VALUES (44,2,'WPE_LAST_LOGIN_TIME','1752110394');
+INSERT INTO `wp_usermeta` VALUES (45,2,'WPE_LOGGED_REQUEST_IDS','a:1:{i:0;s:36:\"70ca91f6-df47-431d-932f-69cab4d4aed9\";}');
+INSERT INTO `wp_usermeta` VALUES (46,2,'wp_dashboard_quick_press_last_post_id','191');
+/*!40000 ALTER TABLE `wp_usermeta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `wp_users`
+--
+
+DROP TABLE IF EXISTS `wp_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `wp_users` (
+  `ID` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_login` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `user_pass` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `user_nicename` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `user_email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `user_url` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `user_registered` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `user_activation_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  `user_status` int NOT NULL DEFAULT '0',
+  `display_name` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`ID`),
+  KEY `user_login_key` (`user_login`),
+  KEY `user_nicename` (`user_nicename`),
+  KEY `user_email` (`user_email`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `wp_users`
+--
+
+LOCK TABLES `wp_users` WRITE;
+/*!40000 ALTER TABLE `wp_users` DISABLE KEYS */;
+INSERT INTO `wp_users` VALUES (1,'admin','$wp$2y$10$ZMFi7gHkleSslW6A.LE15.mHrGQhpbVWgwJTgkWu0TbdFZ71Eqgqm','admin','admin@vibemake.local','http://localhost:8080','2025-06-29 21:40:53','',0,'admin');
+INSERT INTO `wp_users` VALUES (2,'accounts@maker.me','$wp$2y$10$5SH.Dzc5HjD5IUI/IEzcNeziZv7MSyYecrOGv80FS0eeLBjdLVHwW','accountsmaker-me','accounts@maker.me','','2025-07-10 01:19:54','',0,'Bhanu Sharma');
+/*!40000 ALTER TABLE `wp_users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2025-07-10  4:02:37

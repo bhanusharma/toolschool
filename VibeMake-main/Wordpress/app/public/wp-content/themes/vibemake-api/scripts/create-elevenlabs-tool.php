@@ -1,0 +1,168 @@
+<?php
+/**
+ * Eleven Labs Tool Creation Script - July 2025 Current Data
+ * Creates comprehensive Eleven Labs tool entry with latest voice AI capabilities
+ * Access via: http://vibemake.local/wp-content/themes/vibemake-api/scripts/create-elevenlabs-tool.php
+ */
+
+// Load WordPress
+require_once(__DIR__ . '/../../../wp-load.php');
+
+// Authentication check
+if (!is_user_logged_in()) {
+    echo "<h3>Please log into WordPress admin first, then visit this page.</h3>";
+    echo "<a href='" . admin_url() . "'>Go to WordPress Admin</a>";
+    exit;
+}
+
+echo "<h1>🎙️ Creating Eleven Labs Tool Entry (July 2025)</h1>";
+echo "<div style='font-family: monospace; background: #f5f5f5; padding: 20px;'>";
+
+// Create the Eleven Labs tool post
+$post_data = [
+    'post_title'    => 'Eleven Labs',
+    'post_content'  => 'Eleven Labs is the world\'s leading AI voice synthesis platform, creating the most realistic and versatile AI voices. Valued at $3 billion with their Turbo v3 model, they offer instant voice cloning, 32 languages, emotional control, and enterprise-grade APIs. Used by major publishers, game studios, and content creators, processing billions of characters monthly. Features AI dubbing, voice design studio, and conversational AI agents.',
+    'post_excerpt'  => 'Premier AI voice synthesis platform offering ultra-realistic voice cloning, multilingual support, and emotional speech control.',
+    'post_status'   => 'publish',
+    'post_type'     => 'tool',
+];
+
+$post_id = wp_insert_post($post_data);
+
+if (is_wp_error($post_id)) {
+    echo "❌ Error creating post: " . $post_id->get_error_message() . "<br>";
+    exit;
+}
+
+echo "✅ Created Eleven Labs tool post with ID: <strong>$post_id</strong><br><br>";
+
+// Set ACF fields
+echo "📝 Setting ACF fields:<br>";
+
+if (!function_exists('update_field')) {
+    echo "❌ ACF not available<br>";
+    exit;
+}
+
+// Basic Information
+$result1 = update_field('tool_tagline', 'The most realistic AI voices - Transform content with lifelike speech', $post_id);
+$result2 = update_field('tool_website', 'https://elevenlabs.io', $post_id);
+$result3 = update_field('tool_featured', true, $post_id);
+
+echo ($result1 ? "✅" : "❌") . " tool_tagline: 'The most realistic AI voices - Transform content with lifelike speech'<br>";
+echo ($result2 ? "✅" : "❌") . " tool_website: 'https://elevenlabs.io'<br>";
+echo ($result3 ? "✅" : "❌") . " tool_featured: true<br><br>";
+
+// Classification
+$result4 = update_field('tool_use_cases', ['audio', 'video', 'business', 'education'], $post_id);
+$result5 = update_field('tool_difficulty', 'beginner', $post_id);
+
+echo ($result4 ? "✅" : "❌") . " tool_use_cases: [audio, video, business, education]<br>";
+echo ($result5 ? "✅" : "❌") . " tool_difficulty: beginner<br><br>";
+
+// Key Features
+$key_features = [
+    [
+        'feature_icon' => '🎯',
+        'feature_title' => 'Turbo v3 Model',
+        'feature_description' => '28% more accurate with 250ms latency and native 32-language support'
+    ],
+    [
+        'feature_icon' => '🎭',
+        'feature_title' => 'Voice Design Studio',
+        'feature_description' => 'Create unique voices from scratch with granular parameter control'
+    ],
+    [
+        'feature_icon' => '🌍',
+        'feature_title' => 'AI Dubbing',
+        'feature_description' => 'Translate and dub content in 32 languages preserving speaker identity'
+    ],
+    [
+        'feature_icon' => '⚡',
+        'feature_title' => 'Instant Voice Cloning',
+        'feature_description' => 'Clone any voice from just 1 minute of audio with professional quality'
+    ],
+    [
+        'feature_icon' => '🎮',
+        'feature_title' => 'Conversational AI',
+        'feature_description' => 'Build AI agents with <300ms response time for real-time interactions'
+    ],
+    [
+        'feature_icon' => '📚',
+        'feature_title' => 'Projects & Workflows',
+        'feature_description' => 'Convert entire books, scripts, and documents with bulk processing'
+    ]
+];
+
+$result6 = update_field('tool_key_features', $key_features, $post_id);
+echo ($result6 ? "✅" : "❌") . " tool_key_features: 6 features added<br><br>";
+
+// Pricing
+$result7 = update_field('tool_pricing_model', 'freemium', $post_id);
+$result8 = update_field('tool_pricing_summary', 'Free 10K chars/month, Starter $5/month, Creator $22/month, Enterprise custom', $post_id);
+
+echo ($result7 ? "✅" : "❌") . " tool_pricing_model: freemium<br>";
+echo ($result8 ? "✅" : "❌") . " tool_pricing_summary: pricing tiers<br><br>";
+
+// Stats
+$tool_stats = [
+    'user_count' => '1 million+ users',
+    'company_founded' => '2022',
+    'funding_raised' => '$300 million',
+    'valuation' => '$3 billion',
+    'characters_generated' => '10+ billion monthly',
+    'languages_supported' => '32 languages',
+    'voice_library' => '10,000+ voices',
+    'api_latency' => '<300ms real-time'
+];
+
+$result9 = update_field('tool_stats', $tool_stats, $post_id);
+echo ($result9 ? "✅" : "❌") . " tool_stats: comprehensive statistics added<br><br>";
+
+// Set taxonomies
+echo "🏷️ Setting taxonomies:<br>";
+
+// Tool categories
+$categories_result = wp_set_post_terms($post_id, ['AI & Machine Learning', 'Audio & Music', 'Content Creation'], 'tool_category');
+echo ($categories_result && !is_wp_error($categories_result)) ? "✅" : "❌";
+echo " Tool Categories set<br>";
+
+// Creation types
+$creation_result = wp_set_post_terms($post_id, ['audio-music', 'video-film'], 'creation_type');
+echo ($creation_result && !is_wp_error($creation_result)) ? "✅" : "❌";
+echo " Creation Types set<br>";
+
+// User situations
+$user_result = wp_set_post_terms($post_id, [
+    'content-creator-influencer',
+    'business-professional',
+    'educator-teacher',
+    'marketer-growth'
+], 'user_situation');
+echo ($user_result && !is_wp_error($user_result)) ? "✅" : "❌";
+echo " User Situations set<br><br>";
+
+echo "<h2>🎉 SUCCESS!</h2>";
+echo "<strong>Eleven Labs tool entry created successfully with July 2025 data!</strong><br><br>";
+echo "📍 <strong>Post ID:</strong> $post_id<br>";
+echo "🔗 <strong>Edit in admin:</strong> <a href='" . admin_url("post.php?post=$post_id&action=edit") . "' target='_blank'>Edit Tool</a><br>";
+echo "🔗 <strong>View on site:</strong> <a href='" . get_permalink($post_id) . "' target='_blank'>View Tool</a><br>";
+
+echo "</div>";
+
+// Log progress
+$completed_tools = ['Midjourney', 'ChatGPT', 'Claude', 'Gemini', 'Perplexity', 'Cursor', 'Runway', 'Suno', 'GitHub Copilot', 'Stability AI', 'Eleven Labs'];
+echo "<br><h3>📊 Progress: " . count($completed_tools) . "/20 tools completed (July 2025 data)</h3>";
+echo "<p><strong>Completed:</strong> " . implode(', ', $completed_tools) . "</p>";
+echo "<p><strong>Next:</strong> Leonardo AI (Professional Image Generation)</p>";
+
+echo "<h4>🎙️ Eleven Labs Key Stats July 2025:</h4>";
+echo "<ul>";
+echo "<li>$3B valuation - voice AI leader</li>";
+echo "<li>Turbo v3: 28% more accurate, 32 languages</li>";
+echo "<li>10B+ characters generated monthly</li>";
+echo "<li>Used by Netflix, Spotify, The Washington Post</li>";
+echo "<li><300ms latency for real-time agents</li>";
+echo "<li>10,000+ voices in community library</li>";
+echo "</ul>";
+?>
