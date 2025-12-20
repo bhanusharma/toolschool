@@ -1,6 +1,6 @@
 import type { CollectionConfig, CollectionBeforeChangeHook } from 'payload'
 
-// Hook to handle unique featured positions for makers
+// Hook to handle unique featured positions for builders
 const handleFeaturedPosition: CollectionBeforeChangeHook = async ({
   data,
   req,
@@ -20,9 +20,9 @@ const handleFeaturedPosition: CollectionBeforeChangeHook = async ({
     if (data.featured === true && data.featuredPosition) {
       const currentId = originalDoc?.id
 
-      // Find any maker with the same position (excluding current)
+      // Find any builder with the same position (excluding current)
       const conflicts = await payload.find({
-        collection: 'makers',
+        collection: 'builders',
         where: {
           and: [
             { featuredPosition: { equals: data.featuredPosition } },
@@ -35,7 +35,7 @@ const handleFeaturedPosition: CollectionBeforeChangeHook = async ({
       // If conflict exists, find next available position
       if (conflicts.docs.length > 0) {
         const allFeatured = await payload.find({
-          collection: 'makers',
+          collection: 'builders',
           where: {
             featured: { equals: true },
           },
@@ -59,7 +59,7 @@ const handleFeaturedPosition: CollectionBeforeChangeHook = async ({
         if (usedPositions.length >= 10) {
           const oldestConflict = conflicts.docs[0]
           await payload.update({
-            collection: 'makers',
+            collection: 'builders',
             id: oldestConflict.id,
             data: { featured: false, featuredPosition: null },
           })
@@ -71,8 +71,8 @@ const handleFeaturedPosition: CollectionBeforeChangeHook = async ({
   return data
 }
 
-export const Makers: CollectionConfig = {
-  slug: 'makers',
+export const Builders: CollectionConfig = {
+  slug: 'builders',
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'location', 'specialties', 'featured'],
@@ -164,7 +164,7 @@ export const Makers: CollectionConfig = {
               relationTo: 'tools',
               hasMany: true,
               admin: {
-                description: 'AI tools this maker uses',
+                description: 'AI tools this builder uses',
               },
             },
             {
@@ -220,7 +220,7 @@ export const Makers: CollectionConfig = {
     {
       name: 'specialties',
       type: 'relationship',
-      relationTo: 'maker-specialties',
+      relationTo: 'builder-specialties',
       hasMany: true,
       admin: {
         position: 'sidebar',

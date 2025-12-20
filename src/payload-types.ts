@@ -70,13 +70,13 @@ export interface Config {
     users: User;
     media: Media;
     tools: Tool;
-    makers: Maker;
+    builders: Builder;
     projects: Project;
     posts: Post;
     examples: Example;
     'tool-categories': ToolCategory;
     'creation-types': CreationType;
-    'maker-specialties': MakerSpecialty;
+    'builder-specialties': BuilderSpecialty;
     'community-types': CommunityType;
     'news-categories': NewsCategory;
     'user-situations': UserSituation;
@@ -90,13 +90,13 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     tools: ToolsSelect<false> | ToolsSelect<true>;
-    makers: MakersSelect<false> | MakersSelect<true>;
+    builders: BuildersSelect<false> | BuildersSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     examples: ExamplesSelect<false> | ExamplesSelect<true>;
     'tool-categories': ToolCategoriesSelect<false> | ToolCategoriesSelect<true>;
     'creation-types': CreationTypesSelect<false> | CreationTypesSelect<true>;
-    'maker-specialties': MakerSpecialtiesSelect<false> | MakerSpecialtiesSelect<true>;
+    'builder-specialties': BuilderSpecialtiesSelect<false> | BuilderSpecialtiesSelect<true>;
     'community-types': CommunityTypesSelect<false> | CommunityTypesSelect<true>;
     'news-categories': NewsCategoriesSelect<false> | NewsCategoriesSelect<true>;
     'user-situations': UserSituationsSelect<false> | UserSituationsSelect<true>;
@@ -400,9 +400,9 @@ export interface UserSituation {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "makers".
+ * via the `definition` "builders".
  */
-export interface Maker {
+export interface Builder {
   id: number;
   title: string;
   /**
@@ -436,7 +436,7 @@ export interface Maker {
   website?: string | null;
   experienceLevel?: ('beginner' | 'intermediate' | 'advanced' | 'expert') | null;
   /**
-   * AI tools this maker uses
+   * AI tools this builder uses
    */
   toolsExpertise?: (number | Tool)[] | null;
   availability?: ('available' | 'selective' | 'unavailable' | 'open-source-only') | null;
@@ -448,7 +448,7 @@ export interface Maker {
       }[]
     | null;
   slug: string;
-  specialties?: (number | MakerSpecialty)[] | null;
+  specialties?: (number | BuilderSpecialty)[] | null;
   /**
    * Feature in homepage slider
    */
@@ -462,9 +462,9 @@ export interface Maker {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "maker-specialties".
+ * via the `definition` "builder-specialties".
  */
-export interface MakerSpecialty {
+export interface BuilderSpecialty {
   id: number;
   title: string;
   slug: string;
@@ -774,8 +774,8 @@ export interface PayloadLockedDocument {
         value: number | Tool;
       } | null)
     | ({
-        relationTo: 'makers';
-        value: number | Maker;
+        relationTo: 'builders';
+        value: number | Builder;
       } | null)
     | ({
         relationTo: 'projects';
@@ -798,8 +798,8 @@ export interface PayloadLockedDocument {
         value: number | CreationType;
       } | null)
     | ({
-        relationTo: 'maker-specialties';
-        value: number | MakerSpecialty;
+        relationTo: 'builder-specialties';
+        value: number | BuilderSpecialty;
       } | null)
     | ({
         relationTo: 'community-types';
@@ -935,9 +935,9 @@ export interface ToolsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "makers_select".
+ * via the `definition` "builders_select".
  */
-export interface MakersSelect<T extends boolean = true> {
+export interface BuildersSelect<T extends boolean = true> {
   title?: T;
   bio?: T;
   content?: T;
@@ -1147,9 +1147,9 @@ export interface CreationTypesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "maker-specialties_select".
+ * via the `definition` "builder-specialties_select".
  */
-export interface MakerSpecialtiesSelect<T extends boolean = true> {
+export interface BuilderSpecialtiesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   description?: T;

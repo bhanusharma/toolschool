@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useSearchParams, useRouter } from 'next/navigation'
@@ -89,7 +89,18 @@ interface Category {
   slug: string
 }
 
-export default function ToolsPage() {
+interface ToolsApiResponse {
+  docs: Tool[]
+  hasNextPage: boolean
+  hasPrevPage: boolean
+  totalDocs: number
+}
+
+interface CategoriesApiResponse {
+  docs: Category[]
+}
+
+function ToolsPageContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const categoryParam = searchParams.get('category')
@@ -118,12 +129,12 @@ export default function ToolsPage() {
         ])
 
         if (toolsRes.ok) {
-          const toolsData = await toolsRes.json()
+          const toolsData: ToolsApiResponse = await toolsRes.json()
           setTools(toolsData.docs || [])
         }
 
         if (categoriesRes.ok) {
-          const categoriesData = await categoriesRes.json()
+          const categoriesData: CategoriesApiResponse = await categoriesRes.json()
           setCategories(categoriesData.docs || [])
         }
       } catch (error) {
@@ -498,5 +509,19 @@ export default function ToolsPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ToolsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#f8f8f8] flex items-center justify-center">
+          <div className="animate-spin h-8 w-8 border-2 border-black border-t-transparent rounded-full" />
+        </div>
+      }
+    >
+      <ToolsPageContent />
+    </Suspense>
   )
 }

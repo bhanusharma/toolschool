@@ -129,10 +129,10 @@ export default async function HomePage() {
                   </svg>
                 </Link>
                 <Link
-                  href="/makers"
+                  href="/builders"
                   className="bg-white/10 backdrop-blur text-white border border-white/20 px-8 py-4 font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase transition-all duration-300 hover:bg-white/20 inline-flex items-center justify-center"
                 >
-                  MEET THE MAKERS
+                  MEET THE BUILDERS
                 </Link>
               </div>
             </div>

@@ -10,14 +10,14 @@ import { r2Storage } from '@payloadcms/storage-r2'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Tools } from './collections/Tools'
-import { Makers } from './collections/Makers'
+import { Builders } from './collections/Builders'
 import { Projects } from './collections/Projects'
 import { Posts } from './collections/Posts'
 import { Examples } from './collections/Examples'
 import {
   ToolCategories,
   CreationTypes,
-  MakerSpecialties,
+  BuilderSpecialties,
   CommunityTypes,
   NewsCategories,
   UserSituations,
@@ -49,14 +49,14 @@ export default buildConfig({
     Media,
     // Main Content
     Tools,
-    Makers,
+    Builders,
     Projects,
     Posts,
     Examples,
     // Taxonomies
     ToolCategories,
     CreationTypes,
-    MakerSpecialties,
+    BuilderSpecialties,
     CommunityTypes,
     NewsCategories,
     UserSituations,

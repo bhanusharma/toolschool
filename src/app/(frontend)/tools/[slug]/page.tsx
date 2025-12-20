@@ -40,6 +40,13 @@ interface Tool {
   }>
 }
 
+interface ToolsApiResponse {
+  docs: Tool[]
+  hasNextPage: boolean
+  hasPrevPage: boolean
+  totalDocs: number
+}
+
 export default function ToolDetailPage() {
   const params = useParams()
   const slug = params.slug as string
@@ -54,7 +61,7 @@ export default function ToolDetailPage() {
       try {
         const res = await fetch(`/api/tools?where[slug][equals]=${slug}&limit=1`)
         if (res.ok) {
-          const data = await res.json()
+          const data: ToolsApiResponse = await res.json()
           if (data.docs && data.docs.length > 0) {
             setTool(data.docs[0])
 
@@ -65,7 +72,7 @@ export default function ToolDetailPage() {
                 `/api/tools?where[toolCategory][equals]=${categoryId}&where[id][not_equals]=${data.docs[0].id}&limit=4`
               )
               if (relatedRes.ok) {
-                const relatedData = await relatedRes.json()
+                const relatedData: ToolsApiResponse = await relatedRes.json()
                 setRelatedTools(relatedData.docs || [])
               }
             }

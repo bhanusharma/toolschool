@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
-export const MakerSpecialties: CollectionConfig = {
-  slug: 'maker-specialties',
+export const BuilderSpecialties: CollectionConfig = {
+  slug: 'builder-specialties',
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug'],

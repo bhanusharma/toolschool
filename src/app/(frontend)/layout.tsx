@@ -68,12 +68,12 @@ function Header() {
                   </span>
                 </Link>
                 <Link
-                  href="/makers"
+                  href="/builders"
                   prefetch={true}
                   className="flex flex-col h-full justify-center relative shrink-0"
                 >
                   <span className="block leading-[14px] transition-opacity duration-200 hover:opacity-60">
-                    MAKERS
+                    BUILDERS
                   </span>
                 </Link>
                 <Link
@@ -200,8 +200,8 @@ function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/makers" className="hover:text-black transition-colors">
-                    Makers
+                  <Link href="/builders" className="hover:text-black transition-colors">
+                    Builders
                   </Link>
                 </li>
                 <li>

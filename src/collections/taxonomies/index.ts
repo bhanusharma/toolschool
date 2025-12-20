@@ -1,6 +1,6 @@
 export { ToolCategories } from './ToolCategories'
 export { CreationTypes } from './CreationTypes'
-export { MakerSpecialties } from './MakerSpecialties'
+export { BuilderSpecialties } from './BuilderSpecialties'
 export { CommunityTypes } from './CommunityTypes'
 export { NewsCategories } from './NewsCategories'
 export { UserSituations } from './UserSituations'
