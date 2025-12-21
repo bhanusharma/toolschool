@@ -200,6 +200,7 @@ export const Tools: CollectionConfig = {
       type: 'text',
       required: true,
       unique: true,
+      index: true,
       admin: {
         position: 'sidebar',
       },
@@ -208,6 +209,7 @@ export const Tools: CollectionConfig = {
       name: 'featured',
       type: 'checkbox',
       defaultValue: false,
+      index: true,
       admin: {
         position: 'sidebar',
         description: 'Feature in discovery listings',
@@ -217,6 +219,7 @@ export const Tools: CollectionConfig = {
       name: 'toolCategory',
       type: 'relationship',
       relationTo: 'tool-categories',
+      index: true,
       admin: {
         position: 'sidebar',
       },

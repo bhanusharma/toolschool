@@ -101,7 +101,7 @@ function ToolsPageContent() {
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory)
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '')
   const [tools, setTools] = useState<Tool[]>([])
-  const [_categories, setCategories] = useState<Category[]>([])
+  const [, setCategories] = useState<Category[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [sortBy, setSortBy] = useState<SortOption>(sortParam || 'featured')
   const [showSortDropdown, setShowSortDropdown] = useState(false)
