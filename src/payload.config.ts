@@ -14,6 +14,7 @@ import { Builders } from './collections/Builders'
 import { Projects } from './collections/Projects'
 import { Posts } from './collections/Posts'
 import { Examples } from './collections/Examples'
+import { Tutorials } from './collections/Tutorials'
 import {
   ToolCategories,
   CreationTypes,
@@ -53,6 +54,7 @@ export default buildConfig({
     Projects,
     Posts,
     Examples,
+    Tutorials,
     // Taxonomies
     ToolCategories,
     CreationTypes,

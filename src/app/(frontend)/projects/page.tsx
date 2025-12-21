@@ -1,17 +1,24 @@
 import Link from 'next/link'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
-import { Search, Eye, ArrowRight, X } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { Search, X, Sparkles, Image as ImageIcon, Video, Music, Globe } from 'lucide-react'
+import { ProjectCard, EmptyState } from '@/components/cards'
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
+
+// Type colors for visual distinction
+const typeConfig: { [key: string]: { color: string; icon: typeof ImageIcon; emoji: string } } = {
+  websites: { color: '#e7131a', icon: Globe, emoji: '🌐' },
+  images: { color: '#1a73e8', icon: ImageIcon, emoji: '🖼️' },
+  videos: { color: '#fbbc04', icon: Video, emoji: '🎬' },
+  music: { color: '#34a853', icon: Music, emoji: '🎵' },
+}
 
 async function getProjectsData(searchParams: { [key: string]: string | string[] | undefined }) {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
 
-  const where: any = {}
+  const where: Record<string, unknown> = {}
 
   if (searchParams.type) {
     const communityType = await payload.find({
@@ -32,7 +39,7 @@ async function getProjectsData(searchParams: { [key: string]: string | string[] 
     ]
   }
 
-  const [projects, communityTypes, featuredProject] = await Promise.all([
+  const [projects, communityTypes, featuredProjects] = await Promise.all([
     payload.find({
       collection: 'projects',
       limit: 50,
@@ -46,7 +53,7 @@ async function getProjectsData(searchParams: { [key: string]: string | string[] 
     payload.find({
       collection: 'projects',
       where: { featuredInHero: { equals: true } },
-      limit: 1,
+      limit: 3,
     }),
   ])
 
@@ -54,132 +61,8 @@ async function getProjectsData(searchParams: { [key: string]: string | string[] 
     projects: projects.docs,
     communityTypes: communityTypes.docs,
     totalProjects: projects.totalDocs,
-    featuredProject: featuredProject.docs[0] || null,
+    featuredProjects: featuredProjects.docs,
   }
-}
-
-function ProjectCard({ project }: { project: any }) {
-  return (
-    <Link href={`/projects/${project.slug}`} className="group block">
-      <div className="border border-[--color-border-light] overflow-hidden transition-all duration-200 group-hover:border-[--color-primary]">
-        {/* Image placeholder */}
-        <div className="aspect-video bg-gradient-to-br from-[--color-muted] to-[--color-border-light] group-hover:from-[--color-primary]/10 group-hover:to-[--color-primary]/5 transition-all duration-200 flex items-center justify-center">
-          <span className="text-4xl font-bold font-display text-[--color-muted-foreground]/30">
-            {project.title?.charAt(0)?.toUpperCase() || 'P'}
-          </span>
-        </div>
-
-        {/* Content */}
-        <div className="p-6">
-          <div className="flex items-start justify-between gap-2 mb-3">
-            <h3 className="font-semibold font-display uppercase tracking-wide text-base group-hover:text-[--color-primary] transition-colors">
-              {project.title}
-            </h3>
-            {project.views > 0 && (
-              <div className="flex items-center gap-1 text-xs text-[--color-muted-foreground]">
-                <Eye className="h-3 w-3" />
-                {project.views}
-              </div>
-            )}
-          </div>
-
-          {project.excerpt && (
-            <p className="text-sm text-[--color-muted-foreground] line-clamp-2 mb-4">
-              {project.excerpt}
-            </p>
-          )}
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              {project.communityType && (
-                <Badge variant="outline" className="text-[10px]">
-                  {typeof project.communityType === 'object' ? project.communityType.title : project.communityType}
-                </Badge>
-              )}
-              {project.projectYear && (
-                <span className="text-xs text-[--color-muted-foreground]">{project.projectYear}</span>
-              )}
-            </div>
-            {project.projectAuthor && (
-              <span className="text-xs text-[--color-muted-foreground]">
-                by {project.projectAuthor}
-              </span>
-            )}
-          </div>
-        </div>
-      </div>
-    </Link>
-  )
-}
-
-function FeaturedProject({ project }: { project: any }) {
-  return (
-    <Link href={`/projects/${project.slug}`} className="group block">
-      <div className="relative aspect-[21/9] bg-gradient-to-br from-[--color-muted] to-[--color-border-light] border border-[--color-border-light] overflow-hidden group-hover:border-[--color-primary] transition-all duration-200">
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-        {/* Content */}
-        <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12 text-white">
-          <Badge variant="default" className="w-fit mb-4 bg-white text-black">
-            Featured Project
-          </Badge>
-          <h2 className="text-2xl md:text-4xl font-bold font-display uppercase tracking-wide mb-3">
-            {project.title}
-          </h2>
-          {project.excerpt && (
-            <p className="text-white/80 text-lg max-w-2xl line-clamp-2 mb-4">
-              {project.excerpt}
-            </p>
-          )}
-          <div className="flex items-center gap-4 text-sm text-white/70">
-            {project.projectAuthor && <span>by {project.projectAuthor}</span>}
-            {project.projectYear && <span>{project.projectYear}</span>}
-            {project.communityType && (
-              <Badge variant="outline" className="border-white/30 text-white text-[10px]">
-                {typeof project.communityType === 'object' ? project.communityType.title : project.communityType}
-              </Badge>
-            )}
-          </div>
-        </div>
-
-        {/* View button */}
-        <div className="absolute top-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity">
-          <Button variant="secondary" className="bg-white text-black hover:bg-white/90">
-            View Project <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-      </div>
-    </Link>
-  )
-}
-
-function FilterPill({
-  label,
-  href,
-  active,
-  count,
-}: {
-  label: string
-  href: string
-  active: boolean
-  count?: number
-}) {
-  return (
-    <Link href={href}>
-      <div
-        className={`px-4 py-2 text-xs font-medium font-display uppercase tracking-wider border transition-all duration-200 ${
-          active
-            ? 'bg-[--color-primary] text-white border-[--color-primary]'
-            : 'bg-white text-[--color-foreground] border-[--color-border-light] hover:bg-[--color-primary] hover:text-white hover:border-[--color-primary]'
-        }`}
-      >
-        {label}
-        {count !== undefined && ` (${count})`}
-        {active && <X className="inline-block ml-2 h-3 w-3" />}
-      </div>
-    </Link>
-  )
 }
 
 function buildFilterUrl(
@@ -205,126 +88,287 @@ function buildFilterUrl(
 
 export default async function ProjectsPage({ searchParams }: { searchParams: SearchParams }) {
   const resolvedParams = await searchParams
-  const { projects, communityTypes, totalProjects, featuredProject } = await getProjectsData(resolvedParams)
+  const { projects, communityTypes, totalProjects, featuredProjects } = await getProjectsData(resolvedParams)
 
   const activeType = resolvedParams.type as string | undefined
   const searchQuery = resolvedParams.search as string | undefined
-
   const hasActiveFilters = activeType || searchQuery
 
+  // Get featured project for hero
+  const heroProject = featuredProjects[0]
+  const showcaseProjects = featuredProjects.slice(1, 3)
+
   return (
-    <div className="min-h-screen">
-      {/* Header */}
-      <section className="border-b border-[--color-border-light] py-16 md:py-24">
-        <div className="container">
-          <h1 className="text-4xl md:text-6xl font-bold font-display uppercase tracking-wide">
-            AI Projects
-          </h1>
-          <p className="mt-4 text-lg text-[--color-muted-foreground] max-w-2xl">
-            Explore amazing creations made with AI tools by our community
-          </p>
-
-          {/* Search Bar */}
-          <form action="/projects" method="GET" className="mt-8 max-w-xl">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[--color-muted-foreground]" />
-              <input
-                type="text"
-                name="search"
-                defaultValue={searchQuery}
-                placeholder="Search projects..."
-                className="w-full pl-12 pr-4 py-4 border border-[--color-border-light] bg-white focus:outline-none focus:border-[--color-primary] font-display text-sm uppercase tracking-wider placeholder:normal-case placeholder:tracking-normal"
-              />
-              {activeType && <input type="hidden" name="type" value={activeType} />}
-            </div>
-          </form>
+    <div className="min-h-screen bg-[#f8f8f8]">
+      {/* Hero Section */}
+      <section className="relative bg-black overflow-hidden">
+        <div className="absolute inset-0">
+          {/* Geometric background */}
+          <div
+            className="absolute top-0 right-0 w-[60%] h-full bg-[#e7131a] opacity-90"
+            style={{ clipPath: 'polygon(30% 0, 100% 0, 100% 100%, 10% 100%)' }}
+          />
         </div>
-      </section>
 
-      {/* Featured Project */}
-      {featuredProject && !hasActiveFilters && (
-        <section className="py-8">
-          <div className="container">
-            <FeaturedProject project={featuredProject} />
-          </div>
-        </section>
-      )}
+        <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-16 md:py-24">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left - Title and Search */}
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/10 backdrop-blur border border-white/20 mb-6">
+                <Sparkles className="w-4 h-4 text-[#e7131a]" />
+                <span className="text-[11px] font-ibm-plex-sans-condensed tracking-wider uppercase text-white/80">
+                  Community Showcase
+                </span>
+              </div>
 
-      {/* Filters */}
-      <section className="border-b border-[--color-border-light] py-6 sticky top-16 bg-white z-40">
-        <div className="container">
-          <div className="flex flex-wrap items-center gap-3">
-            {/* All Projects */}
-            <FilterPill
-              label="All Projects"
-              href="/projects"
-              active={!hasActiveFilters}
-              count={totalProjects}
-            />
+              <h1 className="text-[48px] md:text-[64px] lg:text-[72px] leading-[0.95] font-gilda-display text-white mb-6">
+                AI-Powered
+                <br />
+                <span className="text-[#e7131a]">Creations</span>
+              </h1>
 
-            {/* Type Filters */}
-            {communityTypes.map((type: any) => (
-              <FilterPill
-                key={type.id}
-                label={type.title}
-                href={buildFilterUrl(
-                  resolvedParams,
-                  'type',
-                  activeType === type.slug ? null : type.slug
-                )}
-                active={activeType === type.slug}
-              />
-            ))}
+              <p className="font-ibm-plex-sans text-[16px] md:text-[18px] leading-relaxed text-white/70 max-w-md mb-8">
+                Explore stunning projects made with AI tools. From websites to music, discover what creators are building.
+              </p>
 
-            {/* Clear All */}
-            {hasActiveFilters && (
-              <>
-                <div className="w-px h-6 bg-[--color-border-light] mx-2" />
-                <Link href="/projects">
-                  <Button variant="ghost" size="sm" className="text-xs">
-                    <X className="mr-1 h-3 w-3" />
-                    Clear Filters
-                  </Button>
-                </Link>
-              </>
+              {/* Search Bar */}
+              <form action="/projects" method="GET" className="max-w-md">
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-black/40" />
+                  <input
+                    type="text"
+                    name="search"
+                    defaultValue={searchQuery}
+                    placeholder="Search projects..."
+                    className="w-full pl-12 pr-4 py-4 bg-white border-0 font-ibm-plex-sans text-[15px] focus:outline-none focus:ring-2 focus:ring-[#e7131a] placeholder:text-black/40"
+                  />
+                  {activeType && <input type="hidden" name="type" value={activeType} />}
+                </div>
+              </form>
+
+              {/* Quick stats */}
+              <div className="flex items-center gap-8 mt-8 pt-8 border-t border-white/20">
+                <div>
+                  <div className="text-[32px] font-gilda-display text-white">{totalProjects}+</div>
+                  <div className="text-[11px] font-ibm-plex-sans-condensed tracking-wider uppercase text-white/50">Projects</div>
+                </div>
+                <div>
+                  <div className="text-[32px] font-gilda-display text-white">{communityTypes.length}</div>
+                  <div className="text-[11px] font-ibm-plex-sans-condensed tracking-wider uppercase text-white/50">Categories</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right - Featured Project Preview */}
+            {heroProject && !hasActiveFilters && (
+              <div className="hidden lg:block">
+                <ProjectCard project={heroProject as any} variant="featured" />
+              </div>
             )}
           </div>
         </div>
       </section>
 
-      {/* Results */}
-      <section className="py-8 bg-[--color-muted]">
-        <div className="container">
-          {/* Results count */}
-          <div className="mb-6">
-            <p className="text-sm text-[--color-muted-foreground] font-display uppercase tracking-wider">
-              Showing {projects.length} {projects.length === 1 ? 'project' : 'projects'}
-              {hasActiveFilters && ' (filtered)'}
-            </p>
-          </div>
+      {/* Category Showcase */}
+      {!hasActiveFilters && (
+        <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-12 bg-white border-b border-[#e5e5e5]">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {communityTypes.map((type: any) => {
+              const config = typeConfig[type.slug] || { color: '#000', icon: Globe, emoji: '📁' }
+              const Icon = config.icon
+              const count = projects.filter((p: any) => {
+                if (!p.communityType) return false
+                const slug = typeof p.communityType === 'object' ? p.communityType.slug : p.communityType
+                return slug === type.slug
+              }).length
 
-          {/* Projects Grid */}
-          {projects.length > 0 ? (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {projects.map((project: any) => (
-                <ProjectCard key={project.id} project={project} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-24 border border-[--color-border-light] bg-white">
-              <p className="text-xl font-display uppercase tracking-wide">
-                No projects found
-              </p>
-              <p className="mt-2 text-[--color-muted-foreground]">
-                Try adjusting your filters or search query
-              </p>
-              <Button asChild className="mt-6">
-                <Link href="/projects">Clear Filters</Link>
-              </Button>
-            </div>
+              return (
+                <Link
+                  key={type.id}
+                  href={`/projects?type=${type.slug}`}
+                  className="group p-6 border border-[#e5e5e5] hover:border-black transition-all duration-200"
+                >
+                  <div
+                    className="w-12 h-12 flex items-center justify-center mb-4"
+                    style={{ backgroundColor: `${config.color}15` }}
+                  >
+                    <Icon className="w-6 h-6" style={{ color: config.color }} />
+                  </div>
+                  <h3 className="font-gilda-display text-[18px] text-black group-hover:text-[#e7131a] transition-colors">
+                    {type.title}
+                  </h3>
+                  <p className="text-[12px] font-ibm-plex-sans text-black/50 mt-1">
+                    {count} {count === 1 ? 'project' : 'projects'}
+                  </p>
+                </Link>
+              )
+            })}
+          </div>
+        </section>
+      )}
+
+      {/* Filter Bar */}
+      <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-4 bg-white border-b border-[#e5e5e5] sticky top-14 md:top-16 lg:top-20 z-40">
+        <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide">
+          {/* All Projects */}
+          <Link
+            href="/projects"
+            className={`flex-shrink-0 px-4 py-2 text-[12px] font-ibm-plex-sans-condensed tracking-wider uppercase border transition-all ${
+              !hasActiveFilters
+                ? 'bg-black text-white border-black'
+                : 'bg-white text-black/70 border-[#e5e5e5] hover:border-black hover:text-black'
+            }`}
+          >
+            All Projects ({totalProjects})
+          </Link>
+
+          {/* Type Filters */}
+          {communityTypes.map((type: any) => {
+            const config = typeConfig[type.slug] || { color: '#000', icon: Globe, emoji: '📁' }
+            const isActive = activeType === type.slug
+
+            return (
+              <Link
+                key={type.id}
+                href={buildFilterUrl(resolvedParams, 'type', isActive ? null : type.slug)}
+                className={`flex-shrink-0 px-4 py-2 text-[12px] font-ibm-plex-sans-condensed tracking-wider uppercase border transition-all flex items-center gap-2 ${
+                  isActive
+                    ? 'text-white border-transparent'
+                    : 'bg-white text-black/70 border-[#e5e5e5] hover:border-black hover:text-black'
+                }`}
+                style={isActive ? { backgroundColor: config.color } : {}}
+              >
+                <span>{config.emoji}</span>
+                {type.title}
+                {isActive && <X className="w-3 h-3 ml-1" />}
+              </Link>
+            )
+          })}
+
+          {/* Clear Filters */}
+          {hasActiveFilters && (
+            <>
+              <div className="w-px h-6 bg-[#e5e5e5] mx-2 flex-shrink-0" />
+              <Link
+                href="/projects"
+                className="flex-shrink-0 flex items-center gap-1 text-[12px] font-ibm-plex-sans text-[#e7131a] hover:underline"
+              >
+                <X className="w-3 h-3" />
+                Clear
+              </Link>
+            </>
           )}
         </div>
       </section>
+
+      {/* Active Filters Display */}
+      {hasActiveFilters && (
+        <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-3 bg-[#f6f4f1] border-b border-[#e5e5e5]">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-[12px] font-ibm-plex-sans text-black/50">Filtering by:</span>
+            {activeType && (
+              <Link
+                href={buildFilterUrl(resolvedParams, 'type', null)}
+                className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#e5e5e5] text-[12px] font-ibm-plex-sans-condensed tracking-wider uppercase hover:border-black transition-colors"
+              >
+                {typeConfig[activeType]?.emoji} {activeType}
+                <X className="w-3 h-3" />
+              </Link>
+            )}
+            {searchQuery && (
+              <Link
+                href={buildFilterUrl(resolvedParams, 'search', null)}
+                className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#e5e5e5] text-[12px] font-ibm-plex-sans hover:border-black transition-colors"
+              >
+                &ldquo;{searchQuery}&rdquo;
+                <X className="w-3 h-3" />
+              </Link>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* Featured Showcase (only when not filtering) */}
+      {!hasActiveFilters && showcaseProjects.length > 0 && (
+        <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-12 bg-white">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="text-[28px] font-gilda-display text-black">Featured Projects</h2>
+              <p className="text-[14px] font-ibm-plex-sans text-black/50 mt-1">
+                Hand-picked by our curators
+              </p>
+            </div>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            {showcaseProjects.map((project: any) => (
+              <ProjectCard key={project.id} project={project} variant="featured" />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Main Grid */}
+      <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-12">
+        {/* Results Header */}
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h2 className="text-[24px] font-gilda-display text-black">
+              {hasActiveFilters ? 'Filtered Results' : 'All Projects'}
+            </h2>
+            <p className="text-[14px] font-ibm-plex-sans text-black/50 mt-1">
+              {projects.length} {projects.length === 1 ? 'project' : 'projects'} found
+            </p>
+          </div>
+        </div>
+
+        {/* Projects Grid */}
+        {projects.length > 0 ? (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.map((project: any) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            type="projects"
+            searchQuery={searchQuery}
+            actionLabel="Clear Filters"
+            actionHref="/projects"
+          />
+        )}
+      </section>
+
+      {/* Submit CTA */}
+      <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12">
+        <div className="relative bg-black py-16 px-8 md:px-12 overflow-hidden">
+          {/* Geometric accent */}
+          <div
+            className="absolute top-0 right-0 w-64 h-64 bg-[#e7131a] opacity-90"
+            style={{ clipPath: 'polygon(100% 0, 100% 100%, 0 100%)' }}
+          />
+
+          <div className="relative z-10 max-w-xl">
+            <h2 className="text-[32px] md:text-[40px] font-gilda-display text-white mb-4">
+              Made Something Amazing?
+            </h2>
+            <p className="font-ibm-plex-sans text-[16px] text-white/70 mb-8">
+              Share your AI-powered creation with our community and inspire others.
+            </p>
+            <Link
+              href="/submit-project"
+              className="inline-flex items-center gap-2 bg-[#e7131a] text-white px-6 py-3 font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase hover:bg-[#c10e14] transition-colors"
+            >
+              Submit Your Project
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="ml-1">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Bottom spacing */}
+      <div className="h-12" />
     </div>
   )
 }

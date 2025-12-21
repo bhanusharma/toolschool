@@ -2,9 +2,9 @@
 
 import { useState, useEffect, Suspense, useMemo } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { ChevronDown, X, Sparkles, Clock, SortAsc } from 'lucide-react'
+import { ChevronDown, X, Sparkles, Clock, SortAsc, Wrench } from 'lucide-react'
+import { ToolCard, EmptyState } from '@/components/cards'
 
 // Category colors for visual distinction
 const categoryColors: { [key: string]: string } = {
@@ -197,6 +197,12 @@ function ToolsPageContent() {
     updateUrl({ sort })
   }
 
+  const clearAllFilters = () => {
+    setSelectedCategory('All')
+    setSearchQuery('')
+    updateUrl({ category: null, search: null })
+  }
+
   // Filter and sort tools
   const filteredTools = useMemo(() => {
     let filtered = tools
@@ -239,11 +245,8 @@ function ToolsPageContent() {
 
   const visibleTools = filteredTools.slice(0, visibleCount)
   const hasMore = visibleCount < filteredTools.length
-
-  const getExcerptText = (excerpt: string | undefined) => {
-    if (!excerpt) return ''
-    return excerpt.replace(/<[^>]*>/g, '').trim()
-  }
+  const hasActiveFilters = selectedCategory !== 'All' || searchQuery
+  const featuredTools = tools.filter(t => t.featured).slice(0, 3)
 
   const sortOptions = [
     { value: 'featured' as SortOption, label: 'Featured', icon: Sparkles },
@@ -255,372 +258,383 @@ function ToolsPageContent() {
     return (
       <div className="min-h-screen bg-[#f8f8f8]">
         {/* Skeleton Hero */}
-        <div className="w-full flex justify-center">
-          <div className="relative w-full max-w-[1440px] bg-gradient-to-br from-black via-gray-900 to-black py-[80px] md:py-[100px] px-6 lg:px-12">
-            <div className="max-w-[980px] mx-auto text-center">
-              <div className="h-16 w-64 bg-white/10 rounded mx-auto mb-6 animate-pulse" />
-              <div className="h-6 w-96 bg-white/10 rounded mx-auto animate-pulse" />
+        <section className="relative bg-black overflow-hidden">
+          <div className="absolute inset-0">
+            <div
+              className="absolute top-0 right-0 w-[45%] h-full bg-[#e7131a] opacity-90"
+              style={{ clipPath: 'polygon(30% 0, 100% 0, 100% 100%, 0 100%)' }}
+            />
+          </div>
+          <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-16 md:py-24">
+            <div className="max-w-2xl">
+              <div className="h-8 w-48 bg-white/10 mb-6 animate-pulse" />
+              <div className="h-16 w-80 bg-white/10 mb-6 animate-pulse" />
+              <div className="h-6 w-64 bg-white/10 animate-pulse" />
             </div>
           </div>
-        </div>
+        </section>
+
         {/* Skeleton Grid */}
-        <div className="w-full flex justify-center">
-          <div className="relative w-full max-w-[1440px] bg-white py-20 px-6 lg:px-12">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-[1200px] mx-auto">
-              {[...Array(8)].map((_, i) => (
-                <div key={i} className="border border-[#e5e5e5] animate-pulse">
-                  <div className="aspect-square bg-[#f6f4f1]" />
-                  <div className="p-6">
-                    <div className="h-6 w-3/4 bg-[#f6f4f1] rounded mb-3" />
-                    <div className="h-4 w-full bg-[#f6f4f1] rounded mb-2" />
-                    <div className="h-4 w-2/3 bg-[#f6f4f1] rounded" />
-                  </div>
+        <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="border border-[#e5e5e5] bg-white animate-pulse">
+                <div className="aspect-square bg-[#f6f4f1]" />
+                <div className="p-5">
+                  <div className="h-6 w-3/4 bg-[#f6f4f1] mb-3" />
+                  <div className="h-4 w-full bg-[#f6f4f1] mb-2" />
+                  <div className="h-4 w-2/3 bg-[#f6f4f1]" />
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
-        </div>
+        </section>
       </div>
     )
   }
 
   return (
     <div className="min-h-screen bg-[#f8f8f8]">
-      {/* Hero Section - Enhanced */}
-      <div className="w-full flex justify-center">
-        <div className="relative w-full max-w-[1440px] bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
-          {/* Animated background elements */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute top-0 left-0 w-96 h-96 bg-[#e7131a]/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 animate-pulse" />
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 animate-pulse" style={{ animationDelay: '1s' }} />
-            <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 animate-pulse" style={{ animationDelay: '2s' }} />
+      {/* Hero Section */}
+      <section className="relative bg-black overflow-hidden">
+        <div className="absolute inset-0">
+          {/* Geometric background - top-right diagonal accent */}
+          <div
+            className="absolute top-0 right-0 w-[45%] h-full bg-[#e7131a] opacity-90 animate-geometric"
+            style={{ clipPath: 'polygon(30% 0, 100% 0, 100% 100%, 0 100%)' }}
+          />
+          {/* Grid pattern */}
+          <div className="absolute inset-0 opacity-[0.03]">
+            <div className="h-full w-full" style={{
+              backgroundImage: `
+                linear-gradient(to right, white 1px, transparent 1px),
+                linear-gradient(to bottom, white 1px, transparent 1px)
+              `,
+              backgroundSize: '80px 80px',
+            }} />
           </div>
+        </div>
 
-          <div className="relative z-10 py-[60px] md:py-[80px] px-6 lg:px-12">
-            <div className="max-w-[980px] mx-auto text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur border border-white/20 mb-6">
-                <Sparkles className="w-4 h-4 text-[#e7131a]" />
-                <span className="text-[12px] font-ibm-plex-sans-condensed tracking-wider uppercase text-white/80">
+        <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-16 md:py-24">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left - Title and Search */}
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/10 backdrop-blur border border-white/20 mb-6 animate-hero">
+                <Wrench className="w-4 h-4 text-[#e7131a]" />
+                <span className="text-[11px] font-ibm-plex-sans-condensed tracking-wider uppercase text-white/80">
                   {tools.length}+ AI Tools Curated
                 </span>
               </div>
 
-              <h1 className="text-[40px] sm:text-[56px] lg:text-[72px] leading-[1] font-gilda-display font-normal text-white mb-6">
-                AI Creation Tools
+              <h1 className="text-[48px] md:text-[64px] lg:text-[72px] leading-[0.95] font-gilda-display text-white mb-6 animate-hero-delay-1">
+                AI Creation
+                <br />
+                <span className="text-[#e7131a]">Tools</span>
               </h1>
-              <p className="font-ibm-plex-sans text-[16px] sm:text-[18px] leading-[28px] text-white/70 max-w-[600px] mx-auto mb-10">
+
+              <p className="font-ibm-plex-sans text-[16px] md:text-[18px] leading-relaxed text-white/70 max-w-md mb-8 animate-hero-delay-2">
                 Discover the best AI tools for creators, artists, and innovators. Find the perfect tool for your next project.
               </p>
 
               {/* Search Bar */}
-              <div className="max-w-[560px] mx-auto">
+              <div className="max-w-md animate-hero-delay-3">
                 <div className="relative">
+                  <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-black/40" viewBox="0 0 24 24" fill="none">
+                    <path d="M21 21L16.514 16.506M19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                   <input
                     type="text"
                     placeholder="Search tools..."
                     value={searchQuery}
                     onChange={(e) => handleSearchChange(e.target.value)}
-                    className="w-full px-6 py-4 bg-white/10 backdrop-blur border border-white/20 font-ibm-plex-sans text-[16px] text-white placeholder:text-white/40 focus:outline-none focus:border-white/40 focus:bg-white/20 transition-all"
+                    className="w-full pl-12 pr-4 py-4 bg-white border-0 font-ibm-plex-sans text-[15px] focus:outline-none focus:ring-2 focus:ring-[#e7131a] placeholder:text-black/40"
                   />
-                  <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
-                    {searchQuery ? (
-                      <button onClick={() => handleSearchChange('')} className="p-1 hover:bg-white/10 rounded">
-                        <X className="w-5 h-5 text-white/60" />
-                      </button>
-                    ) : (
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-white/40">
-                        <path d="M21 21L16.514 16.506M19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    )}
-                  </div>
+                  {searchQuery && (
+                    <button
+                      onClick={() => handleSearchChange('')}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-black/10 rounded"
+                    >
+                      <X className="w-4 h-4 text-black/60" />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Quick stats */}
+              <div className="flex items-center gap-8 mt-8 pt-8 border-t border-white/20 animate-hero-delay-3">
+                <div>
+                  <div className="text-[32px] font-gilda-display text-white">{tools.length}+</div>
+                  <div className="text-[11px] font-ibm-plex-sans-condensed tracking-wider uppercase text-white/50">Tools</div>
+                </div>
+                <div>
+                  <div className="text-[32px] font-gilda-display text-white">{Object.keys(categoryData).length}</div>
+                  <div className="text-[11px] font-ibm-plex-sans-condensed tracking-wider uppercase text-white/50">Categories</div>
                 </div>
               </div>
             </div>
+
+            {/* Right - Featured Tool Preview */}
+            {featuredTools[0] && !hasActiveFilters && (
+              <div className="hidden lg:block animate-slide-left stagger-4">
+                <ToolCard tool={featuredTools[0] as any} variant="featured" />
+              </div>
+            )}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Category Pills - Sticky Filter Bar */}
-      <div className="w-full flex justify-center sticky top-14 md:top-16 lg:top-20 z-30 bg-white border-b border-black/10 shadow-sm">
-        <div className="relative w-full max-w-[1440px] px-6 lg:px-12 py-4">
-          <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide">
-            <button
-              onClick={() => handleCategoryChange('All')}
-              className={`flex-shrink-0 px-4 py-2 font-ibm-plex-sans-condensed text-[12px] tracking-wider uppercase transition-all border ${
-                selectedCategory === 'All'
-                  ? 'bg-black text-white border-black'
-                  : 'bg-white text-black/70 border-black/20 hover:border-black hover:text-black'
-              }`}
-            >
-              All Tools ({tools.length})
-            </button>
-            {Object.keys(categoryData).map((category) => (
+      {/* Category Cards (when not filtering) */}
+      {!hasActiveFilters && (
+        <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-12 bg-white border-b border-[#e5e5e5]">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {Object.keys(categoryData).map((category, index) => {
+              const color = categoryColors[category] || '#000'
+              const staggerClass = `stagger-${index + 1}`
+              return (
+                <button
+                  key={category}
+                  onClick={() => handleCategoryChange(category)}
+                  className={`group p-6 border border-[#e5e5e5] hover:border-black transition-all duration-200 text-left animate-slide-up ${staggerClass}`}
+                >
+                  <div
+                    className="w-10 h-10 flex items-center justify-center mb-4 text-2xl"
+                    style={{ backgroundColor: `${color}15` }}
+                  >
+                    {categoryData[category].emoji}
+                  </div>
+                  <h3 className="font-gilda-display text-[16px] text-black group-hover:text-[#e7131a] transition-colors mb-1">
+                    {category}
+                  </h3>
+                  <p className="font-ibm-plex-sans text-[12px] text-black/50">
+                    {categoryCounts[category] || 0} tools
+                  </p>
+                </button>
+              )
+            })}
+          </div>
+        </section>
+      )}
+
+      {/* Filter Bar */}
+      <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-4 bg-white border-b border-[#e5e5e5] sticky top-14 md:top-16 lg:top-20 z-40">
+        <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide">
+          {/* All Tools */}
+          <button
+            onClick={() => handleCategoryChange('All')}
+            className={`flex-shrink-0 px-4 py-2 text-[12px] font-ibm-plex-sans-condensed tracking-wider uppercase border transition-all ${
+              selectedCategory === 'All'
+                ? 'bg-black text-white border-black'
+                : 'bg-white text-black/70 border-[#e5e5e5] hover:border-black hover:text-black'
+            }`}
+          >
+            All Tools ({tools.length})
+          </button>
+
+          {/* Category Filters */}
+          {Object.keys(categoryData).map((category) => {
+            const isActive = selectedCategory === category
+            const color = categoryColors[category] || '#000'
+
+            return (
               <button
                 key={category}
-                onClick={() => handleCategoryChange(category)}
-                className={`flex-shrink-0 px-4 py-2 font-ibm-plex-sans-condensed text-[12px] tracking-wider uppercase transition-all border flex items-center gap-2 ${
-                  selectedCategory === category
+                onClick={() => handleCategoryChange(isActive ? 'All' : category)}
+                className={`flex-shrink-0 px-4 py-2 text-[12px] font-ibm-plex-sans-condensed tracking-wider uppercase border transition-all flex items-center gap-2 ${
+                  isActive
                     ? 'text-white border-transparent'
-                    : 'bg-white text-black/70 border-black/20 hover:border-black hover:text-black'
+                    : 'bg-white text-black/70 border-[#e5e5e5] hover:border-black hover:text-black'
                 }`}
-                style={selectedCategory === category ? { backgroundColor: categoryColors[category] || '#000' } : {}}
+                style={isActive ? { backgroundColor: color } : {}}
               >
-                <span>{categoryData[category].emoji}</span>
+                <span className="text-[14px]">{categoryData[category].emoji}</span>
                 {category}
                 {categoryCounts[category] && (
-                  <span className={`${selectedCategory === category ? 'text-white/70' : 'text-black/40'}`}>
+                  <span className={isActive ? 'text-white/70' : 'text-black/40'}>
                     ({categoryCounts[category]})
                   </span>
                 )}
+                {isActive && <X className="w-3 h-3 ml-1" />}
               </button>
-            ))}
-          </div>
-        </div>
-      </div>
+            )
+          })}
 
-      {/* Active Filters */}
-      {(selectedCategory !== 'All' || searchQuery) && (
-        <div className="w-full flex justify-center bg-[#f6f4f1] border-b border-black/10">
-          <div className="relative w-full max-w-[1440px] px-6 lg:px-12 py-3">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[12px] font-ibm-plex-sans text-black/50 mr-2">Filters:</span>
-              {selectedCategory !== 'All' && (
-                <button
-                  onClick={() => handleCategoryChange('All')}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-black/10 text-[12px] font-ibm-plex-sans-condensed tracking-wider uppercase hover:border-black transition-colors"
-                >
-                  {categoryData[selectedCategory]?.emoji} {selectedCategory}
-                  <X className="w-3 h-3" />
-                </button>
-              )}
-              {searchQuery && (
-                <button
-                  onClick={() => handleSearchChange('')}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-black/10 text-[12px] font-ibm-plex-sans-condensed tracking-wider hover:border-black transition-colors"
-                >
-                  &ldquo;{searchQuery}&rdquo;
-                  <X className="w-3 h-3" />
-                </button>
-              )}
+          {/* Clear Filters */}
+          {hasActiveFilters && (
+            <>
+              <div className="w-px h-6 bg-[#e5e5e5] mx-2 flex-shrink-0" />
               <button
-                onClick={() => {
-                  handleCategoryChange('All')
-                  handleSearchChange('')
-                }}
-                className="text-[12px] font-ibm-plex-sans text-[#e7131a] hover:underline ml-2"
+                onClick={clearAllFilters}
+                className="flex-shrink-0 flex items-center gap-1 text-[12px] font-ibm-plex-sans text-[#e7131a] hover:underline"
               >
-                Clear All
+                <X className="w-3 h-3" />
+                Clear
               </button>
-            </div>
-          </div>
+            </>
+          )}
         </div>
+      </section>
+
+      {/* Active Filters Display */}
+      {hasActiveFilters && (
+        <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-3 bg-[#f6f4f1] border-b border-[#e5e5e5]">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-[12px] font-ibm-plex-sans text-black/50">Filtering by:</span>
+            {selectedCategory !== 'All' && (
+              <button
+                onClick={() => handleCategoryChange('All')}
+                className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#e5e5e5] text-[12px] font-ibm-plex-sans-condensed tracking-wider uppercase hover:border-black transition-colors"
+              >
+                {categoryData[selectedCategory]?.emoji} {selectedCategory}
+                <X className="w-3 h-3" />
+              </button>
+            )}
+            {searchQuery && (
+              <button
+                onClick={() => handleSearchChange('')}
+                className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#e5e5e5] text-[12px] font-ibm-plex-sans hover:border-black transition-colors"
+              >
+                &ldquo;{searchQuery}&rdquo;
+                <X className="w-3 h-3" />
+              </button>
+            )}
+          </div>
+        </section>
       )}
 
-      {/* Tools Section */}
-      <div className="w-full flex justify-center">
-        <div className="relative w-full max-w-[1440px] bg-white py-12 px-6 lg:px-12">
-          <div className="max-w-[1200px] mx-auto">
-            {/* Header with count and sort */}
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h2 className="text-[28px] font-gilda-display font-normal text-black">
-                  {selectedCategory === 'All' ? 'All Tools' : selectedCategory}
-                </h2>
-                <p className="font-ibm-plex-sans text-[14px] text-black/50 mt-1">
-                  {filteredTools.length} {filteredTools.length === 1 ? 'tool' : 'tools'} found
-                </p>
-              </div>
-
-              {/* Sort Dropdown */}
-              <div className="relative">
-                <button
-                  onClick={() => setShowSortDropdown(!showSortDropdown)}
-                  className="flex items-center gap-2 px-4 py-2 border border-black/20 hover:border-black transition-colors"
-                >
-                  <span className="font-ibm-plex-sans-condensed text-[12px] tracking-wider uppercase text-black/70">
-                    Sort: {sortOptions.find(o => o.value === sortBy)?.label}
-                  </span>
-                  <ChevronDown className={`w-4 h-4 text-black/50 transition-transform ${showSortDropdown ? 'rotate-180' : ''}`} />
-                </button>
-                {showSortDropdown && (
-                  <>
-                    <div className="fixed inset-0 z-10" onClick={() => setShowSortDropdown(false)} />
-                    <div className="absolute right-0 top-full mt-1 bg-white border border-black shadow-lg z-20 min-w-[160px]">
-                      {sortOptions.map((option) => (
-                        <button
-                          key={option.value}
-                          onClick={() => handleSortChange(option.value)}
-                          className={`w-full px-4 py-3 flex items-center gap-2 text-left hover:bg-[#f6f4f1] transition-colors ${
-                            sortBy === option.value ? 'bg-[#f6f4f1]' : ''
-                          }`}
-                        >
-                          <option.icon className="w-4 h-4 text-black/50" />
-                          <span className="font-ibm-plex-sans text-[13px] text-black">
-                            {option.label}
-                          </span>
-                          {sortBy === option.value && (
-                            <span className="ml-auto text-[#e7131a]">✓</span>
-                          )}
-                        </button>
-                      ))}
-                    </div>
-                  </>
-                )}
-              </div>
+      {/* Featured Tools (when not filtering) */}
+      {!hasActiveFilters && featuredTools.length > 1 && (
+        <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-12 bg-white">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="text-[28px] font-gilda-display text-black">Featured Tools</h2>
+              <p className="text-[14px] font-ibm-plex-sans text-black/50 mt-1">
+                Hand-picked for exceptional quality
+              </p>
             </div>
-
-            {filteredTools.length === 0 ? (
-              <div className="text-center py-20 border border-[#e5e5e5]">
-                <div className="w-16 h-16 mx-auto mb-4 bg-[#f6f4f1] rounded-full flex items-center justify-center">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-black/30">
-                    <path d="M21 21L16.514 16.506M19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
-                <p className="font-gilda-display text-[24px] text-black mb-2">No tools found</p>
-                <p className="font-ibm-plex-sans text-[16px] text-black/60 mb-6">
-                  Try adjusting your filters or search query
-                </p>
-                <button
-                  onClick={() => {
-                    setSearchQuery('')
-                    handleCategoryChange('All')
-                  }}
-                  className="bg-[#e7131a] text-white px-6 py-3 font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase transition-all duration-200 hover:bg-[#c10e14]"
-                >
-                  Clear Filters
-                </button>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {featuredTools.slice(0, 3).map((tool, index) => (
+              <div key={tool.id} className={`animate-slide-up stagger-${index + 1}`}>
+                <ToolCard tool={tool as any} variant="featured" />
               </div>
-            ) : (
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Main Grid */}
+      <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-12">
+        {/* Results Header */}
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h2 className="text-[24px] font-gilda-display text-black">
+              {hasActiveFilters ? 'Filtered Results' : 'All Tools'}
+            </h2>
+            <p className="text-[14px] font-ibm-plex-sans text-black/50 mt-1">
+              {filteredTools.length} {filteredTools.length === 1 ? 'tool' : 'tools'} found
+            </p>
+          </div>
+
+          {/* Sort Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setShowSortDropdown(!showSortDropdown)}
+              className="flex items-center gap-2 px-4 py-2 border border-[#e5e5e5] hover:border-black transition-colors"
+            >
+              <span className="font-ibm-plex-sans-condensed text-[12px] tracking-wider uppercase text-black/70">
+                Sort: {sortOptions.find(o => o.value === sortBy)?.label}
+              </span>
+              <ChevronDown className={`w-4 h-4 text-black/50 transition-transform ${showSortDropdown ? 'rotate-180' : ''}`} />
+            </button>
+            {showSortDropdown && (
               <>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                  {visibleTools.map((tool) => (
-                    <Link
-                      key={tool.id}
-                      href={`/tools/${tool.slug}`}
-                      className="group flex flex-col bg-white border border-[#e5e5e5] transition-all duration-300 hover:border-black hover:shadow-lg cursor-pointer relative"
+                <div className="fixed inset-0 z-10" onClick={() => setShowSortDropdown(false)} />
+                <div className="absolute right-0 top-full mt-1 bg-white border border-black shadow-lg z-20 min-w-[160px]">
+                  {sortOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      onClick={() => handleSortChange(option.value)}
+                      className={`w-full px-4 py-3 flex items-center gap-2 text-left hover:bg-[#f6f4f1] transition-colors ${
+                        sortBy === option.value ? 'bg-[#f6f4f1]' : ''
+                      }`}
                     >
-                      {/* Featured Badge */}
-                      {tool.featured && (
-                        <div className="absolute top-3 right-3 z-10 flex items-center gap-1 px-2 py-1 bg-black text-white">
-                          <Sparkles className="w-3 h-3" />
-                          <span className="text-[10px] font-ibm-plex-sans-condensed tracking-wider uppercase">Featured</span>
-                        </div>
+                      <option.icon className="w-4 h-4 text-black/50" />
+                      <span className="font-ibm-plex-sans text-[13px] text-black">
+                        {option.label}
+                      </span>
+                      {sortBy === option.value && (
+                        <span className="ml-auto text-[#e7131a]">✓</span>
                       )}
-
-                      {/* Tool Logo/Icon */}
-                      <div
-                        className="aspect-square p-8 flex items-center justify-center relative overflow-hidden"
-                        style={{
-                          background: tool.featuredImage?.url || tool.logo?.url
-                            ? '#f6f4f1'
-                            : `linear-gradient(135deg, ${categoryColors[tool.toolCategory?.title || ''] || '#e7131a'}15, ${categoryColors[tool.toolCategory?.title || ''] || '#e7131a'}05)`
-                        }}
-                      >
-                        {tool.featuredImage?.url || tool.logo?.url ? (
-                          <Image
-                            src={tool.featuredImage?.url || tool.logo?.url || ''}
-                            alt={tool.featuredImage?.alt || tool.logo?.alt || tool.title}
-                            width={96}
-                            height={96}
-                            className="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-300"
-                          />
-                        ) : (
-                          <div
-                            className="w-24 h-24 rounded-2xl flex items-center justify-center shadow-lg"
-                            style={{ backgroundColor: categoryColors[tool.toolCategory?.title || ''] || '#e7131a' }}
-                          >
-                            <span className="text-4xl font-gilda-display text-white">
-                              {tool.title.charAt(0)}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Tool Info */}
-                      <div className="p-5 flex-1 flex flex-col">
-                        <h3 className="font-gilda-display text-[20px] leading-[28px] text-black mb-2 group-hover:text-[#e7131a] transition-colors">
-                          {tool.title}
-                        </h3>
-
-                        <p className="font-ibm-plex-sans text-[13px] leading-[20px] text-black/60 mb-4 flex-1 line-clamp-2">
-                          {tool.tagline || getExcerptText(tool.excerpt)}
-                        </p>
-
-                        {/* Tags */}
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {tool.toolCategory && (
-                            <span
-                              className="inline-block px-2.5 py-1 text-[10px] font-ibm-plex-sans-condensed tracking-wider uppercase"
-                              style={{
-                                backgroundColor: `${categoryColors[tool.toolCategory.title] || '#000'}10`,
-                                color: categoryColors[tool.toolCategory.title] || '#000'
-                              }}
-                            >
-                              {tool.toolCategory.title}
-                            </span>
-                          )}
-                          {tool.pricingModel && (
-                            <span className={`inline-block px-2.5 py-1 text-[10px] font-ibm-plex-sans-condensed tracking-wider uppercase ${
-                              tool.pricingModel === 'free' ? 'bg-green-500/10 text-green-600' :
-                              tool.pricingModel === 'freemium' ? 'bg-blue-500/10 text-blue-600' :
-                              'bg-purple-500/10 text-purple-600'
-                            }`}>
-                              {tool.pricingModel}
-                            </span>
-                          )}
-                        </div>
-
-                        {/* CTA */}
-                        <div className="flex items-center justify-between mt-auto pt-4 border-t border-[#e5e5e5]">
-                          <span className="font-ibm-plex-sans-condensed text-[12px] tracking-wider uppercase text-black group-hover:text-[#e7131a] transition-colors">
-                            Learn More
-                          </span>
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-black/30 group-hover:text-[#e7131a] group-hover:translate-x-1 transition-all">
-                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        </div>
-                      </div>
-                    </Link>
+                    </button>
                   ))}
                 </div>
-
-                {/* Load More */}
-                {hasMore && (
-                  <div className="text-center mt-12">
-                    <button
-                      onClick={() => setVisibleCount((prev) => prev + 20)}
-                      className="inline-flex items-center gap-2 px-8 py-4 border-2 border-black font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase hover:bg-black hover:text-white transition-all"
-                    >
-                      Load More
-                      <span className="text-black/50">({filteredTools.length - visibleCount} remaining)</span>
-                    </button>
-                  </div>
-                )}
               </>
             )}
           </div>
         </div>
-      </div>
+
+        {/* Tools Grid */}
+        {filteredTools.length > 0 ? (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {visibleTools.map((tool, index) => (
+                <div key={tool.id} className={`animate-slide-up stagger-${Math.min(index + 1, 12)}`}>
+                  <ToolCard tool={tool as any} />
+                </div>
+              ))}
+            </div>
+
+            {/* Load More */}
+            {hasMore && (
+              <div className="text-center mt-12">
+                <button
+                  onClick={() => setVisibleCount((prev) => prev + 20)}
+                  className="inline-flex items-center gap-2 px-8 py-4 border-2 border-black font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase hover:bg-black hover:text-white transition-all"
+                >
+                  Load More
+                  <span className="text-black/50">({filteredTools.length - visibleCount} remaining)</span>
+                </button>
+              </div>
+            )}
+          </>
+        ) : (
+          <EmptyState
+            type="tools"
+            searchQuery={searchQuery || undefined}
+            actionLabel="Clear Filters"
+            onAction={clearAllFilters}
+          />
+        )}
+      </section>
 
       {/* Submit Tool CTA */}
-      <div className="w-full flex justify-center">
-        <div className="relative w-full max-w-[1440px] bg-gradient-to-r from-[#e7131a] to-[#c10e14] py-16 px-6 lg:px-12">
-          <div className="max-w-[800px] mx-auto text-center">
+      <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 mb-12">
+        <div className="relative bg-black py-16 px-8 md:px-12 overflow-hidden">
+          {/* Geometric accent - right side */}
+          <div
+            className="absolute top-0 right-0 w-64 h-full bg-[#e7131a] opacity-90"
+            style={{ clipPath: 'polygon(30% 0, 100% 0, 100% 100%, 0 100%)' }}
+          />
+
+          <div className="relative z-10 max-w-xl">
             <h2 className="text-[32px] md:text-[40px] font-gilda-display text-white mb-4">
               Know an AI Tool We&apos;re Missing?
             </h2>
-            <p className="font-ibm-plex-sans text-[16px] text-white/80 mb-8">
+            <p className="font-ibm-plex-sans text-[16px] text-white/70 mb-8">
               Help us grow the directory by submitting your favorite AI tools.
             </p>
             <Link
               href="/submit"
-              className="inline-block bg-white text-[#e7131a] px-8 py-4 font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase hover:bg-black hover:text-white transition-all"
+              className="inline-flex items-center gap-2 bg-[#e7131a] text-white px-6 py-3 font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase hover:bg-[#c10e14] transition-colors"
             >
               Submit a Tool
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="ml-1">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </Link>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   )
 }

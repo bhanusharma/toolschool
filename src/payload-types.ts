@@ -74,6 +74,7 @@ export interface Config {
     projects: Project;
     posts: Post;
     examples: Example;
+    tutorials: Tutorial;
     'tool-categories': ToolCategory;
     'creation-types': CreationType;
     'builder-specialties': BuilderSpecialty;
@@ -94,6 +95,7 @@ export interface Config {
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     examples: ExamplesSelect<false> | ExamplesSelect<true>;
+    tutorials: TutorialsSelect<false> | TutorialsSelect<true>;
     'tool-categories': ToolCategoriesSelect<false> | ToolCategoriesSelect<true>;
     'creation-types': CreationTypesSelect<false> | CreationTypesSelect<true>;
     'builder-specialties': BuilderSpecialtiesSelect<false> | BuilderSpecialtiesSelect<true>;
@@ -739,6 +741,178 @@ export interface Example {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tutorials".
+ */
+export interface Tutorial {
+  id: number;
+  title: string;
+  /**
+   * Brief description shown under the title
+   */
+  subtitle?: string | null;
+  /**
+   * Summary for listing pages (2-3 sentences)
+   */
+  excerpt?: string | null;
+  featuredImage?: (number | null) | Media;
+  /**
+   * Introduction section before the steps
+   */
+  introduction?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * The main tutorial content broken into steps
+   */
+  steps?:
+    | {
+        /**
+         * Step number (e.g., 1, 2, 3)
+         */
+        stepNumber: number;
+        /**
+         * Step title (e.g., "Set Up Your Knowledge Base")
+         */
+        title: string;
+        /**
+         * Estimated time for this step in minutes
+         */
+        estimatedMinutes?: number | null;
+        /**
+         * Main step content with instructions
+         */
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        /**
+         * Alternative instructions (e.g., for different tools)
+         */
+        alternativeContent?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        /**
+         * Label for the alternative (e.g., "Using Airtable instead")
+         */
+        alternativeLabel?: string | null;
+        /**
+         * Optional pro tip or helpful note
+         */
+        tip?: string | null;
+        /**
+         * Optional warning or common mistake
+         */
+        warning?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Tools used in this tutorial (links to tool library)
+   */
+  toolsUsed?: (number | Tool)[] | null;
+  /**
+   * Tool stack with roles (for display)
+   */
+  toolStack?:
+    | {
+        /**
+         * Role in the workflow (e.g., "Knowledge Base", "AI Reasoning")
+         */
+        role: string;
+        /**
+         * Primary tool name (e.g., "Notion")
+         */
+        primaryTool: string;
+        /**
+         * Alternative tool option (e.g., "Airtable")
+         */
+        alternativeTool?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * What the user needs before starting
+   */
+  prerequisites?:
+    | {
+        item: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Notion template duplicate URL (e.g., https://www.notion.so/...?duplicate=true)
+   */
+  notionTemplateUrl?: string | null;
+  /**
+   * Summary of what the user accomplished
+   */
+  whatYouBuilt?: string | null;
+  /**
+   * Suggested next steps or expansions
+   */
+  nextSteps?:
+    | {
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Related tutorials to recommend
+   */
+  relatedTutorials?: (number | Tutorial)[] | null;
+  slug: string;
+  status?: ('draft' | 'published') | null;
+  /**
+   * Feature on the learn page
+   */
+  featured?: boolean | null;
+  difficulty?: ('beginner' | 'intermediate' | 'advanced') | null;
+  /**
+   * Total estimated time in minutes
+   */
+  estimatedTime?: number | null;
+  category?: ('workflow-automation' | 'ai-agents' | 'content-creation' | 'data-analytics' | 'productivity') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -788,6 +962,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'examples';
         value: number | Example;
+      } | null)
+    | ({
+        relationTo: 'tutorials';
+        value: number | Tutorial;
       } | null)
     | ({
         relationTo: 'tool-categories';
@@ -1098,6 +1276,63 @@ export interface ExamplesSelect<T extends boolean = true> {
       };
   slug?: T;
   creationType?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tutorials_select".
+ */
+export interface TutorialsSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  excerpt?: T;
+  featuredImage?: T;
+  introduction?: T;
+  steps?:
+    | T
+    | {
+        stepNumber?: T;
+        title?: T;
+        estimatedMinutes?: T;
+        content?: T;
+        alternativeContent?: T;
+        alternativeLabel?: T;
+        tip?: T;
+        warning?: T;
+        id?: T;
+      };
+  toolsUsed?: T;
+  toolStack?:
+    | T
+    | {
+        role?: T;
+        primaryTool?: T;
+        alternativeTool?: T;
+        id?: T;
+      };
+  prerequisites?:
+    | T
+    | {
+        item?: T;
+        id?: T;
+      };
+  notionTemplateUrl?: T;
+  whatYouBuilt?: T;
+  nextSteps?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  relatedTutorials?: T;
+  slug?: T;
+  status?: T;
+  featured?: T;
+  difficulty?: T;
+  estimatedTime?: T;
+  category?: T;
   updatedAt?: T;
   createdAt?: T;
 }
