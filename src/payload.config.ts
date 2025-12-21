@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url'
 import { CloudflareContext, getCloudflareContext } from '@opennextjs/cloudflare'
 import { GetPlatformProxyOptions } from 'wrangler'
 import { r2Storage } from '@payloadcms/storage-r2'
+import { searchPlugin } from '@payloadcms/plugin-search'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -76,6 +77,33 @@ export default buildConfig({
     r2Storage({
       bucket: cloudflare.env.R2,
       collections: { media: true },
+    }),
+    searchPlugin({
+      collections: ['tools', 'builders', 'projects', 'posts', 'tutorials'],
+      defaultPriorities: {
+        tools: 50,      // Highest priority - main content
+        tutorials: 40,  // Educational content
+        builders: 30,   // Creator profiles
+        projects: 20,   // Community showcase
+        posts: 10,      // News/articles
+      },
+      beforeSync: ({ originalDoc, searchDoc }) => ({
+        ...searchDoc,
+        // Include excerpt/description for better search context
+        excerpt: originalDoc?.tagline || originalDoc?.excerpt || originalDoc?.bio || '',
+      }),
+      searchOverrides: {
+        fields: ({ defaultFields }) => [
+          ...defaultFields,
+          {
+            name: 'excerpt',
+            type: 'textarea',
+            admin: {
+              position: 'sidebar',
+            },
+          },
+        ],
+      },
     }),
   ],
 })

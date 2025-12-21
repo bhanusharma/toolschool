@@ -3,15 +3,18 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Search, X, ArrowRight, Wrench, Users, FolderOpen, Newspaper } from 'lucide-react'
+import Image from 'next/image'
+import { Search, X, ArrowRight, Wrench, Users, FolderOpen, Newspaper, BookOpen } from 'lucide-react'
 
 interface SearchResult {
   id: string
   title: string
   slug: string
-  type: 'tool' | 'builder' | 'project' | 'news'
+  type: 'tool' | 'builder' | 'project' | 'post' | 'tutorial'
   description?: string
   category?: string
+  score: number
+  image?: string
 }
 
 interface SearchModalProps {
@@ -19,16 +22,10 @@ interface SearchModalProps {
   onClose: () => void
 }
 
-interface ApiResponse {
-  docs: Array<{
-    id: string
-    title: string
-    slug: string
-    tagline?: string
-    excerpt?: string
-    bio?: string
-    toolCategory?: { title: string }
-  }>
+interface UnifiedSearchResponse {
+  results: SearchResult[]
+  query: string
+  total: number
 }
 
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
@@ -64,7 +61,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
     }
   }, [isOpen, onClose])
 
-  // Search function
+  // Unified search function - single API call
   const performSearch = useCallback(async (searchQuery: string) => {
     if (!searchQuery.trim()) {
       setResults([])
@@ -73,58 +70,15 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
     setIsLoading(true)
     try {
-      // Search tools
-      const toolsRes = await fetch(`/api/tools?where[or][0][title][contains]=${encodeURIComponent(searchQuery)}&where[or][1][tagline][contains]=${encodeURIComponent(searchQuery)}&limit=5`)
-      const toolsData: ApiResponse = await toolsRes.json()
-
-      // Search builders
-      const buildersRes = await fetch(`/api/builders?where[or][0][title][contains]=${encodeURIComponent(searchQuery)}&where[or][1][bio][contains]=${encodeURIComponent(searchQuery)}&limit=3`)
-      const buildersData: ApiResponse = await buildersRes.json()
-
-      // Search projects
-      const projectsRes = await fetch(`/api/projects?where[title][contains]=${encodeURIComponent(searchQuery)}&limit=3`)
-      const projectsData: ApiResponse = await projectsRes.json()
-
-      // Search posts/news
-      const postsRes = await fetch(`/api/posts?where[title][contains]=${encodeURIComponent(searchQuery)}&limit=3`)
-      const postsData: ApiResponse = await postsRes.json()
-
-      const searchResults: SearchResult[] = [
-        ...(toolsData.docs || []).map((tool) => ({
-          id: tool.id,
-          title: tool.title,
-          slug: tool.slug,
-          type: 'tool' as const,
-          description: tool.tagline || tool.excerpt,
-          category: tool.toolCategory?.title,
-        })),
-        ...(buildersData.docs || []).map((builder) => ({
-          id: builder.id,
-          title: builder.title,
-          slug: builder.slug,
-          type: 'builder' as const,
-          description: builder.bio,
-        })),
-        ...(projectsData.docs || []).map((project) => ({
-          id: project.id,
-          title: project.title,
-          slug: project.slug,
-          type: 'project' as const,
-          description: project.excerpt,
-        })),
-        ...(postsData.docs || []).map((post) => ({
-          id: post.id,
-          title: post.title,
-          slug: post.slug,
-          type: 'news' as const,
-          description: post.excerpt,
-        })),
-      ]
-
-      setResults(searchResults)
+      const response = await fetch(
+        `/api/search?q=${encodeURIComponent(searchQuery)}&limit=14`
+      )
+      const data: UnifiedSearchResponse = await response.json()
+      setResults(data.results || [])
       setSelectedIndex(0)
     } catch (error) {
       console.error('Search error:', error)
+      setResults([])
     } finally {
       setIsLoading(false)
     }
@@ -134,7 +88,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   useEffect(() => {
     const timer = setTimeout(() => {
       performSearch(query)
-    }, 300)
+    }, 200) // Faster debounce since we're making single request
     return () => clearTimeout(timer)
   }, [query, performSearch])
 
@@ -153,33 +107,47 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   }
 
   const navigateToResult = (result: SearchResult) => {
-    const paths = {
+    const paths: Record<SearchResult['type'], string> = {
       tool: `/tools/${result.slug}`,
       builder: `/builders/${result.slug}`,
       project: `/projects/${result.slug}`,
-      news: `/news/${result.slug}`,
+      post: `/news/${result.slug}`,
+      tutorial: `/learn/${result.slug}`,
     }
     router.push(paths[result.type])
     onClose()
   }
 
-  const getIcon = (type: string) => {
+  const getIcon = (type: SearchResult['type']) => {
     switch (type) {
       case 'tool': return <Wrench className="w-4 h-4" />
       case 'builder': return <Users className="w-4 h-4" />
       case 'project': return <FolderOpen className="w-4 h-4" />
-      case 'news': return <Newspaper className="w-4 h-4" />
+      case 'post': return <Newspaper className="w-4 h-4" />
+      case 'tutorial': return <BookOpen className="w-4 h-4" />
       default: return <Search className="w-4 h-4" />
     }
   }
 
-  const getTypeLabel = (type: string) => {
+  const getTypeLabel = (type: SearchResult['type']) => {
     switch (type) {
       case 'tool': return 'Tool'
       case 'builder': return 'Builder'
       case 'project': return 'Project'
-      case 'news': return 'News'
+      case 'post': return 'News'
+      case 'tutorial': return 'Tutorial'
       default: return type
+    }
+  }
+
+  const getTypeStyles = (type: SearchResult['type']) => {
+    switch (type) {
+      case 'tool': return 'bg-[#e7131a]/10 text-[#e7131a]'
+      case 'builder': return 'bg-blue-500/10 text-blue-500'
+      case 'project': return 'bg-green-500/10 text-green-500'
+      case 'post': return 'bg-purple-500/10 text-purple-500'
+      case 'tutorial': return 'bg-amber-500/10 text-amber-600'
+      default: return 'bg-gray-500/10 text-gray-500'
     }
   }
 
@@ -205,7 +173,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Search tools, builders, projects, news..."
+              placeholder="Search tools, builders, projects, tutorials..."
               className="flex-1 text-[16px] font-ibm-plex-sans placeholder:text-black/40 focus:outline-none bg-transparent"
             />
             {isLoading && (
@@ -239,13 +207,19 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       index === selectedIndex ? 'bg-[#f6f4f1]' : 'hover:bg-[#f6f4f1]/50'
                     }`}
                   >
-                    <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${
-                      result.type === 'tool' ? 'bg-[#e7131a]/10 text-[#e7131a]' :
-                      result.type === 'builder' ? 'bg-blue-500/10 text-blue-500' :
-                      result.type === 'project' ? 'bg-green-500/10 text-green-500' :
-                      'bg-purple-500/10 text-purple-500'
-                    }`}>
-                      {getIcon(result.type)}
+                    {/* Image or Icon */}
+                    <div className={`flex-shrink-0 w-10 h-10 flex items-center justify-center overflow-hidden ${getTypeStyles(result.type)}`}>
+                      {result.image ? (
+                        <Image
+                          src={result.image}
+                          alt={result.title}
+                          width={40}
+                          height={40}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        getIcon(result.type)
+                      )}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
@@ -286,7 +260,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   onClick={onClose}
                   className="w-full px-6 py-3 flex items-center gap-4 hover:bg-[#f6f4f1]/50 transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-[#e7131a]/10 text-[#e7131a] flex items-center justify-center">
+                  <div className="w-10 h-10 bg-[#e7131a]/10 text-[#e7131a] flex items-center justify-center">
                     <Wrench className="w-4 h-4" />
                   </div>
                   <span className="font-ibm-plex-sans text-[15px] text-black">Browse All Tools</span>
@@ -296,7 +270,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   onClick={onClose}
                   className="w-full px-6 py-3 flex items-center gap-4 hover:bg-[#f6f4f1]/50 transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center">
+                  <div className="w-10 h-10 bg-blue-500/10 text-blue-500 flex items-center justify-center">
                     <Users className="w-4 h-4" />
                   </div>
                   <span className="font-ibm-plex-sans text-[15px] text-black">Discover Builders</span>
@@ -306,17 +280,27 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   onClick={onClose}
                   className="w-full px-6 py-3 flex items-center gap-4 hover:bg-[#f6f4f1]/50 transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-green-500/10 text-green-500 flex items-center justify-center">
+                  <div className="w-10 h-10 bg-green-500/10 text-green-500 flex items-center justify-center">
                     <FolderOpen className="w-4 h-4" />
                   </div>
                   <span className="font-ibm-plex-sans text-[15px] text-black">Explore Projects</span>
+                </Link>
+                <Link
+                  href="/learn"
+                  onClick={onClose}
+                  className="w-full px-6 py-3 flex items-center gap-4 hover:bg-[#f6f4f1]/50 transition-colors"
+                >
+                  <div className="w-10 h-10 bg-amber-500/10 text-amber-600 flex items-center justify-center">
+                    <BookOpen className="w-4 h-4" />
+                  </div>
+                  <span className="font-ibm-plex-sans text-[15px] text-black">Learn Tutorials</span>
                 </Link>
                 <Link
                   href="/news"
                   onClick={onClose}
                   className="w-full px-6 py-3 flex items-center gap-4 hover:bg-[#f6f4f1]/50 transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-500 flex items-center justify-center">
+                  <div className="w-10 h-10 bg-purple-500/10 text-purple-500 flex items-center justify-center">
                     <Newspaper className="w-4 h-4" />
                   </div>
                   <span className="font-ibm-plex-sans text-[15px] text-black">Latest News</span>
@@ -329,19 +313,22 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           <div className="px-6 py-3 bg-[#f6f4f1] border-t border-black/10 flex items-center justify-between">
             <div className="flex items-center gap-4 text-[11px] font-ibm-plex-sans text-black/40">
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white border border-black/10 rounded text-[10px]">↑</kbd>
-                <kbd className="px-1.5 py-0.5 bg-white border border-black/10 rounded text-[10px]">↓</kbd>
+                <kbd className="px-1.5 py-0.5 bg-white border border-black/10 text-[10px]">↑</kbd>
+                <kbd className="px-1.5 py-0.5 bg-white border border-black/10 text-[10px]">↓</kbd>
                 <span className="ml-1">Navigate</span>
               </span>
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white border border-black/10 rounded text-[10px]">↵</kbd>
+                <kbd className="px-1.5 py-0.5 bg-white border border-black/10 text-[10px]">↵</kbd>
                 <span className="ml-1">Open</span>
               </span>
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white border border-black/10 rounded text-[10px]">esc</kbd>
+                <kbd className="px-1.5 py-0.5 bg-white border border-black/10 text-[10px]">esc</kbd>
                 <span className="ml-1">Close</span>
               </span>
             </div>
+            <span className="text-[10px] font-ibm-plex-sans text-black/30">
+              {results.length > 0 && `${results.length} results`}
+            </span>
           </div>
         </div>
       </div>
