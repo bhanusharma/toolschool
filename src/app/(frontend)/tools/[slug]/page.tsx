@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { notFound, useParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
+import { ExternalLink, Globe, Apple, Smartphone, Monitor, Code, Puzzle, ArrowLeft } from 'lucide-react'
 
 interface Tool {
   id: string
@@ -28,11 +29,9 @@ interface Tool {
     url: string
     alt?: string
   }
-  stats?: {
-    users?: string
-    rating?: number
-    company?: string
-    launchYear?: number
+  logo?: {
+    url: string
+    alt?: string
   }
   keyFeatures?: Array<{
     title: string
@@ -47,6 +46,52 @@ interface ToolsApiResponse {
   totalDocs: number
 }
 
+// Category colors for visual consistency
+const categoryColors: { [key: string]: string } = {
+  'Image Generation': '#e7131a',
+  'Text / Copywriting': '#1a73e8',
+  'Music / Audio': '#34a853',
+  'Video / Film': '#fbbc04',
+  'Graphic Design': '#9c27b0',
+  'Website / App': '#00bcd4',
+  Coding: '#ff5722',
+  '3D': '#673ab7',
+  Animation: '#e91e63',
+  Creating: '#e7131a',
+  Writing: '#1a73e8',
+  Curating: '#9c27b0',
+  Building: '#ff5722',
+  Video: '#fbbc04',
+  Audio: '#34a853',
+  Design: '#00bcd4',
+}
+
+// Platform icons
+const platformIcons: { [key: string]: React.ReactNode } = {
+  web: <Globe className="w-4 h-4" />,
+  ios: <Apple className="w-4 h-4" />,
+  android: <Smartphone className="w-4 h-4" />,
+  mac: <Monitor className="w-4 h-4" />,
+  windows: <Monitor className="w-4 h-4" />,
+  api: <Code className="w-4 h-4" />,
+  plugin: <Puzzle className="w-4 h-4" />,
+}
+
+// Pricing model labels
+const pricingLabels: { [key: string]: { label: string; color: string } } = {
+  free: { label: 'Free', color: '#34a853' },
+  freemium: { label: 'Freemium', color: '#1a73e8' },
+  paid: { label: 'Paid', color: '#9c27b0' },
+  custom: { label: 'Custom Pricing', color: '#ff5722' },
+}
+
+// Difficulty labels
+const difficultyLabels: { [key: string]: { label: string; color: string } } = {
+  beginner: { label: 'Beginner Friendly', color: '#34a853' },
+  intermediate: { label: 'Intermediate', color: '#fbbc04' },
+  advanced: { label: 'Advanced', color: '#e7131a' },
+}
+
 export default function ToolDetailPage() {
   const params = useParams()
   const slug = params.slug as string
@@ -54,7 +99,6 @@ export default function ToolDetailPage() {
   const [tool, setTool] = useState<Tool | null>(null)
   const [relatedTools, setRelatedTools] = useState<Tool[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState<'overview' | 'features' | 'pricing'>('overview')
 
   useEffect(() => {
     async function fetchTool() {
@@ -92,24 +136,30 @@ export default function ToolDetailPage() {
 
   // Helper function to get category color
   const getCategoryColor = (categoryName?: string) => {
-    const colors: { [key: string]: string } = {
-      'Image Generation': '#e7131a',
-      'Text / Copywriting': '#1a73e8',
-      'Music / Audio': '#34a853',
-      'Video / Film': '#fbbc04',
-      'Graphic Design': '#9c27b0',
-      'Website / App': '#00bcd4',
-      Coding: '#ff5722',
-      '3D': '#673ab7',
-      Animation: '#e91e63',
-    }
-    return colors[categoryName || ''] || '#e7131a'
+    return categoryColors[categoryName || ''] || '#e7131a'
   }
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#f8f8f8] flex items-center justify-center">
-        <div className="animate-spin h-8 w-8 border-2 border-black border-t-transparent rounded-full" />
+      <div className="min-h-screen bg-[#f8f8f8]">
+        <div className="w-full flex justify-center">
+          <div className="relative w-full max-w-[1440px] bg-gradient-to-br from-black via-gray-900 to-black py-20 px-6 lg:px-12">
+            <div className="animate-pulse">
+              <div className="h-4 w-32 bg-white/10 rounded mb-8" />
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                  <div className="h-6 w-24 bg-white/10 rounded mb-4" />
+                  <div className="h-16 w-3/4 bg-white/10 rounded mb-6" />
+                  <div className="h-6 w-full bg-white/10 rounded mb-2" />
+                  <div className="h-6 w-2/3 bg-white/10 rounded" />
+                </div>
+                <div className="flex items-center justify-center">
+                  <div className="w-48 h-48 bg-white/10 rounded-3xl" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
@@ -117,6 +167,10 @@ export default function ToolDetailPage() {
   if (!tool) {
     notFound()
   }
+
+  const categoryColor = getCategoryColor(tool.toolCategory?.title)
+  const hasFeatures = tool.keyFeatures && tool.keyFeatures.length > 0
+  const hasPricingInfo = tool.pricingSummary || tool.pricingModel
 
   return (
     <div className="min-h-screen bg-[#f8f8f8]">
@@ -133,61 +187,79 @@ export default function ToolDetailPage() {
             />
           </div>
 
-          <div className="relative z-10 py-20 px-6 lg:px-12">
-            {/* Breadcrumb */}
-            <nav className="mb-8">
-              <ol className="flex items-center space-x-2 text-sm font-ibm-plex-sans">
-                <li>
-                  <Link href="/" className="text-white/60 hover:text-white transition-colors">
-                    Home
-                  </Link>
-                </li>
-                <li className="text-white/40">/</li>
-                <li>
-                  <Link href="/tools" className="text-white/60 hover:text-white transition-colors">
-                    Tools
-                  </Link>
-                </li>
-                <li className="text-white/40">/</li>
-                <li className="text-white">{tool.title}</li>
-              </ol>
-            </nav>
+          {/* Animated background elements */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div
+              className="absolute top-0 left-0 w-96 h-96 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 animate-pulse opacity-20"
+              style={{ backgroundColor: categoryColor }}
+            />
+            <div
+              className="absolute bottom-0 right-0 w-64 h-64 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 animate-pulse opacity-10"
+              style={{ backgroundColor: categoryColor, animationDelay: '1s' }}
+            />
+          </div>
+
+          <div className="relative z-10 py-16 lg:py-20 px-6 lg:px-12">
+            {/* Back Link */}
+            <Link
+              href="/tools"
+              className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-8 group"
+            >
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+              <span className="font-ibm-plex-sans text-[14px]">Back to Tools</span>
+            </Link>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Left Column - Content */}
               <div>
                 {tool.toolCategory && (
                   <span
-                    className="inline-block px-4 py-1 text-white text-xs font-ibm-plex-sans-condensed tracking-wider uppercase rounded-full mb-4"
-                    style={{ backgroundColor: getCategoryColor(tool.toolCategory.title) }}
+                    className="inline-block px-4 py-1.5 text-white text-[11px] font-ibm-plex-sans-condensed tracking-wider uppercase mb-4"
+                    style={{ backgroundColor: categoryColor }}
                   >
                     {tool.toolCategory.title}
                   </span>
                 )}
 
-                <h1 className="text-[40px] sm:text-[48px] lg:text-[56px] leading-tight text-white mb-6 font-gilda-display">
+                <h1 className="text-[36px] sm:text-[48px] lg:text-[56px] leading-[1.1] text-white mb-6 font-gilda-display">
                   {tool.title}
                 </h1>
 
-                <p className="font-ibm-plex-sans text-[18px] sm:text-[20px] text-white/80 mb-8 leading-relaxed">
+                <p className="font-ibm-plex-sans text-[17px] sm:text-[19px] text-white/80 mb-8 leading-relaxed max-w-[540px]">
                   {tool.tagline || tool.excerpt}
                 </p>
 
-                <div className="flex flex-wrap gap-4">
-                  {tool.website && (
-                    <a
-                      href={tool.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-[#e7131a] text-white px-8 py-4 font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase transition-all duration-300 hover:bg-[#c10e14] inline-block"
+                {/* Quick Info Pills */}
+                <div className="flex flex-wrap gap-3 mb-8">
+                  {tool.pricingModel && pricingLabels[tool.pricingModel] && (
+                    <span
+                      className="inline-flex items-center gap-2 px-4 py-2 text-[12px] font-ibm-plex-sans-condensed tracking-wider uppercase text-white"
+                      style={{ backgroundColor: pricingLabels[tool.pricingModel].color }}
                     >
-                      TRY {tool.title.toUpperCase()} NOW
-                    </a>
+                      {pricingLabels[tool.pricingModel].label}
+                    </span>
                   )}
-                  <button className="bg-white/10 backdrop-blur text-white border border-white/20 px-8 py-4 font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase transition-all duration-300 hover:bg-white/20 hover:border-white/30">
-                    LEARN MORE
-                  </button>
+                  {tool.difficulty && difficultyLabels[tool.difficulty] && (
+                    <span
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20 text-[12px] font-ibm-plex-sans-condensed tracking-wider uppercase text-white"
+                    >
+                      {difficultyLabels[tool.difficulty].label}
+                    </span>
+                  )}
                 </div>
+
+                {/* CTA Button */}
+                {tool.website && (
+                  <a
+                    href={tool.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-3 bg-[#e7131a] text-white px-8 py-4 font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase transition-all duration-300 hover:bg-[#c10e14] group"
+                  >
+                    TRY {tool.title.toUpperCase()}
+                    <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </a>
+                )}
               </div>
 
               {/* Right Column - Visual */}
@@ -195,26 +267,36 @@ export default function ToolDetailPage() {
                 <div className="relative aspect-square max-w-md mx-auto">
                   {/* Animated background circles */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="absolute w-64 h-64 rounded-full bg-gradient-to-r from-[#e7131a]/20 to-transparent animate-pulse" />
-                    <div className="absolute w-48 h-48 rounded-full bg-gradient-to-r from-[#1a73e8]/20 to-transparent animate-pulse animation-delay-2000" />
-                    <div className="absolute w-32 h-32 rounded-full bg-gradient-to-r from-[#34a853]/20 to-transparent animate-pulse animation-delay-4000" />
+                    <div
+                      className="absolute w-64 h-64 rounded-full animate-pulse opacity-20"
+                      style={{ backgroundColor: categoryColor }}
+                    />
+                    <div
+                      className="absolute w-48 h-48 rounded-full animate-pulse opacity-15"
+                      style={{ backgroundColor: categoryColor, animationDelay: '1s' }}
+                    />
                   </div>
 
                   {/* Tool Icon/Logo */}
                   <div className="relative z-10 w-full h-full flex items-center justify-center">
                     <div className="w-48 h-48 bg-white/10 backdrop-blur rounded-3xl flex items-center justify-center border border-white/20 shadow-2xl overflow-hidden">
-                      {tool.featuredImage?.url ? (
+                      {(tool.featuredImage?.url || tool.logo?.url) ? (
                         <Image
-                          src={tool.featuredImage.url}
-                          alt={tool.featuredImage.alt || tool.title}
+                          src={tool.featuredImage?.url || tool.logo?.url || ''}
+                          alt={tool.featuredImage?.alt || tool.logo?.alt || tool.title}
                           width={128}
                           height={128}
                           className="w-32 h-32 object-contain"
                         />
                       ) : (
-                        <span className="text-6xl font-gilda-display text-white/60">
-                          {tool.title.charAt(0)}
-                        </span>
+                        <div
+                          className="w-32 h-32 rounded-2xl flex items-center justify-center"
+                          style={{ backgroundColor: categoryColor }}
+                        >
+                          <span className="text-5xl font-gilda-display text-white">
+                            {tool.title.charAt(0)}
+                          </span>
+                        </div>
                       )}
                     </div>
                   </div>
@@ -225,186 +307,78 @@ export default function ToolDetailPage() {
         </div>
       </div>
 
-      {/* Stats Bar */}
+      {/* Content Section */}
       <div className="w-full flex justify-center">
-        <div className="relative w-full max-w-[1440px] bg-[#f6f4f1]">
-          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-black/10">
-            <div className="px-6 py-8 text-center">
-              <div className="text-[32px] text-black mb-1 font-gilda-display">
-                {tool.stats?.users || '10K+'}
-              </div>
-              <div className="font-ibm-plex-sans text-[14px] text-black/60 uppercase tracking-wider">
-                Active Users
-              </div>
+        <div className="relative w-full max-w-[1440px] bg-white py-16 px-6 lg:px-12">
+          <div className="max-w-4xl">
+            {/* About Section */}
+            <div className="mb-12">
+              <h2 className="text-[28px] font-gilda-display text-black mb-6">
+                About {tool.title}
+              </h2>
+              <p className="font-ibm-plex-sans text-[16px] text-gray-700 leading-relaxed">
+                {tool.excerpt || tool.tagline || `${tool.title} is an AI-powered tool designed for creative professionals and innovators.`}
+              </p>
             </div>
-            <div className="px-6 py-8 text-center">
-              <div className="text-[32px] text-black mb-1 font-gilda-display">
-                {tool.stats?.rating || '4.5'}
-              </div>
-              <div className="font-ibm-plex-sans text-[14px] text-black/60 uppercase tracking-wider">
-                User Rating
-              </div>
-            </div>
-            <div className="px-6 py-8 text-center">
-              <div className="text-[32px] text-black mb-1 font-gilda-display">
-                {tool.stats?.company || 'AI Studio'}
-              </div>
-              <div className="font-ibm-plex-sans text-[14px] text-black/60 uppercase tracking-wider">
-                Company
-              </div>
-            </div>
-            <div className="px-6 py-8 text-center">
-              <div className="text-[32px] text-black mb-1 font-gilda-display">
-                {tool.stats?.launchYear || '2024'}
-              </div>
-              <div className="font-ibm-plex-sans text-[14px] text-black/60 uppercase tracking-wider">
-                Launch Year
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Content Tabs */}
-      <div className="w-full flex justify-center">
-        <div className="relative w-full max-w-[1440px] bg-white">
-          {/* Tab Navigation */}
-          <div className="border-b border-gray-200">
-            <div className="px-6 lg:px-12">
-              <nav className="flex space-x-8">
-                {(['overview', 'features', 'pricing'] as const).map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => setActiveTab(tab)}
-                    className={`py-4 px-1 border-b-2 font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase transition-colors ${
-                      activeTab === tab
-                        ? 'border-[#e7131a] text-black'
-                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                    }`}
-                  >
-                    {tab}
-                  </button>
-                ))}
-              </nav>
-            </div>
-          </div>
-
-          {/* Tab Content */}
-          <div className="px-6 lg:px-12 py-12">
-            <div className="max-w-4xl">
-              {activeTab === 'overview' && (
-                <div className="space-y-8">
-                  <div>
-                    <h2 className="text-[28px] font-gilda-display text-black mb-4">
-                      About {tool.title}
-                    </h2>
-                    <p className="font-ibm-plex-sans text-[16px] text-gray-700 leading-relaxed">
-                      {tool.excerpt ||
-                        `${tool.title} is an AI-powered tool designed for creative professionals and innovators.`}
-                    </p>
-                  </div>
-
-                  {tool.useCases && tool.useCases.length > 0 && (
-                    <div>
-                      <h3 className="text-[20px] font-gilda-display text-black mb-4">Use Cases</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {tool.useCases.map((useCase) => (
-                          <span
-                            key={useCase}
-                            className="inline-block bg-[#f6f4f1] px-4 py-2 font-ibm-plex-sans-condensed text-[12px] tracking-[1px] uppercase text-black/70"
-                          >
-                            {useCase}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {tool.platforms && tool.platforms.length > 0 && (
-                    <div>
-                      <h3 className="text-[20px] font-gilda-display text-black mb-4">
-                        Available Platforms
-                      </h3>
-                      <div className="flex flex-wrap gap-3">
-                        {tool.platforms.map((platform) => (
-                          <span
-                            key={platform}
-                            className="inline-flex items-center gap-2 px-4 py-3 border border-[#e5e5e5] font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase"
-                          >
-                            {platform === 'web' && '🌐'}
-                            {platform === 'ios' && '📱'}
-                            {platform === 'android' && '🤖'}
-                            {platform === 'mac' && '💻'}
-                            {platform === 'windows' && '🖥️'}
-                            {platform === 'api' && '⚡'}
-                            {platform}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+            {/* Use Cases */}
+            {tool.useCases && tool.useCases.length > 0 && (
+              <div className="mb-12">
+                <h3 className="text-[22px] font-gilda-display text-black mb-5">Use Cases</h3>
+                <div className="flex flex-wrap gap-2">
+                  {tool.useCases.map((useCase) => (
+                    <span
+                      key={useCase}
+                      className="inline-block bg-[#f6f4f1] px-4 py-2.5 font-ibm-plex-sans-condensed text-[12px] tracking-[1px] uppercase text-black/70 hover:bg-[#e5e3e0] transition-colors"
+                    >
+                      {useCase}
+                    </span>
+                  ))}
                 </div>
-              )}
+              </div>
+            )}
 
-              {activeTab === 'features' && (
-                <div>
-                  {tool.keyFeatures && tool.keyFeatures.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      {tool.keyFeatures.map((feature, index) => {
-                        const colors = ['#e7131a', '#1a73e8', '#34a853', '#fbbc04']
-                        const color = colors[index % colors.length]
-                        return (
-                          <div key={index} className="flex gap-4">
-                            <div
-                              className="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center"
-                              style={{ backgroundColor: `${color}10` }}
-                            >
-                              <svg
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                style={{ color }}
-                              >
-                                <path
-                                  d="M9 11L12 14L22 4"
-                                  stroke="currentColor"
-                                  strokeWidth="2"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                                <path
-                                  d="M21 12V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H16"
-                                  stroke="currentColor"
-                                  strokeWidth="2"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                            </div>
-                            <div>
-                              <h3 className="text-[20px] text-black mb-2 font-gilda-display">
-                                {feature.title}
-                              </h3>
-                              <p className="font-ibm-plex-sans text-[14px] text-gray-600">
-                                {feature.description || 'Powerful feature to enhance your workflow'}
-                              </p>
-                            </div>
-                          </div>
-                        )
-                      })}
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      <div className="flex gap-4">
-                        <div className="flex-shrink-0 w-12 h-12 bg-[#e7131a]/10 rounded-lg flex items-center justify-center">
+            {/* Platforms */}
+            {tool.platforms && tool.platforms.length > 0 && (
+              <div className="mb-12">
+                <h3 className="text-[22px] font-gilda-display text-black mb-5">
+                  Available Platforms
+                </h3>
+                <div className="flex flex-wrap gap-3">
+                  {tool.platforms.map((platform) => (
+                    <span
+                      key={platform}
+                      className="inline-flex items-center gap-2.5 px-5 py-3 border border-[#e5e5e5] font-ibm-plex-sans-condensed text-[13px] tracking-wider uppercase hover:border-black transition-colors"
+                    >
+                      {platformIcons[platform] || <Globe className="w-4 h-4" />}
+                      {platform}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Key Features - Only show if we have actual data */}
+            {hasFeatures && (
+              <div className="mb-12">
+                <h3 className="text-[22px] font-gilda-display text-black mb-6">Key Features</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {tool.keyFeatures!.map((feature, index) => {
+                    const colors = ['#e7131a', '#1a73e8', '#34a853', '#fbbc04', '#9c27b0', '#00bcd4']
+                    const color = colors[index % colors.length]
+                    return (
+                      <div key={index} className="flex gap-4 p-5 bg-[#f6f4f1] hover:bg-[#f0eeeb] transition-colors">
+                        <div
+                          className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center"
+                          style={{ backgroundColor: `${color}15` }}
+                        >
                           <svg
-                            width="24"
-                            height="24"
+                            width="20"
+                            height="20"
                             viewBox="0 0 24 24"
                             fill="none"
-                            className="text-[#e7131a]"
+                            xmlns="http://www.w3.org/2000/svg"
+                            style={{ color }}
                           >
                             <path
                               d="M9 11L12 14L22 4"
@@ -413,29 +387,8 @@ export default function ToolDetailPage() {
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             />
-                          </svg>
-                        </div>
-                        <div>
-                          <h3 className="text-[20px] text-black mb-2 font-gilda-display">
-                            Advanced AI Capabilities
-                          </h3>
-                          <p className="font-ibm-plex-sans text-[14px] text-gray-600">
-                            Powered by state-of-the-art models for exceptional results
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="flex gap-4">
-                        <div className="flex-shrink-0 w-12 h-12 bg-[#1a73e8]/10 rounded-lg flex items-center justify-center">
-                          <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            className="text-[#1a73e8]"
-                          >
                             <path
-                              d="M12 2L2 7L12 12L22 7L12 2Z"
+                              d="M21 12V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H16"
                               stroke="currentColor"
                               strokeWidth="2"
                               strokeLinecap="round"
@@ -444,187 +397,71 @@ export default function ToolDetailPage() {
                           </svg>
                         </div>
                         <div>
-                          <h3 className="text-[20px] text-black mb-2 font-gilda-display">
-                            Easy Integration
-                          </h3>
-                          <p className="font-ibm-plex-sans text-[14px] text-gray-600">
-                            Seamlessly integrate with your existing workflow
-                          </p>
+                          <h4 className="text-[17px] text-black mb-1.5 font-gilda-display">
+                            {feature.title}
+                          </h4>
+                          {feature.description && (
+                            <p className="font-ibm-plex-sans text-[14px] text-gray-600 leading-relaxed">
+                              {feature.description}
+                            </p>
+                          )}
                         </div>
                       </div>
-
-                      <div className="flex gap-4">
-                        <div className="flex-shrink-0 w-12 h-12 bg-[#34a853]/10 rounded-lg flex items-center justify-center">
-                          <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            className="text-[#34a853]"
-                          >
-                            <path
-                              d="M3 3H21V21H3V3Z"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </div>
-                        <div>
-                          <h3 className="text-[20px] text-black mb-2 font-gilda-display">
-                            Customizable Output
-                          </h3>
-                          <p className="font-ibm-plex-sans text-[14px] text-gray-600">
-                            Fine-tune results to match your specific needs
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="flex gap-4">
-                        <div className="flex-shrink-0 w-12 h-12 bg-[#fbbc04]/10 rounded-lg flex items-center justify-center">
-                          <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            className="text-[#fbbc04]"
-                          >
-                            <circle
-                              cx="12"
-                              cy="12"
-                              r="10"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                            />
-                            <path
-                              d="M12 6V12L16 14"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                            />
-                          </svg>
-                        </div>
-                        <div>
-                          <h3 className="text-[20px] text-black mb-2 font-gilda-display">
-                            Real-time Processing
-                          </h3>
-                          <p className="font-ibm-plex-sans text-[14px] text-gray-600">
-                            Get instant results with minimal latency
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                    )
+                  })}
                 </div>
-              )}
+              </div>
+            )}
 
-              {activeTab === 'pricing' && (
-                <div>
-                  {tool.pricingSummary ? (
-                    <div className="bg-[#f6f4f1] p-8">
-                      <h3 className="text-[24px] text-black mb-4 font-gilda-display">
-                        Pricing Information
-                      </h3>
-                      <p className="font-ibm-plex-sans text-[16px] text-gray-700 leading-relaxed mb-6">
-                        {tool.pricingSummary}
-                      </p>
-                      {tool.pricingModel && (
-                        <span className="inline-block bg-black text-white px-4 py-2 font-ibm-plex-sans-condensed text-[12px] tracking-wider uppercase">
-                          {tool.pricingModel}
-                        </span>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                      <div className="border border-[#e5e5e5] p-8 hover:border-[#e7131a] transition-colors">
-                        <h3 className="text-[24px] text-black mb-2 font-gilda-display">Free</h3>
-                        <p className="font-ibm-plex-sans text-[14px] text-gray-600 mb-6">
-                          Get started with basic features
-                        </p>
-                        <div className="text-[36px] text-black mb-6 font-gilda-display">$0</div>
-                        <ul className="space-y-3 font-ibm-plex-sans text-[14px] text-gray-700">
-                          <li className="flex items-center gap-2">
-                            <span className="text-[#34a853]">✓</span> Basic features
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <span className="text-[#34a853]">✓</span> Limited usage
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <span className="text-[#34a853]">✓</span> Community support
-                          </li>
-                        </ul>
-                      </div>
-
-                      <div className="border-2 border-[#e7131a] p-8 relative">
-                        <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#e7131a] text-white px-4 py-1 font-ibm-plex-sans-condensed text-[12px] tracking-wider uppercase">
-                          Popular
-                        </span>
-                        <h3 className="text-[24px] text-black mb-2 font-gilda-display">Pro</h3>
-                        <p className="font-ibm-plex-sans text-[14px] text-gray-600 mb-6">
-                          For professionals and teams
-                        </p>
-                        <div className="text-[36px] text-black mb-6 font-gilda-display">
-                          $29
-                          <span className="text-[14px] text-gray-600">/mo</span>
-                        </div>
-                        <ul className="space-y-3 font-ibm-plex-sans text-[14px] text-gray-700">
-                          <li className="flex items-center gap-2">
-                            <span className="text-[#34a853]">✓</span> All Free features
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <span className="text-[#34a853]">✓</span> Unlimited usage
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <span className="text-[#34a853]">✓</span> Priority support
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <span className="text-[#34a853]">✓</span> API access
-                          </li>
-                        </ul>
-                      </div>
-
-                      <div className="border border-[#e5e5e5] p-8 hover:border-[#e7131a] transition-colors">
-                        <h3 className="text-[24px] text-black mb-2 font-gilda-display">
-                          Enterprise
-                        </h3>
-                        <p className="font-ibm-plex-sans text-[14px] text-gray-600 mb-6">
-                          Custom solutions for organizations
-                        </p>
-                        <div className="text-[36px] text-black mb-6 font-gilda-display">Custom</div>
-                        <ul className="space-y-3 font-ibm-plex-sans text-[14px] text-gray-700">
-                          <li className="flex items-center gap-2">
-                            <span className="text-[#34a853]">✓</span> All Pro features
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <span className="text-[#34a853]">✓</span> Custom integrations
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <span className="text-[#34a853]">✓</span> Dedicated support
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <span className="text-[#34a853]">✓</span> SLA guarantee
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
+            {/* Pricing Info - Only show if we have actual data */}
+            {hasPricingInfo && (
+              <div className="mb-12">
+                <h3 className="text-[22px] font-gilda-display text-black mb-5">Pricing</h3>
+                <div className="bg-[#f6f4f1] p-8">
+                  {tool.pricingSummary && (
+                    <p className="font-ibm-plex-sans text-[16px] text-gray-700 leading-relaxed mb-5">
+                      {tool.pricingSummary}
+                    </p>
                   )}
-
-                  {tool.website && (
-                    <div className="mt-8 text-center">
+                  <div className="flex flex-wrap items-center gap-4">
+                    {tool.pricingModel && pricingLabels[tool.pricingModel] && (
+                      <span
+                        className="inline-block text-white px-5 py-2.5 font-ibm-plex-sans-condensed text-[12px] tracking-wider uppercase"
+                        style={{ backgroundColor: pricingLabels[tool.pricingModel].color }}
+                      >
+                        {pricingLabels[tool.pricingModel].label}
+                      </span>
+                    )}
+                    {tool.website && (
                       <a
                         href={tool.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-block bg-[#e7131a] text-white px-8 py-4 font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase transition-all duration-300 hover:bg-[#c10e14]"
+                        className="inline-flex items-center gap-2 text-[#e7131a] hover:underline font-ibm-plex-sans text-[14px]"
                       >
-                        VIEW FULL PRICING
+                        View full pricing on website
+                        <ExternalLink className="w-3.5 h-3.5" />
                       </a>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
+
+            {/* Visit Website CTA */}
+            {tool.website && (
+              <div className="border-t border-[#e5e5e5] pt-8">
+                <a
+                  href={tool.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 bg-black text-white px-8 py-4 font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase transition-all duration-300 hover:bg-[#e7131a] group"
+                >
+                  Visit {tool.title}
+                  <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -632,45 +469,68 @@ export default function ToolDetailPage() {
       {/* Related Tools */}
       {relatedTools.length > 0 && (
         <div className="w-full flex justify-center">
-          <div className="relative w-full max-w-[1440px] bg-[#f6f4f1] py-20 px-6 lg:px-12">
-            <h2 className="text-[36px] font-gilda-display font-normal text-black mb-12">
-              Related Tools
-            </h2>
+          <div className="relative w-full max-w-[1440px] bg-[#f6f4f1] py-16 lg:py-20 px-6 lg:px-12">
+            <div className="flex items-center justify-between mb-10">
+              <h2 className="text-[32px] font-gilda-display font-normal text-black">
+                Related Tools
+              </h2>
+              {tool.toolCategory && (
+                <Link
+                  href={`/tools?category=${tool.toolCategory.slug}`}
+                  className="font-ibm-plex-sans-condensed text-[13px] tracking-wider uppercase text-black/60 hover:text-[#e7131a] transition-colors"
+                >
+                  View all {tool.toolCategory.title} tools →
+                </Link>
+              )}
+            </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {relatedTools.map((relatedTool) => (
-                <Link
-                  key={relatedTool.id}
-                  href={`/tools/${relatedTool.slug}`}
-                  className="group flex flex-col bg-white border border-[#e5e5e5] transition-all duration-300 hover:border-black cursor-pointer"
-                >
-                  <div className="aspect-square bg-[#f8f8f8] p-8 flex items-center justify-center">
-                    {relatedTool.featuredImage?.url ? (
-                      <Image
-                        src={relatedTool.featuredImage.url}
-                        alt={relatedTool.featuredImage.alt || relatedTool.title}
-                        width={80}
-                        height={80}
-                        className="w-20 h-20 object-contain"
-                      />
-                    ) : (
-                      <div className="w-20 h-20 bg-black/10 rounded-lg flex items-center justify-center">
-                        <span className="text-3xl font-gilda-display text-black/30">
-                          {relatedTool.title.charAt(0)}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="p-5">
-                    <h3 className="font-gilda-display text-[20px] leading-tight text-black mb-2">
-                      {relatedTool.title}
-                    </h3>
-                    <p className="font-ibm-plex-sans text-[13px] text-black/60 line-clamp-2">
-                      {relatedTool.tagline}
-                    </p>
-                  </div>
-                </Link>
-              ))}
+              {relatedTools.map((relatedTool) => {
+                const relatedColor = getCategoryColor(relatedTool.toolCategory?.title)
+                return (
+                  <Link
+                    key={relatedTool.id}
+                    href={`/tools/${relatedTool.slug}`}
+                    className="group flex flex-col bg-white border border-[#e5e5e5] transition-all duration-300 hover:border-black hover:shadow-lg cursor-pointer"
+                  >
+                    <div
+                      className="aspect-square p-8 flex items-center justify-center relative overflow-hidden"
+                      style={{
+                        background: (relatedTool.featuredImage?.url || relatedTool.logo?.url)
+                          ? '#f8f8f8'
+                          : `linear-gradient(135deg, ${relatedColor}15, ${relatedColor}05)`
+                      }}
+                    >
+                      {(relatedTool.featuredImage?.url || relatedTool.logo?.url) ? (
+                        <Image
+                          src={relatedTool.featuredImage?.url || relatedTool.logo?.url || ''}
+                          alt={relatedTool.featuredImage?.alt || relatedTool.logo?.alt || relatedTool.title}
+                          width={80}
+                          height={80}
+                          className="w-20 h-20 object-contain group-hover:scale-110 transition-transform duration-300"
+                        />
+                      ) : (
+                        <div
+                          className="w-20 h-20 rounded-xl flex items-center justify-center"
+                          style={{ backgroundColor: relatedColor }}
+                        >
+                          <span className="text-3xl font-gilda-display text-white">
+                            {relatedTool.title.charAt(0)}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-5">
+                      <h3 className="font-gilda-display text-[18px] leading-tight text-black mb-2 group-hover:text-[#e7131a] transition-colors">
+                        {relatedTool.title}
+                      </h3>
+                      <p className="font-ibm-plex-sans text-[13px] text-black/60 line-clamp-2">
+                        {relatedTool.tagline || relatedTool.excerpt}
+                      </p>
+                    </div>
+                  </Link>
+                )
+              })}
             </div>
           </div>
         </div>
