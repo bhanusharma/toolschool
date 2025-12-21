@@ -41,6 +41,17 @@
     //   "bucket_name": "<BUCKET_NAME>",
     // },
   ],
+  // Vectorize for semantic search
+  "vectorize": [
+    {
+      "binding": "VECTORIZE",
+      "index_name": "toolschool-search",
+    },
+  ],
+  // Workers AI for generating embeddings
+  "ai": {
+    "binding": "AI",
+  },
 
   // Here's how to configure an additional environment
   // It can be deployed with `CLOUDFLARE_ENV=staging pnpm run deploy`

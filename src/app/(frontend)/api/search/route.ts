@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { getCloudflareContext } from '@opennextjs/cloudflare'
 
 interface SearchResult {
   id: string | number
@@ -11,6 +12,7 @@ interface SearchResult {
   category?: string
   score: number
   image?: string
+  semantic?: boolean // Flag for semantic search results
 }
 
 // Simple relevance scoring based on match position and field importance
@@ -44,11 +46,71 @@ function calculateScore(
   return score
 }
 
+// Semantic search using Vectorize
+async function performSemanticSearch(
+  query: string,
+  limit: number
+): Promise<SearchResult[]> {
+  try {
+    const context = await getCloudflareContext({ async: true })
+    const { VECTORIZE, AI } = context.env
+
+    if (!VECTORIZE || !AI) {
+      return [] // Fall back gracefully if bindings not available
+    }
+
+    // Generate embedding for the search query
+    const embeddingResponse = await AI.run('@cf/baai/bge-base-en-v1.5', {
+      text: [query],
+    })
+
+    // Type guard: check if it's the async response (no data) or the embedding response
+    if (!('data' in embeddingResponse) || !embeddingResponse.data || embeddingResponse.data.length === 0) {
+      return []
+    }
+
+    const queryEmbedding = embeddingResponse.data[0]
+
+    // Query Vectorize for similar vectors
+    const searchResults = await VECTORIZE.query(queryEmbedding, {
+      topK: limit,
+      returnMetadata: 'all',
+    })
+
+    // Transform to SearchResult format
+    return searchResults.matches.map((match) => {
+      const metadata = match.metadata as {
+        title?: string
+        slug?: string
+        type?: string
+        description?: string
+        category?: string
+        image?: string
+      }
+      return {
+        id: match.id,
+        title: metadata.title || '',
+        slug: metadata.slug || '',
+        type: (metadata.type || 'tool') as SearchResult['type'],
+        description: metadata.description,
+        category: metadata.category,
+        score: Math.round(match.score * 100), // Normalize to 0-100 scale
+        image: metadata.image,
+        semantic: true,
+      }
+    })
+  } catch (error) {
+    console.error('Semantic search error:', error)
+    return []
+  }
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const query = searchParams.get('q') || ''
   const limit = Math.min(parseInt(searchParams.get('limit') || '14'), 50)
   const types = searchParams.get('types')?.split(',') || ['tool', 'builder', 'project', 'post', 'tutorial']
+  const useHybrid = searchParams.get('hybrid') !== 'false' // Enable hybrid by default
 
   if (!query.trim()) {
     return NextResponse.json({
@@ -221,19 +283,40 @@ export async function GET(request: NextRequest) {
       )
     }
 
+    // Add semantic search if hybrid is enabled
+    if (useHybrid) {
+      searchPromises.push(performSemanticSearch(query, Math.ceil(limit / 2)))
+    }
+
     // Wait for all searches to complete
     const allResults = await Promise.all(searchPromises)
 
-    // Flatten, sort by score, and limit results
-    const results = allResults
-      .flat()
-      .sort((a, b) => b.score - a.score)
-      .slice(0, limit)
+    // Flatten all results
+    const flatResults = allResults.flat()
+
+    // Deduplicate results by slug+type (prefer keyword matches over semantic)
+    const seen = new Set<string>()
+    const deduped: SearchResult[] = []
+
+    // Sort by score first to prioritize higher-scoring matches
+    flatResults.sort((a, b) => b.score - a.score)
+
+    for (const result of flatResults) {
+      const key = `${result.type}-${result.slug}`
+      if (!seen.has(key)) {
+        seen.add(key)
+        deduped.push(result)
+      }
+    }
+
+    // Limit final results
+    const results = deduped.slice(0, limit)
 
     return NextResponse.json({
       results,
       query,
       total: results.length,
+      hybrid: useHybrid,
     })
   } catch (error) {
     console.error('Search error:', error)
