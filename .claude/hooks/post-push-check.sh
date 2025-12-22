@@ -1,131 +1,115 @@
 #!/bin/bash
 # Claude Code Hook: Check Deployment Status After Push
-# Triggered after git push commands
-# Polls GitHub Actions, then checks Cloudflare deployment
+# Quick check + background monitor with macOS notification
 
 PROJECT_DIR="$(dirname "$0")/../.."
 GH_CLI="$PROJECT_DIR/.bin/gh"
-MAX_WAIT=300  # 5 minutes max
-POLL_INTERVAL=10
+LOG_DIR="$PROJECT_DIR/.claude/logs"
+LOG_FILE="$LOG_DIR/deploy-$(date +%Y%m%d-%H%M%S).log"
 
-echo ""
-echo "═══════════════════════════════════════════════════════════════"
-echo "              MONITORING CI/CD PIPELINE AFTER PUSH              "
-echo "═══════════════════════════════════════════════════════════════"
-echo ""
+# Ensure log directory exists
+mkdir -p "$LOG_DIR"
 
 cd "$PROJECT_DIR"
 
-# ─────────────────────────────────────────────────────────────────
-# PHASE 1: Wait for GitHub Actions to complete
-# ─────────────────────────────────────────────────────────────────
+echo ""
+echo "═══════════════════════════════════════════════════════════════"
+echo "                    DEPLOYMENT INITIATED                        "
+echo "═══════════════════════════════════════════════════════════════"
+echo ""
 
-echo "📦 PHASE 1: GitHub Actions"
-echo "───────────────────────────────────────────────────────────────"
-
-if [ ! -x "$GH_CLI" ]; then
-    echo "   ⚠️  GitHub CLI not found at $GH_CLI"
-    echo "   Skipping GitHub Actions monitoring"
-else
-    echo "⏳ Waiting for workflow to start..."
-    sleep 5
-
-    elapsed=0
-    gh_success=false
-
-    while [ $elapsed -lt $MAX_WAIT ]; do
-        # Get the latest workflow run
-        run=$("$GH_CLI" run list --limit 1 --json status,conclusion,name,headBranch,databaseId 2>/dev/null)
-
-        if [ $? -ne 0 ] || [ -z "$run" ]; then
-            echo "   Unable to fetch GitHub Actions status"
-            break
-        fi
-
+# Quick initial status
+echo "📦 GitHub Actions: Checking..."
+if [ -x "$GH_CLI" ]; then
+    run=$("$GH_CLI" run list --limit 1 --json status,name,headBranch 2>/dev/null)
+    if [ $? -eq 0 ] && [ -n "$run" ]; then
         status=$(echo "$run" | jq -r '.[0].status')
-        conclusion=$(echo "$run" | jq -r '.[0].conclusion')
         name=$(echo "$run" | jq -r '.[0].name')
         branch=$(echo "$run" | jq -r '.[0].headBranch')
 
-        if [ "$status" = "completed" ]; then
-            if [ "$conclusion" = "success" ]; then
-                echo "✅ $name ($branch) - SUCCESS"
-                gh_success=true
+        if [ "$status" = "in_progress" ] || [ "$status" = "queued" ]; then
+            echo "🔄 $name ($branch) - $status"
+        elif [ "$status" = "completed" ]; then
+            echo "✅ $name ($branch) - completed"
+        else
+            echo "❓ $name ($branch) - $status"
+        fi
+    fi
+fi
+
+echo ""
+echo "📋 Monitoring in background..."
+echo "   Log: $LOG_FILE"
+echo "   You'll get a notification when complete."
+echo ""
+echo "═══════════════════════════════════════════════════════════════"
+
+# Spawn background monitor
+nohup bash -c "
+    MAX_WAIT=300
+    POLL_INTERVAL=15
+    elapsed=0
+
+    echo '=== Deployment Monitor Started ===' > '$LOG_FILE'
+    echo \"Started: \$(date)\" >> '$LOG_FILE'
+    echo '' >> '$LOG_FILE'
+
+    # Phase 1: Wait for GitHub Actions
+    echo '📦 PHASE 1: GitHub Actions' >> '$LOG_FILE'
+    echo '───────────────────────────' >> '$LOG_FILE'
+
+    while [ \$elapsed -lt $MAX_WAIT ]; do
+        run=\$('$GH_CLI' run list --limit 1 --json status,conclusion,name,headBranch 2>/dev/null)
+
+        if [ \$? -ne 0 ] || [ -z \"\$run\" ]; then
+            echo 'Unable to fetch GitHub Actions status' >> '$LOG_FILE'
+            break
+        fi
+
+        status=\$(echo \"\$run\" | jq -r '.[0].status')
+        conclusion=\$(echo \"\$run\" | jq -r '.[0].conclusion')
+        name=\$(echo \"\$run\" | jq -r '.[0].name')
+        branch=\$(echo \"\$run\" | jq -r '.[0].headBranch')
+
+        if [ \"\$status\" = \"completed\" ]; then
+            if [ \"\$conclusion\" = \"success\" ]; then
+                echo \"✅ \$name (\$branch) - SUCCESS\" >> '$LOG_FILE'
+
+                # Phase 2: Check Cloudflare
+                echo '' >> '$LOG_FILE'
+                echo '☁️  PHASE 2: Cloudflare Workers' >> '$LOG_FILE'
+                echo '───────────────────────────────' >> '$LOG_FILE'
+
+                sleep 5
+                cf_status=\$(cd '$PROJECT_DIR' && npx wrangler deployments list 2>/dev/null | head -15)
+                echo \"\$cf_status\" >> '$LOG_FILE'
+
+                # Success notification
+                osascript -e 'display notification \"GitHub Actions ✅ Cloudflare ✅\" with title \"Deploy Complete\" sound name \"Glass\"' 2>/dev/null
+
+                echo '' >> '$LOG_FILE'
+                echo '✨ PIPELINE COMPLETE' >> '$LOG_FILE'
             else
-                echo "❌ $name ($branch) - FAILED ($conclusion)"
-                echo ""
-                echo "═══════════════════════════════════════════════════════════════"
-                echo "   ⛔ Pipeline stopped - GitHub Actions failed"
-                echo "   Run 'gh run view --log-failed' to see error details"
-                echo "═══════════════════════════════════════════════════════════════"
-                exit 1
+                echo \"❌ \$name (\$branch) - FAILED (\$conclusion)\" >> '$LOG_FILE'
+
+                # Failure notification
+                osascript -e 'display notification \"GitHub Actions failed: '\$conclusion'\" with title \"Deploy Failed ❌\" sound name \"Basso\"' 2>/dev/null
             fi
             break
         else
-            # Still running
-            mins=$((elapsed / 60))
-            secs=$((elapsed % 60))
-            printf "\r🔄 $name ($branch) - $status... [%dm %ds]" $mins $secs
+            echo \"\$(date +%H:%M:%S) - \$status... [\$((elapsed/60))m \$((elapsed%60))s]\" >> '$LOG_FILE'
             sleep $POLL_INTERVAL
-            elapsed=$((elapsed + POLL_INTERVAL))
+            elapsed=\$((elapsed + POLL_INTERVAL))
         fi
     done
 
-    if [ $elapsed -ge $MAX_WAIT ]; then
-        echo ""
-        echo "⚠️  Timeout waiting for GitHub Actions (${MAX_WAIT}s)"
-        echo "   Run 'gh run watch' to continue monitoring"
+    if [ \$elapsed -ge $MAX_WAIT ]; then
+        echo 'Timeout waiting for GitHub Actions' >> '$LOG_FILE'
+        osascript -e 'display notification \"Timed out after 5 minutes\" with title \"Deploy Monitor\" sound name \"Basso\"' 2>/dev/null
     fi
 
-    # Only proceed to Phase 2 if GitHub Actions succeeded
-    if [ "$gh_success" != "true" ]; then
-        echo ""
-        echo "═══════════════════════════════════════════════════════════════"
-        exit 0
-    fi
-fi
+    echo '' >> '$LOG_FILE'
+    echo \"Completed: \$(date)\" >> '$LOG_FILE'
+" > /dev/null 2>&1 &
 
-echo ""
-
-# ─────────────────────────────────────────────────────────────────
-# PHASE 2: Check Cloudflare Workers deployment
-# ─────────────────────────────────────────────────────────────────
-
-echo "☁️  PHASE 2: Cloudflare Workers"
-echo "───────────────────────────────────────────────────────────────"
-
-# Give Cloudflare a moment to register the new deployment
-echo "⏳ Checking Cloudflare deployment status..."
-sleep 5
-
-# Get latest Cloudflare deployment
-deployments=$(npx wrangler deployments list 2>/dev/null | head -20)
-
-if [ $? -eq 0 ] && [ -n "$deployments" ]; then
-    # Check for Active or Failed in the output
-    if echo "$deployments" | grep -q "Active"; then
-        echo "✅ Deployment is ACTIVE"
-        echo ""
-        # Show the active deployment details
-        echo "$deployments" | grep -A2 "Active" | head -5
-    elif echo "$deployments" | grep -q "Failed"; then
-        echo "❌ Deployment FAILED"
-        echo ""
-        echo "$deployments" | grep -B2 -A2 "Failed" | head -10
-    else
-        echo "📋 Recent deployments:"
-        echo "$deployments" | head -10
-    fi
-
-    echo ""
-    echo "🔗 Dashboard: https://dash.cloudflare.com/"
-else
-    echo "   Unable to fetch Cloudflare deployments"
-    echo "   (Run 'npx wrangler login' if not authenticated)"
-fi
-
-echo ""
-echo "═══════════════════════════════════════════════════════════════"
-echo "                    ✨ PIPELINE COMPLETE ✨                     "
-echo "═══════════════════════════════════════════════════════════════"
 echo ""
