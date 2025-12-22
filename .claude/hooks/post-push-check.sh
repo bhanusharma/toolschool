@@ -1,6 +1,18 @@
 #!/bin/bash
 # Claude Code Hook: Check Deployment Status After Push
+# Triggered on all Bash commands, filters for git push
 # Quick check + background monitor with macOS notification
+
+# Read the JSON input from stdin
+INPUT=$(cat)
+
+# Check if this is a git push command
+COMMAND=$(echo "$INPUT" | jq -r '.tool_input.command // ""' 2>/dev/null)
+
+if [[ "$COMMAND" != *"git push"* ]]; then
+    # Not a git push, exit silently
+    exit 0
+fi
 
 PROJECT_DIR="$(dirname "$0")/../.."
 GH_CLI="$PROJECT_DIR/.bin/gh"
