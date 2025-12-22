@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useEffect, Suspense, useMemo } from 'react'
+import { useState, useEffect, Suspense, useMemo, useCallback } from 'react'
 import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { ChevronDown, X, Sparkles, Clock, SortAsc, Wrench } from 'lucide-react'
+import { ChevronDown, X, Sparkles, Clock, SortAsc, Wrench, Search } from 'lucide-react'
 import { ToolCard, EmptyState } from '@/components/cards'
 
 // Category colors for visual distinction
@@ -87,6 +87,23 @@ interface CategoriesApiResponse {
 
 type SortOption = 'featured' | 'newest' | 'alphabetical'
 
+// Debounce hook for search
+function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value)
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value)
+    }, delay)
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [value, delay])
+
+  return debouncedValue
+}
+
 function ToolsPageContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -106,6 +123,11 @@ function ToolsPageContent() {
   const [sortBy, setSortBy] = useState<SortOption>(sortParam || 'featured')
   const [showSortDropdown, setShowSortDropdown] = useState(false)
   const [visibleCount, setVisibleCount] = useState(20)
+
+  // Search API state
+  const [searchResults, setSearchResults] = useState<Tool[]>([])
+  const [isSearching, setIsSearching] = useState(false)
+  const debouncedSearchQuery = useDebounce(searchQuery, 300)
 
   // Calculate category counts
   const categoryCounts = useMemo(() => {
@@ -145,6 +167,52 @@ function ToolsPageContent() {
 
     fetchData()
   }, [])
+
+  // Fetch search results from unified API when search query changes
+  useEffect(() => {
+    async function fetchSearchResults() {
+      if (!debouncedSearchQuery.trim()) {
+        setSearchResults([])
+        setIsSearching(false)
+        return
+      }
+
+      setIsSearching(true)
+      try {
+        const res = await fetch(
+          `/api/search?q=${encodeURIComponent(debouncedSearchQuery)}&types=tool&limit=50`
+        )
+        if (res.ok) {
+          const data = await res.json()
+          // Map search results to Tool format
+          const mappedResults: Tool[] = data.results.map((result: {
+            id: string | number
+            title: string
+            slug: string
+            description?: string
+            category?: string
+            image?: string
+          }) => ({
+            id: String(result.id),
+            slug: result.slug,
+            title: result.title,
+            tagline: result.description,
+            toolCategory: result.category ? { id: '', title: result.category, slug: '' } : undefined,
+            featuredImage: result.image ? { url: result.image } : undefined,
+          }))
+          setSearchResults(mappedResults)
+        }
+      } catch (error) {
+        console.error('Search API error:', error)
+        // Fall back to client-side filtering
+        setSearchResults([])
+      } finally {
+        setIsSearching(false)
+      }
+    }
+
+    fetchSearchResults()
+  }, [debouncedSearchQuery])
 
   // Update URL
   const updateUrl = (params: { category?: string | null; sort?: string | null; search?: string | null }) => {
@@ -205,43 +273,49 @@ function ToolsPageContent() {
 
   // Filter and sort tools
   const filteredTools = useMemo(() => {
-    let filtered = tools
+    // Use search API results when we have a search query and results
+    let filtered: Tool[]
+
+    if (debouncedSearchQuery && searchResults.length > 0) {
+      // Use semantic search results - enrich with full tool data
+      filtered = searchResults.map(searchResult => {
+        // Find the full tool data from pre-loaded tools
+        const fullTool = tools.find(t => t.slug === searchResult.slug)
+        return fullTool || searchResult
+      })
+    } else if (debouncedSearchQuery && searchResults.length === 0 && !isSearching) {
+      // Search returned no results
+      filtered = []
+    } else {
+      // No search - use all tools
+      filtered = tools
+    }
 
     // Filter by category
     if (selectedCategory !== 'All') {
       filtered = filtered.filter((tool) => tool.toolCategory?.title === selectedCategory)
     }
 
-    // Filter by search
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase()
-      filtered = filtered.filter(
-        (tool) =>
-          tool.title.toLowerCase().includes(query) ||
-          tool.tagline?.toLowerCase().includes(query) ||
-          tool.excerpt?.toLowerCase().includes(query) ||
-          tool.toolCategory?.title.toLowerCase().includes(query)
-      )
-    }
-
-    // Sort
-    switch (sortBy) {
-      case 'newest':
-        filtered = [...filtered].sort((a, b) =>
-          new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()
-        )
-        break
-      case 'alphabetical':
-        filtered = [...filtered].sort((a, b) => a.title.localeCompare(b.title))
-        break
-      case 'featured':
-      default:
-        filtered = [...filtered].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0))
-        break
+    // Sort (only when not using search results, as API returns ranked results)
+    if (!debouncedSearchQuery) {
+      switch (sortBy) {
+        case 'newest':
+          filtered = [...filtered].sort((a, b) =>
+            new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()
+          )
+          break
+        case 'alphabetical':
+          filtered = [...filtered].sort((a, b) => a.title.localeCompare(b.title))
+          break
+        case 'featured':
+        default:
+          filtered = [...filtered].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0))
+          break
+      }
     }
 
     return filtered
-  }, [selectedCategory, searchQuery, tools, sortBy])
+  }, [selectedCategory, debouncedSearchQuery, searchResults, tools, sortBy, isSearching])
 
   const visibleTools = filteredTools.slice(0, visibleCount)
   const hasMore = visibleCount < filteredTools.length
@@ -339,12 +413,16 @@ function ToolsPageContent() {
               {/* Search Bar */}
               <div className="max-w-md animate-hero-delay-3">
                 <div className="relative">
-                  <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-black/40" viewBox="0 0 24 24" fill="none">
-                    <path d="M21 21L16.514 16.506M19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+                  {isSearching ? (
+                    <div className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5">
+                      <div className="animate-spin h-5 w-5 border-2 border-black/40 border-t-[#e7131a] rounded-full" />
+                    </div>
+                  ) : (
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-black/40" />
+                  )}
                   <input
                     type="text"
-                    placeholder="Search tools..."
+                    placeholder="Search tools with AI..."
                     value={searchQuery}
                     onChange={(e) => handleSearchChange(e.target.value)}
                     className="w-full pl-12 pr-4 py-4 bg-white border-0 font-ibm-plex-sans text-[15px] focus:outline-none focus:ring-2 focus:ring-[#e7131a] placeholder:text-black/40"
@@ -358,6 +436,12 @@ function ToolsPageContent() {
                     </button>
                   )}
                 </div>
+                {searchQuery && !isSearching && searchResults.length > 0 && (
+                  <div className="mt-2 flex items-center gap-2 text-[11px] font-ibm-plex-sans text-white/60">
+                    <Sparkles className="w-3 h-3 text-[#e7131a]" />
+                    <span>AI-powered semantic search</span>
+                  </div>
+                )}
               </div>
 
               {/* Quick stats */}
