@@ -84,16 +84,18 @@ nohup bash -c "
                 cf_status=\$(cd '$PROJECT_DIR' && npx wrangler deployments list 2>/dev/null | head -15)
                 echo \"\$cf_status\" >> '$LOG_FILE'
 
-                # Success notification
-                osascript -e 'display notification \"GitHub Actions ✅ Cloudflare ✅\" with title \"Deploy Complete\" sound name \"Glass\"' 2>/dev/null
+                # Success notification with banner
+                osascript -e 'display notification \"GitHub Actions ✅ Cloudflare ✅\" with title \"ToolSchool Deploy\" subtitle \"Deploy Complete\" sound name \"Glass\"' 2>/dev/null
+                osascript -e 'display dialog \"✅ Deploy Complete!\n\nGitHub Actions: Success\nCloudflare: Active\" with title \"ToolSchool\" buttons {\"View Site\", \"OK\"} default button \"OK\" with icon note giving up after 30' 2>/dev/null && open \"https://toolschool.ai\" &
 
                 echo '' >> '$LOG_FILE'
                 echo '✨ PIPELINE COMPLETE' >> '$LOG_FILE'
             else
                 echo \"❌ \$name (\$branch) - FAILED (\$conclusion)\" >> '$LOG_FILE'
 
-                # Failure notification
-                osascript -e 'display notification \"GitHub Actions failed: '\$conclusion'\" with title \"Deploy Failed ❌\" sound name \"Basso\"' 2>/dev/null
+                # Failure notification with banner
+                osascript -e 'display notification \"GitHub Actions failed: '\$conclusion'\" with title \"ToolSchool Deploy\" subtitle \"Deploy Failed\" sound name \"Basso\"' 2>/dev/null
+                osascript -e 'display dialog \"❌ Deploy Failed!\n\nGitHub Actions: '\$conclusion'\n\nCheck the logs for details.\" with title \"ToolSchool\" buttons {\"View Logs\", \"OK\"} default button \"OK\" with icon stop giving up after 60' 2>/dev/null
             fi
             break
         else
