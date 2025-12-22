@@ -117,10 +117,6 @@ export default async function HomePage() {
                 clipPath: 'polygon(100% 0, 100% 100%, 30% 100%, 60% 0)',
               }}
             />
-            {/* Secondary geometric accent */}
-            <div
-              className="absolute -right-10 top-20 w-[120px] h-[120px] border border-white/10 animate-slide-left stagger-8"
-            />
             {/* Grid lines */}
             <div className="absolute inset-0 opacity-[0.03]">
               <div className="h-full w-full" style={{
@@ -253,8 +249,6 @@ export default async function HomePage() {
                     })}
                   </div>
 
-                  {/* Decorative element */}
-                  <div className="absolute -bottom-8 -right-8 w-32 h-32 border border-white/10" />
                 </div>
               </div>
             </div>
