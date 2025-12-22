@@ -451,7 +451,8 @@ export default async function TutorialPage({ params }: { params: Promise<{ slug:
               </div>
 
               {/* Right Column - Sidebar (sticky) */}
-              <aside className="lg:sticky lg:top-6 lg:self-start">
+              <aside>
+                <div className="lg:sticky lg:top-6">
                 {/* Notion Template Button */}
                 {tutorial.notionTemplateUrl && (
                   <div className="mb-8">
@@ -546,6 +547,7 @@ export default async function TutorialPage({ params }: { params: Promise<{ slug:
                     </div>
                   </div>
                 )}
+                </div>
               </aside>
             </div>
           </div>
