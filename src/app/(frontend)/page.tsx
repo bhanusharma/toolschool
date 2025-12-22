@@ -2,6 +2,17 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
+import {
+  Sparkles,
+  PenLine,
+  Music,
+  Video,
+  Palette,
+  Hammer,
+  Layers,
+  Box,
+  type LucideIcon,
+} from 'lucide-react'
 
 async function getHomePageData() {
   const payloadConfig = await config
@@ -43,52 +54,47 @@ async function getHomePageData() {
   }
 }
 
-// Category data with descriptions and colors
-const categoryData: { [key: string]: { description: string; emoji: string; color: string } } = {
-  'image-generation': {
-    description: 'Create stunning visuals with AI',
-    emoji: '🎨',
-    color: '#e7131a',
-  },
-  'text-copywriting': {
-    description: 'Generate and enhance written content',
-    emoji: '✍️',
-    color: '#1a73e8',
-  },
-  'music-audio': {
-    description: 'Compose and produce AI music',
-    emoji: '🎵',
-    color: '#34a853',
-  },
-  'video-film': {
-    description: 'Edit and generate video content',
-    emoji: '🎬',
-    color: '#fbbc04',
-  },
-  'graphic-design': {
-    description: 'Design tools powered by AI',
-    emoji: '🖌️',
-    color: '#9c27b0',
-  },
-  'website-app': {
-    description: 'Build websites with AI assistance',
-    emoji: '🌐',
-    color: '#00bcd4',
-  },
-  coding: {
-    description: 'Code generation and assistance',
-    emoji: '💻',
-    color: '#ff5722',
-  },
+// Category data with descriptions, icons, and colors
+const categoryData: { [key: string]: { description: string; icon: LucideIcon; color: string } } = {
   '3d': {
     description: '3D modeling and rendering',
-    emoji: '🎲',
+    icon: Box,
     color: '#673ab7',
   },
-  animation: {
-    description: 'Animate with AI tools',
-    emoji: '🎞️',
-    color: '#e91e63',
+  design: {
+    description: 'Design tools powered by AI',
+    icon: Palette,
+    color: '#9c27b0',
+  },
+  audio: {
+    description: 'Compose and produce AI music',
+    icon: Music,
+    color: '#34a853',
+  },
+  video: {
+    description: 'Edit and generate video content',
+    icon: Video,
+    color: '#fbbc04',
+  },
+  building: {
+    description: 'Build apps and websites with AI',
+    icon: Hammer,
+    color: '#ff5722',
+  },
+  curating: {
+    description: 'Organize and manage content',
+    icon: Layers,
+    color: '#00bcd4',
+  },
+  writing: {
+    description: 'Generate and enhance written content',
+    icon: PenLine,
+    color: '#1a73e8',
+  },
+  creating: {
+    description: 'Create stunning visuals with AI',
+    icon: Sparkles,
+    color: '#e7131a',
   },
 }
 
@@ -194,9 +200,10 @@ export default async function HomePage() {
                     {categories.slice(0, 4).map((category: any, index: number) => {
                       const data = categoryData[category.slug] || {
                         description: 'Explore AI tools',
-                        emoji: '🤖',
+                        icon: Sparkles,
                         color: '#e7131a',
                       }
+                      const IconComponent = data.icon
                       const offsets = ['ml-0', 'ml-12', 'ml-6', 'ml-16']
                       const staggerClasses = ['stagger-4', 'stagger-5', 'stagger-6', 'stagger-7']
                       return (
@@ -207,10 +214,15 @@ export default async function HomePage() {
                         >
                           <div className="bg-white/5 backdrop-blur border border-white/10 p-5 flex items-center gap-5 transition-all duration-300 hover:bg-white hover:border-white group-hover:translate-x-2">
                             <div
-                              className="w-12 h-12 flex items-center justify-center text-2xl transition-colors"
+                              className="w-12 h-12 flex items-center justify-center transition-colors"
                               style={{ backgroundColor: `${data.color}20` }}
                             >
-                              {data.emoji}
+                              <IconComponent
+                                size={24}
+                                strokeWidth={1.5}
+                                className="transition-colors"
+                                style={{ color: data.color }}
+                              />
                             </div>
                             <div className="flex-1">
                               <h3 className="font-ibm-plex-sans-condensed text-[14px] tracking-[0.1em] uppercase text-white group-hover:text-black transition-colors">
@@ -512,9 +524,10 @@ export default async function HomePage() {
               categories.slice(0, 8).map((category: any, index: number) => {
                 const data = categoryData[category.slug] || {
                   description: 'Explore AI tools',
-                  emoji: '🤖',
+                  icon: Sparkles,
                   color: '#e7131a',
                 }
+                const IconComponent = data.icon
                 return (
                   <Link
                     key={category.id}
@@ -522,10 +535,14 @@ export default async function HomePage() {
                     className={`group bg-white p-6 lg:p-8 border border-black/5 hover:border-black hover:shadow-lg transition-all duration-300 animate-scale-in stagger-${index + 1}`}
                   >
                     <div
-                      className="w-12 h-12 flex items-center justify-center text-2xl mb-4 transition-transform group-hover:scale-110"
+                      className="w-12 h-12 flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
                       style={{ backgroundColor: `${data.color}15` }}
                     >
-                      {data.emoji}
+                      <IconComponent
+                        size={24}
+                        strokeWidth={1.5}
+                        style={{ color: data.color }}
+                      />
                     </div>
                     <h3 className="font-gilda-display text-[18px] lg:text-[20px] text-black group-hover:text-[#e7131a] transition-colors mb-1">
                       {category.title}
