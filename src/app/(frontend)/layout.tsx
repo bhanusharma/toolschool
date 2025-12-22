@@ -62,6 +62,7 @@ function Footer() {
                     AI Tools
                   </Link>
                 </li>
+                {/* TEMPORARILY HIDDEN - Builders and Projects pages not ready yet, will bring back later
                 <li>
                   <Link href="/builders" className="hover:text-black transition-colors">
                     Builders
@@ -72,6 +73,7 @@ function Footer() {
                     Projects
                   </Link>
                 </li>
+                */}
               </ul>
             </div>
 

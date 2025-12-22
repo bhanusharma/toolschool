@@ -66,6 +66,7 @@ export function Header() {
                       TOOLS
                     </span>
                   </Link>
+                  {/* TEMPORARILY HIDDEN - Builders and Projects pages not ready yet, will bring back later
                   <Link
                     href="/builders"
                     prefetch={true}
@@ -84,6 +85,7 @@ export function Header() {
                       PROJECTS
                     </span>
                   </Link>
+                  */}
                   <Link
                     href="/news"
                     prefetch={true}
@@ -201,6 +203,7 @@ export function Header() {
               >
                 TOOLS
               </Link>
+              {/* TEMPORARILY HIDDEN - Builders and Projects pages not ready yet, will bring back later
               <Link
                 href="/builders"
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -215,6 +218,7 @@ export function Header() {
               >
                 PROJECTS
               </Link>
+              */}
               <Link
                 href="/news"
                 onClick={() => setIsMobileMenuOpen(false)}
