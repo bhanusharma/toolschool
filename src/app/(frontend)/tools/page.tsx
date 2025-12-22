@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, Suspense, useMemo, useCallback } from 'react'
+import { useState, useEffect, Suspense, useMemo } from 'react'
 import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { ChevronDown, X, Sparkles, Clock, SortAsc, Wrench, Search } from 'lucide-react'
@@ -183,7 +183,16 @@ function ToolsPageContent() {
           `/api/search?q=${encodeURIComponent(debouncedSearchQuery)}&types=tool&limit=50`
         )
         if (res.ok) {
-          const data = await res.json()
+          const data = await res.json() as {
+            results: Array<{
+              id: string | number
+              title: string
+              slug: string
+              description?: string
+              category?: string
+              image?: string
+            }>
+          }
           // Map search results to Tool format
           const mappedResults: Tool[] = data.results.map((result: {
             id: string | number
