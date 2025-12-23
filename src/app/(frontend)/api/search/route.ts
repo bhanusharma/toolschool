@@ -3,8 +3,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { getCloudflareContext } from '@opennextjs/cloudflare'
 
-// Force edge runtime and disable static generation
-export const runtime = 'edge'
+// Force dynamic to prevent prerendering issues
 export const dynamic = 'force-dynamic'
 
 interface SearchResult {
