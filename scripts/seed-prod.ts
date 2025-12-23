@@ -69,35 +69,43 @@ const GET_ALL_TOOLS = `
   }
 `
 
-// Map WordPress categories to our categories
+// Map WordPress categories to our categories (10 categories)
 const categoryMapping: Record<string, { slug: string; title: string; description: string; color: string }> = {
   'text-copywriting': { slug: 'writing', title: 'Writing', description: 'AI-powered text generation and editing', color: '#1a73e8' },
   'text / copywriting': { slug: 'writing', title: 'Writing', description: 'AI-powered text generation and editing', color: '#1a73e8' },
-  'coding': { slug: 'building', title: 'Building', description: 'Develop AI-powered applications', color: '#fbbc04' },
-  'image-generation': { slug: 'creating', title: 'Creating', description: 'Generate art, images, and creative content', color: '#e7131a' },
-  'image generation': { slug: 'creating', title: 'Creating', description: 'Generate art, images, and creative content', color: '#e7131a' },
+  'coding': { slug: 'building', title: 'Building', description: 'No-code and app development', color: '#fbbc04' },
+  'image-generation': { slug: 'image', title: 'Image', description: 'Generate art, images, and visual content', color: '#e7131a' },
+  'image generation': { slug: 'image', title: 'Image', description: 'Generate art, images, and visual content', color: '#e7131a' },
   'video-film': { slug: 'video', title: 'Video', description: 'AI video generation and editing', color: '#9c27b0' },
   'video / film': { slug: 'video', title: 'Video', description: 'AI video generation and editing', color: '#9c27b0' },
   'music-audio': { slug: 'audio', title: 'Audio', description: 'AI music and voice generation', color: '#ff5722' },
   'music / audio': { slug: 'audio', title: 'Audio', description: 'AI music and voice generation', color: '#ff5722' },
-  'graphic-design': { slug: 'design', title: 'Design', description: 'AI-powered graphic design tools', color: '#00bcd4' },
-  'graphic design': { slug: 'design', title: 'Design', description: 'AI-powered graphic design tools', color: '#00bcd4' },
-  '3d': { slug: '3d', title: '3D', description: 'AI 3D modeling and generation', color: '#673ab7' },
-  'website-app': { slug: 'building', title: 'Building', description: 'Develop AI-powered applications', color: '#fbbc04' },
-  'website / app': { slug: 'building', title: 'Building', description: 'Develop AI-powered applications', color: '#fbbc04' },
-  'presentation': { slug: 'creating', title: 'Creating', description: 'Generate art, images, and creative content', color: '#e7131a' },
+  'graphic-design': { slug: 'image', title: 'Image', description: 'Generate art, images, and visual content', color: '#e7131a' },
+  'graphic design': { slug: 'image', title: 'Image', description: 'Generate art, images, and visual content', color: '#e7131a' },
+  '3d': { slug: '3d', title: '3D', description: '3D modeling and rendering', color: '#673ab7' },
+  'website-app': { slug: 'building', title: 'Building', description: 'No-code and app development', color: '#fbbc04' },
+  'website / app': { slug: 'building', title: 'Building', description: 'No-code and app development', color: '#fbbc04' },
+  'presentation': { slug: 'marketing', title: 'Marketing', description: 'SEO, ads, and content strategy', color: '#f59e0b' },
+  'automation': { slug: 'automation', title: 'Automation', description: 'Workflow and task automation tools', color: '#10b981' },
+  'chatbot': { slug: 'chatbots', title: 'Chatbots', description: 'Conversational AI and agents', color: '#6366f1' },
+  'chatbots': { slug: 'chatbots', title: 'Chatbots', description: 'Conversational AI and agents', color: '#6366f1' },
+  'marketing': { slug: 'marketing', title: 'Marketing', description: 'SEO, ads, and content strategy', color: '#f59e0b' },
+  'data': { slug: 'data', title: 'Data', description: 'Analytics and data visualization', color: '#06b6d4' },
+  'analytics': { slug: 'data', title: 'Data', description: 'Analytics and data visualization', color: '#06b6d4' },
 }
 
-// Tool categories for our system
+// Tool categories for our system (10 categories)
 const toolCategories = [
-  { title: 'Creating', slug: 'creating', description: 'Generate art, images, and creative content', color: '#e7131a' },
   { title: 'Writing', slug: 'writing', description: 'AI-powered text generation and editing', color: '#1a73e8' },
-  { title: 'Curating', slug: 'curating', description: 'Discover and organize AI content', color: '#34a853' },
-  { title: 'Building', slug: 'building', description: 'Develop AI-powered applications', color: '#fbbc04' },
+  { title: 'Image', slug: 'image', description: 'Generate art, images, and visual content', color: '#e7131a' },
   { title: 'Video', slug: 'video', description: 'AI video generation and editing', color: '#9c27b0' },
   { title: 'Audio', slug: 'audio', description: 'AI music and voice generation', color: '#ff5722' },
-  { title: 'Design', slug: 'design', description: 'AI-powered graphic design tools', color: '#00bcd4' },
-  { title: '3D', slug: '3d', description: 'AI 3D modeling and generation', color: '#673ab7' },
+  { title: 'Automation', slug: 'automation', description: 'Workflow and task automation tools', color: '#10b981' },
+  { title: 'Chatbots', slug: 'chatbots', description: 'Conversational AI and agents', color: '#6366f1' },
+  { title: 'Marketing', slug: 'marketing', description: 'SEO, ads, and content strategy', color: '#f59e0b' },
+  { title: 'Data', slug: 'data', description: 'Analytics and data visualization', color: '#06b6d4' },
+  { title: 'Building', slug: 'building', description: 'No-code and app development', color: '#fbbc04' },
+  { title: '3D', slug: '3d', description: '3D modeling and rendering', color: '#673ab7' },
 ]
 
 // Other taxonomies

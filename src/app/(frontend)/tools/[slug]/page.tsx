@@ -46,24 +46,27 @@ interface ToolsApiResponse {
   totalDocs: number
 }
 
-// Category colors for visual consistency
+// Category colors for visual consistency (10 categories + legacy WordPress mappings)
 const categoryColors: { [key: string]: string } = {
+  // New 10 categories
+  Writing: '#1a73e8',
+  Image: '#e7131a',
+  Video: '#9c27b0',
+  Audio: '#ff5722',
+  Automation: '#10b981',
+  Chatbots: '#6366f1',
+  Marketing: '#f59e0b',
+  Data: '#06b6d4',
+  Building: '#fbbc04',
+  '3D': '#673ab7',
+  // Legacy WordPress mappings for existing tools
   'Image Generation': '#e7131a',
   'Text / Copywriting': '#1a73e8',
-  'Music / Audio': '#34a853',
-  'Video / Film': '#fbbc04',
-  'Graphic Design': '#9c27b0',
-  'Website / App': '#00bcd4',
-  Coding: '#ff5722',
-  '3D': '#673ab7',
-  Animation: '#e91e63',
-  Creating: '#e7131a',
-  Writing: '#1a73e8',
-  Curating: '#9c27b0',
-  Building: '#ff5722',
-  Video: '#fbbc04',
-  Audio: '#34a853',
-  Design: '#00bcd4',
+  'Music / Audio': '#ff5722',
+  'Video / Film': '#9c27b0',
+  'Graphic Design': '#e7131a',
+  'Website / App': '#fbbc04',
+  Coding: '#fbbc04',
 }
 
 // Platform icons

@@ -7,10 +7,12 @@ import {
   PenLine,
   Music,
   Video,
-  Palette,
   Hammer,
-  Layers,
   Box,
+  Zap,
+  MessageSquare,
+  TrendingUp,
+  BarChart,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -54,47 +56,57 @@ async function getHomePageData() {
   }
 }
 
-// Category data with descriptions, icons, and colors
+// Category data with descriptions, icons, and colors (10 categories)
 const categoryData: { [key: string]: { description: string; icon: LucideIcon; color: string } } = {
-  '3d': {
-    description: '3D modeling and rendering',
-    icon: Box,
-    color: '#673ab7',
-  },
-  design: {
-    description: 'Design tools powered by AI',
-    icon: Palette,
-    color: '#9c27b0',
-  },
-  audio: {
-    description: 'Compose and produce AI music',
-    icon: Music,
-    color: '#34a853',
-  },
-  video: {
-    description: 'Edit and generate video content',
-    icon: Video,
-    color: '#fbbc04',
-  },
-  building: {
-    description: 'Build apps and websites with AI',
-    icon: Hammer,
-    color: '#ff5722',
-  },
-  curating: {
-    description: 'Organize and manage content',
-    icon: Layers,
-    color: '#00bcd4',
-  },
   writing: {
     description: 'Generate and enhance written content',
     icon: PenLine,
     color: '#1a73e8',
   },
-  creating: {
+  image: {
     description: 'Create stunning visuals with AI',
     icon: Sparkles,
     color: '#e7131a',
+  },
+  video: {
+    description: 'Edit and generate video content',
+    icon: Video,
+    color: '#9c27b0',
+  },
+  audio: {
+    description: 'Compose and produce AI music',
+    icon: Music,
+    color: '#ff5722',
+  },
+  automation: {
+    description: 'Automate workflows and tasks',
+    icon: Zap,
+    color: '#10b981',
+  },
+  chatbots: {
+    description: 'Conversational AI and agents',
+    icon: MessageSquare,
+    color: '#6366f1',
+  },
+  marketing: {
+    description: 'SEO, ads, and content strategy',
+    icon: TrendingUp,
+    color: '#f59e0b',
+  },
+  data: {
+    description: 'Analytics and visualization',
+    icon: BarChart,
+    color: '#06b6d4',
+  },
+  building: {
+    description: 'Build apps and websites with AI',
+    icon: Hammer,
+    color: '#fbbc04',
+  },
+  '3d': {
+    description: '3D modeling and rendering',
+    icon: Box,
+    color: '#673ab7',
   },
 }
 

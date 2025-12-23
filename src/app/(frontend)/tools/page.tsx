@@ -12,51 +12,59 @@ import {
   Wrench,
   Search,
   PenLine,
-  BookOpen,
   Hammer,
   Video,
   Music,
-  Palette,
   Box,
+  Zap,
+  MessageSquare,
+  TrendingUp,
+  BarChart,
   type LucideIcon,
 } from 'lucide-react'
 import { ToolCard, EmptyState } from '@/components/cards'
 
-// Category colors for visual distinction
+// Category colors for visual distinction (10 categories)
 const categoryColors: { [key: string]: string } = {
-  Creating: '#e7131a',
   Writing: '#1a73e8',
-  Curating: '#9c27b0',
-  Building: '#ff5722',
-  Video: '#fbbc04',
-  Audio: '#34a853',
-  Design: '#00bcd4',
+  Image: '#e7131a',
+  Video: '#9c27b0',
+  Audio: '#ff5722',
+  Automation: '#10b981',
+  Chatbots: '#6366f1',
+  Marketing: '#f59e0b',
+  Data: '#06b6d4',
+  Building: '#fbbc04',
   '3D': '#673ab7',
 }
 
-// Category mapping from URL params to display names
+// Category mapping from URL params to display names (10 categories)
 const categoryUrlToDisplayName: { [key: string]: string } = {
-  'creating': 'Creating',
   'writing': 'Writing',
-  'curating': 'Curating',
-  'building': 'Building',
+  'image': 'Image',
   'video': 'Video',
   'audio': 'Audio',
-  'design': 'Design',
+  'automation': 'Automation',
+  'chatbots': 'Chatbots',
+  'marketing': 'Marketing',
+  'data': 'Data',
+  'building': 'Building',
   '3d': '3D',
 }
 
-// Category icons and descriptions
+// Category icons and descriptions (10 categories)
 const categoryData: {
   [key: string]: { icon: LucideIcon; description: string }
 } = {
-  Creating: { icon: Sparkles, description: 'Generate art, images, and creative content' },
   Writing: { icon: PenLine, description: 'AI-powered text generation and editing' },
-  Curating: { icon: BookOpen, description: 'Organize and discover content' },
-  Building: { icon: Hammer, description: 'Develop AI-powered applications' },
+  Image: { icon: Sparkles, description: 'Generate art, images, and visual content' },
   Video: { icon: Video, description: 'AI video generation and editing' },
   Audio: { icon: Music, description: 'AI music and voice generation' },
-  Design: { icon: Palette, description: 'Design tools powered by AI' },
+  Automation: { icon: Zap, description: 'Workflow and task automation tools' },
+  Chatbots: { icon: MessageSquare, description: 'Conversational AI and agents' },
+  Marketing: { icon: TrendingUp, description: 'SEO, ads, and content strategy' },
+  Data: { icon: BarChart, description: 'Analytics and data visualization' },
+  Building: { icon: Hammer, description: 'No-code and app development' },
   '3D': { icon: Box, description: '3D modeling and rendering' },
 }
 
@@ -81,6 +89,8 @@ interface Tool {
     url: string
     alt?: string
   }
+  logoUrl?: string
+  website?: string
   createdAt?: string
 }
 

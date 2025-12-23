@@ -4,16 +4,99 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Sparkles, ArrowRight } from 'lucide-react'
 
-// Category colors for visual distinction
+// Category colors for visual distinction (10 categories)
 const categoryColors: { [key: string]: string } = {
-  Creating: '#e7131a',
   Writing: '#1a73e8',
-  Curating: '#9c27b0',
-  Building: '#ff5722',
-  Video: '#fbbc04',
-  Audio: '#34a853',
-  Design: '#00bcd4',
+  Image: '#e7131a',
+  Video: '#9c27b0',
+  Audio: '#ff5722',
+  Automation: '#10b981',
+  Chatbots: '#6366f1',
+  Marketing: '#f59e0b',
+  Data: '#06b6d4',
+  Building: '#fbbc04',
   '3D': '#673ab7',
+}
+
+// Map of tool slugs to their official domains for logo fetching
+const toolDomainMap: Record<string, string> = {
+  'chatgpt': 'openai.com',
+  'claude': 'anthropic.com',
+  'midjourney': 'midjourney.com',
+  'dall-e-3': 'openai.com',
+  'stable-diffusion': 'stability.ai',
+  'stability-ai': 'stability.ai',
+  'leonardo-ai': 'leonardo.ai',
+  'ideogram': 'ideogram.ai',
+  'runway': 'runwayml.com',
+  'runway-ml': 'runwayml.com',
+  'runwayml': 'runwayml.com',
+  'pika': 'pika.art',
+  'eleven-labs': 'elevenlabs.io',
+  'elevenlabs': 'elevenlabs.io',
+  'suno': 'suno.ai',
+  'suno-ai': 'suno.ai',
+  'cursor': 'cursor.com',
+  'github-copilot': 'github.com',
+  'replit': 'replit.com',
+  'replit-ai': 'replit.com',
+  'framer-ai': 'framer.com',
+  'canva-magic-studio': 'canva.com',
+  'adobe-firefly': 'adobe.com',
+  'figma-ai': 'figma.com',
+  'notion-ai': 'notion.so',
+  'jasper-ai': 'jasper.ai',
+  'copy-ai': 'copy.ai',
+  'character-ai': 'character.ai',
+  'perplexity': 'perplexity.ai',
+  'notebooklm': 'google.com',
+  'google-gemini': 'google.com',
+  'flux': 'blackforestlabs.ai',
+  'maker': 'maker.co',
+  'tome': 'tome.app',
+  'gamma': 'gamma.app',
+  'durable': 'durable.co',
+  '10web': '10web.io',
+  'spline-ai': 'spline.design',
+  'meshy': 'meshy.ai',
+  'invideo': 'invideo.io',
+  'veed': 'veed.io',
+  'bolt': 'stackblitz.com',
+  'v0': 'vercel.com',
+  'v0-by-vercel': 'vercel.com',
+  'zapier-ai': 'zapier.com',
+  'udio': 'udio.com',
+  'mubert': 'mubert.com',
+  'deepseek': 'deepseek.com',
+  'warp-ai': 'warp.dev',
+  'clay': 'clay.com',
+  'harvey-ai': 'harvey.ai',
+  'captions': 'captions.ai',
+  'clipchamp': 'clipchamp.com',
+  'kling-ai': 'klingai.com',
+  'hailuo-ai': 'hailuoai.video',
+  'sora': 'openai.com',
+}
+
+// Generate high-res logo URL using Google's favicon service
+function getLogoUrl(slug: string, website?: string): string | null {
+  // First try to get domain from our mapping
+  let domain = toolDomainMap[slug]
+
+  // If not in mapping, try to extract from website URL
+  if (!domain && website) {
+    try {
+      const url = new URL(website.startsWith('http') ? website : `https://${website}`)
+      domain = url.hostname.replace('www.', '')
+    } catch {
+      // Invalid URL
+    }
+  }
+
+  if (!domain) return null
+
+  // Use Google's favicon service with size parameter for higher resolution (up to 256px)
+  return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`
 }
 
 interface ToolCardProps {
@@ -38,6 +121,8 @@ interface ToolCardProps {
       url: string
       alt?: string
     }
+    logoUrl?: string
+    website?: string
   }
   variant?: 'default' | 'compact' | 'featured'
   showCategory?: boolean
@@ -58,7 +143,8 @@ export function ToolCard({
   className = '',
 }: ToolCardProps) {
   const categoryColor = categoryColors[tool.toolCategory?.title || ''] || '#e7131a'
-  const imageUrl = tool.featuredImage?.url || tool.logo?.url
+  // Try multiple sources for logo: featuredImage > logo > logoUrl > generated from domain
+  const imageUrl = tool.featuredImage?.url || tool.logo?.url || tool.logoUrl || getLogoUrl(tool.slug, tool.website)
 
   if (variant === 'compact') {
     return (
