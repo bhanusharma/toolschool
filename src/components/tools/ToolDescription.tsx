@@ -6,8 +6,13 @@ interface ToolDescriptionProps {
 }
 
 export function ToolDescription({ tool }: ToolDescriptionProps) {
-  const hasRichContent = tool.content && Array.isArray(tool.content.root?.children) && tool.content.root.children.length > 0
-  const hasHowItWorks = tool.howItWorks && Array.isArray(tool.howItWorks.root?.children) && tool.howItWorks.root.children.length > 0
+  // Check for rich text content (object with root.children) or plain text (string)
+  const hasRichContent = tool.content && typeof tool.content === 'object' && Array.isArray(tool.content.root?.children) && tool.content.root.children.length > 0
+  const hasHowItWorks = tool.howItWorks && (
+    typeof tool.howItWorks === 'string' ||
+    (typeof tool.howItWorks === 'object' && Array.isArray(tool.howItWorks.root?.children) && tool.howItWorks.root.children.length > 0)
+  )
+  const howItWorksIsRichText = tool.howItWorks && typeof tool.howItWorks === 'object' && 'root' in tool.howItWorks
 
   return (
     <section id="overview" className="bg-white border border-[#e5e5e5] p-8 lg:p-10">
@@ -32,9 +37,15 @@ export function ToolDescription({ tool }: ToolDescriptionProps) {
           <h3 className="text-[22px] font-gilda-display text-black mb-5">
             How {tool.title} Works
           </h3>
-          <div className="prose prose-gray max-w-none font-ibm-plex-sans text-[16px] leading-relaxed">
-            <RichText data={tool.howItWorks} />
-          </div>
+          {howItWorksIsRichText ? (
+            <div className="prose prose-gray max-w-none font-ibm-plex-sans text-[16px] leading-relaxed">
+              <RichText data={tool.howItWorks} />
+            </div>
+          ) : (
+            <p className="font-ibm-plex-sans text-[16px] text-gray-700 leading-relaxed">
+              {String(tool.howItWorks)}
+            </p>
+          )}
         </div>
       )}
 
