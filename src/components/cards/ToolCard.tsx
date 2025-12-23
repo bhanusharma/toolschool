@@ -76,6 +76,36 @@ const toolDomainMap: Record<string, string> = {
   'kling-ai': 'klingai.com',
   'hailuo-ai': 'hailuoai.video',
   'sora': 'openai.com',
+  // Data tools
+  'julius-ai': 'julius.ai',
+  'equals': 'equals.com',
+  'obviously-ai': 'obviously.ai',
+  'akkio': 'akkio.com',
+  'hex': 'hex.tech',
+  // Automation tools
+  'make': 'make.com',
+  'n8n': 'n8n.io',
+  'bardeen': 'bardeen.ai',
+  'relay': 'relay.app',
+  'activepieces': 'activepieces.com',
+  // Marketing tools
+  'jasper': 'jasper.ai',
+  'surfer-seo': 'surferseo.com',
+  'clearscope': 'clearscope.io',
+  'writesonic': 'writesonic.com',
+  // 3D tools
+  'luma-ai': 'lumalabs.ai',
+  'kaedim': 'kaedim3d.com',
+  'csm-ai': 'csm.ai',
+  'tripo-ai': 'tripo3d.ai',
+  // Writing tools
+  'grammarly': 'grammarly.com',
+  'sudowrite': 'sudowrite.com',
+  'wordtune': 'wordtune.com',
+  // Chatbot tools
+  'pi': 'pi.ai',
+  'poe': 'poe.com',
+  'grok': 'x.ai',
 }
 
 // Generate high-res logo URL using Google's favicon service

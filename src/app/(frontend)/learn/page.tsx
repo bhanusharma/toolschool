@@ -61,6 +61,11 @@ function getImageUrl(tutorial: Tutorial): string | null {
   return tutorial.featuredImage.url
 }
 
+// Check if URL is internal (needs unoptimized flag on Cloudflare Workers)
+function isInternalUrl(url: string): boolean {
+  return url.startsWith('/api/') || url.startsWith('/media/')
+}
+
 export default async function LearnPage() {
   const tutorials = await getTutorials()
   const featuredTutorial = tutorials.find(t => t.featured)
@@ -160,6 +165,7 @@ export default async function LearnPage() {
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 1024px) 100vw, 50vw"
+                    unoptimized={isInternalUrl(getImageUrl(featuredTutorial)!)}
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
@@ -251,6 +257,7 @@ export default async function LearnPage() {
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        unoptimized={isInternalUrl(getImageUrl(tutorial)!)}
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#1a1a1a] to-[#333]">

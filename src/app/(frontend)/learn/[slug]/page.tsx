@@ -207,6 +207,11 @@ function getImageUrl(tutorial: Tutorial): string | null {
   return tutorial.featuredImage.url
 }
 
+// Check if URL is internal (needs unoptimized flag on Cloudflare Workers)
+function isInternalUrl(url: string): boolean {
+  return url.startsWith('/api/') || url.startsWith('/media/')
+}
+
 export default async function TutorialPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const tutorial = await getTutorial(slug)
@@ -531,7 +536,7 @@ export default async function TutorialPage({ params }: { params: Promise<{ slug:
                             className="flex items-center gap-3 text-[14px] font-ibm-plex-sans text-black/70 hover:text-black transition-colors"
                           >
                             {toolLogo ? (
-                              <Image src={toolLogo} alt={tool.title} width={24} height={24} className="rounded" />
+                              <Image src={toolLogo} alt={tool.title} width={24} height={24} className="rounded" unoptimized={isInternalUrl(toolLogo)} />
                             ) : (
                               <div className="w-6 h-6 bg-gray-200 rounded flex items-center justify-center text-[10px] font-bold text-gray-500">
                                 {tool.title.charAt(0)}
