@@ -3,7 +3,23 @@
 import { useState, useEffect, Suspense, useMemo } from 'react'
 import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { ChevronDown, X, Sparkles, Clock, SortAsc, Wrench, Search } from 'lucide-react'
+import {
+  ChevronDown,
+  X,
+  Sparkles,
+  Clock,
+  SortAsc,
+  Wrench,
+  Search,
+  PenLine,
+  BookOpen,
+  Hammer,
+  Video,
+  Music,
+  Palette,
+  Box,
+  type LucideIcon,
+} from 'lucide-react'
 import { ToolCard, EmptyState } from '@/components/cards'
 
 // Category colors for visual distinction
@@ -32,16 +48,16 @@ const categoryUrlToDisplayName: { [key: string]: string } = {
 
 // Category icons and descriptions
 const categoryData: {
-  [key: string]: { emoji: string; description: string }
+  [key: string]: { icon: LucideIcon; description: string }
 } = {
-  Creating: { emoji: '🎨', description: 'Generate art, images, and creative content' },
-  Writing: { emoji: '✍️', description: 'AI-powered text generation and editing' },
-  Curating: { emoji: '📚', description: 'Organize and discover content' },
-  Building: { emoji: '🔧', description: 'Develop AI-powered applications' },
-  Video: { emoji: '🎬', description: 'AI video generation and editing' },
-  Audio: { emoji: '🎵', description: 'AI music and voice generation' },
-  Design: { emoji: '🖌️', description: 'Design tools powered by AI' },
-  '3D': { emoji: '🎲', description: '3D modeling and rendering' },
+  Creating: { icon: Sparkles, description: 'Generate art, images, and creative content' },
+  Writing: { icon: PenLine, description: 'AI-powered text generation and editing' },
+  Curating: { icon: BookOpen, description: 'Organize and discover content' },
+  Building: { icon: Hammer, description: 'Develop AI-powered applications' },
+  Video: { icon: Video, description: 'AI video generation and editing' },
+  Audio: { icon: Music, description: 'AI music and voice generation' },
+  Design: { icon: Palette, description: 'Design tools powered by AI' },
+  '3D': { icon: Box, description: '3D modeling and rendering' },
 }
 
 interface Tool {
@@ -483,6 +499,7 @@ function ToolsPageContent() {
             {Object.keys(categoryData).map((category, index) => {
               const color = categoryColors[category] || '#000'
               const staggerClass = `stagger-${index + 1}`
+              const IconComponent = categoryData[category].icon
               return (
                 <button
                   key={category}
@@ -490,10 +507,10 @@ function ToolsPageContent() {
                   className={`group p-6 border border-[#e5e5e5] hover:border-black transition-all duration-200 text-left animate-slide-up ${staggerClass}`}
                 >
                   <div
-                    className="w-10 h-10 flex items-center justify-center mb-4 text-2xl"
+                    className="w-10 h-10 flex items-center justify-center mb-4"
                     style={{ backgroundColor: `${color}15` }}
                   >
-                    {categoryData[category].emoji}
+                    <IconComponent size={20} strokeWidth={1.5} style={{ color }} />
                   </div>
                   <h3 className="font-gilda-display text-[16px] text-black group-hover:text-[#e7131a] transition-colors mb-1">
                     {category}
@@ -527,6 +544,7 @@ function ToolsPageContent() {
           {Object.keys(categoryData).map((category) => {
             const isActive = selectedCategory === category
             const color = categoryColors[category] || '#000'
+            const IconComponent = categoryData[category].icon
 
             return (
               <button
@@ -539,7 +557,7 @@ function ToolsPageContent() {
                 }`}
                 style={isActive ? { backgroundColor: color } : {}}
               >
-                <span className="text-[14px]">{categoryData[category].emoji}</span>
+                <IconComponent size={14} strokeWidth={1.5} className={isActive ? 'text-white' : ''} style={!isActive ? { color } : {}} />
                 {category}
                 {categoryCounts[category] && (
                   <span className={isActive ? 'text-white/70' : 'text-black/40'}>
@@ -572,15 +590,20 @@ function ToolsPageContent() {
         <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-3 bg-[#f6f4f1] border-b border-[#e5e5e5]">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="text-[12px] font-ibm-plex-sans text-black/50">Filtering by:</span>
-            {selectedCategory !== 'All' && (
-              <button
-                onClick={() => handleCategoryChange('All')}
-                className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#e5e5e5] text-[12px] font-ibm-plex-sans-condensed tracking-wider uppercase hover:border-black transition-colors"
-              >
-                {categoryData[selectedCategory]?.emoji} {selectedCategory}
-                <X className="w-3 h-3" />
-              </button>
-            )}
+            {selectedCategory !== 'All' && categoryData[selectedCategory] && (() => {
+              const IconComponent = categoryData[selectedCategory].icon
+              const color = categoryColors[selectedCategory] || '#000'
+              return (
+                <button
+                  onClick={() => handleCategoryChange('All')}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-[#e5e5e5] text-[12px] font-ibm-plex-sans-condensed tracking-wider uppercase hover:border-black transition-colors"
+                >
+                  <IconComponent size={12} strokeWidth={1.5} style={{ color }} />
+                  {selectedCategory}
+                  <X className="w-3 h-3" />
+                </button>
+              )
+            })()}
             {searchQuery && (
               <button
                 onClick={() => handleSearchChange('')}

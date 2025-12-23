@@ -3,7 +3,19 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import { Newspaper, Clock, ArrowRight, X } from 'lucide-react'
+import {
+  Newspaper,
+  Clock,
+  ArrowRight,
+  X,
+  PenLine,
+  ImageIcon,
+  Video,
+  Music,
+  Code,
+  Globe,
+  type LucideIcon,
+} from 'lucide-react'
 import { NewsCard, EmptyState } from '@/components/cards'
 
 export const revalidate = 300 // 5 minutes ISR
@@ -71,13 +83,13 @@ const getImageUrl = (post: Post) => {
   return post.featuredImage.url
 }
 
-const categories = [
-  { icon: '📝', label: 'TEXT', slug: 'text' },
-  { icon: '🖼', label: 'IMAGE', slug: 'image' },
-  { icon: '🎬', label: 'VIDEO', slug: 'video' },
-  { icon: '🎵', label: 'MUSIC', slug: 'music' },
-  { icon: '💻', label: 'CODE', slug: 'code' },
-  { icon: '🌐', label: 'WEB / APP', slug: 'web' }
+const categories: Array<{ icon: LucideIcon; label: string; slug: string }> = [
+  { icon: PenLine, label: 'TEXT', slug: 'text' },
+  { icon: ImageIcon, label: 'IMAGE', slug: 'image' },
+  { icon: Video, label: 'VIDEO', slug: 'video' },
+  { icon: Music, label: 'MUSIC', slug: 'music' },
+  { icon: Code, label: 'CODE', slug: 'code' },
+  { icon: Globe, label: 'WEB / APP', slug: 'web' }
 ]
 
 type SearchParams = Promise<{ category?: string; page?: string }>
@@ -299,6 +311,7 @@ export default async function NewsPage({
             {categories.map((cat, index) => {
               const color = categoryColors[cat.slug] || '#000'
               const staggerClass = `stagger-${index + 1}`
+              const IconComponent = cat.icon
               return (
                 <Link
                   key={cat.label}
@@ -306,10 +319,10 @@ export default async function NewsPage({
                   className={`group p-6 border border-[#e5e5e5] hover:border-black transition-all duration-200 animate-slide-up ${staggerClass}`}
                 >
                   <div
-                    className="w-10 h-10 flex items-center justify-center mb-4 text-2xl"
+                    className="w-10 h-10 flex items-center justify-center mb-4"
                     style={{ backgroundColor: `${color}15` }}
                   >
-                    {cat.icon}
+                    <IconComponent size={20} strokeWidth={1.5} style={{ color }} />
                   </div>
                   <h3 className="font-gilda-display text-[14px] text-black group-hover:text-[#e7131a] transition-colors">
                     {cat.label}
@@ -340,6 +353,7 @@ export default async function NewsPage({
           {categories.map((cat) => {
             const isActive = selectedCategory === cat.label
             const color = categoryColors[cat.slug] || '#000'
+            const IconComponent = cat.icon
 
             return (
               <Link
@@ -352,7 +366,7 @@ export default async function NewsPage({
                 }`}
                 style={isActive ? { backgroundColor: color } : {}}
               >
-                <span className="text-[14px]">{cat.icon}</span>
+                <IconComponent size={14} strokeWidth={1.5} className={isActive ? 'text-white' : ''} style={!isActive ? { color } : {}} />
                 {cat.label}
                 {isActive && <X className="w-3 h-3 ml-1" />}
               </Link>
