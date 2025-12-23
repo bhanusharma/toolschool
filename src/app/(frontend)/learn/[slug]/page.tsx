@@ -6,6 +6,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { TutorialProgress } from '@/components/TutorialProgress'
 import { SocialShare } from '@/components/SocialShare'
+import { CodeBlock } from '@/components/CodeBlock'
 
 export const revalidate = 600 // 10 minutes ISR
 
@@ -147,11 +148,7 @@ function RenderRichText({ content, className = '' }: { content: any; className?:
           }
           if (node.type === 'code') {
             const code = node.children?.map((child: any) => child.text || '').join('') || ''
-            return (
-              <pre key={index} className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4 text-[14px] max-w-full">
-                <code className="whitespace-pre-wrap break-words">{code}</code>
-              </pre>
-            )
+            return <CodeBlock key={index} code={code} />
           }
           // Default
           const text = node.children?.map((child: any) => child.text || '').join('') || node.text || ''
