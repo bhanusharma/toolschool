@@ -5,6 +5,8 @@ import * as migration_20251220_192500_rename_makers_to_builders from './20251220
 import * as migration_20251220_193300_fix_builders_rels_column from './20251220_193300_fix_builders_rels_column';
 import * as migration_20251221_022700_add_tutorials from './20251221_022700_add_tutorials';
 import * as migration_20251221_140200_add_search_collection from './20251221_140200_add_search_collection';
+import * as migration_20251223_000000_add_logo_url from './20251223_000000_add_logo_url';
+import * as migration_20251223_025900_add_tools_extended_fields from './20251223_025900_add_tools_extended_fields';
 
 export const migrations = [
   {
@@ -41,5 +43,15 @@ export const migrations = [
     up: migration_20251221_140200_add_search_collection.up,
     down: migration_20251221_140200_add_search_collection.down,
     name: '20251221_140200_add_search_collection'
+  },
+  {
+    up: migration_20251223_000000_add_logo_url.up,
+    down: migration_20251223_000000_add_logo_url.down,
+    name: '20251223_000000_add_logo_url'
+  },
+  {
+    up: migration_20251223_025900_add_tools_extended_fields.up,
+    down: migration_20251223_025900_add_tools_extended_fields.down,
+    name: '20251223_025900_add_tools_extended_fields'
   },
 ];

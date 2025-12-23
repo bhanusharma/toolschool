@@ -1,543 +1,409 @@
-'use client'
+import { notFound } from 'next/navigation'
+import { Metadata } from 'next'
+import { getPayload } from 'payload'
+import config from '@/payload.config'
+import { ToolDetailHero } from '@/components/tools/ToolDetailHero'
+import { ToolQuickFacts } from '@/components/tools/ToolQuickFacts'
+import { ToolDescription } from '@/components/tools/ToolDescription'
+import { ToolFeatures } from '@/components/tools/ToolFeatures'
+import { ToolPricing } from '@/components/tools/ToolPricing'
+import { ToolProsCons } from '@/components/tools/ToolProsCons'
+import { ToolUseCases } from '@/components/tools/ToolUseCases'
+import { ToolFAQ } from '@/components/tools/ToolFAQ'
+import { ToolVerdict } from '@/components/tools/ToolVerdict'
+import { ToolAlternatives } from '@/components/tools/ToolAlternatives'
+import { ToolRelated } from '@/components/tools/ToolRelated'
+import { ToolJsonLd } from '@/components/tools/ToolJsonLd'
+import type { Tool, ToolCategory } from '@/payload-types'
 
-import { useState, useEffect } from 'react'
-import { notFound, useParams } from 'next/navigation'
-import Link from 'next/link'
-import Image from 'next/image'
-import { ExternalLink, Globe, Apple, Smartphone, Monitor, Code, Puzzle, ArrowLeft } from 'lucide-react'
+type Params = Promise<{ slug: string }>
 
-interface Tool {
-  id: string
-  slug: string
-  title: string
-  tagline?: string
-  excerpt?: string
-  website?: string
-  toolCategory?: {
-    id: string
-    title: string
-    slug: string
-    description?: string
-  }
-  pricingModel?: string
-  pricingSummary?: string
-  difficulty?: string
-  useCases?: string[]
-  platforms?: string[]
-  featured?: boolean
-  featuredImage?: {
-    url: string
-    alt?: string
-  }
-  logo?: {
-    url: string
-    alt?: string
-  }
-  keyFeatures?: Array<{
-    title: string
-    description?: string
-  }>
-}
+// Fetch tool data with all relationships
+async function getToolBySlug(slug: string) {
+  const payloadConfig = await config
+  const payload = await getPayload({ config: payloadConfig })
 
-interface ToolsApiResponse {
-  docs: Tool[]
-  hasNextPage: boolean
-  hasPrevPage: boolean
-  totalDocs: number
-}
+  const result = await payload.find({
+    collection: 'tools',
+    where: { slug: { equals: slug } },
+    limit: 1,
+    depth: 2, // Get nested relationships
+  })
 
-// Category colors for visual consistency (10 categories + legacy WordPress mappings)
-const categoryColors: { [key: string]: string } = {
-  // New 10 categories
-  Writing: '#1a73e8',
-  Image: '#e7131a',
-  Video: '#9c27b0',
-  Audio: '#ff5722',
-  Automation: '#10b981',
-  Chatbots: '#6366f1',
-  Marketing: '#f59e0b',
-  Data: '#06b6d4',
-  Building: '#fbbc04',
-  '3D': '#673ab7',
-  // Legacy WordPress mappings for existing tools
-  'Image Generation': '#e7131a',
-  'Text / Copywriting': '#1a73e8',
-  'Music / Audio': '#ff5722',
-  'Video / Film': '#9c27b0',
-  'Graphic Design': '#e7131a',
-  'Website / App': '#fbbc04',
-  Coding: '#fbbc04',
-}
-
-// Platform icons
-const platformIcons: { [key: string]: React.ReactNode } = {
-  web: <Globe className="w-4 h-4" />,
-  ios: <Apple className="w-4 h-4" />,
-  android: <Smartphone className="w-4 h-4" />,
-  mac: <Monitor className="w-4 h-4" />,
-  windows: <Monitor className="w-4 h-4" />,
-  api: <Code className="w-4 h-4" />,
-  plugin: <Puzzle className="w-4 h-4" />,
-}
-
-// Pricing model labels
-const pricingLabels: { [key: string]: { label: string; color: string } } = {
-  free: { label: 'Free', color: '#34a853' },
-  freemium: { label: 'Freemium', color: '#1a73e8' },
-  paid: { label: 'Paid', color: '#9c27b0' },
-  custom: { label: 'Custom Pricing', color: '#ff5722' },
-}
-
-// Difficulty labels
-const difficultyLabels: { [key: string]: { label: string; color: string } } = {
-  beginner: { label: 'Beginner Friendly', color: '#34a853' },
-  intermediate: { label: 'Intermediate', color: '#fbbc04' },
-  advanced: { label: 'Advanced', color: '#e7131a' },
-}
-
-export default function ToolDetailPage() {
-  const params = useParams()
-  const slug = params.slug as string
-
-  const [tool, setTool] = useState<Tool | null>(null)
-  const [relatedTools, setRelatedTools] = useState<Tool[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    async function fetchTool() {
-      try {
-        const res = await fetch(`/api/tools?where[slug][equals]=${slug}&limit=1`)
-        if (res.ok) {
-          const data: ToolsApiResponse = await res.json()
-          if (data.docs && data.docs.length > 0) {
-            setTool(data.docs[0])
-
-            // Fetch related tools if we have a category
-            const categoryId = data.docs[0].toolCategory?.id
-            if (categoryId) {
-              const relatedRes = await fetch(
-                `/api/tools?where[toolCategory][equals]=${categoryId}&where[id][not_equals]=${data.docs[0].id}&limit=4`
-              )
-              if (relatedRes.ok) {
-                const relatedData: ToolsApiResponse = await relatedRes.json()
-                setRelatedTools(relatedData.docs || [])
-              }
-            }
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching tool:', error)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    if (slug) {
-      fetchTool()
-    }
-  }, [slug])
-
-  // Helper function to get category color
-  const getCategoryColor = (categoryName?: string) => {
-    return categoryColors[categoryName || ''] || '#e7131a'
+  if (result.docs.length === 0) {
+    return null
   }
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-[#f8f8f8]">
-        <div className="w-full flex justify-center">
-          <div className="relative w-full max-w-[1440px] bg-gradient-to-br from-black via-gray-900 to-black py-20 px-6 lg:px-12">
-            <div className="animate-pulse">
-              <div className="h-4 w-32 bg-white/10 rounded mb-8" />
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <div>
-                  <div className="h-6 w-24 bg-white/10 rounded mb-4" />
-                  <div className="h-16 w-3/4 bg-white/10 rounded mb-6" />
-                  <div className="h-6 w-full bg-white/10 rounded mb-2" />
-                  <div className="h-6 w-2/3 bg-white/10 rounded" />
-                </div>
-                <div className="flex items-center justify-center">
-                  <div className="w-48 h-48 bg-white/10 rounded-3xl" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  const tool = result.docs[0] as Tool
+
+  // Get related tools (same category)
+  let relatedTools: Tool[] = []
+  if (tool.toolCategory) {
+    const categoryId = typeof tool.toolCategory === 'object'
+      ? tool.toolCategory.id
+      : tool.toolCategory
+
+    const related = await payload.find({
+      collection: 'tools',
+      where: {
+        and: [
+          { toolCategory: { equals: categoryId } },
+          { id: { not_equals: tool.id } },
+        ],
+      },
+      limit: 4,
+      depth: 1,
+    })
+    relatedTools = related.docs as Tool[]
+  }
+
+  // Get alternatives if specified
+  let alternatives: Tool[] = []
+  if (tool.alternatives && tool.alternatives.length > 0) {
+    const alternativeIds = tool.alternatives.map((alt: Tool | number) =>
+      typeof alt === 'object' ? alt.id : alt
     )
+    const altResult = await payload.find({
+      collection: 'tools',
+      where: { id: { in: alternativeIds } },
+      depth: 1,
+    })
+    alternatives = altResult.docs as Tool[]
   }
 
-  if (!tool) {
+  return { tool, relatedTools, alternatives }
+}
+
+// Generate static params for SSG
+export async function generateStaticParams() {
+  const payloadConfig = await config
+  const payload = await getPayload({ config: payloadConfig })
+
+  const tools = await payload.find({
+    collection: 'tools',
+    limit: 100,
+    select: { slug: true },
+  })
+
+  return tools.docs.map((tool) => ({
+    slug: tool.slug,
+  }))
+}
+
+// Generate metadata for SEO
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
+  const { slug } = await params
+  const data = await getToolBySlug(slug)
+
+  if (!data) {
+    return {
+      title: 'Tool Not Found',
+      robots: { index: false, follow: false },
+    }
+  }
+
+  const { tool } = data
+  const category = tool.toolCategory as ToolCategory | undefined
+
+  // Build comprehensive title
+  const title = tool.metaTitle ||
+    `${tool.title} Review 2025: Features, Pricing & Alternatives | ToolSchool`
+
+  // Build comprehensive description
+  const description = tool.metaDescription ||
+    tool.excerpt ||
+    `${tool.title} is ${tool.tagline || 'an AI-powered tool'}. Read our in-depth review covering features, pricing, pros & cons, and top alternatives.`
+
+  // Keywords from various sources
+  const keywords = [
+    tool.title,
+    `${tool.title} review`,
+    `${tool.title} pricing`,
+    `${tool.title} alternatives`,
+    tool.focusKeyword,
+    ...(tool.secondaryKeywords?.map(k => k.keyword) || []),
+    ...(tool.useCases || []),
+    category?.title,
+    'AI tool',
+  ].filter(Boolean) as string[]
+
+  // Construct canonical URL
+  const canonicalUrl = `https://toolschool.io/tools/${slug}`
+
+  return {
+    title,
+    description,
+    keywords: keywords.join(', '),
+    authors: [{ name: 'ToolSchool Team' }],
+    creator: 'ToolSchool',
+    publisher: 'ToolSchool',
+
+    // Open Graph
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      siteName: 'ToolSchool',
+      type: 'article',
+      images: tool.logo && typeof tool.logo === 'object' && tool.logo.url ? [
+        {
+          url: tool.logo.url,
+          width: 200,
+          height: 200,
+          alt: `${tool.title} logo`,
+        },
+      ] : tool.logoUrl ? [
+        {
+          url: tool.logoUrl,
+          width: 200,
+          height: 200,
+          alt: `${tool.title} logo`,
+        },
+      ] : undefined,
+    },
+
+    // Twitter
+    twitter: {
+      card: 'summary',
+      title,
+      description,
+      images: tool.logo && typeof tool.logo === 'object' && tool.logo.url
+        ? [tool.logo.url]
+        : tool.logoUrl
+          ? [tool.logoUrl]
+          : undefined,
+    },
+
+    // Canonical and alternates
+    alternates: {
+      canonical: canonicalUrl,
+    },
+
+    // Robots
+    robots: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+    },
+
+    // Other
+    other: {
+      'article:published_time': tool.createdAt,
+      'article:modified_time': tool.updatedAt,
+      'article:section': category?.title || 'AI Tools',
+    },
+  }
+}
+
+export default async function ToolDetailPage({ params }: { params: Params }) {
+  const { slug } = await params
+  const data = await getToolBySlug(slug)
+
+  if (!data) {
     notFound()
   }
 
-  const categoryColor = getCategoryColor(tool.toolCategory?.title)
+  const { tool, relatedTools, alternatives } = data
+  const category = tool.toolCategory as ToolCategory | undefined
+
+  // Check what content is available
   const hasFeatures = tool.keyFeatures && tool.keyFeatures.length > 0
-  const hasPricingInfo = tool.pricingSummary || tool.pricingModel
+  const hasPricingTiers = tool.pricingTiers && tool.pricingTiers.length > 0
+  const hasPros = tool.pros && tool.pros.length > 0
+  const hasCons = tool.cons && tool.cons.length > 0
+  const hasUseCaseScenarios = tool.useCaseScenarios && tool.useCaseScenarios.length > 0
+  const hasFaqs = tool.faqs && tool.faqs.length > 0
+  const hasVerdict = tool.expertVerdict || tool.ratings?.overall
+  const hasAlternatives = alternatives && alternatives.length > 0
+  const hasRelated = relatedTools && relatedTools.length > 0
 
   return (
-    <div className="min-h-screen bg-[#f8f8f8]">
-      {/* Hero Section */}
-      <div className="w-full flex justify-center">
-        <div className="relative w-full max-w-[1440px] bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
-          {/* Background Pattern */}
-          <div className="absolute inset-0 opacity-10">
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.05) 35px, rgba(255,255,255,.05) 70px)`,
-              }}
-            />
-          </div>
+    <>
+      {/* JSON-LD Structured Data */}
+      <ToolJsonLd tool={tool} />
 
-          {/* Animated background elements */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div
-              className="absolute top-0 left-0 w-96 h-96 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 animate-pulse opacity-20"
-              style={{ backgroundColor: categoryColor }}
-            />
-            <div
-              className="absolute bottom-0 right-0 w-64 h-64 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 animate-pulse opacity-10"
-              style={{ backgroundColor: categoryColor, animationDelay: '1s' }}
-            />
-          </div>
+      <div className="min-h-screen bg-[#f8f8f8]">
+        {/* Hero Section with Quick Stats */}
+        <ToolDetailHero tool={tool} category={category} />
 
-          <div className="relative z-10 py-16 lg:py-20 px-6 lg:px-12">
-            {/* Back Link */}
-            <Link
-              href="/tools"
-              className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-8 group"
-            >
-              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-              <span className="font-ibm-plex-sans text-[14px]">Back to Tools</span>
-            </Link>
+        {/* Quick Facts Panel - For AI Snippets */}
+        <ToolQuickFacts tool={tool} category={category} />
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              {/* Left Column - Content */}
-              <div>
-                {tool.toolCategory && (
-                  <span
-                    className="inline-block px-4 py-1.5 text-white text-[11px] font-ibm-plex-sans-condensed tracking-wider uppercase mb-4"
-                    style={{ backgroundColor: categoryColor }}
-                  >
-                    {tool.toolCategory.title}
-                  </span>
+        {/* Main Content Area */}
+        <div className="w-full flex justify-center">
+          <div className="w-full max-w-[1440px] px-6 lg:px-12">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 py-12">
+
+              {/* Main Content Column (2/3) */}
+              <div className="lg:col-span-2 space-y-12">
+                {/* About / Description */}
+                <ToolDescription tool={tool} />
+
+                {/* Key Features */}
+                {hasFeatures && <ToolFeatures features={tool.keyFeatures!} />}
+
+                {/* Pricing Breakdown */}
+                {(hasPricingTiers || tool.pricingSummary) && (
+                  <ToolPricing
+                    tiers={tool.pricingTiers}
+                    summary={tool.pricingSummary}
+                    model={tool.pricingModel}
+                    lastVerified={tool.priceLastVerified}
+                    website={tool.website}
+                  />
                 )}
 
-                <h1 className="text-[36px] sm:text-[48px] lg:text-[56px] leading-[1.1] text-white mb-6 font-gilda-display">
-                  {tool.title}
-                </h1>
+                {/* Pros & Cons */}
+                {(hasPros || hasCons) && (
+                  <ToolProsCons
+                    pros={tool.pros}
+                    cons={tool.cons}
+                    bestFor={tool.bestFor}
+                    notIdealFor={tool.notIdealFor}
+                  />
+                )}
 
-                <p className="font-ibm-plex-sans text-[17px] sm:text-[19px] text-white/80 mb-8 leading-relaxed max-w-[540px]">
-                  {tool.tagline || tool.excerpt}
-                </p>
+                {/* Use Case Scenarios */}
+                {hasUseCaseScenarios && (
+                  <ToolUseCases scenarios={tool.useCaseScenarios!} toolName={tool.title} />
+                )}
 
-                {/* Quick Info Pills */}
-                <div className="flex flex-wrap gap-3 mb-8">
-                  {tool.pricingModel && pricingLabels[tool.pricingModel] && (
-                    <span
-                      className="inline-flex items-center gap-2 px-4 py-2 text-[12px] font-ibm-plex-sans-condensed tracking-wider uppercase text-white"
-                      style={{ backgroundColor: pricingLabels[tool.pricingModel].color }}
-                    >
-                      {pricingLabels[tool.pricingModel].label}
-                    </span>
-                  )}
-                  {tool.difficulty && difficultyLabels[tool.difficulty] && (
-                    <span
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20 text-[12px] font-ibm-plex-sans-condensed tracking-wider uppercase text-white"
-                    >
-                      {difficultyLabels[tool.difficulty].label}
-                    </span>
-                  )}
-                </div>
+                {/* FAQ Section */}
+                {hasFaqs && <ToolFAQ faqs={tool.faqs!} toolName={tool.title} />}
 
-                {/* CTA Button */}
-                {tool.website && (
-                  <a
-                    href={tool.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-3 bg-[#e7131a] text-white px-8 py-4 font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase transition-all duration-300 hover:bg-[#c10e14] group"
-                  >
-                    TRY {tool.title.toUpperCase()}
-                    <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </a>
+                {/* Expert Verdict */}
+                {hasVerdict && (
+                  <ToolVerdict
+                    verdict={tool.expertVerdict}
+                    summary={tool.verdictSummary}
+                    ratings={tool.ratings}
+                    toolName={tool.title}
+                  />
                 )}
               </div>
 
-              {/* Right Column - Visual */}
-              <div className="relative">
-                <div className="relative aspect-square max-w-md mx-auto">
-                  {/* Animated background circles */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div
-                      className="absolute w-64 h-64 rounded-full animate-pulse opacity-20"
-                      style={{ backgroundColor: categoryColor }}
-                    />
-                    <div
-                      className="absolute w-48 h-48 rounded-full animate-pulse opacity-15"
-                      style={{ backgroundColor: categoryColor, animationDelay: '1s' }}
-                    />
-                  </div>
-
-                  {/* Tool Icon/Logo */}
-                  <div className="relative z-10 w-full h-full flex items-center justify-center">
-                    <div className="w-48 h-48 bg-white/10 backdrop-blur rounded-3xl flex items-center justify-center border border-white/20 shadow-2xl overflow-hidden">
-                      {(tool.featuredImage?.url || tool.logo?.url) ? (
-                        <Image
-                          src={tool.featuredImage?.url || tool.logo?.url || ''}
-                          alt={tool.featuredImage?.alt || tool.logo?.alt || tool.title}
-                          width={128}
-                          height={128}
-                          className="w-32 h-32 object-contain"
-                        />
-                      ) : (
-                        <div
-                          className="w-32 h-32 rounded-2xl flex items-center justify-center"
-                          style={{ backgroundColor: categoryColor }}
-                        >
-                          <span className="text-5xl font-gilda-display text-white">
-                            {tool.title.charAt(0)}
+              {/* Sidebar Column (1/3) */}
+              <div className="lg:col-span-1">
+                <div className="sticky top-24 space-y-6">
+                  {/* CTA Card */}
+                  <div className="bg-white border border-[#e5e5e5] p-6">
+                    <div className="text-center mb-6">
+                      {tool.stats?.rating && (
+                        <div className="flex items-center justify-center gap-2 mb-2">
+                          <div className="flex">
+                            {[1, 2, 3, 4, 5].map((star) => (
+                              <svg
+                                key={star}
+                                className={`w-5 h-5 ${
+                                  star <= Math.round(tool.stats!.rating!)
+                                    ? 'text-yellow-400'
+                                    : 'text-gray-200'
+                                }`}
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                              >
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                              </svg>
+                            ))}
+                          </div>
+                          <span className="font-ibm-plex-sans text-[14px] text-gray-600">
+                            {tool.stats.rating.toFixed(1)}/5
                           </span>
                         </div>
                       )}
+                      {tool.stats?.users && (
+                        <p className="font-ibm-plex-sans text-[13px] text-gray-500">
+                          {tool.stats.users} users
+                        </p>
+                      )}
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Content Section */}
-      <div className="w-full flex justify-center">
-        <div className="relative w-full max-w-[1440px] bg-white py-16 px-6 lg:px-12">
-          <div className="max-w-4xl">
-            {/* About Section */}
-            <div className="mb-12">
-              <h2 className="text-[28px] font-gilda-display text-black mb-6">
-                About {tool.title}
-              </h2>
-              <p className="font-ibm-plex-sans text-[16px] text-gray-700 leading-relaxed">
-                {tool.excerpt || tool.tagline || `${tool.title} is an AI-powered tool designed for creative professionals and innovators.`}
-              </p>
-            </div>
-
-            {/* Use Cases */}
-            {tool.useCases && tool.useCases.length > 0 && (
-              <div className="mb-12">
-                <h3 className="text-[22px] font-gilda-display text-black mb-5">Use Cases</h3>
-                <div className="flex flex-wrap gap-2">
-                  {tool.useCases.map((useCase) => (
-                    <span
-                      key={useCase}
-                      className="inline-block bg-[#f6f4f1] px-4 py-2.5 font-ibm-plex-sans-condensed text-[12px] tracking-[1px] uppercase text-black/70 hover:bg-[#e5e3e0] transition-colors"
-                    >
-                      {useCase}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Platforms */}
-            {tool.platforms && tool.platforms.length > 0 && (
-              <div className="mb-12">
-                <h3 className="text-[22px] font-gilda-display text-black mb-5">
-                  Available Platforms
-                </h3>
-                <div className="flex flex-wrap gap-3">
-                  {tool.platforms.map((platform) => (
-                    <span
-                      key={platform}
-                      className="inline-flex items-center gap-2.5 px-5 py-3 border border-[#e5e5e5] font-ibm-plex-sans-condensed text-[13px] tracking-wider uppercase hover:border-black transition-colors"
-                    >
-                      {platformIcons[platform] || <Globe className="w-4 h-4" />}
-                      {platform}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Key Features - Only show if we have actual data */}
-            {hasFeatures && (
-              <div className="mb-12">
-                <h3 className="text-[22px] font-gilda-display text-black mb-6">Key Features</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {tool.keyFeatures!.map((feature, index) => {
-                    const colors = ['#e7131a', '#1a73e8', '#34a853', '#fbbc04', '#9c27b0', '#00bcd4']
-                    const color = colors[index % colors.length]
-                    return (
-                      <div key={index} className="flex gap-4 p-5 bg-[#f6f4f1] hover:bg-[#f0eeeb] transition-colors">
-                        <div
-                          className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center"
-                          style={{ backgroundColor: `${color}15` }}
-                        >
-                          <svg
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            style={{ color }}
-                          >
-                            <path
-                              d="M9 11L12 14L22 4"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M21 12V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H16"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </div>
-                        <div>
-                          <h4 className="text-[17px] text-black mb-1.5 font-gilda-display">
-                            {feature.title}
-                          </h4>
-                          {feature.description && (
-                            <p className="font-ibm-plex-sans text-[14px] text-gray-600 leading-relaxed">
-                              {feature.description}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-            )}
-
-            {/* Pricing Info - Only show if we have actual data */}
-            {hasPricingInfo && (
-              <div className="mb-12">
-                <h3 className="text-[22px] font-gilda-display text-black mb-5">Pricing</h3>
-                <div className="bg-[#f6f4f1] p-8">
-                  {tool.pricingSummary && (
-                    <p className="font-ibm-plex-sans text-[16px] text-gray-700 leading-relaxed mb-5">
-                      {tool.pricingSummary}
-                    </p>
-                  )}
-                  <div className="flex flex-wrap items-center gap-4">
-                    {tool.pricingModel && pricingLabels[tool.pricingModel] && (
-                      <span
-                        className="inline-block text-white px-5 py-2.5 font-ibm-plex-sans-condensed text-[12px] tracking-wider uppercase"
-                        style={{ backgroundColor: pricingLabels[tool.pricingModel].color }}
-                      >
-                        {pricingLabels[tool.pricingModel].label}
-                      </span>
-                    )}
                     {tool.website && (
                       <a
                         href={tool.website}
                         target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-[#e7131a] hover:underline font-ibm-plex-sans text-[14px]"
+                        rel="noopener noreferrer sponsored"
+                        className="block w-full bg-[#e7131a] text-white text-center py-4 font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase transition-colors hover:bg-[#c10e14]"
                       >
-                        View full pricing on website
-                        <ExternalLink className="w-3.5 h-3.5" />
+                        Try {tool.title} Free
                       </a>
                     )}
+
+                    <p className="text-center font-ibm-plex-sans text-[12px] text-gray-400 mt-3">
+                      No credit card required
+                    </p>
                   </div>
+
+                  {/* Quick Links */}
+                  <div className="bg-white border border-[#e5e5e5] p-6">
+                    <h3 className="font-gilda-display text-[16px] mb-4">On This Page</h3>
+                    <nav className="space-y-2">
+                      <a href="#overview" className="block font-ibm-plex-sans text-[13px] text-gray-600 hover:text-[#e7131a]">Overview</a>
+                      {hasFeatures && <a href="#features" className="block font-ibm-plex-sans text-[13px] text-gray-600 hover:text-[#e7131a]">Key Features</a>}
+                      {(hasPricingTiers || tool.pricingSummary) && <a href="#pricing" className="block font-ibm-plex-sans text-[13px] text-gray-600 hover:text-[#e7131a]">Pricing</a>}
+                      {(hasPros || hasCons) && <a href="#pros-cons" className="block font-ibm-plex-sans text-[13px] text-gray-600 hover:text-[#e7131a]">Pros & Cons</a>}
+                      {hasUseCaseScenarios && <a href="#use-cases" className="block font-ibm-plex-sans text-[13px] text-gray-600 hover:text-[#e7131a]">Use Cases</a>}
+                      {hasFaqs && <a href="#faq" className="block font-ibm-plex-sans text-[13px] text-gray-600 hover:text-[#e7131a]">FAQ</a>}
+                      {hasVerdict && <a href="#verdict" className="block font-ibm-plex-sans text-[13px] text-gray-600 hover:text-[#e7131a]">Verdict</a>}
+                      {hasAlternatives && <a href="#alternatives" className="block font-ibm-plex-sans text-[13px] text-gray-600 hover:text-[#e7131a]">Alternatives</a>}
+                    </nav>
+                  </div>
+
+                  {/* Company Info */}
+                  {tool.stats?.company && (
+                    <div className="bg-white border border-[#e5e5e5] p-6">
+                      <h3 className="font-gilda-display text-[16px] mb-4">Company Info</h3>
+                      <dl className="space-y-3 font-ibm-plex-sans text-[13px]">
+                        <div className="flex justify-between">
+                          <dt className="text-gray-500">Company</dt>
+                          <dd className="text-gray-900">{tool.stats.company}</dd>
+                        </div>
+                        {tool.stats.launchYear && (
+                          <div className="flex justify-between">
+                            <dt className="text-gray-500">Founded</dt>
+                            <dd className="text-gray-900">{tool.stats.launchYear}</dd>
+                          </div>
+                        )}
+                        {tool.stats.headquarters && (
+                          <div className="flex justify-between">
+                            <dt className="text-gray-500">HQ</dt>
+                            <dd className="text-gray-900">{tool.stats.headquarters}</dd>
+                          </div>
+                        )}
+                        {tool.stats.fundingRaised && (
+                          <div className="flex justify-between">
+                            <dt className="text-gray-500">Funding</dt>
+                            <dd className="text-gray-900">{tool.stats.fundingRaised}</dd>
+                          </div>
+                        )}
+                      </dl>
+                    </div>
+                  )}
                 </div>
               </div>
-            )}
-
-            {/* Visit Website CTA */}
-            {tool.website && (
-              <div className="border-t border-[#e5e5e5] pt-8">
-                <a
-                  href={tool.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 bg-black text-white px-8 py-4 font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase transition-all duration-300 hover:bg-[#e7131a] group"
-                >
-                  Visit {tool.title}
-                  <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
-              </div>
-            )}
+            </div>
           </div>
         </div>
+
+        {/* Alternatives Section */}
+        {hasAlternatives && (
+          <ToolAlternatives
+            alternatives={alternatives}
+            comparisonNotes={tool.comparisonNotes}
+            currentTool={tool.title}
+          />
+        )}
+
+        {/* Related Tools Section */}
+        {hasRelated && (
+          <ToolRelated
+            tools={relatedTools}
+            category={category}
+          />
+        )}
       </div>
-
-      {/* Related Tools */}
-      {relatedTools.length > 0 && (
-        <div className="w-full flex justify-center">
-          <div className="relative w-full max-w-[1440px] bg-[#f6f4f1] py-16 lg:py-20 px-6 lg:px-12">
-            <div className="flex items-center justify-between mb-10">
-              <h2 className="text-[32px] font-gilda-display font-normal text-black">
-                Related Tools
-              </h2>
-              {tool.toolCategory && (
-                <Link
-                  href={`/tools?category=${tool.toolCategory.slug}`}
-                  className="font-ibm-plex-sans-condensed text-[13px] tracking-wider uppercase text-black/60 hover:text-[#e7131a] transition-colors"
-                >
-                  View all {tool.toolCategory.title} tools →
-                </Link>
-              )}
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {relatedTools.map((relatedTool) => {
-                const relatedColor = getCategoryColor(relatedTool.toolCategory?.title)
-                return (
-                  <Link
-                    key={relatedTool.id}
-                    href={`/tools/${relatedTool.slug}`}
-                    className="group flex flex-col bg-white border border-[#e5e5e5] transition-all duration-300 hover:border-black hover:shadow-lg cursor-pointer"
-                  >
-                    <div
-                      className="aspect-square p-8 flex items-center justify-center relative overflow-hidden"
-                      style={{
-                        background: (relatedTool.featuredImage?.url || relatedTool.logo?.url)
-                          ? '#f8f8f8'
-                          : `linear-gradient(135deg, ${relatedColor}15, ${relatedColor}05)`
-                      }}
-                    >
-                      {(relatedTool.featuredImage?.url || relatedTool.logo?.url) ? (
-                        <Image
-                          src={relatedTool.featuredImage?.url || relatedTool.logo?.url || ''}
-                          alt={relatedTool.featuredImage?.alt || relatedTool.logo?.alt || relatedTool.title}
-                          width={80}
-                          height={80}
-                          className="w-20 h-20 object-contain group-hover:scale-110 transition-transform duration-300"
-                        />
-                      ) : (
-                        <div
-                          className="w-20 h-20 rounded-xl flex items-center justify-center"
-                          style={{ backgroundColor: relatedColor }}
-                        >
-                          <span className="text-3xl font-gilda-display text-white">
-                            {relatedTool.title.charAt(0)}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                    <div className="p-5">
-                      <h3 className="font-gilda-display text-[18px] leading-tight text-black mb-2 group-hover:text-[#e7131a] transition-colors">
-                        {relatedTool.title}
-                      </h3>
-                      <p className="font-ibm-plex-sans text-[13px] text-black/60 line-clamp-2">
-                        {relatedTool.tagline || relatedTool.excerpt}
-                      </p>
-                    </div>
-                  </Link>
-                )
-              })}
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+    </>
   )
 }

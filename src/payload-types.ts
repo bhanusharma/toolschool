@@ -195,13 +195,31 @@ export interface Tool {
    */
   tagline?: string | null;
   /**
-   * Brief summary for listings
+   * Brief summary for listings (150-160 chars ideal for meta description)
    */
   excerpt?: string | null;
   /**
-   * Full tool description
+   * Full tool description (500+ words for SEO)
    */
   content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Technical overview of how the tool works
+   */
+  howItWorks?: {
     root: {
       type: string;
       children: {
@@ -221,6 +239,10 @@ export interface Tool {
    */
   logo?: (number | null) | Media;
   /**
+   * External logo URL (auto-populated from Clearbit)
+   */
+  logoUrl?: string | null;
+  /**
    * Official website URL
    */
   website?: string | null;
@@ -229,6 +251,51 @@ export interface Tool {
    * e.g., "Free tier available, Pro from $20/mo"
    */
   pricingSummary?: string | null;
+  /**
+   * Detailed pricing breakdown for each tier
+   */
+  pricingTiers?:
+    | {
+        /**
+         * e.g., "Free", "Pro", "Team", "Enterprise"
+         */
+        name: string;
+        /**
+         * e.g., "$0", "$20/mo", "$200/yr", "Custom"
+         */
+        price: string;
+        billingPeriod?: ('free' | 'monthly' | 'yearly' | 'one-time' | 'custom') | null;
+        features?:
+          | {
+              feature?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        limitations?:
+          | {
+              limitation?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Highlight as best value
+         */
+        recommended?: boolean | null;
+        /**
+         * e.g., "Get Started Free", "Start Trial"
+         */
+        ctaText?: string | null;
+        /**
+         * Direct link to this pricing tier
+         */
+        ctaUrl?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * When pricing was last verified (shows freshness)
+   */
+  priceLastVerified?: string | null;
   difficulty?: ('beginner' | 'intermediate' | 'advanced') | null;
   useCases?:
     | (
@@ -247,6 +314,9 @@ export interface Tool {
   platforms?:
     | ('web' | 'ios' | 'android' | 'mac' | 'windows' | 'linux' | 'api' | 'plugin' | 'discord' | 'slack')[]
     | null;
+  /**
+   * Key features with detailed descriptions
+   */
   keyFeatures?:
     | {
         /**
@@ -255,6 +325,10 @@ export interface Tool {
         icon?: string | null;
         title: string;
         description?: string | null;
+        /**
+         * Specific use case for this feature
+         */
+        useCase?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -267,9 +341,173 @@ export interface Tool {
      * Rating out of 5
      */
     rating?: number | null;
+    /**
+     * Number of reviews (for schema)
+     */
+    reviewCount?: number | null;
     company?: string | null;
     launchYear?: number | null;
+    /**
+     * e.g., "San Francisco, CA"
+     */
+    headquarters?: string | null;
+    /**
+     * e.g., "$11.3B"
+     */
+    fundingRaised?: string | null;
   };
+  pros?:
+    | {
+        /**
+         * e.g., "Natural language understanding"
+         */
+        title: string;
+        /**
+         * Detailed explanation of this advantage
+         */
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  cons?:
+    | {
+        /**
+         * e.g., "Knowledge cutoff date"
+         */
+        title: string;
+        /**
+         * Honest explanation of this limitation
+         */
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Who should use this tool
+   */
+  bestFor?:
+    | {
+        /**
+         * e.g., "Content Writers", "Developers"
+         */
+        persona: string;
+        /**
+         * Why it is good for them
+         */
+        reason?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Who should NOT use this tool (builds trust)
+   */
+  notIdealFor?:
+    | {
+        persona: string;
+        reason?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  useCaseScenarios?:
+    | {
+        /**
+         * e.g., "Writing Blog Posts"
+         */
+        title: string;
+        /**
+         * e.g., "Content Marketer"
+         */
+        persona?: string | null;
+        /**
+         * The challenge they face
+         */
+        problem?: string | null;
+        /**
+         * How the tool solves it
+         */
+        solution?: string | null;
+        /**
+         * e.g., "10x faster content creation"
+         */
+        outcome?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Add 8-12 FAQs for schema markup and AEO
+   */
+  faqs?:
+    | {
+        /**
+         * Question as users would search it
+         */
+        question: string;
+        /**
+         * Direct, comprehensive answer (50-300 words)
+         */
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  ratings?: {
+    /**
+     * Overall rating (1-5)
+     */
+    overall?: number | null;
+    /**
+     * Ease of Use rating (1-5)
+     */
+    easeOfUse?: number | null;
+    /**
+     * Value for Money rating (1-5)
+     */
+    valueForMoney?: number | null;
+    /**
+     * Features rating (1-5)
+     */
+    features?: number | null;
+    /**
+     * Customer Support rating (1-5)
+     */
+    support?: number | null;
+  };
+  /**
+   * Final expert assessment (2-3 paragraphs)
+   */
+  expertVerdict?: string | null;
+  /**
+   * One-line verdict for featured snippets
+   */
+  verdictSummary?: string | null;
+  /**
+   * Top alternatives to this tool
+   */
+  alternatives?: (number | Tool)[] | null;
+  /**
+   * Brief comparison guide (e.g., "Choose X over Y when...")
+   */
+  comparisonNotes?: string | null;
+  /**
+   * Custom SEO title (max 60 chars). Leave blank for auto-generated.
+   */
+  metaTitle?: string | null;
+  /**
+   * Custom meta description (max 160 chars). Leave blank for auto-generated.
+   */
+  metaDescription?: string | null;
+  /**
+   * Primary keyword to optimize for (e.g., "ChatGPT review")
+   */
+  focusKeyword?: string | null;
+  /**
+   * Secondary keywords to target
+   */
+  secondaryKeywords?:
+    | {
+        keyword?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   slug: string;
   /**
    * Feature in discovery listings
@@ -1121,10 +1359,36 @@ export interface ToolsSelect<T extends boolean = true> {
   tagline?: T;
   excerpt?: T;
   content?: T;
+  howItWorks?: T;
   logo?: T;
+  logoUrl?: T;
   website?: T;
   pricingModel?: T;
   pricingSummary?: T;
+  pricingTiers?:
+    | T
+    | {
+        name?: T;
+        price?: T;
+        billingPeriod?: T;
+        features?:
+          | T
+          | {
+              feature?: T;
+              id?: T;
+            };
+        limitations?:
+          | T
+          | {
+              limitation?: T;
+              id?: T;
+            };
+        recommended?: T;
+        ctaText?: T;
+        ctaUrl?: T;
+        id?: T;
+      };
+  priceLastVerified?: T;
   difficulty?: T;
   useCases?: T;
   platforms?: T;
@@ -1134,6 +1398,7 @@ export interface ToolsSelect<T extends boolean = true> {
         icon?: T;
         title?: T;
         description?: T;
+        useCase?: T;
         id?: T;
       };
   stats?:
@@ -1141,8 +1406,78 @@ export interface ToolsSelect<T extends boolean = true> {
     | {
         users?: T;
         rating?: T;
+        reviewCount?: T;
         company?: T;
         launchYear?: T;
+        headquarters?: T;
+        fundingRaised?: T;
+      };
+  pros?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  cons?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  bestFor?:
+    | T
+    | {
+        persona?: T;
+        reason?: T;
+        id?: T;
+      };
+  notIdealFor?:
+    | T
+    | {
+        persona?: T;
+        reason?: T;
+        id?: T;
+      };
+  useCaseScenarios?:
+    | T
+    | {
+        title?: T;
+        persona?: T;
+        problem?: T;
+        solution?: T;
+        outcome?: T;
+        id?: T;
+      };
+  faqs?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  ratings?:
+    | T
+    | {
+        overall?: T;
+        easeOfUse?: T;
+        valueForMoney?: T;
+        features?: T;
+        support?: T;
+      };
+  expertVerdict?: T;
+  verdictSummary?: T;
+  alternatives?: T;
+  comparisonNotes?: T;
+  metaTitle?: T;
+  metaDescription?: T;
+  focusKeyword?: T;
+  secondaryKeywords?:
+    | T
+    | {
+        keyword?: T;
+        id?: T;
       };
   slug?: T;
   featured?: T;
