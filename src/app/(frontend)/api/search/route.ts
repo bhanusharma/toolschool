@@ -3,6 +3,10 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { getCloudflareContext } from '@opennextjs/cloudflare'
 
+// Force edge runtime and disable static generation
+export const runtime = 'edge'
+export const dynamic = 'force-dynamic'
+
 interface SearchResult {
   id: string | number
   title: string
@@ -15,16 +19,32 @@ interface SearchResult {
   semantic?: boolean // Flag for semantic search results
 }
 
+// Category keywords for boosting relevance (10 categories)
+const categoryKeywords: Record<string, string[]> = {
+  writing: ['write', 'text', 'content', 'copy', 'article', 'blog', 'essay', 'grammar', 'editor'],
+  image: ['image', 'photo', 'picture', 'art', 'visual', 'design', 'generate', 'create'],
+  video: ['video', 'film', 'movie', 'clip', 'animation', 'editing', 'footage'],
+  audio: ['audio', 'music', 'sound', 'voice', 'song', 'podcast', 'speech'],
+  automation: ['automate', 'workflow', 'integrate', 'zapier', 'task', 'process', 'bot'],
+  chatbots: ['chat', 'conversation', 'assistant', 'ai', 'gpt', 'claude', 'gemini', 'llm'],
+  marketing: ['marketing', 'seo', 'ads', 'content', 'social', 'campaign', 'analytics'],
+  data: ['data', 'analytics', 'dashboard', 'visualization', 'chart', 'spreadsheet', 'ml'],
+  building: ['build', 'code', 'app', 'website', 'develop', 'no-code', 'low-code'],
+  '3d': ['3d', 'model', 'render', 'mesh', 'texture', 'sculpt', 'blender'],
+}
+
 // Simple relevance scoring based on match position and field importance
 function calculateScore(
   query: string,
   title: string,
   description?: string,
+  category?: string,
   isFeatured?: boolean
 ): number {
   const q = query.toLowerCase()
   const t = title.toLowerCase()
   const d = (description || '').toLowerCase()
+  const cat = (category || '').toLowerCase()
 
   let score = 0
 
@@ -39,6 +59,18 @@ function calculateScore(
 
   // Description contains query
   if (d.includes(q)) score += 10
+
+  // Category match boost - if searching for a category name
+  if (cat === q || cat.includes(q)) score += 40
+
+  // Category keyword boost - if query matches category keywords
+  for (const [catSlug, keywords] of Object.entries(categoryKeywords)) {
+    if (keywords.some(kw => q.includes(kw) || kw.includes(q))) {
+      if (cat === catSlug || cat.toLowerCase() === catSlug) {
+        score += 25 // Boost if tool is in the matching category
+      }
+    }
+  }
 
   // Featured boost
   if (isFeatured) score += 15
@@ -126,6 +158,15 @@ export async function GET(request: NextRequest) {
     // Run all searches in parallel for maximum performance
     const searchPromises: Promise<SearchResult[]>[] = []
 
+    // Check if query matches a category name (for searches like "automation", "data tools", etc.)
+    const categoryNames = ['writing', 'image', 'video', 'audio', 'automation', 'chatbots', 'marketing', 'data', 'building', '3d']
+    const queryLower = query.toLowerCase()
+    const matchedCategory = categoryNames.find(cat =>
+      queryLower === cat ||
+      queryLower.includes(cat) ||
+      cat.includes(queryLower)
+    )
+
     // Tools search
     if (types.includes('tool')) {
       searchPromises.push(
@@ -143,19 +184,53 @@ export async function GET(request: NextRequest) {
             depth: 1,
           })
           .then((res) =>
-            res.docs.map((doc) => ({
-              id: doc.id,
-              title: doc.title,
-              slug: doc.slug,
-              type: 'tool' as const,
-              description: doc.tagline || doc.excerpt || undefined,
-              category: typeof doc.toolCategory === 'object' ? doc.toolCategory?.title : undefined,
-              score: calculateScore(query, doc.title, doc.tagline || doc.excerpt, doc.featured),
-              image: typeof doc.logo === 'object' ? doc.logo?.url : undefined,
-            }))
+            res.docs.map((doc) => {
+              const category = typeof doc.toolCategory === 'object' ? doc.toolCategory?.title : undefined
+              return {
+                id: doc.id,
+                title: doc.title,
+                slug: doc.slug,
+                type: 'tool' as const,
+                description: doc.tagline || doc.excerpt || undefined,
+                category,
+                score: calculateScore(query, doc.title, doc.tagline || doc.excerpt, category, doc.featured),
+                image: typeof doc.logo === 'object' ? doc.logo?.url : undefined,
+              }
+            })
           )
           .catch((): SearchResult[] => [])
       )
+
+      // If query matches a category, also search for tools in that category
+      if (matchedCategory) {
+        searchPromises.push(
+          payload
+            .find({
+              collection: 'tools',
+              where: {
+                'toolCategory.slug': { equals: matchedCategory },
+              },
+              limit: limit,
+              depth: 1,
+            })
+            .then((res) =>
+              res.docs.map((doc) => {
+                const category = typeof doc.toolCategory === 'object' ? doc.toolCategory?.title : undefined
+                return {
+                  id: doc.id,
+                  title: doc.title,
+                  slug: doc.slug,
+                  type: 'tool' as const,
+                  description: doc.tagline || doc.excerpt || undefined,
+                  category,
+                  score: calculateScore(query, doc.title, doc.tagline || doc.excerpt, category, doc.featured) + 20, // Boost for category match
+                  image: typeof doc.logo === 'object' ? doc.logo?.url : undefined,
+                }
+              })
+            )
+            .catch((): SearchResult[] => [])
+        )
+      }
     }
 
     // Builders search
@@ -174,16 +249,19 @@ export async function GET(request: NextRequest) {
             depth: 1,
           })
           .then((res) =>
-            res.docs.map((doc) => ({
-              id: doc.id,
-              title: doc.title,
-              slug: doc.slug,
-              type: 'builder' as const,
-              description: doc.bio || undefined,
-              category: Array.isArray(doc.specialties) && doc.specialties[0] && typeof doc.specialties[0] === 'object' ? (doc.specialties[0] as { title?: string }).title : undefined,
-              score: calculateScore(query, doc.title, doc.bio, doc.featured),
-              image: typeof doc.profileImage === 'object' ? doc.profileImage?.url : undefined,
-            }))
+            res.docs.map((doc) => {
+              const category = Array.isArray(doc.specialties) && doc.specialties[0] && typeof doc.specialties[0] === 'object' ? (doc.specialties[0] as { title?: string }).title : undefined
+              return {
+                id: doc.id,
+                title: doc.title,
+                slug: doc.slug,
+                type: 'builder' as const,
+                description: doc.bio || undefined,
+                category,
+                score: calculateScore(query, doc.title, doc.bio, category, doc.featured),
+                image: typeof doc.profileImage === 'object' ? doc.profileImage?.url : undefined,
+              }
+            })
           )
           .catch((): SearchResult[] => [])
       )
@@ -205,16 +283,19 @@ export async function GET(request: NextRequest) {
             depth: 1,
           })
           .then((res) =>
-            res.docs.map((doc) => ({
-              id: doc.id,
-              title: doc.title,
-              slug: doc.slug,
-              type: 'project' as const,
-              description: doc.excerpt || undefined,
-              category: typeof doc.communityType === 'object' ? doc.communityType?.title : undefined,
-              score: calculateScore(query, doc.title, doc.excerpt, doc.featuredInHero || doc.featuredInShowcase),
-              image: typeof doc.featuredImage === 'object' ? doc.featuredImage?.url : undefined,
-            }))
+            res.docs.map((doc) => {
+              const category = typeof doc.communityType === 'object' ? doc.communityType?.title : undefined
+              return {
+                id: doc.id,
+                title: doc.title,
+                slug: doc.slug,
+                type: 'project' as const,
+                description: doc.excerpt || undefined,
+                category,
+                score: calculateScore(query, doc.title, doc.excerpt, category, doc.featuredInHero || doc.featuredInShowcase),
+                image: typeof doc.featuredImage === 'object' ? doc.featuredImage?.url : undefined,
+              }
+            })
           )
           .catch((): SearchResult[] => [])
       )
@@ -236,16 +317,19 @@ export async function GET(request: NextRequest) {
             depth: 1,
           })
           .then((res) =>
-            res.docs.map((doc) => ({
-              id: doc.id,
-              title: doc.title,
-              slug: doc.slug,
-              type: 'post' as const,
-              description: doc.excerpt || undefined,
-              category: doc.categoryBadge || undefined,
-              score: calculateScore(query, doc.title, doc.excerpt, false),
-              image: typeof doc.featuredImage === 'object' ? doc.featuredImage?.url : undefined,
-            }))
+            res.docs.map((doc) => {
+              const category = doc.categoryBadge || undefined
+              return {
+                id: doc.id,
+                title: doc.title,
+                slug: doc.slug,
+                type: 'post' as const,
+                description: doc.excerpt || undefined,
+                category,
+                score: calculateScore(query, doc.title, doc.excerpt, category, false),
+                image: typeof doc.featuredImage === 'object' ? doc.featuredImage?.url : undefined,
+              }
+            })
           )
           .catch((): SearchResult[] => [])
       )
@@ -268,16 +352,19 @@ export async function GET(request: NextRequest) {
             depth: 1,
           })
           .then((res) =>
-            res.docs.map((doc) => ({
-              id: doc.id,
-              title: doc.title,
-              slug: doc.slug,
-              type: 'tutorial' as const,
-              description: doc.subtitle || doc.excerpt || undefined,
-              category: doc.difficulty || undefined,
-              score: calculateScore(query, doc.title, doc.subtitle || doc.excerpt, doc.featured),
-              image: typeof doc.featuredImage === 'object' ? doc.featuredImage?.url : undefined,
-            }))
+            res.docs.map((doc) => {
+              const category = doc.difficulty || undefined
+              return {
+                id: doc.id,
+                title: doc.title,
+                slug: doc.slug,
+                type: 'tutorial' as const,
+                description: doc.subtitle || doc.excerpt || undefined,
+                category,
+                score: calculateScore(query, doc.title, doc.subtitle || doc.excerpt, category, doc.featured),
+                image: typeof doc.featuredImage === 'object' ? doc.featuredImage?.url : undefined,
+              }
+            })
           )
           .catch((): SearchResult[] => [])
       )

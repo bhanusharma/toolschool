@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCloudflareContext } from '@opennextjs/cloudflare'
 
+// Force edge runtime and disable static generation
+export const runtime = 'edge'
+export const dynamic = 'force-dynamic'
+
 interface SemanticSearchResult {
   id: string
   score: number
