@@ -457,7 +457,7 @@ export default async function HomePage() {
                 ))}
               </div>
 
-              {/* Featured Builder Spotlight */}
+              {/* Featured Builder Spotlight - Hidden for now
               {builders[0] && (
                 <div className="mt-12 pt-12 border-t border-black/10 animate-slide-up stagger-8">
                   <div className="flex items-center gap-3 mb-6">
@@ -493,6 +493,7 @@ export default async function HomePage() {
                   </Link>
                 </div>
               )}
+              */}
             </div>
           </div>
         </div>
