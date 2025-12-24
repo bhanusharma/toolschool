@@ -290,14 +290,14 @@ export default async function ToolDetailPage({ params }: { params: Params }) {
                   {/* CTA Card */}
                   <div className="bg-white border border-[#e5e5e5] p-6">
                     <div className="text-center mb-6">
-                      {tool.stats?.rating && (
+                      {tool.stats?.rating != null && !isNaN(Number(tool.stats.rating)) && (
                         <div className="flex items-center justify-center gap-2 mb-2">
                           <div className="flex">
                             {[1, 2, 3, 4, 5].map((star) => (
                               <svg
                                 key={star}
                                 className={`w-5 h-5 ${
-                                  star <= Math.round(tool.stats!.rating!)
+                                  star <= Math.round(Number(tool.stats!.rating!))
                                     ? 'text-yellow-400'
                                     : 'text-gray-200'
                                 }`}
@@ -309,7 +309,7 @@ export default async function ToolDetailPage({ params }: { params: Params }) {
                             ))}
                           </div>
                           <span className="font-ibm-plex-sans text-[14px] text-gray-600">
-                            {tool.stats.rating.toFixed(1)}/5
+                            {Number(tool.stats.rating).toFixed(1)}/5
                           </span>
                         </div>
                       )}
@@ -366,13 +366,13 @@ export default async function ToolDetailPage({ params }: { params: Params }) {
                             <dd className="text-gray-900">{tool.stats.launchYear}</dd>
                           </div>
                         )}
-                        {tool.stats.headquarters && (
+                        {tool.stats.headquarters && !tool.stats.headquarters.includes('_') && (
                           <div className="flex justify-between">
                             <dt className="text-gray-500">HQ</dt>
                             <dd className="text-gray-900">{tool.stats.headquarters}</dd>
                           </div>
                         )}
-                        {tool.stats.fundingRaised && (
+                        {tool.stats.fundingRaised && !tool.stats.fundingRaised.includes('_') && (
                           <div className="flex justify-between">
                             <dt className="text-gray-500">Funding</dt>
                             <dd className="text-gray-900">{tool.stats.fundingRaised}</dd>

@@ -11,7 +11,7 @@ interface ToolVerdictProps {
 }
 
 export function ToolVerdict({ verdict, summary, ratings, toolName }: ToolVerdictProps) {
-  const overallRating = ratings?.overall || 4
+  const overallRating = (ratings?.overall != null && !isNaN(Number(ratings.overall))) ? Number(ratings.overall) : 4
 
   // Calculate rating label
   const getRatingLabel = (rating: number) => {
@@ -126,17 +126,18 @@ export function ToolVerdict({ verdict, summary, ratings, toolName }: ToolVerdict
 }
 
 function RatingItem({ label, value }: { label: string; value: number }) {
+  const safeValue = Number(value) || 0
   return (
     <div className="flex items-center gap-3">
       <div className="flex-1">
         <div className="flex justify-between mb-1">
           <span className="font-ibm-plex-sans text-[13px] text-white/70">{label}</span>
-          <span className="font-ibm-plex-sans text-[13px] text-white">{value.toFixed(1)}</span>
+          <span className="font-ibm-plex-sans text-[13px] text-white">{safeValue.toFixed(1)}</span>
         </div>
         <div className="h-2 bg-white/20 rounded-full overflow-hidden">
           <div
             className="h-full bg-[#e7131a] rounded-full transition-all duration-500"
-            style={{ width: `${(value / 5) * 100}%` }}
+            style={{ width: `${(safeValue / 5) * 100}%` }}
           />
         </div>
       </div>

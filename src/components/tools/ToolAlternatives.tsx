@@ -68,6 +68,7 @@ export function ToolAlternatives({ alternatives, comparisonNotes, currentTool }:
                           width={48}
                           height={48}
                           className="w-12 h-12 object-contain"
+                          unoptimized
                         />
                       ) : (
                         <span className="text-2xl font-gilda-display text-gray-400">
@@ -95,11 +96,11 @@ export function ToolAlternatives({ alternatives, comparisonNotes, currentTool }:
 
                   {/* Stats Row */}
                   <div className="flex items-center justify-between">
-                    {alt.stats?.rating && (
+                    {alt.stats?.rating != null && !isNaN(Number(alt.stats.rating)) && (
                       <div className="flex items-center gap-1">
                         <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
                         <span className="font-ibm-plex-sans text-[13px] text-gray-700">
-                          {alt.stats.rating.toFixed(1)}
+                          {Number(alt.stats.rating).toFixed(1)}
                         </span>
                       </div>
                     )}

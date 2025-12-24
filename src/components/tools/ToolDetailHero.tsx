@@ -104,6 +104,7 @@ export function ToolDetailHero({ tool, category }: ToolDetailHeroProps) {
                       width={80}
                       height={80}
                       className="w-16 h-16 lg:w-20 lg:h-20 object-contain"
+                      unoptimized
                     />
                   ) : (
                     <div
@@ -142,15 +143,15 @@ export function ToolDetailHero({ tool, category }: ToolDetailHeroProps) {
 
               {/* Quick Stats Row */}
               <div className="flex flex-wrap items-center gap-4 mb-8">
-                {tool.stats?.rating && (
+                {tool.stats?.rating != null && !isNaN(tool.stats.rating) && (
                   <div className="flex items-center gap-2 text-white">
                     <Star className="w-5 h-5 text-yellow-400 fill-yellow-400" />
                     <span className="font-ibm-plex-sans text-[15px]">
-                      {tool.stats.rating.toFixed(1)}/5
+                      {Number(tool.stats.rating).toFixed(1)}/5
                     </span>
-                    {tool.stats.reviewCount && (
+                    {tool.stats.reviewCount != null && !isNaN(tool.stats.reviewCount) && (
                       <span className="text-white/50">
-                        ({tool.stats.reviewCount.toLocaleString()} reviews)
+                        ({Number(tool.stats.reviewCount).toLocaleString()} reviews)
                       </span>
                     )}
                   </div>
@@ -233,13 +234,13 @@ export function ToolDetailHero({ tool, category }: ToolDetailHeroProps) {
                     ToolSchool Verdict
                   </h2>
 
-                  {tool.ratings?.overall && (
+                  {tool.ratings?.overall != null && !isNaN(tool.ratings.overall) && (
                     <div className="flex items-center gap-4 mb-4">
                       <div
                         className="w-16 h-16 rounded-full flex items-center justify-center text-white font-gilda-display text-[24px]"
                         style={{ backgroundColor: categoryColor }}
                       >
-                        {tool.ratings.overall.toFixed(1)}
+                        {Number(tool.ratings.overall).toFixed(1)}
                       </div>
                       <div>
                         <div className="flex gap-1">
@@ -295,16 +296,17 @@ export function ToolDetailHero({ tool, category }: ToolDetailHeroProps) {
 }
 
 function RatingBar({ label, value, color }: { label: string; value: number; color: string }) {
+  const safeValue = Number(value) || 0
   return (
     <div className="flex items-center gap-3">
       <span className="font-ibm-plex-sans text-[12px] text-white/60 w-20">{label}</span>
       <div className="flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
         <div
           className="h-full rounded-full transition-all duration-500"
-          style={{ width: `${(value / 5) * 100}%`, backgroundColor: color }}
+          style={{ width: `${(safeValue / 5) * 100}%`, backgroundColor: color }}
         />
       </div>
-      <span className="font-ibm-plex-sans text-[12px] text-white/80 w-8">{value.toFixed(1)}</span>
+      <span className="font-ibm-plex-sans text-[12px] text-white/80 w-8">{safeValue.toFixed(1)}</span>
     </div>
   )
 }

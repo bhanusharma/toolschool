@@ -194,6 +194,7 @@ export function ToolCard({
               width={32}
               height={32}
               className="w-8 h-8 object-contain"
+              unoptimized
             />
           ) : (
             <span
@@ -251,6 +252,7 @@ export function ToolCard({
               width={160}
               height={160}
               className="w-40 h-40 object-contain group-hover:scale-110 transition-transform duration-500"
+              unoptimized
             />
           ) : (
             <div
@@ -340,6 +342,7 @@ export function ToolCard({
             width={96}
             height={96}
             className="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-300"
+            unoptimized
           />
         ) : (
           <div

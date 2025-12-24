@@ -73,6 +73,7 @@ export function ToolRelated({ tools, category }: ToolRelatedProps) {
                       width={80}
                       height={80}
                       className="w-20 h-20 object-contain group-hover:scale-110 transition-transform duration-300"
+                      unoptimized
                     />
                   ) : (
                     <div
@@ -97,11 +98,11 @@ export function ToolRelated({ tools, category }: ToolRelatedProps) {
 
                   {/* Stats */}
                   <div className="flex items-center justify-between mt-4 pt-3 border-t border-[#e5e5e5]">
-                    {tool.stats?.rating && (
+                    {tool.stats?.rating != null && !isNaN(Number(tool.stats.rating)) && (
                       <div className="flex items-center gap-1">
                         <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
                         <span className="font-ibm-plex-sans text-[12px] text-gray-600">
-                          {tool.stats.rating.toFixed(1)}
+                          {Number(tool.stats.rating).toFixed(1)}
                         </span>
                       </div>
                     )}

@@ -41,7 +41,7 @@ export function ToolQuickFacts({ tool }: ToolQuickFactsProps) {
     },
     ...(tool.stats?.company ? [{
       question: `Who makes ${tool.title}?`,
-      answer: `${tool.title} is developed by ${tool.stats.company}${tool.stats.headquarters ? `, headquartered in ${tool.stats.headquarters}` : ''}.`,
+      answer: `${tool.title} is developed by ${tool.stats.company}${tool.stats.headquarters && !tool.stats.headquarters.includes('_') ? `, headquartered in ${tool.stats.headquarters}` : ''}.`,
     }] : []),
     ...(tool.pricingModel ? [{
       question: `How much does ${tool.title} cost?`,
