@@ -47,9 +47,18 @@ export function ToolAlternatives({ alternatives, comparisonNotes, currentTool }:
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {alternatives.map((alt) => {
             const category = alt.toolCategory as ToolCategory | undefined
+            // Use logo from Payload CMS only
             const logoUrl = alt.logo && typeof alt.logo === 'object' && alt.logo.url
               ? alt.logo.url
-              : alt.logoUrl || null
+              : null
+
+            // Category color for fallback
+            const categoryColors: Record<string, string> = {
+              Writing: '#1a73e8', Image: '#e7131a', Video: '#9c27b0', Audio: '#ff5722',
+              Automation: '#10b981', Chatbots: '#6366f1', Marketing: '#f59e0b',
+              Data: '#06b6d4', Building: '#fbbc04', '3D': '#673ab7',
+            }
+            const fallbackColor = categoryColors[category?.title || ''] || '#e7131a'
 
             return (
               <Link
@@ -60,7 +69,10 @@ export function ToolAlternatives({ alternatives, comparisonNotes, currentTool }:
                 <div className="p-6">
                   <div className="flex items-start gap-4 mb-4">
                     {/* Logo */}
-                    <div className="flex-shrink-0 w-14 h-14 bg-[#f8f8f8] flex items-center justify-center overflow-hidden">
+                    <div
+                      className="flex-shrink-0 w-14 h-14 flex items-center justify-center overflow-hidden"
+                      style={{ backgroundColor: logoUrl ? '#f8f8f8' : fallbackColor }}
+                    >
                       {logoUrl ? (
                         <Image
                           src={logoUrl}
@@ -68,11 +80,10 @@ export function ToolAlternatives({ alternatives, comparisonNotes, currentTool }:
                           width={48}
                           height={48}
                           className="w-12 h-12 object-contain"
-                          unoptimized
                         />
                       ) : (
-                        <span className="text-2xl font-gilda-display text-gray-400">
-                          {alt.title.charAt(0)}
+                        <span className="text-2xl font-gilda-display text-white">
+                          {alt.title.charAt(0).toUpperCase()}
                         </span>
                       )}
                     </div>

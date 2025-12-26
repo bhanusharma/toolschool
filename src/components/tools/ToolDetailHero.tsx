@@ -41,9 +41,10 @@ const difficultyLabels: Record<string, { label: string; color: string }> = {
 
 export function ToolDetailHero({ tool, category }: ToolDetailHeroProps) {
   const categoryColor = categoryColors[category?.title || ''] || '#e7131a'
+  // Use logo from Payload CMS only
   const logoUrl = tool.logo && typeof tool.logo === 'object' && tool.logo.url
     ? tool.logo.url
-    : tool.logoUrl || null
+    : null
 
   return (
     <div className="w-full flex justify-center">
@@ -104,7 +105,6 @@ export function ToolDetailHero({ tool, category }: ToolDetailHeroProps) {
                       width={80}
                       height={80}
                       className="w-16 h-16 lg:w-20 lg:h-20 object-contain"
-                      unoptimized
                     />
                   ) : (
                     <div

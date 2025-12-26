@@ -47,9 +47,10 @@ export function ToolRelated({ tools, category }: ToolRelatedProps) {
           {tools.map((tool) => {
             const toolCategory = tool.toolCategory as ToolCategory | undefined
             const toolColor = categoryColors[toolCategory?.title || ''] || categoryColor
+            // Use logo from Payload CMS only
             const logoUrl = tool.logo && typeof tool.logo === 'object' && tool.logo.url
               ? tool.logo.url
-              : tool.logoUrl || null
+              : null
 
             return (
               <Link
@@ -73,15 +74,14 @@ export function ToolRelated({ tools, category }: ToolRelatedProps) {
                       width={80}
                       height={80}
                       className="w-20 h-20 object-contain group-hover:scale-110 transition-transform duration-300"
-                      unoptimized
                     />
                   ) : (
                     <div
-                      className="w-20 h-20 flex items-center justify-center"
-                      style={{ backgroundColor: toolColor }}
+                      className="w-20 h-20 flex items-center justify-center shadow-lg"
+                      style={{ backgroundColor: toolColor, boxShadow: `0 4px 14px ${toolColor}40` }}
                     >
                       <span className="text-3xl font-gilda-display text-white">
-                        {tool.title.charAt(0)}
+                        {tool.title.charAt(0).toUpperCase()}
                       </span>
                     </div>
                   )}

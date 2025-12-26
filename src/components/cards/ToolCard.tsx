@@ -18,115 +18,33 @@ const categoryColors: { [key: string]: string } = {
   '3D': '#673ab7',
 }
 
-// Map of tool slugs to their official domains for logo fetching
-const toolDomainMap: Record<string, string> = {
-  'chatgpt': 'openai.com',
-  'claude': 'anthropic.com',
-  'midjourney': 'midjourney.com',
-  'dall-e-3': 'openai.com',
-  'stable-diffusion': 'stability.ai',
-  'stability-ai': 'stability.ai',
-  'leonardo-ai': 'leonardo.ai',
-  'ideogram': 'ideogram.ai',
-  'runway': 'runwayml.com',
-  'runway-ml': 'runwayml.com',
-  'runwayml': 'runwayml.com',
-  'pika': 'pika.art',
-  'eleven-labs': 'elevenlabs.io',
-  'elevenlabs': 'elevenlabs.io',
-  'suno': 'suno.ai',
-  'suno-ai': 'suno.ai',
-  'cursor': 'cursor.com',
-  'github-copilot': 'github.com',
-  'replit': 'replit.com',
-  'replit-ai': 'replit.com',
-  'framer-ai': 'framer.com',
-  'canva-magic-studio': 'canva.com',
-  'adobe-firefly': 'adobe.com',
-  'figma-ai': 'figma.com',
-  'notion-ai': 'notion.so',
-  'jasper-ai': 'jasper.ai',
-  'copy-ai': 'copy.ai',
-  'character-ai': 'character.ai',
-  'perplexity': 'perplexity.ai',
-  'notebooklm': 'google.com',
-  'google-gemini': 'google.com',
-  'flux': 'blackforestlabs.ai',
-  'maker': 'maker.co',
-  'tome': 'tome.app',
-  'gamma': 'gamma.app',
-  'durable': 'durable.co',
-  '10web': '10web.io',
-  'spline-ai': 'spline.design',
-  'meshy': 'meshy.ai',
-  'invideo': 'invideo.io',
-  'veed': 'veed.io',
-  'bolt': 'stackblitz.com',
-  'v0': 'vercel.com',
-  'v0-by-vercel': 'vercel.com',
-  'zapier-ai': 'zapier.com',
-  'udio': 'udio.com',
-  'mubert': 'mubert.com',
-  'deepseek': 'deepseek.com',
-  'warp-ai': 'warp.dev',
-  'clay': 'clay.com',
-  'harvey-ai': 'harvey.ai',
-  'captions': 'captions.ai',
-  'clipchamp': 'clipchamp.com',
-  'kling-ai': 'klingai.com',
-  'hailuo-ai': 'hailuoai.video',
-  'sora': 'openai.com',
-  // Data tools
-  'julius-ai': 'julius.ai',
-  'equals': 'equals.com',
-  'obviously-ai': 'obviously.ai',
-  'akkio': 'akkio.com',
-  'hex': 'hex.tech',
-  // Automation tools
-  'make': 'make.com',
-  'n8n': 'n8n.io',
-  'bardeen': 'bardeen.ai',
-  'relay': 'relay.app',
-  'activepieces': 'activepieces.com',
-  // Marketing tools
-  'jasper': 'jasper.ai',
-  'surfer-seo': 'surferseo.com',
-  'clearscope': 'clearscope.io',
-  'writesonic': 'writesonic.com',
-  // 3D tools
-  'luma-ai': 'lumalabs.ai',
-  'kaedim': 'kaedim3d.com',
-  'csm-ai': 'csm.ai',
-  'tripo-ai': 'tripo3d.ai',
-  // Writing tools
-  'grammarly': 'grammarly.com',
-  'sudowrite': 'sudowrite.com',
-  'wordtune': 'wordtune.com',
-  // Chatbot tools
-  'pi': 'pi.ai',
-  'poe': 'poe.com',
-  'grok': 'x.ai',
-}
-
-// Generate high-res logo URL using Google's favicon service
-function getLogoUrl(slug: string, website?: string): string | null {
-  // First try to get domain from our mapping
-  let domain = toolDomainMap[slug]
-
-  // If not in mapping, try to extract from website URL
-  if (!domain && website) {
-    try {
-      const url = new URL(website.startsWith('http') ? website : `https://${website}`)
-      domain = url.hostname.replace('www.', '')
-    } catch {
-      // Invalid URL
-    }
+// Styled letter fallback component
+function LetterAvatar({
+  letter,
+  color,
+  size = 'md'
+}: {
+  letter: string
+  color: string
+  size?: 'sm' | 'md' | 'lg'
+}) {
+  const sizeClasses = {
+    sm: 'w-8 h-8 text-lg',
+    md: 'w-24 h-24 text-4xl',
+    lg: 'w-32 h-32 text-5xl',
   }
 
-  if (!domain) return null
-
-  // Use Google's favicon service with size parameter for higher resolution (up to 256px)
-  return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`
+  return (
+    <div
+      className={`${sizeClasses[size]} flex items-center justify-center font-gilda-display text-white shadow-lg`}
+      style={{
+        backgroundColor: color,
+        boxShadow: `0 4px 14px ${color}40`
+      }}
+    >
+      {letter.toUpperCase()}
+    </div>
+  )
 }
 
 interface ToolCardProps {
@@ -143,16 +61,10 @@ interface ToolCardProps {
     }
     pricingModel?: string
     featured?: boolean
-    featuredImage?: {
-      url: string
-      alt?: string
-    }
     logo?: {
       url: string
       alt?: string
     }
-    logoUrl?: string
-    website?: string
   }
   variant?: 'default' | 'compact' | 'featured'
   showCategory?: boolean
@@ -173,8 +85,8 @@ export function ToolCard({
   className = '',
 }: ToolCardProps) {
   const categoryColor = categoryColors[tool.toolCategory?.title || ''] || '#e7131a'
-  // Try multiple sources for logo: featuredImage > logo > logoUrl > generated from domain
-  const imageUrl = tool.featuredImage?.url || tool.logo?.url || tool.logoUrl || getLogoUrl(tool.slug, tool.website)
+  // Use logo from Payload CMS only
+  const logoUrl = tool.logo?.url
 
   if (variant === 'compact') {
     return (
@@ -184,24 +96,20 @@ export function ToolCard({
       >
         {/* Icon */}
         <div
-          className="w-12 h-12 flex-shrink-0 flex items-center justify-center"
-          style={{ backgroundColor: `${categoryColor}15` }}
+          className="w-12 h-12 flex-shrink-0 flex items-center justify-center overflow-hidden"
+          style={{ backgroundColor: logoUrl ? '#f6f4f1' : categoryColor }}
         >
-          {imageUrl ? (
+          {logoUrl ? (
             <Image
-              src={imageUrl}
+              src={logoUrl}
               alt={tool.logo?.alt || tool.title}
               width={32}
               height={32}
               className="w-8 h-8 object-contain"
-              unoptimized
             />
           ) : (
-            <span
-              className="text-lg font-gilda-display font-bold"
-              style={{ color: categoryColor }}
-            >
-              {tool.title.charAt(0)}
+            <span className="text-lg font-gilda-display font-bold text-white">
+              {tool.title.charAt(0).toUpperCase()}
             </span>
           )}
         </div>
@@ -234,7 +142,7 @@ export function ToolCard({
         <div
           className="aspect-[4/3] p-12 flex items-center justify-center relative overflow-hidden"
           style={{
-            background: imageUrl
+            background: logoUrl
               ? '#f6f4f1'
               : `linear-gradient(135deg, ${categoryColor}20, ${categoryColor}05)`
           }}
@@ -245,24 +153,16 @@ export function ToolCard({
             <span className="text-[10px] font-ibm-plex-sans-condensed tracking-wider uppercase">Featured</span>
           </div>
 
-          {imageUrl ? (
+          {logoUrl ? (
             <Image
-              src={imageUrl}
-              alt={tool.featuredImage?.alt || tool.logo?.alt || tool.title}
+              src={logoUrl}
+              alt={tool.logo?.alt || tool.title}
               width={160}
               height={160}
               className="w-40 h-40 object-contain group-hover:scale-110 transition-transform duration-500"
-              unoptimized
             />
           ) : (
-            <div
-              className="w-32 h-32 flex items-center justify-center"
-              style={{ backgroundColor: categoryColor }}
-            >
-              <span className="text-5xl font-gilda-display text-white">
-                {tool.title.charAt(0)}
-              </span>
-            </div>
+            <LetterAvatar letter={tool.title.charAt(0)} color={categoryColor} size="lg" />
           )}
         </div>
 
@@ -316,7 +216,7 @@ export function ToolCard({
   return (
     <Link
       href={`/tools/${tool.slug}`}
-      className={`group flex flex-col bg-white border border-[#e5e5e5] transition-all duration-300 hover:border-black hover:shadow-lg ${className}`}
+      className={`group flex flex-col bg-white border border-[#e5e5e5] transition-all duration-300 hover:border-black hover:shadow-lg relative ${className}`}
     >
       {/* Featured Badge */}
       {tool.featured && (
@@ -330,29 +230,21 @@ export function ToolCard({
       <div
         className="aspect-square p-8 flex items-center justify-center relative overflow-hidden"
         style={{
-          background: imageUrl
+          background: logoUrl
             ? '#f6f4f1'
             : `linear-gradient(135deg, ${categoryColor}15, ${categoryColor}05)`
         }}
       >
-        {imageUrl ? (
+        {logoUrl ? (
           <Image
-            src={imageUrl}
-            alt={tool.featuredImage?.alt || tool.logo?.alt || tool.title}
+            src={logoUrl}
+            alt={tool.logo?.alt || tool.title}
             width={96}
             height={96}
             className="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-300"
-            unoptimized
           />
         ) : (
-          <div
-            className="w-24 h-24 flex items-center justify-center shadow-lg"
-            style={{ backgroundColor: categoryColor }}
-          >
-            <span className="text-4xl font-gilda-display text-white">
-              {tool.title.charAt(0)}
-            </span>
-          </div>
+          <LetterAvatar letter={tool.title.charAt(0)} color={categoryColor} size="md" />
         )}
       </div>
 
