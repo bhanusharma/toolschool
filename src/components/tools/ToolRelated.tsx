@@ -77,10 +77,10 @@ export function ToolRelated({ tools, category }: ToolRelatedProps) {
                     />
                   ) : (
                     <div
-                      className="w-20 h-20 flex items-center justify-center shadow-lg"
-                      style={{ backgroundColor: toolColor, boxShadow: `0 4px 14px ${toolColor}40` }}
+                      className="w-24 h-24 flex items-center justify-center transition-transform duration-300 group-hover:scale-105"
+                      style={{ backgroundColor: toolColor, boxShadow: `0 8px 24px ${toolColor}30` }}
                     >
-                      <span className="text-3xl font-gilda-display text-white">
+                      <span className="text-4xl font-gilda-display text-white drop-shadow-sm">
                         {tool.title.charAt(0).toUpperCase()}
                       </span>
                     </div>

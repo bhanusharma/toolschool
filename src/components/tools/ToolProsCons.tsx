@@ -85,36 +85,45 @@ export function ToolProsCons({ pros, cons }: ToolProsConsProps) {
       </div>
 
       {/* Summary Box */}
-      <div className="mt-8 p-6 bg-[#f8f8f8]">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+      <div className="mt-10 pt-8 border-t border-[#e5e5e5]">
+        <div className="flex items-center justify-center gap-12 flex-wrap">
           {hasPros && (
-            <div>
-              <div className="text-[36px] font-gilda-display text-green-600">
-                {pros.length}
+            <div className="flex items-center gap-3">
+              <div className="w-14 h-14 bg-green-100 flex items-center justify-center">
+                <span className="text-[24px] font-gilda-display text-green-600">
+                  {pros.length}
+                </span>
               </div>
-              <p className="font-ibm-plex-sans text-[13px] text-gray-500 uppercase tracking-wider">
-                Advantages
-              </p>
+              <div>
+                <p className="font-ibm-plex-sans text-[14px] font-medium text-gray-900">Advantages</p>
+                <p className="font-ibm-plex-sans text-[12px] text-gray-500">identified</p>
+              </div>
             </div>
           )}
           {hasCons && (
-            <div>
-              <div className="text-[36px] font-gilda-display text-red-500">
-                {cons.length}
+            <div className="flex items-center gap-3">
+              <div className="w-14 h-14 bg-red-100 flex items-center justify-center">
+                <span className="text-[24px] font-gilda-display text-red-500">
+                  {cons.length}
+                </span>
               </div>
-              <p className="font-ibm-plex-sans text-[13px] text-gray-500 uppercase tracking-wider">
-                Limitations
-              </p>
+              <div>
+                <p className="font-ibm-plex-sans text-[14px] font-medium text-gray-900">Limitations</p>
+                <p className="font-ibm-plex-sans text-[12px] text-gray-500">noted</p>
+              </div>
             </div>
           )}
           {hasPros && hasCons && (
-            <div>
-              <div className="text-[36px] font-gilda-display text-[#e7131a]">
-                {pros.length > cons.length ? '+' : ''}{pros.length - cons.length}
+            <div className="flex items-center gap-3">
+              <div className={`w-14 h-14 flex items-center justify-center ${pros.length >= cons.length ? 'bg-green-100' : 'bg-red-100'}`}>
+                <span className={`text-[24px] font-gilda-display ${pros.length >= cons.length ? 'text-green-600' : 'text-red-500'}`}>
+                  {pros.length > cons.length ? '+' : ''}{pros.length - cons.length}
+                </span>
               </div>
-              <p className="font-ibm-plex-sans text-[13px] text-gray-500 uppercase tracking-wider">
-                Net Score
-              </p>
+              <div>
+                <p className="font-ibm-plex-sans text-[14px] font-medium text-gray-900">Net Score</p>
+                <p className="font-ibm-plex-sans text-[12px] text-gray-500">{pros.length >= cons.length ? 'favorable' : 'consider alternatives'}</p>
+              </div>
             </div>
           )}
         </div>

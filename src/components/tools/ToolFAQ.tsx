@@ -70,17 +70,17 @@ export function ToolFAQ({ faqs, toolName }: ToolFAQProps) {
       </div>
 
       {/* Quick Answers Summary for AI/Search */}
-      <div className="mt-8 pt-6 border-t border-[#e5e5e5]">
-        <h3 className="font-ibm-plex-sans-condensed text-[12px] tracking-wider uppercase text-gray-400 mb-4">
+      <div className="mt-10 pt-8 border-t border-[#e5e5e5]">
+        <h3 className="font-ibm-plex-sans-condensed text-[12px] tracking-wider uppercase text-gray-500 mb-6">
           Quick Answers
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {faqs.slice(0, 4).map((faq, index) => (
-            <div key={index} className="bg-[#f8f8f8] p-4">
-              <p className="font-ibm-plex-sans text-[13px] font-medium text-gray-700 mb-1">
+            <div key={index} className="bg-[#f8f8f8] p-5 border-l-4 border-[#e7131a]">
+              <p className="font-ibm-plex-sans text-[14px] font-medium text-gray-900 mb-2">
                 {faq.question}
               </p>
-              <p className="font-ibm-plex-sans text-[12px] text-gray-500 line-clamp-2">
+              <p className="font-ibm-plex-sans text-[13px] text-gray-600 leading-relaxed line-clamp-2">
                 {faq.answer}
               </p>
             </div>
