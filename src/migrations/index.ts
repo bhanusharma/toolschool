@@ -7,6 +7,7 @@ import * as migration_20251221_022700_add_tutorials from './20251221_022700_add_
 import * as migration_20251221_140200_add_search_collection from './20251221_140200_add_search_collection';
 import * as migration_20251223_000000_add_logo_url from './20251223_000000_add_logo_url';
 import * as migration_20251223_025900_add_tools_extended_fields from './20251223_025900_add_tools_extended_fields';
+import * as migration_20251224_011300_add_builders_id_to_locked_docs_rels from './20251224_011300_add_builders_id_to_locked_docs_rels';
 
 export const migrations = [
   {
@@ -53,5 +54,10 @@ export const migrations = [
     up: migration_20251223_025900_add_tools_extended_fields.up,
     down: migration_20251223_025900_add_tools_extended_fields.down,
     name: '20251223_025900_add_tools_extended_fields'
+  },
+  {
+    up: migration_20251224_011300_add_builders_id_to_locked_docs_rels.up,
+    down: migration_20251224_011300_add_builders_id_to_locked_docs_rels.down,
+    name: '20251224_011300_add_builders_id_to_locked_docs_rels'
   },
 ];
