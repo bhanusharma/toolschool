@@ -366,22 +366,82 @@ function ToolsPageContent() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[#f8f8f8]">
-        {/* Skeleton Hero - 2026 Design */}
+        {/* Skeleton Hero - matches actual hero layout exactly */}
         <section className="relative bg-[#0a0a0a] overflow-hidden">
           <div className="absolute inset-0">
             <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#111] to-[#0d0d0d]" />
             <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-gradient-radial from-violet-500/[0.04] via-transparent to-transparent blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-radial from-blue-500/[0.03] via-transparent to-transparent blur-3xl" />
             <div className="absolute inset-0 opacity-[0.12]" style={{
               backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 1px)`,
               backgroundSize: '32px 32px',
             }} />
           </div>
           <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-16 md:py-24">
-            <div className="max-w-2xl">
-              <div className="h-8 w-48 bg-white/[0.06] mb-6 animate-pulse" />
-              <div className="h-16 w-80 bg-white/[0.06] mb-6 animate-pulse" />
-              <div className="h-6 w-64 bg-white/[0.06] animate-pulse" />
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Left column skeleton */}
+              <div>
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/[0.06] border border-white/[0.08] mb-6">
+                  <div className="w-4 h-4 bg-white/10 rounded" />
+                  <div className="h-3 w-32 bg-white/10 rounded" />
+                </div>
+                <div className="h-[137px] lg:h-[206px] mb-6">
+                  <div className="h-[48px] md:h-[64px] lg:h-[72px] w-72 bg-white/[0.06] mb-2" />
+                  <div className="h-[48px] md:h-[64px] lg:h-[72px] w-48 bg-white/[0.06]" />
+                </div>
+                <div className="h-14 w-full max-w-md bg-white/[0.06] mb-8" />
+                <div className="max-w-md">
+                  <div className="h-14 w-full bg-white/[0.06]" />
+                </div>
+                <div className="flex items-stretch gap-0 mt-8 pt-8 border-t border-white/[0.12]">
+                  <div className="pr-8">
+                    <div className="h-9 w-16 bg-white/[0.06] mb-1" />
+                    <div className="h-3 w-24 bg-white/[0.06]" />
+                  </div>
+                  <div className="w-px bg-white/[0.12]" />
+                  <div className="pl-8">
+                    <div className="h-9 w-8 bg-white/[0.06] mb-1" />
+                    <div className="h-3 w-20 bg-white/[0.06]" />
+                  </div>
+                </div>
+              </div>
+              {/* Right column skeleton - featured card */}
+              <div className="hidden lg:block">
+                <div className="bg-white border border-[#e5e5e5]">
+                  <div className="aspect-[4/3] bg-[#f6f4f1]" />
+                  <div className="p-6">
+                    <div className="h-7 w-32 bg-[#f6f4f1] mb-3" />
+                    <div className="h-5 w-full bg-[#f6f4f1] mb-2" />
+                    <div className="h-5 w-3/4 bg-[#f6f4f1] mb-4" />
+                    <div className="flex gap-2 mb-4">
+                      <div className="h-6 w-20 bg-[#f6f4f1]" />
+                      <div className="h-6 w-20 bg-[#f6f4f1]" />
+                    </div>
+                    <div className="flex items-center justify-between pt-4 border-t border-[#e5e5e5]">
+                      <div className="h-4 w-24 bg-[#f6f4f1]" />
+                      <div className="h-4 w-4 bg-[#f6f4f1]" />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+        </section>
+
+        {/* Skeleton Categories */}
+        <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-14 bg-white border-b border-[#e5e5e5]">
+          <div className="flex items-center gap-4 mb-10">
+            <div className="w-8 h-[2px] bg-black" />
+            <div className="h-4 w-40 bg-[#f6f4f1]" />
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+            {[...Array(10)].map((_, i) => (
+              <div key={i} className="p-5 border-2 border-[#e5e5e5] bg-white">
+                <div className="w-11 h-11 bg-[#f6f4f1] mb-4" />
+                <div className="h-4 w-20 bg-[#f6f4f1] mb-1" />
+                <div className="h-3 w-12 bg-[#f6f4f1]" />
+              </div>
+            ))}
           </div>
         </section>
 
@@ -389,7 +449,7 @@ function ToolsPageContent() {
         <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[...Array(8)].map((_, i) => (
-              <div key={i} className="border-2 border-[#e5e5e5] bg-white animate-pulse">
+              <div key={i} className="border border-[#e5e5e5] bg-white">
                 <div className="aspect-square bg-[#f6f4f1]" />
                 <div className="p-5">
                   <div className="h-6 w-3/4 bg-[#f6f4f1] mb-3" />
