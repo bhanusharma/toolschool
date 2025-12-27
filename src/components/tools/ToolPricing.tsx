@@ -57,7 +57,7 @@ export function ToolPricing({ tiers, summary, model, lastVerified, website }: To
 
       {/* Pricing Tiers Grid */}
       {hasTiers && (
-        <div className={`grid gap-6 pt-4 ${
+        <div className={`grid gap-6 pt-6 items-start ${
           tiers.length === 1 ? 'grid-cols-1 max-w-md' :
           tiers.length === 2 ? 'grid-cols-1 md:grid-cols-2' :
           tiers.length === 3 ? 'grid-cols-1 md:grid-cols-3' :
@@ -68,13 +68,13 @@ export function ToolPricing({ tiers, summary, model, lastVerified, website }: To
               key={index}
               className={`relative flex flex-col border bg-white ${
                 tier.recommended
-                  ? 'border-[#e7131a] shadow-lg ring-1 ring-[#e7131a]'
-                  : 'border-[#e5e5e5]'
+                  ? 'border-[#e7131a] shadow-lg ring-1 ring-[#e7131a] mt-0'
+                  : 'border-[#e5e5e5] mt-4'
               }`}
             >
               {/* Recommended Badge */}
               {tier.recommended && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#e7131a] text-white text-[11px] font-ibm-plex-sans-condensed tracking-wider uppercase px-4 py-1.5 whitespace-nowrap z-10">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#e7131a] text-white text-[11px] font-ibm-plex-sans-condensed tracking-wider uppercase px-4 py-1.5 whitespace-nowrap z-10">
                   Most Popular
                 </div>
               )}
