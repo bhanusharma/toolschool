@@ -8,7 +8,8 @@ import { TutorialProgress } from '@/components/TutorialProgress'
 import { SocialShare } from '@/components/SocialShare'
 import { CodeBlock } from '@/components/CodeBlock'
 
-export const revalidate = 600 // 10 minutes ISR
+// Force dynamic rendering - D1 database not available during static build in CI
+export const dynamic = 'force-dynamic'
 
 // Calculate reading time based on word count (average 200 words per minute)
 function calculateReadingTime(tutorial: Tutorial): number {

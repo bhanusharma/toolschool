@@ -15,6 +15,11 @@ import {
   BarChart,
   type LucideIcon,
 } from 'lucide-react'
+// ASCII Hero commented out for now - may use elsewhere later
+// import { AsciiHero } from '@/components/AsciiHero'
+
+// Force dynamic rendering - D1 database not available during static build in CI
+export const dynamic = 'force-dynamic'
 
 async function getHomePageData() {
   const payloadConfig = await config
@@ -66,7 +71,7 @@ const categoryData: { [key: string]: { description: string; icon: LucideIcon; co
   image: {
     description: 'Create stunning visuals with AI',
     icon: Sparkles,
-    color: '#e7131a',
+    color: '#8b5cf6',
   },
   video: {
     description: 'Edit and generate video content',
@@ -118,17 +123,10 @@ export default async function HomePage() {
       {/* Hero Section - Bold Editorial Design */}
       <div className="w-full flex justify-center">
         <div className="relative w-full max-w-[1440px] bg-black overflow-hidden">
-          {/* Geometric background pattern */}
+          {/* Subtle background pattern */}
           <div className="absolute inset-0">
-            {/* Subtle ambient glow */}
-            <div className="absolute top-1/2 left-1/4 w-[600px] h-[600px] bg-[#e7131a]/5 blur-[150px] animate-pulse-soft" />
-            {/* Large red diagonal accent */}
-            <div
-              className="absolute -right-20 top-0 w-[600px] h-[600px] bg-[#e7131a] animate-geometric"
-              style={{
-                clipPath: 'polygon(100% 0, 100% 100%, 30% 100%, 60% 0)',
-              }}
-            />
+            {/* Subtle gradient */}
+            <div className="absolute inset-0 bg-gradient-to-br from-black via-[#111] to-black" />
             {/* Grid lines */}
             <div className="absolute inset-0 opacity-[0.03]">
               <div className="h-full w-full" style={{
@@ -139,10 +137,6 @@ export default async function HomePage() {
                 backgroundSize: '80px 80px',
               }} />
             </div>
-            {/* Noise texture overlay */}
-            <div className="absolute inset-0 opacity-[0.015]" style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-            }} />
           </div>
 
           <div className="relative z-10 px-6 lg:px-12 py-16 lg:py-24">
@@ -150,7 +144,7 @@ export default async function HomePage() {
               {/* Left Column - Typography */}
               <div className="max-w-[600px]">
                 <div className="flex items-center gap-3 mb-8 animate-hero">
-                  <div className="w-2 h-2 bg-[#e7131a]" />
+                  <div className="w-8 h-[1px] bg-white/40" />
                   <span className="font-ibm-plex-sans-condensed text-[12px] tracking-[0.2em] uppercase text-white/60">
                     AI Creator Platform
                   </span>
@@ -159,7 +153,7 @@ export default async function HomePage() {
                 <h1 className="text-[42px] sm:text-[56px] lg:text-[72px] xl:text-[84px] leading-[0.95] font-gilda-display text-white mb-8 animate-hero-delay-1">
                   Where
                   <br />
-                  <span className="text-[#e7131a]">Creators</span>
+                  <span className="text-white/50">Creators</span>
                   <br />
                   Find AI Tools
                 </h1>
@@ -172,7 +166,7 @@ export default async function HomePage() {
                 <div className="flex flex-col sm:flex-row gap-4 animate-hero-delay-3">
                   <Link
                     href="/tools"
-                    className="group bg-[#e7131a] text-white px-8 py-4 font-ibm-plex-sans-condensed text-[13px] tracking-[0.15em] uppercase transition-all duration-300 hover:bg-white hover:text-black inline-flex items-center justify-center gap-3"
+                    className="group bg-white text-black px-8 py-4 font-ibm-plex-sans-condensed text-[13px] tracking-[0.15em] uppercase transition-all duration-300 hover:bg-white/90 inline-flex items-center justify-center gap-3"
                   >
                     Explore Tools
                     <svg
@@ -193,7 +187,7 @@ export default async function HomePage() {
                   </Link>
                   <Link
                     href="/learn"
-                    className="group border border-white/30 text-white px-8 py-4 font-ibm-plex-sans-condensed text-[13px] tracking-[0.15em] uppercase transition-all duration-300 hover:bg-white hover:text-black hover:border-white inline-flex items-center justify-center gap-3"
+                    className="group bg-black border border-white/20 text-white px-8 py-4 font-ibm-plex-sans-condensed text-[13px] tracking-[0.15em] uppercase transition-all duration-300 hover:bg-white/10 hover:border-white/40 inline-flex items-center justify-center gap-3"
                   >
                     Start Learning
                   </Link>
@@ -201,18 +195,58 @@ export default async function HomePage() {
               </div>
 
               {/* Right Column - Category Showcase */}
+              {/* Mobile: 2x2 grid */}
+              <div className="lg:hidden mt-8">
+                <div className="grid grid-cols-2 gap-3">
+                  {categories.slice(0, 4).map((category: any, index: number) => {
+                    const data = categoryData[category.slug] || {
+                      description: 'Explore AI tools',
+                      icon: Sparkles,
+                      color: '#6366f1',
+                    }
+                    const IconComponent = data.icon
+                    return (
+                      <Link
+                        key={category.id}
+                        href={`/tools?category=${category.slug}`}
+                        className={`group animate-slide-up stagger-${index + 4}`}
+                      >
+                        <div className="relative bg-white/[0.05] backdrop-blur-xl border border-white/[0.1] p-4 transition-all duration-300 hover:bg-white/[0.1]">
+                          <div
+                            className="w-9 h-9 flex items-center justify-center mb-3"
+                            style={{ backgroundColor: `${data.color}20` }}
+                          >
+                            <IconComponent
+                              size={18}
+                              strokeWidth={1.5}
+                              style={{ color: data.color }}
+                            />
+                          </div>
+                          <h3 className="font-ibm-plex-sans-condensed text-[12px] tracking-[0.1em] uppercase text-white/90">
+                            {category.title}
+                          </h3>
+                          <p className="font-ibm-plex-sans text-[11px] text-white/40 mt-1 line-clamp-1">
+                            {data.description}
+                          </p>
+                        </div>
+                      </Link>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Desktop: Stacked cards with offsets */}
               <div className="hidden lg:block">
                 <div className="relative">
-                  {/* Floating category cards - stacked asymmetrically */}
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     {categories.slice(0, 4).map((category: any, index: number) => {
                       const data = categoryData[category.slug] || {
                         description: 'Explore AI tools',
                         icon: Sparkles,
-                        color: '#e7131a',
+                        color: '#6366f1',
                       }
                       const IconComponent = data.icon
-                      const offsets = ['ml-0', 'ml-12', 'ml-6', 'ml-16']
+                      const offsets = ['ml-0', 'ml-8', 'ml-4', 'ml-12']
                       const staggerClasses = ['stagger-4', 'stagger-5', 'stagger-6', 'stagger-7']
                       return (
                         <Link
@@ -220,32 +254,33 @@ export default async function HomePage() {
                           href={`/tools?category=${category.slug}`}
                           className={`block ${offsets[index]} group animate-slide-left ${staggerClasses[index]}`}
                         >
-                          <div className="bg-white/5 backdrop-blur border border-white/10 p-5 flex items-center gap-5 transition-all duration-300 hover:bg-white hover:border-white group-hover:translate-x-2">
+                          <div className="relative bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] p-5 flex items-center gap-5 transition-all duration-500 hover:bg-white/[0.08] hover:border-white/20 group-hover:translate-x-2 overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                             <div
-                              className="w-12 h-12 flex items-center justify-center transition-colors"
-                              style={{ backgroundColor: `${data.color}20` }}
+                              className="relative w-11 h-11 flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                              style={{ backgroundColor: `${data.color}15` }}
                             >
                               <IconComponent
-                                size={24}
+                                size={22}
                                 strokeWidth={1.5}
                                 className="transition-colors"
                                 style={{ color: data.color }}
                               />
                             </div>
-                            <div className="flex-1">
-                              <h3 className="font-ibm-plex-sans-condensed text-[14px] tracking-[0.1em] uppercase text-white group-hover:text-black transition-colors">
+                            <div className="relative flex-1">
+                              <h3 className="font-ibm-plex-sans-condensed text-[13px] tracking-[0.12em] uppercase text-white/90 group-hover:text-white transition-colors">
                                 {category.title}
                               </h3>
-                              <p className="font-ibm-plex-sans text-[13px] text-white/50 group-hover:text-black/60 transition-colors mt-0.5">
+                              <p className="font-ibm-plex-sans text-[12px] text-white/40 group-hover:text-white/60 transition-colors mt-0.5">
                                 {data.description}
                               </p>
                             </div>
                             <svg
-                              width="20"
-                              height="20"
+                              width="18"
+                              height="18"
                               viewBox="0 0 24 24"
                               fill="none"
-                              className="text-white/30 group-hover:text-black/50 transition-all group-hover:translate-x-1"
+                              className="relative text-white/20 group-hover:text-white/50 transition-all duration-300 group-hover:translate-x-1"
                             >
                               <path
                                 d="M5 12H19M19 12L12 5M19 12L12 19"
@@ -260,7 +295,6 @@ export default async function HomePage() {
                       )
                     })}
                   </div>
-
                 </div>
               </div>
             </div>
@@ -268,145 +302,152 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* Stats Ticker */}
+      {/* Stats Bar - Modern 2026 */}
       <div className="w-full flex justify-center">
-        <div className="relative w-full max-w-[1440px] bg-[#e7131a] overflow-hidden group/stats">
-          {/* Subtle pattern overlay */}
-          <div className="absolute inset-0 opacity-10" style={{
-            backgroundImage: `repeating-linear-gradient(
-              90deg,
-              transparent,
-              transparent 100px,
-              rgba(255,255,255,0.1) 100px,
-              rgba(255,255,255,0.1) 101px
-            )`,
-          }} />
-          <div className="relative flex items-center justify-between px-6 lg:px-12 py-5">
-            <div className="flex items-center gap-8 lg:gap-16">
-              <div className="flex items-center gap-3 group/stat cursor-default">
-                <span className="font-gilda-display text-[28px] lg:text-[36px] text-white transition-transform group-hover/stat:scale-110">50+</span>
-                <span className="font-ibm-plex-sans-condensed text-[11px] tracking-[0.15em] uppercase text-white/80">
-                  AI Tools
-                </span>
+        <div className="relative w-full max-w-[1440px] bg-[#fafafa] border-y border-black/[0.06] overflow-hidden">
+          <div className="relative flex items-center justify-between px-6 lg:px-12 py-6">
+            <div className="flex items-center gap-10 lg:gap-20">
+              <div className="flex items-center gap-4 group/stat cursor-default">
+                <span className="font-gilda-display text-[32px] lg:text-[40px] text-black/90 transition-all duration-300 group-hover/stat:text-black">50+</span>
+                <div className="flex flex-col">
+                  <span className="font-ibm-plex-sans-condensed text-[10px] tracking-[0.2em] uppercase text-black/40">
+                    Curated
+                  </span>
+                  <span className="font-ibm-plex-sans-condensed text-[11px] tracking-[0.15em] uppercase text-black/70">
+                    AI Tools
+                  </span>
+                </div>
               </div>
-              <div className="hidden sm:flex items-center gap-3 group/stat cursor-default">
-                <span className="font-gilda-display text-[28px] lg:text-[36px] text-white transition-transform group-hover/stat:scale-110">8</span>
-                <span className="font-ibm-plex-sans-condensed text-[11px] tracking-[0.15em] uppercase text-white/80">
-                  Categories
-                </span>
+              <div className="hidden sm:block w-[1px] h-8 bg-black/10" />
+              <div className="hidden sm:flex items-center gap-4 group/stat cursor-default">
+                <span className="font-gilda-display text-[32px] lg:text-[40px] text-black/90 transition-all duration-300 group-hover/stat:text-black">8</span>
+                <div className="flex flex-col">
+                  <span className="font-ibm-plex-sans-condensed text-[10px] tracking-[0.2em] uppercase text-black/40">
+                    Creative
+                  </span>
+                  <span className="font-ibm-plex-sans-condensed text-[11px] tracking-[0.15em] uppercase text-black/70">
+                    Categories
+                  </span>
+                </div>
               </div>
-              <div className="hidden md:flex items-center gap-3 group/stat cursor-default">
-                <span className="font-gilda-display text-[28px] lg:text-[36px] text-white transition-transform group-hover/stat:scale-110">Daily</span>
-                <span className="font-ibm-plex-sans-condensed text-[11px] tracking-[0.15em] uppercase text-white/80">
-                  Updates
-                </span>
+              <div className="hidden md:block w-[1px] h-8 bg-black/10" />
+              <div className="hidden md:flex items-center gap-4 group/stat cursor-default">
+                <span className="font-gilda-display text-[32px] lg:text-[40px] text-black/90 transition-all duration-300 group-hover/stat:text-black">Daily</span>
+                <div className="flex flex-col">
+                  <span className="font-ibm-plex-sans-condensed text-[10px] tracking-[0.2em] uppercase text-black/40">
+                    Fresh
+                  </span>
+                  <span className="font-ibm-plex-sans-condensed text-[11px] tracking-[0.15em] uppercase text-black/70">
+                    Updates
+                  </span>
+                </div>
               </div>
             </div>
             <Link
               href="/tools"
-              className="font-ibm-plex-sans-condensed text-[12px] tracking-[0.15em] uppercase text-white hover:text-white/80 transition-colors flex items-center gap-2 group/link"
+              className="font-ibm-plex-sans-condensed text-[11px] tracking-[0.2em] uppercase text-black/40 hover:text-black transition-all duration-300 flex items-center gap-2 group/link"
             >
               Browse All
-              <span className="transition-transform group-hover/link:translate-x-1">→</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="transition-transform duration-300 group-hover/link:translate-x-1">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </Link>
           </div>
         </div>
       </div>
 
-      {/* Featured Section - Split Layout */}
+      {/* Featured Section - Modern Split Layout */}
       <div className="w-full flex justify-center">
         <div className="relative w-full max-w-[1440px] bg-white">
           <div className="grid lg:grid-cols-2">
             {/* Left - Featured Tools */}
-            <div className="px-6 lg:px-12 py-16 lg:py-20 border-r border-black/10">
-              <div className="flex items-center justify-between mb-10">
+            <div className="px-6 lg:px-12 py-20 lg:py-24 border-r border-black/[0.06]">
+              <div className="flex items-center justify-between mb-12">
                 <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-[#e7131a] animate-pulse-soft" />
-                  <h2 className="font-ibm-plex-sans-condensed text-[12px] tracking-[0.2em] uppercase text-black/50">
+                  <div className="w-10 h-[1px] bg-gradient-to-r from-black/30 to-transparent" />
+                  <h2 className="font-ibm-plex-sans-condensed text-[10px] tracking-[0.25em] uppercase text-black/40">
                     Featured Tools
                   </h2>
                 </div>
                 <Link
                   href="/tools"
-                  className="font-ibm-plex-sans-condensed text-[12px] tracking-[0.15em] uppercase text-black/50 hover:text-black transition-colors group/viewall flex items-center gap-1"
+                  className="font-ibm-plex-sans-condensed text-[11px] tracking-[0.2em] uppercase text-black/40 hover:text-black transition-all duration-300 group/viewall flex items-center gap-1.5"
                 >
                   View All
-                  <span className="transition-transform group-hover/viewall:translate-x-0.5">→</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" className="transition-transform duration-300 group-hover/viewall:translate-x-0.5">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </Link>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {tools.length > 0 ? (
                   tools.slice(0, 4).map((tool: any, index: number) => {
-                    const categoryColor = categoryData[tool.toolCategory?.slug]?.color || '#e7131a'
+                    const categoryColor = categoryData[tool.toolCategory?.slug]?.color || '#6366f1'
                     return (
                       <Link
                         key={tool.id}
                         href={`/tools/${tool.slug}`}
-                        className={`group flex items-start gap-5 p-5 -mx-5 hover:bg-[#f6f4f1] transition-all duration-300 animate-slide-up stagger-${index + 1}`}
+                        className={`group relative flex items-start gap-5 p-5 -mx-5 transition-all duration-500 animate-slide-up stagger-${index + 1} overflow-hidden`}
                       >
+                        {/* Hover background */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#f8f8f8] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         <div
-                          className="w-14 h-14 flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-105"
-                          style={{ backgroundColor: `${categoryColor}15` }}
+                          className="relative w-12 h-12 flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-105"
+                          style={{ backgroundColor: `${categoryColor}10` }}
                         >
                           {tool.logo?.url ? (
                             <Image
                               src={tool.logo.url}
                               alt={tool.title}
-                              width={32}
-                              height={32}
+                              width={28}
+                              height={28}
                               className="object-contain"
                             />
                           ) : (
                             <span
-                              className="text-xl font-gilda-display"
+                              className="text-lg font-gilda-display"
                               style={{ color: categoryColor }}
                             >
                               {tool.title.charAt(0)}
                             </span>
                           )}
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-3 mb-1">
-                            <h3 className="font-gilda-display text-[20px] text-black group-hover:text-[#e7131a] transition-colors">
+                        <div className="relative flex-1 min-w-0">
+                          <div className="flex items-center gap-3 mb-1.5">
+                            <h3 className="font-gilda-display text-[18px] text-black group-hover:text-black/80 transition-colors">
                               {tool.title}
                             </h3>
                             {index === 0 && (
-                              <span className="px-2 py-0.5 bg-black text-white text-[9px] font-ibm-plex-sans-condensed tracking-wider uppercase">
+                              <span className="px-2 py-0.5 bg-black text-white text-[8px] font-ibm-plex-sans-condensed tracking-[0.15em] uppercase">
                                 New
                               </span>
                             )}
                           </div>
-                          <p className="font-ibm-plex-sans text-[14px] text-black/60 line-clamp-1">
+                          <p className="font-ibm-plex-sans text-[13px] text-black/50 line-clamp-1 leading-relaxed">
                             {tool.tagline}
                           </p>
                         </div>
                         <svg
-                          width="20"
-                          height="20"
+                          width="18"
+                          height="18"
                           viewBox="0 0 24 24"
                           fill="none"
-                          className="text-black/20 group-hover:text-[#e7131a] transition-all flex-shrink-0 mt-2 group-hover:translate-x-1"
+                          className="relative text-black/15 group-hover:text-black/40 transition-all duration-300 flex-shrink-0 mt-1.5 group-hover:translate-x-1"
                         >
-                          <path
-                            d="M5 12H19M19 12L12 5M19 12L12 19"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
+                          <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </Link>
                     )
                   })
                 ) : (
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     {[1, 2, 3, 4].map((i) => (
                       <div key={i} className="flex items-start gap-5 p-5 -mx-5">
-                        <div className="w-14 h-14 bg-black/5 animate-pulse" />
+                        <div className="w-12 h-12 bg-black/[0.03] animate-pulse" />
                         <div className="flex-1 space-y-2">
-                          <div className="h-5 bg-black/5 animate-pulse w-32" />
-                          <div className="h-4 bg-black/5 animate-pulse w-48" />
+                          <div className="h-5 bg-black/[0.03] animate-pulse w-32" />
+                          <div className="h-4 bg-black/[0.03] animate-pulse w-48" />
                         </div>
                       </div>
                     ))}
@@ -415,40 +456,44 @@ export default async function HomePage() {
               </div>
             </div>
 
-            {/* Right - Latest from Blog/Builders */}
-            <div className="px-6 lg:px-12 py-16 lg:py-20">
-              <div className="flex items-center justify-between mb-10">
+            {/* Right - Latest News */}
+            <div className="px-6 lg:px-12 py-20 lg:py-24">
+              <div className="flex items-center justify-between mb-12">
                 <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-black" />
-                  <h2 className="font-ibm-plex-sans-condensed text-[12px] tracking-[0.2em] uppercase text-black/50">
+                  <div className="w-1.5 h-1.5 bg-black/80" />
+                  <h2 className="font-ibm-plex-sans-condensed text-[10px] tracking-[0.25em] uppercase text-black/40">
                     Latest News
                   </h2>
                 </div>
                 <Link
                   href="/news"
-                  className="font-ibm-plex-sans-condensed text-[12px] tracking-[0.15em] uppercase text-black/50 hover:text-black transition-colors group/viewall flex items-center gap-1"
+                  className="font-ibm-plex-sans-condensed text-[11px] tracking-[0.2em] uppercase text-black/40 hover:text-black transition-all duration-300 group/viewall flex items-center gap-1.5"
                 >
                   View All
-                  <span className="transition-transform group-hover/viewall:translate-x-0.5">→</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" className="transition-transform duration-300 group-hover/viewall:translate-x-0.5">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </Link>
               </div>
 
-              <div className="space-y-6">
+              <div className="space-y-5">
                 {posts.slice(0, 3).map((post: any, index: number) => (
                   <Link
                     key={post.id}
                     href={`/news/${post.slug}`}
-                    className={`group block p-4 -mx-4 hover:bg-[#f6f4f1] transition-all duration-300 animate-slide-up stagger-${index + 5}`}
+                    className={`group relative block p-4 -mx-4 transition-all duration-500 animate-slide-up stagger-${index + 5} overflow-hidden`}
                   >
-                    <div className="flex items-start gap-5">
-                      <span className="font-gilda-display text-[32px] text-black/10 leading-none transition-colors group-hover:text-[#e7131a]/30">
+                    {/* Hover background */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#f8f8f8] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="relative flex items-start gap-5">
+                      <span className="font-gilda-display text-[28px] text-black/[0.08] leading-none transition-colors duration-300 group-hover:text-black/15">
                         {String(index + 1).padStart(2, '0')}
                       </span>
                       <div className="flex-1">
-                        <span className="font-ibm-plex-sans-condensed text-[10px] tracking-[0.15em] uppercase text-[#e7131a] mb-2 block">
+                        <span className="font-ibm-plex-sans-condensed text-[9px] tracking-[0.2em] uppercase text-black/35 mb-2 block">
                           {post.categoryBadge || 'News'}
                         </span>
-                        <h3 className="font-gilda-display text-[20px] leading-[1.3] text-black group-hover:text-[#e7131a] transition-colors">
+                        <h3 className="font-gilda-display text-[18px] leading-[1.35] text-black group-hover:text-black/75 transition-colors duration-300">
                           {post.title}
                         </h3>
                       </div>
@@ -499,62 +544,68 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* Categories Grid - Bold Treatment */}
+      {/* Categories Grid - Modern 2026 */}
       <div className="w-full flex justify-center">
-        <div className="relative w-full max-w-[1440px] bg-[#f6f4f1] py-16 lg:py-24 px-6 lg:px-12 overflow-hidden">
-          {/* Subtle decorative element */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-black/[0.02] transform rotate-45 translate-x-32 -translate-y-32" />
+        <div className="relative w-full max-w-[1440px] bg-gradient-to-b from-[#f8f8f8] to-[#f4f4f4] py-20 lg:py-28 px-6 lg:px-12 overflow-hidden">
+          {/* Subtle decorative gradient orb */}
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-radial from-black/[0.02] via-transparent to-transparent blur-3xl" />
 
-          <div className="relative flex items-center justify-between mb-12">
-            <h2 className="font-gilda-display text-[32px] lg:text-[40px] text-black">
-              Browse by Category
-            </h2>
+          <div className="relative flex items-center justify-between mb-14">
+            <div>
+              <span className="font-ibm-plex-sans-condensed text-[10px] tracking-[0.25em] uppercase text-black/40 block mb-2">
+                Discover
+              </span>
+              <h2 className="font-gilda-display text-[34px] lg:text-[44px] text-black leading-[1.1]">
+                Browse by Category
+              </h2>
+            </div>
             <Link
               href="/tools"
-              className="hidden sm:inline-flex items-center gap-2 font-ibm-plex-sans-condensed text-[12px] tracking-[0.15em] uppercase text-black/50 hover:text-black transition-colors group/link"
+              className="hidden sm:inline-flex items-center gap-2 font-ibm-plex-sans-condensed text-[11px] tracking-[0.2em] uppercase text-black/40 hover:text-black transition-all duration-300 group/link"
             >
-              View All Categories
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="transition-transform group-hover/link:translate-x-1">
-                <path
-                  d="M5 12H19M19 12L12 5M19 12L12 19"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+              View All
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="transition-transform duration-300 group-hover/link:translate-x-1">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </Link>
           </div>
 
-          <div className="relative grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
+          <div className="relative grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5">
             {categories.length > 0 ? (
               categories.slice(0, 8).map((category: any, index: number) => {
                 const data = categoryData[category.slug] || {
                   description: 'Explore AI tools',
                   icon: Sparkles,
-                  color: '#e7131a',
+                  color: '#6366f1',
                 }
                 const IconComponent = data.icon
                 return (
                   <Link
                     key={category.id}
                     href={`/tools?category=${category.slug}`}
-                    className={`group bg-white p-6 lg:p-8 border border-black/5 hover:border-black hover:shadow-lg transition-all duration-300 animate-scale-in stagger-${index + 1}`}
+                    className={`group relative bg-white p-6 lg:p-7 border border-black/[0.04] hover:border-black/20 transition-all duration-500 animate-scale-in stagger-${index + 1} overflow-hidden`}
                   >
+                    {/* Hover gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-black/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    {/* Colored accent line at top */}
                     <div
-                      className="w-12 h-12 flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
-                      style={{ backgroundColor: `${data.color}15` }}
+                      className="absolute top-0 left-0 right-0 h-[2px] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
+                      style={{ backgroundColor: data.color }}
+                    />
+                    <div
+                      className="relative w-11 h-11 flex items-center justify-center mb-5 transition-all duration-300 group-hover:scale-105"
+                      style={{ backgroundColor: `${data.color}12` }}
                     >
                       <IconComponent
-                        size={24}
+                        size={22}
                         strokeWidth={1.5}
                         style={{ color: data.color }}
                       />
                     </div>
-                    <h3 className="font-gilda-display text-[18px] lg:text-[20px] text-black group-hover:text-[#e7131a] transition-colors mb-1">
+                    <h3 className="relative font-gilda-display text-[17px] lg:text-[19px] text-black group-hover:text-black/80 transition-colors mb-1.5">
                       {category.title}
                     </h3>
-                    <p className="font-ibm-plex-sans text-[13px] text-black/50 hidden sm:block">
+                    <p className="relative font-ibm-plex-sans text-[12px] text-black/45 hidden sm:block leading-relaxed">
                       {data.description}
                     </p>
                   </Link>
@@ -563,8 +614,8 @@ export default async function HomePage() {
             ) : (
               // Empty state - show placeholder cards
               Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="bg-white p-6 lg:p-8 border border-black/5">
-                  <div className="w-12 h-12 bg-black/5 animate-pulse mb-4" />
+                <div key={i} className="bg-white p-6 lg:p-7 border border-black/[0.04]">
+                  <div className="w-11 h-11 bg-black/5 animate-pulse mb-5" />
                   <div className="h-5 bg-black/5 animate-pulse w-24 mb-2" />
                   <div className="h-4 bg-black/5 animate-pulse w-32 hidden sm:block" />
                 </div>
@@ -574,69 +625,57 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* CTA Section - Bold Black */}
+      {/* CTA Section - Modern 2026 */}
       <div className="w-full flex justify-center">
-        <div className="relative w-full max-w-[1440px] bg-black overflow-hidden">
-          {/* Geometric accents */}
-          <div
-            className="absolute left-0 top-0 bottom-0 w-[200px] bg-[#e7131a] animate-geometric"
-            style={{ clipPath: 'polygon(0 0, 100% 0, 60% 100%, 0 100%)' }}
-          />
-          {/* Secondary geometric element */}
-          <div
-            className="absolute right-0 bottom-0 w-[150px] h-[150px] border border-white/10"
-          />
-          {/* Ambient glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[#e7131a]/5 blur-[100px] animate-pulse-soft" />
-          {/* Grid pattern */}
-          <div className="absolute inset-0 opacity-[0.02]">
-            <div className="h-full w-full" style={{
-              backgroundImage: `
-                linear-gradient(to right, white 1px, transparent 1px),
-                linear-gradient(to bottom, white 1px, transparent 1px)
-              `,
-              backgroundSize: '60px 60px',
+        <div className="relative w-full max-w-[1440px] bg-[#0a0a0a] overflow-hidden">
+          {/* Modern gradient background */}
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#111] to-[#0a0a0a]" />
+            {/* Subtle colored gradient orbs */}
+            <div className="absolute top-1/2 left-1/4 w-[600px] h-[600px] bg-gradient-radial from-indigo-500/[0.04] via-transparent to-transparent blur-3xl transform -translate-y-1/2" />
+            <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-gradient-radial from-purple-500/[0.03] via-transparent to-transparent blur-3xl" />
+            {/* Fine dot pattern */}
+            <div className="absolute inset-0 opacity-[0.1]" style={{
+              backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 1px)`,
+              backgroundSize: '40px 40px',
             }} />
           </div>
 
-          <div className="relative z-10 px-6 lg:px-12 py-20 lg:py-28">
-            <div className="max-w-[700px] mx-auto text-center">
-              <h2 className="font-gilda-display text-[32px] sm:text-[42px] lg:text-[56px] leading-[1.1] text-white mb-6 animate-hero">
+          <div className="relative z-10 px-6 lg:px-12 py-24 lg:py-32">
+            <div className="max-w-[680px] mx-auto text-center">
+              <span className="font-ibm-plex-sans-condensed text-[10px] tracking-[0.3em] uppercase text-white/30 block mb-6">
+                Get Started
+              </span>
+              <h2 className="font-gilda-display text-[34px] sm:text-[44px] lg:text-[58px] leading-[1.05] text-white mb-6">
                 Ready to Create
                 <br />
-                <span className="text-[#e7131a]">with AI?</span>
+                <span className="bg-gradient-to-r from-white/70 via-white/50 to-white/30 bg-clip-text text-transparent">with AI?</span>
               </h2>
-              <p className="font-ibm-plex-sans text-[16px] lg:text-[18px] text-white/60 mb-10 max-w-[500px] mx-auto animate-hero-delay-1">
+              <p className="font-ibm-plex-sans text-[15px] lg:text-[17px] text-white/45 mb-12 max-w-[460px] mx-auto leading-relaxed">
                 Join creators discovering the best AI tools. Start exploring
                 and unlock your creative potential.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center animate-hero-delay-2">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   href="/tools"
-                  className="group bg-[#e7131a] text-white px-8 py-4 font-ibm-plex-sans-condensed text-[13px] tracking-[0.15em] uppercase transition-all duration-300 hover:bg-white hover:text-black inline-flex items-center justify-center gap-3 hover:scale-105"
+                  className="group bg-white text-black px-8 py-4 font-ibm-plex-sans-condensed text-[12px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-white/90 hover:shadow-[0_0_40px_rgba(255,255,255,0.15)] inline-flex items-center justify-center gap-3"
                 >
                   Browse All Tools
                   <svg
-                    width="18"
-                    height="18"
+                    width="16"
+                    height="16"
                     viewBox="0 0 24 24"
                     fill="none"
-                    className="transition-transform group-hover:translate-x-1"
+                    className="transition-transform duration-300 group-hover:translate-x-1"
                   >
-                    <path
-                      d="M5 12H19M19 12L12 5M19 12L12 19"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </Link>
                 <Link
-                  href="/builders"
-                  className="group border border-white/30 text-white px-8 py-4 font-ibm-plex-sans-condensed text-[13px] tracking-[0.15em] uppercase transition-all duration-300 hover:bg-white hover:text-black hover:border-white inline-flex items-center justify-center hover:scale-105"
+                  href="/learn"
+                  className="group border border-white/15 backdrop-blur-sm text-white px-8 py-4 font-ibm-plex-sans-condensed text-[12px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-white/10 hover:border-white/30 inline-flex items-center justify-center"
                 >
-                  Meet the Builders
+                  Start Learning
                 </Link>
               </div>
             </div>
@@ -644,34 +683,35 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* Newsletter Section - Clean */}
+      {/* Newsletter Section - Modern 2026 */}
       <div className="w-full flex justify-center">
-        <div className="relative w-full max-w-[1440px] bg-white py-16 lg:py-20 px-6 lg:px-12 border-t border-black/10 overflow-hidden">
-          {/* Subtle decorative elements */}
-          <div className="absolute top-8 left-8 w-2 h-2 bg-[#e7131a]/20" />
-          <div className="absolute bottom-8 right-8 w-2 h-2 bg-black/10" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-[#f6f4f1]/50 blur-[80px]" />
-
-          <div className="relative max-w-[500px] mx-auto text-center">
-            <h2 className="font-gilda-display text-[28px] lg:text-[32px] text-black mb-3">
+        <div className="relative w-full max-w-[1440px] bg-white py-20 lg:py-24 px-6 lg:px-12 border-t border-black/[0.06] overflow-hidden">
+          <div className="relative max-w-[480px] mx-auto text-center">
+            <span className="font-ibm-plex-sans-condensed text-[10px] tracking-[0.3em] uppercase text-black/50 block mb-4">
+              Newsletter
+            </span>
+            <h2 className="font-gilda-display text-[30px] lg:text-[36px] text-black mb-4 leading-[1.15]">
               Stay Updated
             </h2>
-            <p className="font-ibm-plex-sans text-[15px] text-black/50 mb-8">
+            <p className="font-ibm-plex-sans text-[14px] text-black/45 mb-10 leading-relaxed">
               Get the latest AI tools and news delivered to your inbox.
             </p>
             <form className="flex flex-col sm:flex-row gap-3">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-5 py-4 bg-[#f6f4f1] border-0 font-ibm-plex-sans text-[15px] placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-black transition-all hover:bg-[#f0ede9]"
+                className="flex-1 px-5 py-4 bg-[#fafafa] border border-black/[0.06] font-ibm-plex-sans text-[14px] placeholder:text-black/45 focus:outline-none focus:border-black/20 focus:bg-white transition-all duration-300"
               />
               <button
                 type="submit"
-                className="bg-black text-white px-8 py-4 font-ibm-plex-sans-condensed text-[13px] tracking-[0.15em] uppercase transition-all duration-300 hover:bg-[#e7131a] hover:scale-105"
+                className="bg-black text-white px-8 py-4 font-ibm-plex-sans-condensed text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-black/85"
               >
                 Subscribe
               </button>
             </form>
+            <p className="font-ibm-plex-sans text-[11px] text-black/45 mt-5">
+              No spam. Unsubscribe anytime.
+            </p>
           </div>
         </div>
       </div>

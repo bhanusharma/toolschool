@@ -3,6 +3,9 @@ import { Metadata } from 'next'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { ToolDetailHero } from '@/components/tools/ToolDetailHero'
+
+// Force dynamic rendering - D1 database not available during static build in CI
+export const dynamic = 'force-dynamic'
 import { ToolQuickFacts } from '@/components/tools/ToolQuickFacts'
 import { ToolDescription } from '@/components/tools/ToolDescription'
 import { ToolFeatures } from '@/components/tools/ToolFeatures'
@@ -72,22 +75,6 @@ async function getToolBySlug(slug: string) {
   }
 
   return { tool, relatedTools, alternatives }
-}
-
-// Generate static params for SSG
-export async function generateStaticParams() {
-  const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
-
-  const tools = await payload.find({
-    collection: 'tools',
-    limit: 100,
-    select: { slug: true },
-  })
-
-  return tools.docs.map((tool) => ({
-    slug: tool.slug,
-  }))
 }
 
 // Generate metadata for SEO

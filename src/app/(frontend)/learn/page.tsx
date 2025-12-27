@@ -6,7 +6,8 @@ import config from '@payload-config'
 import { BookOpen, Clock, Wrench, CheckCircle2, ArrowRight, GraduationCap } from 'lucide-react'
 import { EmptyState } from '@/components/cards'
 
-export const revalidate = 300 // 5 minutes ISR
+// Force dynamic rendering - D1 database not available during static build in CI
+export const dynamic = 'force-dynamic'
 
 interface Tutorial {
   id: number | string
@@ -33,7 +34,7 @@ interface Tutorial {
 const difficultyConfig = {
   beginner: { bg: 'bg-green-500/10', text: 'text-green-600', label: 'Beginner', color: '#34a853' },
   intermediate: { bg: 'bg-yellow-500/10', text: 'text-yellow-600', label: 'Intermediate', color: '#fbbc04' },
-  advanced: { bg: 'bg-red-500/10', text: 'text-red-600', label: 'Advanced', color: '#e7131a' },
+  advanced: { bg: 'bg-purple-500/10', text: 'text-purple-600', label: 'Advanced', color: '#8b5cf6' },
 }
 
 async function getTutorials(): Promise<Tutorial[]> {
@@ -73,31 +74,26 @@ export default async function LearnPage() {
 
   return (
     <div className="min-h-screen bg-[#f8f8f8]">
-      {/* Hero Section */}
-      <section className="relative bg-black overflow-hidden">
+      {/* Hero Section - 2026 Design */}
+      <section className="relative bg-[#0a0a0a] overflow-hidden">
         <div className="absolute inset-0">
-          {/* Geometric background - centered split accent */}
-          <div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-full bg-[#e7131a] opacity-90 animate-geometric"
-            style={{ clipPath: 'polygon(20% 0, 80% 0, 60% 100%, 40% 100%)' }}
-          />
-          {/* Grid pattern */}
-          <div className="absolute inset-0 opacity-[0.03]">
-            <div className="h-full w-full" style={{
-              backgroundImage: `
-                linear-gradient(to right, white 1px, transparent 1px),
-                linear-gradient(to bottom, white 1px, transparent 1px)
-              `,
-              backgroundSize: '80px 80px',
-            }} />
-          </div>
+          {/* Modern gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#111] to-[#0d0d0d]" />
+          {/* Gradient orbs */}
+          <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-gradient-radial from-emerald-500/[0.04] via-transparent to-transparent blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-radial from-teal-500/[0.03] via-transparent to-transparent blur-3xl" />
+          {/* Dot pattern */}
+          <div className="absolute inset-0 opacity-[0.12]" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 1px)`,
+            backgroundSize: '32px 32px',
+          }} />
         </div>
 
         <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-16 md:py-24">
           <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/10 backdrop-blur border border-white/20 mb-6 animate-hero">
-              <GraduationCap className="w-4 h-4 text-[#e7131a]" />
-              <span className="text-[11px] font-ibm-plex-sans-condensed tracking-wider uppercase text-white/80">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/[0.06] backdrop-blur-xl border border-white/[0.08] mb-6 animate-hero">
+              <GraduationCap className="w-4 h-4 text-white/50" />
+              <span className="text-[11px] font-ibm-plex-sans-condensed tracking-[0.15em] uppercase text-white/60">
                 ToolSchool Learn
               </span>
             </div>
@@ -105,39 +101,40 @@ export default async function LearnPage() {
             <h1 className="text-[48px] md:text-[64px] lg:text-[72px] leading-[0.95] font-gilda-display text-white mb-6 animate-hero-delay-1">
               Build Real
               <br />
-              <span className="text-[#e7131a]">AI Systems</span>
+              <span className="bg-gradient-to-r from-white/70 via-white/50 to-white/30 bg-clip-text text-transparent">AI Systems</span>
             </h1>
 
-            <p className="font-ibm-plex-sans text-[16px] md:text-[18px] leading-relaxed text-white/70 max-w-xl mx-auto mb-10 animate-hero-delay-2">
+            <p className="font-ibm-plex-sans text-[16px] md:text-[18px] leading-relaxed text-white/55 max-w-xl mx-auto mb-10 animate-hero-delay-2">
               Hands-on tutorials that teach you how to connect AI tools into working workflows.
               No theory—just practical skills you can use today.
             </p>
 
-            {/* Quick features */}
-            <div className="flex flex-wrap items-center justify-center gap-6 text-[13px] font-ibm-plex-sans text-white/60 animate-hero-delay-3">
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-[#e7131a]" />
+            {/* Quick features - 2026 style */}
+            <div className="flex flex-wrap items-center justify-center gap-6 text-[13px] font-ibm-plex-sans text-white/50 animate-hero-delay-3">
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-white/[0.04] border border-white/[0.06]">
+                <Clock className="w-4 h-4 text-white/40" />
                 <span>45 min average</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Wrench className="w-4 h-4 text-[#e7131a]" />
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-white/[0.04] border border-white/[0.06]">
+                <Wrench className="w-4 h-4 text-white/40" />
                 <span>Cross-tool workflows</span>
               </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#e7131a]" />
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-white/[0.04] border border-white/[0.06]">
+                <CheckCircle2 className="w-4 h-4 text-white/40" />
                 <span>Working output guaranteed</span>
               </div>
             </div>
 
-            {/* Quick stats */}
-            <div className="flex items-center justify-center gap-8 mt-10 pt-10 border-t border-white/20 animate-hero-delay-3">
-              <div>
-                <div className="text-[32px] font-gilda-display text-white">{tutorials.length}</div>
-                <div className="text-[11px] font-ibm-plex-sans-condensed tracking-wider uppercase text-white/50">Tutorials</div>
+            {/* Quick stats - 2026 style with dividers */}
+            <div className="flex items-stretch justify-center gap-0 mt-10 pt-10 border-t border-white/[0.12] animate-hero-delay-3">
+              <div className="pr-10">
+                <div className="text-[36px] font-gilda-display text-white">{tutorials.length}</div>
+                <div className="text-[10px] font-ibm-plex-sans-condensed tracking-[0.2em] uppercase text-white/40 mt-1">Tutorials</div>
               </div>
-              <div>
-                <div className="text-[32px] font-gilda-display text-white">3</div>
-                <div className="text-[11px] font-ibm-plex-sans-condensed tracking-wider uppercase text-white/50">Difficulty Levels</div>
+              <div className="w-px bg-white/[0.12]" />
+              <div className="pl-10">
+                <div className="text-[36px] font-gilda-display text-white">3</div>
+                <div className="text-[10px] font-ibm-plex-sans-condensed tracking-[0.2em] uppercase text-white/40 mt-1">Difficulty Levels</div>
               </div>
             </div>
           </div>
@@ -147,9 +144,9 @@ export default async function LearnPage() {
       {/* Featured Tutorial */}
       {featuredTutorial && (
         <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-12 bg-white border-b border-[#e5e5e5]">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#e7131a]/10 border border-[#e7131a]/20 mb-8 animate-slide-up stagger-1">
-            <BookOpen className="w-4 h-4 text-[#e7131a]" />
-            <span className="text-[11px] font-ibm-plex-sans-condensed tracking-wider uppercase text-[#e7131a]">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-black border border-black mb-8 animate-slide-up stagger-1">
+            <BookOpen className="w-4 h-4 text-white" />
+            <span className="text-[11px] font-ibm-plex-sans-condensed tracking-wider uppercase text-white">
               Start Here
             </span>
           </div>
@@ -194,7 +191,7 @@ export default async function LearnPage() {
                   )}
                 </div>
 
-                <h2 className="text-[28px] lg:text-[36px] font-gilda-display text-black mb-4 group-hover:text-[#e7131a] transition-colors">
+                <h2 className="text-[28px] lg:text-[36px] font-gilda-display text-black mb-4 group-hover:text-black/70 transition-colors">
                   {featuredTutorial.title}
                 </h2>
 
@@ -222,7 +219,7 @@ export default async function LearnPage() {
                   </div>
                 )}
 
-                <div className="inline-flex items-center gap-2 text-[#e7131a] font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase group-hover:gap-3 transition-all">
+                <div className="inline-flex items-center gap-2 text-black font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase group-hover:gap-3 transition-all">
                   Start Tutorial
                   <ArrowRight className="w-4 h-4" />
                 </div>
@@ -291,7 +288,7 @@ export default async function LearnPage() {
                       )}
                     </div>
 
-                    <h3 className="text-[18px] font-gilda-display text-black mb-2 group-hover:text-[#e7131a] transition-colors line-clamp-2">
+                    <h3 className="text-[18px] font-gilda-display text-black mb-2 group-hover:text-black/70 transition-colors line-clamp-2">
                       {tutorial.title}
                     </h3>
 
@@ -303,10 +300,10 @@ export default async function LearnPage() {
 
                     {/* CTA */}
                     <div className="flex items-center justify-between pt-4 border-t border-[#e5e5e5]">
-                      <span className="font-ibm-plex-sans-condensed text-[12px] tracking-wider uppercase text-black group-hover:text-[#e7131a] transition-colors">
+                      <span className="font-ibm-plex-sans-condensed text-[12px] tracking-wider uppercase text-black group-hover:text-black/70 transition-colors">
                         Start Learning
                       </span>
-                      <ArrowRight className="w-4 h-4 text-black/30 group-hover:text-[#e7131a] group-hover:translate-x-1 transition-all" />
+                      <ArrowRight className="w-4 h-4 text-black/30 group-hover:text-black group-hover:translate-x-1 transition-all" />
                     </div>
                   </div>
                 </div>
@@ -329,28 +326,40 @@ export default async function LearnPage() {
         </section>
       )}
 
-      {/* CTA Section */}
+      {/* CTA Section - 2026 Design */}
       <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 mb-12">
-        <div className="relative bg-black py-16 px-8 md:px-12 overflow-hidden">
-          {/* Geometric accent - centered triangle */}
-          <div
-            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-96 h-64 bg-[#e7131a] opacity-90"
-            style={{ clipPath: 'polygon(50% 0, 100% 100%, 0 100%)' }}
-          />
+        <div className="relative bg-[#0a0a0a] py-20 px-8 md:px-16 overflow-hidden">
+          {/* Gradient orbs */}
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-radial from-emerald-500/[0.05] via-transparent to-transparent blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-radial from-teal-500/[0.04] via-transparent to-transparent blur-3xl" />
+          {/* Dot pattern */}
+          <div className="absolute inset-0 opacity-[0.08]" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 1px)`,
+            backgroundSize: '24px 24px',
+          }} />
 
           <div className="relative z-10 max-w-xl mx-auto text-center">
-            <h2 className="text-[32px] md:text-[40px] font-gilda-display text-white mb-4">
-              Want to Contribute?
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="w-8 h-[2px] bg-white/20" />
+              <span className="text-[11px] font-ibm-plex-sans-condensed tracking-[0.2em] uppercase text-white/40">
+                Contribute
+              </span>
+              <div className="w-8 h-[2px] bg-white/20" />
+            </div>
+            <h2 className="text-[32px] md:text-[44px] font-gilda-display text-white mb-4 leading-tight">
+              Want to
+              <br />
+              <span className="text-white/50">Contribute?</span>
             </h2>
-            <p className="font-ibm-plex-sans text-[16px] text-white/70 mb-8">
+            <p className="font-ibm-plex-sans text-[16px] text-white/50 mb-8 max-w-md mx-auto">
               Share your AI workflow knowledge. Write tutorials and help others learn.
             </p>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 bg-[#e7131a] text-white px-6 py-3 font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase hover:bg-[#c10e14] transition-colors"
+              className="group inline-flex items-center gap-3 bg-white text-black px-7 py-4 font-ibm-plex-sans-condensed text-[13px] tracking-[0.15em] uppercase hover:bg-white/90 transition-all"
             >
               Get in Touch
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>

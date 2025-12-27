@@ -13,6 +13,9 @@ import {
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 
+// Force dynamic rendering - D1 database not available during static build in CI
+export const dynamic = 'force-dynamic'
+
 type Params = Promise<{ slug: string }>
 
 async function getProjectBySlug(slug: string) {

@@ -6,7 +6,8 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import NewsArticleClient from './NewsArticleClient'
 
-export const revalidate = 600 // 10 minutes ISR
+// Force dynamic rendering - D1 database not available during static build in CI
+export const dynamic = 'force-dynamic'
 
 interface Post {
   id: number | string

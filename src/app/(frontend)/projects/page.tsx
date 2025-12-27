@@ -4,6 +4,9 @@ import config from '@/payload.config'
 import { Search, X, Sparkles, Image as ImageIcon, Video, Music, Globe } from 'lucide-react'
 import { ProjectCard, EmptyState } from '@/components/cards'
 
+// Force dynamic rendering - D1 database not available during static build in CI
+export const dynamic = 'force-dynamic'
+
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
 
 // Type colors for visual distinction

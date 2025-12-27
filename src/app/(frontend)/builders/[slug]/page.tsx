@@ -10,6 +10,9 @@ import {
   ExternalLink,
 } from 'lucide-react'
 
+// Force dynamic rendering - D1 database not available during static build in CI
+export const dynamic = 'force-dynamic'
+
 type Params = Promise<{ slug: string }>
 
 async function getBuilderBySlug(slug: string) {
