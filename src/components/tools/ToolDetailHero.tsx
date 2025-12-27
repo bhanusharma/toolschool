@@ -8,10 +8,10 @@ interface ToolDetailHeroProps {
   category?: ToolCategory
 }
 
-// Category colors for visual consistency
+// Category colors for visual consistency - matches tools page
 const categoryColors: Record<string, string> = {
   Writing: '#1a73e8',
-  Image: '#e7131a',
+  Image: '#8b5cf6',
   Video: '#9c27b0',
   Audio: '#ff5722',
   Automation: '#10b981',
@@ -20,7 +20,7 @@ const categoryColors: Record<string, string> = {
   Data: '#06b6d4',
   Building: '#fbbc04',
   '3D': '#673ab7',
-  'Image Generation': '#e7131a',
+  'Image Generation': '#8b5cf6',
   'Text / Copywriting': '#1a73e8',
   'Music / Audio': '#ff5722',
   'Video / Film': '#9c27b0',
@@ -40,7 +40,7 @@ const difficultyLabels: Record<string, { label: string; color: string }> = {
 }
 
 export function ToolDetailHero({ tool, category }: ToolDetailHeroProps) {
-  const categoryColor = categoryColors[category?.title || ''] || '#e7131a'
+  const categoryColor = categoryColors[category?.title || ''] || '#6366f1'
   // Use logo from Payload CMS only
   const logoUrl = tool.logo && typeof tool.logo === 'object' && tool.logo.url
     ? tool.logo.url

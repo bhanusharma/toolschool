@@ -4,10 +4,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Sparkles, ArrowRight } from 'lucide-react'
 
-// Category colors for visual distinction (10 categories)
+// Category colors for visual distinction (10 categories) - matches tools page
 const categoryColors: { [key: string]: string } = {
   Writing: '#1a73e8',
-  Image: '#e7131a',
+  Image: '#8b5cf6',
   Video: '#9c27b0',
   Audio: '#ff5722',
   Automation: '#10b981',
@@ -84,7 +84,7 @@ export function ToolCard({
   showPricing = true,
   className = '',
 }: ToolCardProps) {
-  const categoryColor = categoryColors[tool.toolCategory?.title || ''] || '#e7131a'
+  const categoryColor = categoryColors[tool.toolCategory?.title || ''] || '#6366f1'
   // Use logo from Payload CMS only
   const logoUrl = tool.logo?.url
 
@@ -93,6 +93,7 @@ export function ToolCard({
       <Link
         href={`/tools/${tool.slug}`}
         className={`group flex items-center gap-4 p-4 bg-white border border-[#e5e5e5] transition-all duration-200 hover:border-black hover:shadow-md ${className}`}
+        style={{ '--hover-color': categoryColor } as React.CSSProperties}
       >
         {/* Icon */}
         <div
@@ -116,7 +117,7 @@ export function ToolCard({
 
         {/* Content */}
         <div className="flex-1 min-w-0">
-          <h3 className="font-gilda-display text-[16px] text-black group-hover:text-[#e7131a] transition-colors truncate">
+          <h3 className="font-gilda-display text-[16px] text-black transition-colors truncate group-hover:[color:var(--hover-color)]">
             {tool.title}
           </h3>
           {tool.tagline && (
@@ -127,7 +128,7 @@ export function ToolCard({
         </div>
 
         {/* Arrow */}
-        <ArrowRight className="w-4 h-4 text-black/30 group-hover:text-[#e7131a] group-hover:translate-x-1 transition-all flex-shrink-0" />
+        <ArrowRight className="w-4 h-4 text-black/30 group-hover:translate-x-1 transition-all flex-shrink-0 group-hover:[color:var(--hover-color)]" />
       </Link>
     )
   }
@@ -137,6 +138,7 @@ export function ToolCard({
       <Link
         href={`/tools/${tool.slug}`}
         className={`group block bg-white border border-[#e5e5e5] transition-all duration-300 hover:border-black hover:shadow-xl ${className}`}
+        style={{ '--hover-color': categoryColor } as React.CSSProperties}
       >
         {/* Large Image Area */}
         <div
@@ -168,7 +170,7 @@ export function ToolCard({
 
         {/* Content */}
         <div className="p-6">
-          <h3 className="font-gilda-display text-[24px] leading-tight text-black mb-3 group-hover:text-[#e7131a] transition-colors">
+          <h3 className="font-gilda-display text-[24px] leading-tight text-black mb-3 transition-colors group-hover:[color:var(--hover-color)]">
             {tool.title}
           </h3>
 
@@ -202,10 +204,10 @@ export function ToolCard({
 
           {/* CTA */}
           <div className="flex items-center justify-between pt-4 border-t border-[#e5e5e5]">
-            <span className="font-ibm-plex-sans-condensed text-[12px] tracking-wider uppercase text-black group-hover:text-[#e7131a] transition-colors">
+            <span className="font-ibm-plex-sans-condensed text-[12px] tracking-wider uppercase text-black transition-colors group-hover:[color:var(--hover-color)]">
               Explore Tool
             </span>
-            <ArrowRight className="w-4 h-4 text-black/30 group-hover:text-[#e7131a] group-hover:translate-x-1 transition-all" />
+            <ArrowRight className="w-4 h-4 text-black/30 group-hover:translate-x-1 transition-all group-hover:[color:var(--hover-color)]" />
           </div>
         </div>
       </Link>
@@ -217,6 +219,7 @@ export function ToolCard({
     <Link
       href={`/tools/${tool.slug}`}
       className={`group flex flex-col bg-white border border-[#e5e5e5] transition-all duration-300 hover:border-black hover:shadow-lg relative ${className}`}
+      style={{ '--hover-color': categoryColor } as React.CSSProperties}
     >
       {/* Featured Badge */}
       {tool.featured && (
@@ -250,7 +253,7 @@ export function ToolCard({
 
       {/* Tool Info */}
       <div className="p-5 flex-1 flex flex-col relative">
-        <h3 className="font-gilda-display text-[20px] leading-[28px] text-black mb-2 group-hover:text-[#e7131a] transition-colors">
+        <h3 className="font-gilda-display text-[20px] leading-[28px] text-black mb-2 transition-colors group-hover:[color:var(--hover-color)]">
           {tool.title}
         </h3>
 
@@ -284,10 +287,10 @@ export function ToolCard({
 
         {/* CTA */}
         <div className="flex items-center justify-between mt-auto pt-4 border-t border-[#e5e5e5]">
-          <span className="font-ibm-plex-sans-condensed text-[12px] tracking-wider uppercase text-black group-hover:text-[#e7131a] transition-colors">
+          <span className="font-ibm-plex-sans-condensed text-[12px] tracking-wider uppercase text-black transition-colors group-hover:[color:var(--hover-color)]">
             Learn More
           </span>
-          <ArrowRight className="w-4 h-4 text-black/30 group-hover:text-[#e7131a] group-hover:translate-x-1 transition-all" />
+          <ArrowRight className="w-4 h-4 text-black/30 group-hover:translate-x-1 transition-all group-hover:[color:var(--hover-color)]" />
         </div>
       </div>
     </Link>

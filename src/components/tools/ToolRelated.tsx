@@ -8,10 +8,10 @@ interface ToolRelatedProps {
   category?: ToolCategory
 }
 
-// Category colors for visual consistency
+// Category colors for visual consistency - matches tools page
 const categoryColors: Record<string, string> = {
   Writing: '#1a73e8',
-  Image: '#e7131a',
+  Image: '#8b5cf6',
   Video: '#9c27b0',
   Audio: '#ff5722',
   Automation: '#10b981',
@@ -23,7 +23,7 @@ const categoryColors: Record<string, string> = {
 }
 
 export function ToolRelated({ tools, category }: ToolRelatedProps) {
-  const categoryColor = categoryColors[category?.title || ''] || '#e7131a'
+  const categoryColor = categoryColors[category?.title || ''] || '#6366f1'
 
   return (
     <section className="w-full flex justify-center bg-white border-t border-[#e5e5e5]">
@@ -35,7 +35,7 @@ export function ToolRelated({ tools, category }: ToolRelatedProps) {
           {category && (
             <Link
               href={`/tools?category=${category.slug}`}
-              className="font-ibm-plex-sans-condensed text-[13px] tracking-wider uppercase text-black/60 hover:text-[#e7131a] transition-colors flex items-center gap-2"
+              className="font-ibm-plex-sans-condensed text-[13px] tracking-wider uppercase text-black/60 transition-colors flex items-center gap-2 hover:text-black"
             >
               View all {category.title} tools
               <ArrowRight className="w-4 h-4" />
@@ -57,6 +57,7 @@ export function ToolRelated({ tools, category }: ToolRelatedProps) {
                 key={tool.id}
                 href={`/tools/${tool.slug}`}
                 className="group flex flex-col bg-[#f8f8f8] border border-[#e5e5e5] transition-all duration-300 hover:border-black hover:shadow-lg"
+                style={{ '--hover-color': toolColor } as React.CSSProperties}
               >
                 {/* Logo Area */}
                 <div
@@ -89,7 +90,7 @@ export function ToolRelated({ tools, category }: ToolRelatedProps) {
 
                 {/* Content Area */}
                 <div className="p-5 flex-1 flex flex-col bg-white">
-                  <h3 className="font-gilda-display text-[18px] leading-tight text-black mb-2 group-hover:text-[#e7131a] transition-colors">
+                  <h3 className="font-gilda-display text-[18px] leading-tight text-black mb-2 transition-colors group-hover:[color:var(--hover-color)]">
                     {tool.title}
                   </h3>
                   <p className="font-ibm-plex-sans text-[13px] text-black/60 line-clamp-2 flex-1">
