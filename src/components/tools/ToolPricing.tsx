@@ -87,11 +87,11 @@ export function ToolPricing({ tiers, summary, model, lastVerified, website }: To
 
                 {/* Price */}
                 <div className="mb-6">
-                  <span className="text-[36px] font-gilda-display text-black">
+                  <span className="text-[32px] font-gilda-display text-black leading-tight">
                     {tier.price}
                   </span>
                   {tier.billingPeriod && tier.billingPeriod !== 'free' && tier.billingPeriod !== 'one-time' && (
-                    <span className="font-ibm-plex-sans text-[14px] text-gray-500">
+                    <span className="font-ibm-plex-sans text-[14px] text-gray-400 ml-1">
                       /{tier.billingPeriod === 'monthly' ? 'mo' : 'yr'}
                     </span>
                   )}
