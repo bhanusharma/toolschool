@@ -100,7 +100,7 @@ export function Header() {
                     prefetch={true}
                     className="flex flex-col h-full justify-center relative shrink-0"
                   >
-                    <span className="block leading-[14px] transition-opacity duration-200 hover:opacity-60 text-[#e7131a]">
+                    <span className="block leading-[14px] transition-opacity duration-200 hover:opacity-60">
                       LEARN
                     </span>
                   </Link>
@@ -140,7 +140,7 @@ export function Header() {
                   </button>
 
                   {/* Subscribe Button */}
-                  <button className="bg-[#e7131a] text-white px-6 py-2 font-ibm-plex-sans-condensed text-[12px] md:text-[13px] tracking-wider uppercase transition-all duration-200 hover:bg-[#c10e14]">
+                  <button className="bg-black text-white px-6 py-2 font-ibm-plex-sans-condensed text-[12px] md:text-[13px] tracking-wider uppercase transition-all duration-200 hover:bg-black/80">
                     SUBSCRIBE
                   </button>
                 </div>
@@ -229,12 +229,12 @@ export function Header() {
               <Link
                 href="/learn"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="px-6 py-4 font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase text-[#e7131a] hover:bg-[#f6f4f1] transition-colors"
+                className="px-6 py-4 font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase text-black hover:bg-[#f6f4f1] transition-colors"
               >
                 LEARN
               </Link>
               <div className="px-6 py-4 border-t border-black/10 mt-2">
-                <button className="w-full bg-[#e7131a] text-white px-6 py-3 font-ibm-plex-sans-condensed text-[13px] tracking-wider uppercase transition-all duration-200 hover:bg-[#c10e14]">
+                <button className="w-full bg-black text-white px-6 py-3 font-ibm-plex-sans-condensed text-[13px] tracking-wider uppercase transition-all duration-200 hover:bg-black/80">
                   SUBSCRIBE
                 </button>
               </div>

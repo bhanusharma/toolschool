@@ -25,10 +25,11 @@
   ],
   "services": [
     // The service should match the "name" of your worker
-    // {
-    //   "binding": "WORKER_SELF_REFERENCE",
-    //   "service": "toolschool"
-    // },
+    // Required for OpenNext internal routing (RSC data fetching)
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "toolschool"
+    },
   ],
   "r2_buckets": [
     {

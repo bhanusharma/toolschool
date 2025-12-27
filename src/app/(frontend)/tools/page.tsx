@@ -27,7 +27,7 @@ import { ToolCard, EmptyState } from '@/components/cards'
 // Category colors for visual distinction (10 categories)
 const categoryColors: { [key: string]: string } = {
   Writing: '#1a73e8',
-  Image: '#e7131a',
+  Image: '#8b5cf6',
   Video: '#9c27b0',
   Audio: '#ff5722',
   Automation: '#10b981',
@@ -366,19 +366,21 @@ function ToolsPageContent() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[#f8f8f8]">
-        {/* Skeleton Hero */}
-        <section className="relative bg-black overflow-hidden">
+        {/* Skeleton Hero - 2026 Design */}
+        <section className="relative bg-[#0a0a0a] overflow-hidden">
           <div className="absolute inset-0">
-            <div
-              className="absolute top-0 right-0 w-[45%] h-full bg-[#e7131a] opacity-90"
-              style={{ clipPath: 'polygon(30% 0, 100% 0, 100% 100%, 0 100%)' }}
-            />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#111] to-[#0d0d0d]" />
+            <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-gradient-radial from-violet-500/[0.04] via-transparent to-transparent blur-3xl" />
+            <div className="absolute inset-0 opacity-[0.12]" style={{
+              backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 1px)`,
+              backgroundSize: '32px 32px',
+            }} />
           </div>
           <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-16 md:py-24">
             <div className="max-w-2xl">
-              <div className="h-8 w-48 bg-white/10 mb-6 animate-pulse" />
-              <div className="h-16 w-80 bg-white/10 mb-6 animate-pulse" />
-              <div className="h-6 w-64 bg-white/10 animate-pulse" />
+              <div className="h-8 w-48 bg-white/[0.06] mb-6 animate-pulse" />
+              <div className="h-16 w-80 bg-white/[0.06] mb-6 animate-pulse" />
+              <div className="h-6 w-64 bg-white/[0.06] animate-pulse" />
             </div>
           </div>
         </section>
@@ -387,7 +389,7 @@ function ToolsPageContent() {
         <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[...Array(8)].map((_, i) => (
-              <div key={i} className="border border-[#e5e5e5] bg-white animate-pulse">
+              <div key={i} className="border-2 border-[#e5e5e5] bg-white animate-pulse">
                 <div className="aspect-square bg-[#f6f4f1]" />
                 <div className="p-5">
                   <div className="h-6 w-3/4 bg-[#f6f4f1] mb-3" />
@@ -404,53 +406,48 @@ function ToolsPageContent() {
 
   return (
     <div className="min-h-screen bg-[#f8f8f8]">
-      {/* Hero Section */}
-      <section className="relative bg-black overflow-hidden">
+      {/* Hero Section - 2026 Design */}
+      <section className="relative bg-[#0a0a0a] overflow-hidden">
         <div className="absolute inset-0">
-          {/* Geometric background - top-right diagonal accent */}
-          <div
-            className="absolute top-0 right-0 w-[45%] h-full bg-[#e7131a] opacity-90 animate-geometric"
-            style={{ clipPath: 'polygon(30% 0, 100% 0, 100% 100%, 0 100%)' }}
-          />
-          {/* Grid pattern */}
-          <div className="absolute inset-0 opacity-[0.03]">
-            <div className="h-full w-full" style={{
-              backgroundImage: `
-                linear-gradient(to right, white 1px, transparent 1px),
-                linear-gradient(to bottom, white 1px, transparent 1px)
-              `,
-              backgroundSize: '80px 80px',
-            }} />
-          </div>
+          {/* Modern gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#111] to-[#0d0d0d]" />
+          {/* Subtle gradient orbs */}
+          <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-gradient-radial from-violet-500/[0.04] via-transparent to-transparent blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-radial from-blue-500/[0.03] via-transparent to-transparent blur-3xl" />
+          {/* Dot pattern */}
+          <div className="absolute inset-0 opacity-[0.12]" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 1px)`,
+            backgroundSize: '32px 32px',
+          }} />
         </div>
 
         <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-16 md:py-24">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left - Title and Search */}
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/10 backdrop-blur border border-white/20 mb-6 animate-hero">
-                <Wrench className="w-4 h-4 text-[#e7131a]" />
-                <span className="text-[11px] font-ibm-plex-sans-condensed tracking-wider uppercase text-white/80">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/[0.06] backdrop-blur-xl border border-white/[0.08] mb-6">
+                <Wrench className="w-4 h-4 text-white/50" />
+                <span className="text-[11px] font-ibm-plex-sans-condensed tracking-[0.15em] uppercase text-white/60">
                   {tools.length}+ AI Tools Curated
                 </span>
               </div>
 
-              <h1 className="text-[48px] md:text-[64px] lg:text-[72px] leading-[0.95] font-gilda-display text-white mb-6 animate-hero-delay-1">
+              <h1 className="text-[48px] md:text-[64px] lg:text-[72px] leading-[0.95] font-gilda-display text-white mb-6">
                 AI Creation
                 <br />
-                <span className="text-[#e7131a]">Tools</span>
+                <span className="bg-gradient-to-r from-white/70 via-white/50 to-white/30 bg-clip-text text-transparent">Tools</span>
               </h1>
 
-              <p className="font-ibm-plex-sans text-[16px] md:text-[18px] leading-relaxed text-white/70 max-w-md mb-8 animate-hero-delay-2">
+              <p className="font-ibm-plex-sans text-[16px] md:text-[18px] leading-relaxed text-white/70 max-w-md mb-8">
                 Discover the best AI tools for creators, artists, and innovators. Find the perfect tool for your next project.
               </p>
 
               {/* Search Bar */}
-              <div className="max-w-md animate-hero-delay-3">
+              <div className="max-w-md">
                 <div className="relative">
                   {isSearching ? (
                     <div className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5">
-                      <div className="animate-spin h-5 w-5 border-2 border-black/40 border-t-[#e7131a] rounded-full" />
+                      <div className="animate-spin h-5 w-5 border-2 border-black/40 border-t-black rounded-full" />
                     </div>
                   ) : (
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-black/40" />
@@ -460,7 +457,7 @@ function ToolsPageContent() {
                     placeholder="Search tools with AI..."
                     value={searchQuery}
                     onChange={(e) => handleSearchChange(e.target.value)}
-                    className="w-full pl-12 pr-4 py-4 bg-white border-0 font-ibm-plex-sans text-[15px] focus:outline-none focus:ring-2 focus:ring-[#e7131a] placeholder:text-black/40"
+                    className="w-full pl-12 pr-4 py-4 bg-white border-0 font-ibm-plex-sans text-[15px] focus:outline-none focus:ring-2 focus:ring-black/20 placeholder:text-black/40"
                   />
                   {searchQuery && (
                     <button
@@ -473,28 +470,38 @@ function ToolsPageContent() {
                 </div>
                 {searchQuery && !isSearching && searchResults.length > 0 && (
                   <div className="mt-2 flex items-center gap-2 text-[11px] font-ibm-plex-sans text-white/60">
-                    <Sparkles className="w-3 h-3 text-[#e7131a]" />
+                    <Sparkles className="w-3 h-3 text-white/50" />
                     <span>AI-powered semantic search</span>
                   </div>
                 )}
               </div>
 
-              {/* Quick stats */}
-              <div className="flex items-center gap-8 mt-8 pt-8 border-t border-white/20 animate-hero-delay-3">
-                <div>
-                  <div className="text-[32px] font-gilda-display text-white">{tools.length}+</div>
-                  <div className="text-[11px] font-ibm-plex-sans-condensed tracking-wider uppercase text-white/50">Tools</div>
+              {/* Quick stats - 2026 style with dividers */}
+              <div className="flex items-stretch gap-0 mt-8 pt-8 border-t border-white/[0.12]">
+                <div className="pr-8">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-[36px] font-gilda-display text-white">{tools.length}</span>
+                    <span className="text-[14px] font-ibm-plex-sans-condensed text-white/40">+</span>
+                  </div>
+                  <div className="text-[10px] font-ibm-plex-sans-condensed tracking-[0.2em] uppercase text-white/40 mt-1">
+                    Curated Tools
+                  </div>
                 </div>
-                <div>
-                  <div className="text-[32px] font-gilda-display text-white">{Object.keys(categoryData).length}</div>
-                  <div className="text-[11px] font-ibm-plex-sans-condensed tracking-wider uppercase text-white/50">Categories</div>
+                <div className="w-px bg-white/[0.12]" />
+                <div className="pl-8">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-[36px] font-gilda-display text-white">{Object.keys(categoryData).length}</span>
+                  </div>
+                  <div className="text-[10px] font-ibm-plex-sans-condensed tracking-[0.2em] uppercase text-white/40 mt-1">
+                    Categories
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Right - Featured Tool Preview */}
             {featuredTools[0] && !hasActiveFilters && (
-              <div className="hidden lg:block animate-slide-left stagger-4">
+              <div className="hidden lg:block">
                 <ToolCard tool={featuredTools[0] as any} variant="featured" />
               </div>
             )}
@@ -502,32 +509,53 @@ function ToolsPageContent() {
         </div>
       </section>
 
-      {/* Category Cards (when not filtering) */}
+      {/* Category Cards - 2026 Design with hover effects */}
       {!hasActiveFilters && (
-        <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-12 bg-white border-b border-[#e5e5e5]">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {Object.keys(categoryData).map((category, index) => {
+        <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 py-14 bg-white border-b border-[#e5e5e5]">
+          {/* Section header */}
+          <div className="flex items-center gap-4 mb-10">
+            <div className="w-8 h-[2px] bg-black" />
+            <h2 className="text-[13px] font-ibm-plex-sans-condensed tracking-[0.2em] uppercase text-black/50">
+              Browse by Category
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+            {Object.keys(categoryData).map((category) => {
               const color = categoryColors[category] || '#000'
-              const staggerClass = `stagger-${index + 1}`
               const IconComponent = categoryData[category].icon
               return (
                 <button
                   key={category}
                   onClick={() => handleCategoryChange(category)}
-                  className={`group p-6 border border-[#e5e5e5] hover:border-black transition-all duration-200 text-left animate-slide-up ${staggerClass}`}
+                  className="group relative p-5 border-2 border-[#e5e5e5] hover:border-black bg-white transition-all duration-300 text-left overflow-hidden"
                 >
+                  {/* Hover background fill */}
                   <div
-                    className="w-10 h-10 flex items-center justify-center mb-4"
-                    style={{ backgroundColor: `${color}15` }}
-                  >
-                    <IconComponent size={20} strokeWidth={1.5} style={{ color }} />
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ backgroundColor: `${color}08` }}
+                  />
+
+                  {/* Top accent line on hover */}
+                  <div
+                    className="absolute top-0 left-0 right-0 h-[3px] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
+                    style={{ backgroundColor: color }}
+                  />
+
+                  <div className="relative z-10">
+                    <div
+                      className="w-11 h-11 flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110"
+                      style={{ backgroundColor: `${color}12` }}
+                    >
+                      <IconComponent size={20} strokeWidth={1.5} style={{ color }} />
+                    </div>
+                    <h3 className="font-ibm-plex-sans-condensed text-[14px] tracking-[0.1em] uppercase text-black group-hover:text-black transition-colors">
+                      {category}
+                    </h3>
+                    <p className="font-ibm-plex-sans text-[11px] text-black/40 mt-1">
+                      {categoryCounts[category] || 0} tools
+                    </p>
                   </div>
-                  <h3 className="font-gilda-display text-[16px] text-black group-hover:text-[#e7131a] transition-colors mb-1">
-                    {category}
-                  </h3>
-                  <p className="font-ibm-plex-sans text-[12px] text-black/50">
-                    {categoryCounts[category] || 0} tools
-                  </p>
                 </button>
               )
             })}
@@ -585,7 +613,7 @@ function ToolsPageContent() {
               <div className="w-px h-6 bg-[#e5e5e5] mx-2 flex-shrink-0" />
               <button
                 onClick={clearAllFilters}
-                className="flex-shrink-0 flex items-center gap-1 text-[12px] font-ibm-plex-sans text-[#e7131a] hover:underline"
+                className="flex-shrink-0 flex items-center gap-1 text-[12px] font-ibm-plex-sans text-black/60 hover:text-black hover:underline"
               >
                 <X className="w-3 h-3" />
                 Clear
@@ -689,7 +717,7 @@ function ToolsPageContent() {
                         {option.label}
                       </span>
                       {sortBy === option.value && (
-                        <span className="ml-auto text-[#e7131a]">✓</span>
+                        <span className="ml-auto text-black">✓</span>
                       )}
                     </button>
                   ))}
@@ -733,28 +761,39 @@ function ToolsPageContent() {
         )}
       </section>
 
-      {/* Submit Tool CTA */}
+      {/* Submit Tool CTA - 2026 Design */}
       <section className="w-full max-w-[1440px] mx-auto px-6 lg:px-12 mb-12">
-        <div className="relative bg-black py-16 px-8 md:px-12 overflow-hidden">
-          {/* Geometric accent - right side */}
-          <div
-            className="absolute top-0 right-0 w-64 h-full bg-[#e7131a] opacity-90"
-            style={{ clipPath: 'polygon(30% 0, 100% 0, 100% 100%, 0 100%)' }}
-          />
+        <div className="relative bg-[#0a0a0a] py-20 px-8 md:px-16 overflow-hidden">
+          {/* Gradient orbs */}
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-radial from-violet-500/[0.05] via-transparent to-transparent blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-radial from-blue-500/[0.04] via-transparent to-transparent blur-3xl" />
+          {/* Dot pattern */}
+          <div className="absolute inset-0 opacity-[0.08]" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 1px)`,
+            backgroundSize: '24px 24px',
+          }} />
 
           <div className="relative z-10 max-w-xl">
-            <h2 className="text-[32px] md:text-[40px] font-gilda-display text-white mb-4">
-              Know an AI Tool We&apos;re Missing?
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-[2px] bg-white/30" />
+              <span className="text-[11px] font-ibm-plex-sans-condensed tracking-[0.2em] uppercase text-white/50">
+                Contribute
+              </span>
+            </div>
+            <h2 className="text-[32px] md:text-[44px] font-gilda-display text-white mb-4 leading-tight">
+              Know an AI Tool
+              <br />
+              <span className="text-white/50">We&apos;re Missing?</span>
             </h2>
-            <p className="font-ibm-plex-sans text-[16px] text-white/70 mb-8">
+            <p className="font-ibm-plex-sans text-[16px] text-white/50 mb-8 max-w-md">
               Help us grow the directory by submitting your favorite AI tools.
             </p>
             <Link
               href="/submit"
-              className="inline-flex items-center gap-2 bg-[#e7131a] text-white px-6 py-3 font-ibm-plex-sans-condensed text-[14px] tracking-wider uppercase hover:bg-[#c10e14] transition-colors"
+              className="group inline-flex items-center gap-3 bg-white text-black px-7 py-4 font-ibm-plex-sans-condensed text-[13px] tracking-[0.15em] uppercase hover:bg-white/90 transition-all"
             >
               Submit a Tool
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="ml-1">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="group-hover:translate-x-1 transition-transform">
                 <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </Link>

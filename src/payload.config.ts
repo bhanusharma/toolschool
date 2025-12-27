@@ -72,6 +72,9 @@ export default buildConfig({
   db: sqliteD1Adapter({
     binding: cloudflare.env.D1,
     prodMigrations: migrations,
+    // Disable automatic schema push in dev to avoid interactive migration prompts
+    // This is needed when using remoteBindings: true with a production database
+    push: false,
   }),
   plugins: [
     r2Storage({
@@ -114,7 +117,9 @@ function getCloudflareContextFromWrangler(): Promise<CloudflareContext> {
     ({ getPlatformProxy }) =>
       getPlatformProxy({
         environment: process.env.CLOUDFLARE_ENV,
-        remoteBindings: isProduction,
+        // Use remote bindings to connect to production D1 database in development
+        // This allows local dev to access the same data as production
+        remoteBindings: true,
       } satisfies GetPlatformProxyOptions),
   )
 }

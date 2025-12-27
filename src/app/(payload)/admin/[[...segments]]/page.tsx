@@ -6,6 +6,10 @@ import config from '@payload-config'
 import { RootPage, generatePageMetadata } from '@payloadcms/next/views'
 import { importMap } from '../importMap'
 
+// Force dynamic rendering to ensure auth cookies are always read fresh
+// This fixes the blank admin pages issue on Cloudflare Workers
+export const dynamic = 'force-dynamic'
+
 type Args = {
   params: Promise<{
     segments: string[]

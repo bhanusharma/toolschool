@@ -14,7 +14,7 @@ html {
   --color-secondary: #f8f8f8;
   --color-secondary-foreground: #000000;
 
-  --color-accent: #e7131a;
+  --color-accent: #1a1a1a;
   --color-accent-foreground: #ffffff;
 
   --color-background: #ffffff;
@@ -33,12 +33,12 @@ html {
   --color-destructive: #ef4444;
   --color-destructive-foreground: #ffffff;
 
-  /* VibeMake Primary Red */
-  --color-vibe-red: #e7131a;
-  --color-vibe-red-hover: #c10e14;
+  /* Refined accent - warm coral for selective emphasis only */
+  --color-vibe-red: #c45d4a;
+  --color-vibe-red-hover: #a84d3d;
 
   /* Category colors - kept for category badges */
-  --color-creating: #e7131a;
+  --color-creating: #c45d4a;
   --color-writing: #1a73e8;
   --color-curating: #34a853;
   --color-building: #fbbc04;
@@ -116,7 +116,7 @@ textarea:focus-visible {
 
 /* Improved selection colors */
 ::selection {
-  background-color: rgba(231, 19, 26, 0.2);
+  background-color: rgba(0, 0, 0, 0.1);
   color: #000000;
 }
 
@@ -164,6 +164,11 @@ textarea:focus-visible {
 
   .font-ibm-plex-sans-condensed {
     font-family: var(--font-ibm-plex-sans-condensed);
+  }
+
+  /* Radial gradient utility for modern glow effects */
+  .bg-gradient-radial {
+    background-image: radial-gradient(var(--tw-gradient-stops));
   }
 
   .tracking-premium {

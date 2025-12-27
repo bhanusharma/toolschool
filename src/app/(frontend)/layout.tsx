@@ -40,60 +40,58 @@ export const metadata = {
 function Footer() {
   return (
     <div className="w-full flex justify-center">
-      <footer className="w-full max-w-[1440px] border-t border-black bg-white">
-        <div className="px-6 lg:px-12 py-16">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <footer className="w-full max-w-[1440px] border-t border-black/[0.06] bg-[#fafafa]">
+        <div className="px-6 lg:px-12 py-16 lg:py-20">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 lg:gap-12">
             <div className="col-span-2 md:col-span-1">
-              <Link href="/" className="flex items-center gap-2 mb-4">
-                <span className="text-[24px] font-gilda-display text-black">ToolSchool</span>
+              <Link href="/" className="flex items-center gap-2 mb-5">
+                <span className="text-[22px] font-gilda-display text-black">ToolSchool</span>
               </Link>
-              <p className="font-ibm-plex-sans text-[14px] text-black/60">
+              <p className="font-ibm-plex-sans text-[13px] text-black/50 leading-relaxed max-w-[200px]">
                 The premier discovery platform for AI creators.
               </p>
             </div>
 
             <div>
-              <h4 className="font-ibm-plex-sans-condensed text-[12px] tracking-wider uppercase text-black mb-4">
+              <h4 className="font-ibm-plex-sans-condensed text-[10px] tracking-[0.2em] uppercase text-black/40 mb-5">
                 Discover
               </h4>
-              <ul className="space-y-3 font-ibm-plex-sans text-[14px] text-black/60">
+              <ul className="space-y-3.5 font-ibm-plex-sans text-[13px] text-black/55">
                 <li>
-                  <Link href="/tools" className="hover:text-black transition-colors">
+                  <Link href="/tools" className="hover:text-black transition-colors duration-300">
                     AI Tools
                   </Link>
                 </li>
-                {/* TEMPORARILY HIDDEN - Builders and Projects pages not ready yet, will bring back later
                 <li>
-                  <Link href="/builders" className="hover:text-black transition-colors">
-                    Builders
+                  <Link href="/learn" className="hover:text-black transition-colors duration-300">
+                    Learn
                   </Link>
                 </li>
                 <li>
-                  <Link href="/projects" className="hover:text-black transition-colors">
-                    Projects
+                  <Link href="/news" className="hover:text-black transition-colors duration-300">
+                    News
                   </Link>
                 </li>
-                */}
               </ul>
             </div>
 
             <div>
-              <h4 className="font-ibm-plex-sans-condensed text-[12px] tracking-wider uppercase text-black mb-4">
+              <h4 className="font-ibm-plex-sans-condensed text-[10px] tracking-[0.2em] uppercase text-black/40 mb-5">
                 Categories
               </h4>
-              <ul className="space-y-3 font-ibm-plex-sans text-[14px] text-black/60">
+              <ul className="space-y-3.5 font-ibm-plex-sans text-[13px] text-black/55">
                 <li>
                   <Link
-                    href="/tools?category=creating"
-                    className="hover:text-black transition-colors"
+                    href="/tools?category=image"
+                    className="hover:text-black transition-colors duration-300"
                   >
-                    Creating
+                    Image
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="/tools?category=writing"
-                    className="hover:text-black transition-colors"
+                    className="hover:text-black transition-colors duration-300"
                   >
                     Writing
                   </Link>
@@ -101,7 +99,7 @@ function Footer() {
                 <li>
                   <Link
                     href="/tools?category=video"
-                    className="hover:text-black transition-colors"
+                    className="hover:text-black transition-colors duration-300"
                   >
                     Video
                   </Link>
@@ -109,7 +107,7 @@ function Footer() {
                 <li>
                   <Link
                     href="/tools?category=audio"
-                    className="hover:text-black transition-colors"
+                    className="hover:text-black transition-colors duration-300"
                   >
                     Audio
                   </Link>
@@ -118,38 +116,38 @@ function Footer() {
             </div>
 
             <div>
-              <h4 className="font-ibm-plex-sans-condensed text-[12px] tracking-wider uppercase text-black mb-4">
-                Resources
+              <h4 className="font-ibm-plex-sans-condensed text-[10px] tracking-[0.2em] uppercase text-black/40 mb-5">
+                Company
               </h4>
-              <ul className="space-y-3 font-ibm-plex-sans text-[14px] text-black/60">
+              <ul className="space-y-3.5 font-ibm-plex-sans text-[13px] text-black/55">
                 <li>
-                  <Link href="/news" className="hover:text-black transition-colors">
-                    News
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/about" className="hover:text-black transition-colors">
+                  <Link href="/about" className="hover:text-black transition-colors duration-300">
                     About
                   </Link>
                 </li>
                 <li>
-                  <Link href="/submit" className="hover:text-black transition-colors">
+                  <Link href="/submit" className="hover:text-black transition-colors duration-300">
                     Submit a Tool
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/contact" className="hover:text-black transition-colors duration-300">
+                    Contact
                   </Link>
                 </li>
               </ul>
             </div>
           </div>
 
-          <div className="mt-12 pt-8 border-t border-black/10 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="font-ibm-plex-sans text-[14px] text-black/60">
+          <div className="mt-14 pt-8 border-t border-black/[0.06] flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p className="font-ibm-plex-sans text-[12px] text-black/40">
               © {new Date().getFullYear()} ToolSchool. All rights reserved.
             </p>
-            <div className="flex gap-6 font-ibm-plex-sans text-[14px] text-black/60">
-              <Link href="/privacy" className="hover:text-black transition-colors">
+            <div className="flex gap-8 font-ibm-plex-sans text-[12px] text-black/40">
+              <Link href="/privacy" className="hover:text-black transition-colors duration-300">
                 Privacy
               </Link>
-              <Link href="/terms" className="hover:text-black transition-colors">
+              <Link href="/terms" className="hover:text-black transition-colors duration-300">
                 Terms
               </Link>
             </div>
